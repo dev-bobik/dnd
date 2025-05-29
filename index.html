@@ -65,6 +65,23 @@
       margin: 0.5rem 0;
     }
   </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
+      authDomain: "heil-47dc3.firebaseapp.com",
+      databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
+      projectId: "heil-47dc3",
+      storageBucket: "heil-47dc3.appspot.com",
+      messagingSenderId: "204548727050",
+      appId: "1:204548727050:web:14066e11908a1fd97f9af3",
+      measurementId: "G-TJZZDNCV05"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
   <h1>DnD Fight Grid</h1>
@@ -120,6 +137,7 @@
     createGrid();
 
     const upload = document.getElementById('upload');
+    const db = firebase.database();
 
     upload.addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -127,14 +145,35 @@
 
       const reader = new FileReader();
       reader.onload = function (event) {
+        const id = Date.now();
+        const tokenData = {
+          id,
+          src: event.target.result,
+          top: 0,
+          left: 0,
+          width: cellSize,
+          height: cellSize
+        };
+        db.ref('tokens/' + id).set(tokenData);
+      };
+
+      reader.readAsDataURL(file);
+      e.target.value = "";
+    });
+
+    db.ref('tokens').on('value', (snapshot) => {
+      const tokens = snapshot.val();
+      document.querySelectorAll('.token').forEach(el => el.remove());
+      for (let key in tokens) {
+        const data = tokens[key];
         const img = document.createElement('img');
-        img.src = event.target.result;
+        img.src = data.src;
         img.classList.add('token');
         img.draggable = true;
-        img.style.top = '0px';
-        img.style.left = '0px';
-        img.style.width = `${cellSize}px`;
-        img.style.height = `${cellSize}px`;
+        img.style.top = `${data.top}px`;
+        img.style.left = `${data.left}px`;
+        img.style.width = `${data.width}px`;
+        img.style.height = `${data.height}px`;
 
         let offsetX, offsetY;
 
@@ -143,35 +182,52 @@
           offsetY = e.offsetY;
         });
 
-        grid.appendChild(img);
-
         img.addEventListener('dragend', (e) => {
           const rect = grid.getBoundingClientRect();
-          img.style.left = `${e.clientX - rect.left - offsetX}px`;
-          img.style.top = `${e.clientY - rect.top - offsetY}px`;
+          const newLeft = e.clientX - rect.left - offsetX;
+          const newTop = e.clientY - rect.top - offsetY;
+          db.ref('tokens/' + data.id).update({ left: newLeft, top: newTop });
         });
-      };
 
-      reader.readAsDataURL(file);
-      e.target.value = "";
+        grid.appendChild(img);
+      }
     });
 
     // Pozadí
     const backgroundInput = document.getElementById('backgroundUpload');
     const background = document.getElementById('background');
 
-    backgroundInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+    function startRealtimeSync() {
+      db.ref('background').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          background.src = snapshot.val();
+        }
+      });
 
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        background.src = event.target.result;
-      };
+      backgroundInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-      reader.readAsDataURL(file);
-      e.target.value = "";
-    });
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const imageUrl = event.target.result;
+          background.src = imageUrl;
+          db.ref('background').set(imageUrl);
+        };
+
+        reader.readAsDataURL(file);
+        e.target.value = "";
+      });
+    }
+
+    firebase.auth().signInAnonymously()
+      .then(() => {
+        console.log("✅ Přihlášen anonymně");
+        startRealtimeSync();
+      })
+      .catch((error) => {
+        console.error("❌ Přihlášení selhalo:", error);
+      });
 
     grid.addEventListener('dragover', (e) => e.preventDefault());
   </script>
