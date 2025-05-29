@@ -144,77 +144,82 @@
     </div>
   </div>
 
-  <script>
-    const grid = document.getElementById('grid');
-    const cellSizeSelect = document.getElementById('cellSizeSelect');
-    const containerSize = 1000;
-    let gridSize = 20;
-    let cellSize = parseInt(cellSizeSelect.value);
+const grid = document.getElementById('grid');
+const gridContainer = document.getElementById('grid-container');
+const cellSizeSelect = document.getElementById('cellSizeSelect');
+let cellSize = parseInt(cellSizeSelect.value);
 
-    function createGrid() {
-      grid.innerHTML = '';
-      gridSize = Math.floor(containerSize / cellSize);
-      grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-      grid.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-      for (let i = 0; i < gridSize * gridSize; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        grid.appendChild(cell);
-      }
-    }
+function createGrid() {
+  grid.innerHTML = '';
+  const containerWidth = gridContainer.clientWidth;
+  const containerHeight = gridContainer.clientHeight;
 
-    cellSizeSelect.addEventListener('change', () => {
-      const newCellSize = parseInt(cellSizeSelect.value);
-      const scale = newCellSize / cellSize;
-      cellSize = newCellSize;
-      createGrid();
+  const columns = Math.floor(containerWidth / cellSize);
+  const rows = Math.floor(containerHeight / cellSize);
 
-      document.querySelectorAll('.token').forEach(token => {
-        const newLeft = parseFloat(token.style.left) * scale;
-        const newTop = parseFloat(token.style.top) * scale;
-        token.style.width = `${cellSize}px`;
-        token.style.height = `${cellSize}px`;
-        token.style.left = `${newLeft}px`;
-        token.style.top = `${newTop}px`;
+  grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
-        const tokenId = Object.entries(db._root._value.tokens || {}).find(([_, t]) => t.src === token.src)?.[0];
-        if (tokenId) {
-          db.ref('tokens/' + tokenId).update({
-            top: newTop,
-            left: newLeft,
-            width: cellSize,
-            height: cellSize
-          });
-        }
+  for (let i = 0; i < columns * rows; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    grid.appendChild(cell);
+  }
+}
+
+cellSizeSelect.addEventListener('change', () => {
+  const newCellSize = parseInt(cellSizeSelect.value);
+  const scale = newCellSize / cellSize;
+  cellSize = newCellSize;
+  createGrid();
+
+  document.querySelectorAll('.token').forEach(token => {
+    const newLeft = parseFloat(token.style.left) * scale;
+    const newTop = parseFloat(token.style.top) * scale;
+    token.style.width = `${cellSize}px`;
+    token.style.height = `${cellSize}px`;
+    token.style.left = `${newLeft}px`;
+    token.style.top = `${newTop}px`;
+
+    const tokenId = Object.entries(db._root._value.tokens || {}).find(([_, t]) => t.src === token.src)?.[0];
+    if (tokenId) {
+      db.ref('tokens/' + tokenId).update({
+        top: newTop,
+        left: newLeft,
+        width: cellSize,
+        height: cellSize
       });
-    });
+    }
+  });
+});
 
-    createGrid();
+createGrid();
 
-    const upload = document.getElementById('upload');
-    const db = firebase.database();
+const upload = document.getElementById('upload');
+const db = firebase.database();
 
-    upload.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+upload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const id = Date.now();
-        const tokenData = {
-          id,
-          src: event.target.result,
-          top: 0,
-          left: 0,
-          width: cellSize,
-          height: cellSize
-        };
-        db.ref('tokens/' + id).set(tokenData);
-      };
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const id = Date.now();
+    const tokenData = {
+      id,
+      src: event.target.result,
+      top: 0,
+      left: 0,
+      width: cellSize,
+      height: cellSize
+    };
+    db.ref('tokens/' + id).set(tokenData);
+  };
 
-      reader.readAsDataURL(file);
-      e.target.value = "";
-    });
+  reader.readAsDataURL(file);
+  e.target.value = "";
+});
+
 
     db.ref('tokens').on('value', (snapshot) => {
       const tokens = snapshot.val();
