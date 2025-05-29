@@ -3,90 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tvoje máma idk</title>
+  <title>DnD Battle Grid</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      color: #fff;
+      font-family: sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+      margin: 0;
+      padding: 1rem;
+      background-color: #2e2e2e;
+      color: white;
     }
 
-    .container {
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 600px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(10, 50px);
+      grid-template-rows: repeat(10, 50px);
+      gap: 1px;
+      background-color: #333;
+      border: 2px solid #555;
+      position: relative;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+    .cell {
+      width: 50px;
+      height: 50px;
+      background-color: #444;
+      border: 1px solid #666;
+      position: relative;
     }
 
-    p.description {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      line-height: 1.6;
+    .token {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      cursor: grab;
     }
 
-    a.download-button {
-      display: inline-block;
-      padding: 14px 28px;
-      background-color: #00bfff;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-    }
-
-    a.download-button:hover {
-      background-color: #009acd;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      p.description {
-        font-size: 1rem;
-      }
-
-      a.download-button {
-        padding: 12px 24px;
-        font-size: 0.95rem;
-      }
+    input[type="file"] {
+      margin: 1rem 0;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Color matters</h1>
-    <p class="description">
-      Vítej! Toto je jednoduchá hra vytvořená v Pythonu pomocí knihovny Pyglet.
-      <br><br>
-      Klikni na tlačítko níže a stáhni si ji jako ZIP soubor. Po rozbalení můžeš spustit hlavní `.py` nebo `.exe` soubor.
-    </p>
-    <a href="webpy.zip" class="download-button" download>📦 Stáhnout hru (.zip)</a>
-  </div>
+  <h1>DnD Fight Grid</h1>
+  <input type="file" id="upload" accept="image/*" />
+  <div id="grid"></div>
+
+  <script>
+    const grid = document.getElementById('grid');
+
+    // Vytvoření mřížky 10x10
+    for (let i = 0; i < 100; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      grid.appendChild(cell);
+    }
+
+    const upload = document.getElementById('upload');
+
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.classList.add('token');
+        img.draggable = true;
+        img.style.top = '0px';
+        img.style.left = '0px';
+
+        let offsetX, offsetY;
+
+        img.addEventListener('dragstart', (e) => {
+          offsetX = e.offsetX;
+          offsetY = e.offsetY;
+        });
+
+        grid.appendChild(img);
+
+        grid.addEventListener('dragover', (e) => e.preventDefault());
+        grid.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const rect = grid.getBoundingClientRect();
+          img.style.left = `${e.clientX - rect.left - offsetX}px`;
+          img.style.top = `${e.clientY - rect.top - offsetY}px`;
+        });
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
 </body>
 </html>
