@@ -18,12 +18,13 @@
 
     #grid {
       display: grid;
-      grid-template-columns: repeat(10, 50px);
-      grid-template-rows: repeat(10, 50px);
+      grid-template-columns: repeat(20, 50px);
+      grid-template-rows: repeat(20, 50px);
       gap: 1px;
       background-color: #333;
       border: 2px solid #555;
       position: relative;
+      width: max-content;
     }
 
     .cell {
@@ -54,8 +55,8 @@
   <script>
     const grid = document.getElementById('grid');
 
-    // Vytvoření mřížky 10x10
-    for (let i = 0; i < 100; i++) {
+    // Vytvoření mřížky 20x20
+    for (let i = 0; i < 400; i++) {
       const cell = document.createElement('div');
       cell.classList.add('cell');
       grid.appendChild(cell);
@@ -85,9 +86,7 @@
 
         grid.appendChild(img);
 
-        grid.addEventListener('dragover', (e) => e.preventDefault());
-        grid.addEventListener('drop', (e) => {
-          e.preventDefault();
+        img.addEventListener('dragend', (e) => {
           const rect = grid.getBoundingClientRect();
           img.style.left = `${e.clientX - rect.left - offsetX}px`;
           img.style.top = `${e.clientY - rect.top - offsetY}px`;
@@ -95,7 +94,12 @@
       };
 
       reader.readAsDataURL(file);
+
+      // Reset input pro další nahrání stejného souboru
+      e.target.value = "";
     });
+
+    grid.addEventListener('dragover', (e) => e.preventDefault());
   </script>
 </body>
 </html>
