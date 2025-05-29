@@ -55,10 +55,34 @@
       position: relative;
     }
 
-    .token {
+    .token-container {
       position: absolute;
-      cursor: grab;
       z-index: 2;
+    }
+
+    .token-container img {
+      cursor: grab;
+      display: block;
+      width: 100%;
+      height: 100%;
+      user-select: none;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 18px;
+      padding: 0;
+      user-select: none;
     }
 
     input[type="file"], select {
@@ -108,8 +132,10 @@
     const grid = document.getElementById('grid');
     const cellSizeSelect = document.getElementById('cellSizeSelect');
     const containerSize = 1000;
-    let gridSize = 20;
+    const db = firebase.database();
+
     let cellSize = parseInt(cellSizeSelect.value);
+    let gridSize = Math.floor(containerSize / cellSize);
 
     function createGrid() {
       grid.innerHTML = '';
@@ -125,19 +151,40 @@
       }
     }
 
-    cellSizeSelect.addEventListener('change', () => {
-      cellSize = parseInt(cellSizeSelect.value);
-      createGrid();
-      document.querySelectorAll('.token').forEach(token => {
-        token.style.width = `${cellSize}px`;
-        token.style.height = `${cellSize}px`;
+    function updateTokensSize() {
+      document.querySelectorAll('.token-container').forEach(container => {
+        container.style.width = `${cellSize}px`;
+        container.style.height = `${cellSize}px`;
+        const img = container.querySelector('img');
+        if (img) {
+          img.style.width = '100%';
+          img.style.height = '100%';
+        }
       });
+    }
+
+    // Synchronizace velikosti mrizky přes Firebase
+    db.ref('cellSize').on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        const newSize = snapshot.val();
+        if (newSize !== cellSize) {
+          cellSize = newSize;
+          cellSizeSelect.value = newSize;
+          createGrid();
+          updateTokensSize();
+        }
+      }
+    });
+
+    cellSizeSelect.addEventListener('change', () => {
+      const newSize = parseInt(cellSizeSelect.value);
+      db.ref('cellSize').set(newSize); // změna se pošle do Firebase, všichni klienti dostanou update
     });
 
     createGrid();
 
+    // Nahrávání tokenů
     const upload = document.getElementById('upload');
-    const db = firebase.database();
 
     upload.addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -161,19 +208,27 @@
       e.target.value = "";
     });
 
+    // Vykreslení tokenů s mazáním
     db.ref('tokens').on('value', (snapshot) => {
-      const tokens = snapshot.val();
-      document.querySelectorAll('.token').forEach(el => el.remove());
+      const tokens = snapshot.val() || {};
+      // smažeme všechny tokeny z DOM
+      document.querySelectorAll('.token-container').forEach(el => el.remove());
+
       for (let key in tokens) {
         const data = tokens[key];
+
+        // kontejner pro token + křížek
+        const container = document.createElement('div');
+        container.classList.add('token-container');
+        container.style.top = `${data.top}px`;
+        container.style.left = `${data.left}px`;
+        container.style.width = `${cellSize}px`;
+        container.style.height = `${cellSize}px`;
+
+        // obrázek tokenu
         const img = document.createElement('img');
         img.src = data.src;
-        img.classList.add('token');
         img.draggable = true;
-        img.style.top = `${data.top}px`;
-        img.style.left = `${data.left}px`;
-        img.style.width = `${data.width}px`;
-        img.style.height = `${data.height}px`;
 
         let offsetX, offsetY;
 
@@ -189,7 +244,18 @@
           db.ref('tokens/' + data.id).update({ left: newLeft, top: newTop });
         });
 
-        grid.appendChild(img);
+        // tlačítko pro smazání
+        const delBtn = document.createElement('button');
+        delBtn.textContent = '×';
+        delBtn.classList.add('delete-btn');
+        delBtn.title = 'Smazat token';
+        delBtn.addEventListener('click', () => {
+          db.ref('tokens/' + data.id).remove();
+        });
+
+        container.appendChild(img);
+        container.appendChild(delBtn);
+        grid.appendChild(container);
       }
     });
 
