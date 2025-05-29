@@ -24,7 +24,8 @@
 
     #grid-container {
       position: relative;
-      width: max-content;
+      width: 1000px;
+      height: 1000px;
     }
 
     #background {
@@ -32,6 +33,9 @@
       top: 0;
       left: 0;
       z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     #grid {
@@ -39,7 +43,9 @@
       gap: 1px;
       background-color: transparent;
       border: 2px solid #555;
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
       z-index: 1;
     }
 
@@ -67,28 +73,30 @@
     <label>Nahrát pozadí: <input type="file" id="backgroundUpload" accept="image/*" /></label>
     <label>Velikost polí:
       <select id="cellSizeSelect">
-        <option value="30">30px</option>
-        <option value="40">40px</option>
-        <option value="50" selected>50px</option>
-        <option value="60">60px</option>
-        <option value="70">70px</option>
+        <option value="20">20px (50x50)</option>
+        <option value="25">25px (40x40)</option>
+        <option value="33">33px (30x30)</option>
+        <option value="50" selected>50px (20x20)</option>
+        <option value="100">100px (10x10)</option>
       </select>
     </label>
   </div>
 
   <div id="grid-container">
-    <img id="background" width="1000" height="1000" />
+    <img id="background" />
     <div id="grid"></div>
   </div>
 
   <script>
     const grid = document.getElementById('grid');
     const cellSizeSelect = document.getElementById('cellSizeSelect');
+    const containerSize = 1000;
     let gridSize = 20;
     let cellSize = parseInt(cellSizeSelect.value);
 
     function createGrid() {
       grid.innerHTML = '';
+      gridSize = Math.floor(containerSize / cellSize);
       grid.style.gridTemplateColumns = `repeat(${gridSize}, ${cellSize}px)`;
       grid.style.gridTemplateRows = `repeat(${gridSize}, ${cellSize}px)`;
       for (let i = 0; i < gridSize * gridSize; i++) {
