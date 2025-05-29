@@ -35,7 +35,7 @@
       z-index: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: fill;
     }
 
     #grid {
@@ -73,11 +73,11 @@
     <label>Nahrát pozadí: <input type="file" id="backgroundUpload" accept="image/*" /></label>
     <label>Velikost polí:
       <select id="cellSizeSelect">
-        <option value="20">20px (50x50)</option>
         <option value="25">25px (40x40)</option>
         <option value="33">33px (30x30)</option>
         <option value="50" selected>50px (20x20)</option>
         <option value="100">100px (10x10)</option>
+        <option value="200">200px (5x5)</option>
       </select>
     </label>
   </div>
