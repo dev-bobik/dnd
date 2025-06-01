@@ -92,7 +92,6 @@
       top: 0;
       left: 0;
       z-index: 1.5;
-      pointer-events: none;
     }  
 
 
@@ -355,8 +354,19 @@ deleteAllTokensBtn.addEventListener('click', () => {
 
 
 const drawCanvas = document.getElementById('drawLayer');
-drawCanvas.width = gridContainer.clientWidth;
-drawCanvas.height = gridContainer.clientHeight;
+
+function resizeCanvas() {
+  drawCanvas.width = gridContainer.clientWidth;
+  drawCanvas.height = gridContainer.clientHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  createGrid();
+});
+
 
       
 
@@ -373,6 +383,7 @@ toggleDrawBtn.addEventListener('click', () => {
   drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
   toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
 });
+
 
 clearCanvasBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
