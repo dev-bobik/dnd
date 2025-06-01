@@ -45,6 +45,9 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 1rem;
+      <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
+      <button id="toggleDraw">Režim kreslení</button>
+      <button id="clearCanvas">Smazat kresby</button>
     }
 
     #grid-container {
@@ -87,6 +90,14 @@
       cursor: grab;
       z-index: 2;
     }
+    #drawLayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1.5;
+      pointer-events: none;
+    }  
+
 
     input[type="file"], select {
       margin: 0.5rem 0;
@@ -337,6 +348,57 @@ deleteAllTokensBtn.addEventListener('click', () => {
       .catch(console.error);
   }
 });
+
+
+const drawCanvas = document.createElement('canvas');
+drawCanvas.id = 'drawLayer';
+drawCanvas.width = grid.offsetWidth;
+drawCanvas.height = grid.offsetHeight;
+gridContainer.appendChild(drawCanvas);
+
+const ctx = drawCanvas.getContext('2d');
+let drawing = false;
+let drawMode = false;
+
+const drawColorInput = document.getElementById('drawColor');
+const toggleDrawBtn = document.getElementById('toggleDraw');
+const clearCanvasBtn = document.getElementById('clearCanvas');
+
+toggleDrawBtn.addEventListener('click', () => {
+  drawMode = !drawMode;
+  drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
+  toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
+});
+
+clearCanvasBtn.addEventListener('click', () => {
+  ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+});
+
+drawCanvas.addEventListener('mousedown', (e) => {
+  if (!drawMode) return;
+  drawing = true;
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+});
+
+drawCanvas.addEventListener('mousemove', (e) => {
+  if (!drawMode || !drawing) return;
+  ctx.strokeStyle = drawColorInput.value;
+  ctx.lineWidth = 2;
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+});
+
+drawCanvas.addEventListener('mouseup', () => {
+  drawing = false;
+  ctx.closePath();
+});
+
+drawCanvas.addEventListener('mouseleave', () => {
+  drawing = false;
+  ctx.closePath();
+});
+
 
   </script>
 </body>
