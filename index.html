@@ -414,6 +414,13 @@ drawCanvas.addEventListener('mouseleave', () => {
   ctx.closePath();
 });
 
+const ctx = drawCanvas.getContext('2d');
+let drawing = false;
+let drawMode = false;
+const drawColorInput = document.getElementById('drawColor');
+const toggleDrawBtn = document.getElementById('toggleDraw');
+const clearCanvasBtn = document.getElementById('clearCanvas');
+
 
   </script>
 </body>
