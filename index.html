@@ -45,9 +45,6 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 1rem;
-      <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
-      <button id="toggleDraw">Režim kreslení</button>
-      <button id="clearCanvas">Smazat kresby</button>
     }
 
     #grid-container {
@@ -149,6 +146,12 @@
         </select>
       </label>
     </div>
+    <div id="controls">
+      <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
+      <button id="toggleDraw">Režim kreslení</button>
+      <button id="clearCanvas">Smazat kresby</button>
+    </div>
+
     <div id="grid-container">
       <img id="background" />
       <div id="grid"></div>
