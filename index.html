@@ -537,6 +537,7 @@
         </select>
       </label>
       <label>Barva ohraničení: <input type="color" id="tokenBorderColor" value="#8A2BE2"></label>
+      <label><input type="checkbox" id="dmModeToggle"> DM režim</label>
     </div>
     <div id="controls">
       <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
@@ -659,6 +660,16 @@ tokenSizeSelect.addEventListener('change', (e) => {
   // Pouze synchronizuj nastavení do Firebase
   // Neměň existující tokeny - velikost se použije jen pro nové tokeny
   db.ref('settings/tokenSizeMultiplier').set(tokenSizeMultiplier);
+});
+
+// DM Mode
+let isDMMode = false;
+const dmModeToggle = document.getElementById('dmModeToggle');
+dmModeToggle.addEventListener('change', (e) => {
+  isDMMode = e.target.checked;
+  // Každý uživatel má vlastní DM režim lokálně
+  // Není potřeba synchronizovat do Firebase
+  console.log('DM Mode:', isDMMode ? 'Zapnuto' : 'Vypnuto');
 });
 
 // Aspect ratio
