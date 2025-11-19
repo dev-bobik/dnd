@@ -596,9 +596,14 @@ const drawCanvas = document.getElementById('drawLayer');
 const ctx = drawCanvas.getContext('2d');
 
 function resizeCanvas() {
-  const rect = gridContainer.getBoundingClientRect();
+  // Použij rozměry přímo z gridu, ne z containeru
+  const rect = grid.getBoundingClientRect();
   drawCanvas.width = rect.width;
   drawCanvas.height = rect.height;
+  
+  // Nastav také CSS rozměry
+  drawCanvas.style.width = rect.width + 'px';
+  drawCanvas.style.height = rect.height + 'px';
   
   // Překresli všechny tahy po resize
   db.ref('drawing').once('value', (snapshot) => {
@@ -607,11 +612,12 @@ function resizeCanvas() {
   });
 }
 
-resizeCanvas();
+// Resize po vytvoření gridu
+setTimeout(resizeCanvas, 100);
 
 window.addEventListener('resize', () => {
-  resizeCanvas();
   createGrid();
+  setTimeout(resizeCanvas, 100);
 });
 
 let drawing = false;
