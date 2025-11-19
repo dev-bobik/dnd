@@ -403,6 +403,7 @@
         <span id="brushWidthValue">2</span>px
       </label>
       <button id="toggleDraw">Režim kreslení</button>
+      <button id="undoDraw">Zpět (poslední kresba)</button>
       <button id="clearCanvas">Smazat kresby</button>
     </div>
 
@@ -677,14 +678,20 @@ upload.addEventListener('change', (e) => {
       // Kreslení - načítej strokes z databáze
       db.ref('drawing').on('child_added', (snapshot) => {
         const stroke = snapshot.val();
+        const timestamp = snapshot.key;
         if (stroke && stroke.points) {
           drawStroke(stroke);
+          // Přidej timestamp do historie, pokud tam ještě není
+          if (!drawingHistory.includes(timestamp)) {
+            drawingHistory.push(timestamp);
+          }
         }
       });
 
       db.ref('drawing').on('value', (snapshot) => {
         if (!snapshot.val()) {
           ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+          drawingHistory = [];
         }
       });
 
@@ -779,12 +786,14 @@ window.addEventListener('resize', () => {
 let drawing = false;
 let drawMode = false;
 let currentStroke = [];
+let drawingHistory = []; // Pro sledování pořadí kreseb
 
 ctx.lineCap = 'round';
 ctx.lineJoin = 'round';
 
 const drawColorInput = document.getElementById('drawColor');
 const toggleDrawBtn = document.getElementById('toggleDraw');
+const undoDrawBtn = document.getElementById('undoDraw');
 const clearCanvasBtn = document.getElementById('clearCanvas');
 const brushWidthInput = document.getElementById('brushWidth');
 const brushWidthValue = document.getElementById('brushWidthValue');
@@ -803,9 +812,27 @@ toggleDrawBtn.addEventListener('click', () => {
   toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
 });
 
+undoDrawBtn.addEventListener('click', () => {
+  if (drawingHistory.length === 0) return;
+  
+  // Odeber poslední timestamp z historie
+  const lastTimestamp = drawingHistory.pop();
+  
+  // Smaž z Firebase
+  db.ref('drawing/' + lastTimestamp).remove();
+  
+  // Překresli canvas bez poslední kresby
+  ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  db.ref('drawing').once('value', (snapshot) => {
+    const strokes = snapshot.val() || {};
+    Object.values(strokes).forEach(drawStroke);
+  });
+});
+
 clearCanvasBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
   db.ref('drawing').set(null);
+  drawingHistory = [];
 });
 
 function drawStroke(stroke) {
@@ -813,10 +840,22 @@ function drawStroke(stroke) {
   ctx.strokeStyle = stroke.color;
   ctx.lineWidth = stroke.width;
   ctx.beginPath();
+  
+  // Použij quadratic curves pro hladší křivky
   ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-  for (let i = 1; i < stroke.points.length; i++) {
-    ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+  
+  for (let i = 1; i < stroke.points.length - 1; i++) {
+    const xc = (stroke.points[i].x + stroke.points[i + 1].x) / 2;
+    const yc = (stroke.points[i].y + stroke.points[i + 1].y) / 2;
+    ctx.quadraticCurveTo(stroke.points[i].x, stroke.points[i].y, xc, yc);
   }
+  
+  // Posledni bod
+  if (stroke.points.length > 1) {
+    const lastPoint = stroke.points[stroke.points.length - 1];
+    ctx.lineTo(lastPoint.x, lastPoint.y);
+  }
+  
   ctx.stroke();
 }
 
@@ -847,6 +886,7 @@ drawCanvas.addEventListener('mouseup', () => {
   if (currentStroke.points.length > 1) {
     const timestamp = Date.now();
     db.ref('drawing/' + timestamp).set(currentStroke);
+    drawingHistory.push(timestamp);
   }
 });
 
@@ -892,6 +932,7 @@ drawCanvas.addEventListener('touchend', (e) => {
   if (currentStroke.points.length > 1) {
     const timestamp = Date.now();
     db.ref('drawing/' + timestamp).set(currentStroke);
+    drawingHistory.push(timestamp);
   }
 });
 
