@@ -84,6 +84,43 @@
       box-shadow: 0 5px 20px rgba(138, 43, 226, 0.6);
     }
 
+    .category {
+      margin-bottom: 0.5rem;
+    }
+
+    .category-header {
+      color: #8A2BE2;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .category-header:hover {
+      background: rgba(138, 43, 226, 0.2);
+    }
+
+    .category-header span {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      margin-right: 0.5rem;
+    }
+
+    .category-header.open span {
+      transform: rotate(90deg);
+    }
+
+    .category-content {
+      padding-left: 1rem;
+      padding-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
     #main {
       flex: 1;
       display: flex;
@@ -261,8 +298,14 @@
 <body>
   <div id="sidebar">
     <h3>Knihovna</h3>
-    <div style="color: #8A2BE2; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Characters</div>
-    <img src="https://i.redd.it/axxsavk41ot21.jpg" class="library-token" draggable="true">
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Characters
+      </div>
+      <div class="category-content" style="display: none;">
+        <img src="https://i.redd.it/axxsavk41ot21.jpg" class="library-token" draggable="true">
+      </div>
+    </div>
      <button id="deleteAllTokensBtn" style="margin-top: auto; background:#b33; color:#fff; border:none; padding:0.5rem; border-radius:4px; cursor:pointer;">
   Smazat všechny tokeny
 </button>
@@ -760,6 +803,19 @@ drawCanvas.addEventListener('touchend', (e) => {
     db.ref('drawing/' + timestamp).set(currentStroke);
   }
 });
+
+function toggleCategory(header) {
+  const content = header.nextElementSibling;
+  const isOpen = content.style.display === 'flex';
+  
+  if (isOpen) {
+    content.style.display = 'none';
+    header.classList.remove('open');
+  } else {
+    content.style.display = 'flex';
+    header.classList.add('open');
+  }
+}
 
   </script>
 </body>
