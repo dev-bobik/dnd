@@ -877,7 +877,22 @@ drawCanvas.addEventListener('mousemove', (e) => {
   const y = e.clientY - rect.top;
   currentStroke.points.push({ x, y });
   
-  drawStroke(currentStroke);
+  // Vykresluj průběžně během tahu
+  ctx.strokeStyle = currentStroke.color;
+  ctx.lineWidth = currentStroke.width;
+  
+  if (currentStroke.points.length === 2) {
+    ctx.beginPath();
+    ctx.moveTo(currentStroke.points[0].x, currentStroke.points[0].y);
+  }
+  
+  if (currentStroke.points.length > 1) {
+    const prevPoint = currentStroke.points[currentStroke.points.length - 2];
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  }
 });
 
 drawCanvas.addEventListener('mouseup', () => {
@@ -922,7 +937,23 @@ drawCanvas.addEventListener('touchmove', (e) => {
   e.preventDefault();
   const pos = getTouchPos(e);
   currentStroke.points.push(pos);
-  drawStroke(currentStroke);
+  
+  // Vykresluj průběžně během tahu
+  ctx.strokeStyle = currentStroke.color;
+  ctx.lineWidth = currentStroke.width;
+  
+  if (currentStroke.points.length === 2) {
+    ctx.beginPath();
+    ctx.moveTo(currentStroke.points[0].x, currentStroke.points[0].y);
+  }
+  
+  if (currentStroke.points.length > 1) {
+    const prevPoint = currentStroke.points[currentStroke.points.length - 2];
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  }
 });
 
 drawCanvas.addEventListener('touchend', (e) => {
