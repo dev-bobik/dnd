@@ -390,6 +390,89 @@
       margin: 0.5rem 0;
     }
 
+    .critical-success {
+      animation: criticalSuccess 1s ease-out infinite;
+    }
+
+    @keyframes criticalSuccess {
+      0%, 100% { 
+        filter: drop-shadow(0 0 20px gold) drop-shadow(0 0 40px gold);
+      }
+      25% { 
+        filter: drop-shadow(0 0 40px gold) drop-shadow(0 0 60px gold);
+        transform: scale(1.15) rotate(5deg);
+      }
+      50% { 
+        filter: drop-shadow(0 0 60px gold) drop-shadow(0 0 80px gold);
+        transform: scale(1.25) rotate(-5deg);
+      }
+      75% { 
+        filter: drop-shadow(0 0 40px gold) drop-shadow(0 0 60px gold);
+        transform: scale(1.15) rotate(3deg);
+      }
+    }
+
+    .critical-fail {
+      animation: criticalFail 0.6s ease-out;
+    }
+
+    @keyframes criticalFail {
+      0%, 100% { 
+        filter: drop-shadow(0 0 15px red) brightness(1);
+        transform: translateX(0) rotate(0deg);
+      }
+      10% { transform: translateX(-15px) rotate(-8deg); }
+      20% { transform: translateX(15px) rotate(8deg); }
+      30% { transform: translateX(-12px) rotate(-6deg); }
+      40% { transform: translateX(12px) rotate(6deg); }
+      50% { 
+        filter: drop-shadow(0 0 30px red) brightness(0.7);
+        transform: translateX(-8px) rotate(-4deg);
+      }
+      60% { transform: translateX(8px) rotate(4deg); }
+      70% { transform: translateX(-4px) rotate(-2deg); }
+      80% { transform: translateX(4px) rotate(2deg); }
+    }
+
+    .high-roll {
+      animation: highRoll 0.8s ease-out;
+    }
+
+    @keyframes highRoll {
+      0%, 100% { filter: drop-shadow(0 0 15px lime); }
+      50% { filter: drop-shadow(0 0 30px lime); transform: scale(1.15); }
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: sparkle 1s ease-out forwards;
+    }
+
+    @keyframes sparkle {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(var(--tx), var(--ty)) scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(0);
+      }
+    }
+
     #contextMenu {
       position: fixed;
       background: rgba(20, 20, 20, 0.95);
@@ -1432,25 +1515,69 @@ db.ref('diceRolls').limitToLast(1).on('child_added', (snapshot) => {
 function displayDiceRoll(rollData) {
   diceResults.innerHTML = '';
   
-  // Animace kostky
-  const diceIcon = document.createElement('div');
-  diceIcon.className = 'dice-animation';
-  diceIcon.textContent = '🎲';
+  // Container pro kostky
+  const diceContainer = document.createElement('div');
+  diceContainer.className = 'dice-container';
   
-  if (rollData.criticalSuccess) {
-    diceIcon.classList.add('critical-success');
-  } else if (rollData.criticalFail) {
-    diceIcon.classList.add('critical-fail');
-  } else if (rollData.highRoll) {
-    diceIcon.classList.add('high-roll');
-  }
+  // Vytvoř animované kostky s čísly
+  rollData.rolls.forEach((roll, index) => {
+    setTimeout(() => {
+      const dieWrapper = document.createElement('div');
+      dieWrapper.style.position = 'relative';
+      dieWrapper.style.display = 'inline-block';
+      
+      const die = document.createElement('div');
+      die.className = 'single-die';
+      // Použij různé emoji podle typu kostky pro vizuální rozmanitost
+      const diceEmojis = {
+        d4: '▲',
+        d6: '🎲',
+        d8: '🔸',
+        d10: '🔹',
+        d12: '⬢',
+        d20: '⬣',
+        d100: '🎯'
+      };
+      die.textContent = diceEmojis[roll.type] || '🎲';
+      die.style.animationDelay = `${index * 0.1}s`;
+      
+      // Aplikuj speciální efekty
+      if (roll.value === roll.max && roll.max === 20) {
+        die.classList.add('critical-success');
+        createSparkles(dieWrapper, 'gold');
+      } else if (roll.value === 1 && roll.max === 20) {
+        die.classList.add('critical-fail');
+      } else if (roll.value >= roll.max * 0.8 && roll.max >= 10) {
+        die.classList.add('high-roll');
+      }
+      
+      // Číslo na kostce
+      const valueSpan = document.createElement('div');
+      valueSpan.className = 'die-value';
+      valueSpan.textContent = roll.value;
+      valueSpan.style.animationDelay = `${index * 0.1 + 1.2}s`;
+      
+      if (roll.value === roll.max && roll.max === 20) {
+        valueSpan.style.color = 'gold';
+        valueSpan.style.textShadow = '0 0 20px gold, 2px 2px 0 rgba(0,0,0,0.5)';
+      } else if (roll.value === 1 && roll.max === 20) {
+        valueSpan.style.color = '#ff4444';
+        valueSpan.style.textShadow = '0 0 20px red, 2px 2px 0 rgba(0,0,0,0.5)';
+      } else if (roll.value >= roll.max * 0.8) {
+        valueSpan.style.color = '#44ff44';
+        valueSpan.style.textShadow = '0 0 15px lime, 2px 2px 0 rgba(0,0,0,0.5)';
+      }
+      
+      dieWrapper.appendChild(die);
+      dieWrapper.appendChild(valueSpan);
+      diceContainer.appendChild(dieWrapper);
+    }, index * 150);
+  });
   
-  diceResults.appendChild(diceIcon);
+  diceResults.appendChild(diceContainer);
   
-  // Po animaci zobraz výsledek
+  // Po animaci všech kostek zobraz celkový výsledek
   setTimeout(() => {
-    diceResults.innerHTML = '';
-    
     // Celkový výsledek
     const totalDiv = document.createElement('div');
     totalDiv.className = 'result-total';
@@ -1458,13 +1585,16 @@ function displayDiceRoll(rollData) {
     
     if (rollData.criticalSuccess) {
       totalDiv.style.color = 'gold';
-      totalDiv.style.textShadow = '0 0 30px gold';
+      totalDiv.style.textShadow = '0 0 40px gold, 0 0 20px gold';
+      totalDiv.style.animation = 'criticalSuccess 1s ease-out';
     } else if (rollData.criticalFail) {
-      totalDiv.style.color = 'red';
-      totalDiv.style.textShadow = '0 0 30px red';
+      totalDiv.style.color = '#ff4444';
+      totalDiv.style.textShadow = '0 0 40px red, 0 0 20px red';
+      totalDiv.style.animation = 'criticalFail 0.6s ease-out';
     } else if (rollData.highRoll) {
-      totalDiv.style.color = 'lime';
-      totalDiv.style.textShadow = '0 0 20px lime';
+      totalDiv.style.color = '#44ff44';
+      totalDiv.style.textShadow = '0 0 30px lime, 0 0 15px lime';
+      totalDiv.style.animation = 'highRoll 0.8s ease-out';
     }
     
     diceResults.appendChild(totalDiv);
@@ -1489,20 +1619,57 @@ function displayDiceRoll(rollData) {
       const critText = document.createElement('div');
       critText.style.color = 'gold';
       critText.style.fontWeight = 'bold';
+      critText.style.fontSize = '1.3rem';
       critText.style.marginTop = '0.5rem';
-      critText.textContent = '✨ CRITICAL SUCCESS! ✨';
+      critText.style.textShadow = '0 0 20px gold';
+      critText.style.animation = 'resultAppear 0.5s ease-out';
+      critText.textContent = '✨✨✨ CRITICAL SUCCESS! ✨✨✨';
       diceResults.appendChild(critText);
     } else if (rollData.criticalFail) {
       const failText = document.createElement('div');
-      failText.style.color = 'red';
+      failText.style.color = '#ff4444';
       failText.style.fontWeight = 'bold';
+      failText.style.fontSize = '1.3rem';
       failText.style.marginTop = '0.5rem';
-      failText.textContent = '💥 CRITICAL FAIL! 💥';
+      failText.style.textShadow = '0 0 20px red';
+      failText.style.animation = 'resultAppear 0.5s ease-out';
+      failText.textContent = '💥💥 CRITICAL FAIL! 💥💥';
       diceResults.appendChild(failText);
     }
     
     diceResults.appendChild(detailsDiv);
-  }, 600);
+  }, rollData.rolls.length * 150 + 1500);
+}
+
+function createSparkles(container, color) {
+  const sparklesDiv = document.createElement('div');
+  sparklesDiv.className = 'sparkles';
+  
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.textContent = '✨';
+      
+      const angle = (i / 8) * Math.PI * 2;
+      const distance = 60;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+      
+      sparkle.style.setProperty('--tx', tx + 'px');
+      sparkle.style.setProperty('--ty', ty + 'px');
+      sparkle.style.left = '50%';
+      sparkle.style.top = '50%';
+      sparkle.style.color = color;
+      
+      sparklesDiv.appendChild(sparkle);
+      
+      setTimeout(() => sparkle.remove(), 1000);
+    }, i * 50);
+  }
+  
+  container.appendChild(sparklesDiv);
+  setTimeout(() => sparklesDiv.remove(), 1500);
 }
 
 // Context menu
