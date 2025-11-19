@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D&D Online Platform</title>
+  <title>D&D Online - Hraj s kámošema</title>
   <style>
     * {
       margin: 0;
@@ -12,42 +12,20 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0f0a1a 100%);
-      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Navigation */
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10, 10, 15, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+      background: #111;
       padding: 1rem 2rem;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      border-bottom: 3px solid #8A2BE2;
     }
 
     .nav-container {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -55,13 +33,9 @@
     }
 
     .logo {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      background: linear-gradient(135deg, #8A2BE2, #DA70D6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      cursor: pointer;
+      color: #8A2BE2;
     }
 
     .nav-links {
@@ -71,30 +45,12 @@
     }
 
     .nav-links a {
-      color: #e0e0e0;
+      color: #ddd;
       text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #8A2BE2, #DA70D6);
-      transition: width 0.3s ease;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
     }
 
     .nav-links a:hover {
-      color: #DA70D6;
+      color: #8A2BE2;
     }
 
     .nav-auth {
@@ -103,201 +59,177 @@
     }
 
     .btn {
-      padding: 0.6rem 1.5rem;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      padding: 0.5rem 1.2rem;
+      border-radius: 5px;
       text-decoration: none;
       display: inline-block;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #8A2BE2, #6A1BB2);
+      background: #8A2BE2;
       color: white;
-      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6);
+      background: #9A3BF2;
     }
 
     .btn-secondary {
       background: transparent;
-      color: #DA70D6;
+      color: #8A2BE2;
       border: 2px solid #8A2BE2;
     }
 
     .btn-secondary:hover {
-      background: rgba(138, 43, 226, 0.2);
+      background: #8A2BE2;
+      color: white;
     }
 
-    /* Hero Section */
     .hero {
-      position: relative;
-      margin-top: 80px;
-      padding: 6rem 2rem;
+      padding: 4rem 2rem;
       text-align: center;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .hero h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff, #DA70D6, #8A2BE2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5)); }
-      50% { filter: drop-shadow(0 0 40px rgba(218, 112, 214, 0.8)); }
+      color: #fff;
     }
 
     .hero p {
-      font-size: 1.4rem;
-      color: #b0b0b0;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 2rem;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
       justify-content: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
 
     .hero .btn {
-      font-size: 1.1rem;
-      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
     }
 
-    /* Features Grid */
     .features {
-      max-width: 1400px;
-      margin: 4rem auto;
+      max-width: 1200px;
+      margin: 3rem auto;
       padding: 0 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
 
     .feature-card {
-      background: rgba(20, 20, 30, 0.6);
-      border: 2px solid rgba(138, 43, 226, 0.3);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+      background: #222;
+      border: 2px solid #333;
+      border-radius: 8px;
+      padding: 1.5rem;
     }
 
     .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(138, 43, 226, 0.6);
-      box-shadow: 0 10px 40px rgba(138, 43, 226, 0.3);
+      border-color: #8A2BE2;
     }
 
     .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
 
     .feature-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #DA70D6;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #8A2BE2;
     }
 
     .feature-card p {
-      color: #b0b0b0;
-      line-height: 1.6;
+      color: #bbb;
+      line-height: 1.5;
+      font-size: 0.95rem;
     }
 
-    /* Stats Section */
     .stats {
-      max-width: 1200px;
-      margin: 6rem auto;
-      padding: 3rem 2rem;
-      background: rgba(138, 43, 226, 0.1);
-      border-radius: 16px;
-      border: 2px solid rgba(138, 43, 226, 0.3);
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #222;
+      border: 2px solid #8A2BE2;
+      border-radius: 8px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 2rem;
       text-align: center;
     }
 
     .stat-item h2 {
-      font-size: 3rem;
-      color: #DA70D6;
-      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+      color: #8A2BE2;
+      margin-bottom: 0.3rem;
     }
 
     .stat-item p {
-      color: #b0b0b0;
-      font-size: 1.1rem;
+      color: #bbb;
+      font-size: 1rem;
     }
 
-    /* CTA Section */
     .cta {
-      max-width: 800px;
-      margin: 6rem auto;
-      padding: 4rem 2rem;
+      max-width: 700px;
+      margin: 4rem auto;
+      padding: 3rem 2rem;
       text-align: center;
-      background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2));
-      border-radius: 16px;
-      border: 2px solid rgba(138, 43, 226, 0.4);
+      background: #222;
+      border: 2px solid #8A2BE2;
+      border-radius: 8px;
     }
 
     .cta h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
       color: #fff;
     }
 
     .cta p {
-      font-size: 1.2rem;
-      color: #b0b0b0;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 1.5rem;
     }
 
-    /* Footer */
     footer {
-      margin-top: 6rem;
+      margin-top: 4rem;
       padding: 2rem;
       text-align: center;
-      border-top: 2px solid rgba(138, 43, 226, 0.3);
-      background: rgba(10, 10, 15, 0.8);
+      border-top: 2px solid #333;
+      background: #111;
     }
 
     footer p {
-      color: #808080;
+      color: #666;
+      font-size: 0.9rem;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
       }
 
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
       .hero p {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
       .hero-buttons {
         flex-direction: column;
-        align-items: center;
       }
 
       .features {
@@ -324,122 +256,91 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
-    <h1>Tvá D&D Dobrodružství Online</h1>
-    <p>Kompletní platforma pro hraní Dungeons & Dragons s přáteli. Vytvářej postavy, spravuj kampaně a užívej si epická dobrodružství.</p>
+    <h1>🎲 D&D Online</h1>
+    <p>Hraj D&D s kámoši přes internet. Všechno co potřebuješ na jednom místě.</p>
     <div class="hero-buttons">
-      <a href="#" class="btn btn-primary">Začít Hrát Zdarma</a>
-      <a href="#features" class="btn btn-secondary">Zjistit Více</a>
+      <a href="#" class="btn btn-primary">Zaregistrovat se</a>
+      <a href="#features" class="btn btn-secondary">Co to umí</a>
     </div>
   </section>
 
-  <!-- Stats -->
   <section class="stats">
     <div class="stat-item">
       <h2>∞</h2>
-      <p>Kampaní k vytvoření</p>
+      <p>Kampaní</p>
     </div>
     <div class="stat-item">
       <h2>∞</h2>
-      <p>Postav k hraní</p>
+      <p>Postav</p>
     </div>
     <div class="stat-item">
-      <h2>100%</h2>
-      <p>Zdarma</p>
+      <h2>0 Kč</h2>
+      <p>Cena</p>
     </div>
     <div class="stat-item">
       <h2>24/7</h2>
-      <p>Dostupnost</p>
+      <p>Online</p>
     </div>
   </section>
 
-  <!-- Features -->
   <section class="features" id="features">
     <div class="feature-card">
       <div class="feature-icon">📜</div>
       <h3>Character Sheets</h3>
-      <p>Vytvárej a spravuj své postavy s intuitivními character sheety. Sleduj statistiky, vybavení, schopnosti a historii postavy.</p>
+      <p>Vytvoř si postavu, ulož statistiky, vybavení a level. Všechno se ukládá automaticky.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-icon">🗺️</div>
       <h3>Battle Grid</h3>
-      <p>Interaktivní bojová mřížka s podporou tokenů, vlastních pozadí a real-time synchronizací pro všechny hráče.</p>
+      <p>Bojová mřížka kde můžeš přetahovat figurky. DM nahraje mapu a všichni vidí co se děje.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-icon">🎲</div>
-      <h3>Dice Roller</h3>
-      <p>Pokročilý házeč kostek s podporou všech typů kostek, automatickým sčítáním a sdílením výsledků napříč sessionem.</p>
+      <h3>Hod kostkou</h3>
+      <p>Hoď d20, d6 nebo čímkoliv jiným. Všichni ve hře vidí výsledek.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-icon">👥</div>
-      <h3>Správa Kampaní</h3>
-      <p>Vytvárej kampaně, pozvi hráče, sdílej poznámky a sleduj postup příběhu. DM má plnou kontrolu nad sessionem.</p>
+      <h3>Kampaně</h3>
+      <p>Založíš kampaň, přidáš lidi a hrajete. DM má přístup ke všemu, hráči jen ke svým postavám.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-icon">💬</div>
-      <h3>Komunikace v Reálném Čase</h3>
-      <p>Všechny změny se synchronizují okamžitě. Vidíš hody kostek, pohyby tokenů a akce ostatních hráčů v reálném čase.</p>
+      <h3>Real-time</h3>
+      <p>Všechno se sync uje hned. Pohneš figurkou, hodíš kostkou - ostatní to vidí okamžitě.</p>
     </div>
 
     <div class="feature-card">
       <div class="feature-icon">🎨</div>
-      <h3>Kreslení na Mapě</h3>
-      <p>Kresli na bojovou mapu, plánuj strategie, ukazuj pohyby a komunikuj vizuálně s týmem.</p>
+      <h3>Kreslení</h3>
+      <p>Namaluj na mapu kam jdeš, kde je past nebo cokoliv jinýho. Funguje jak whiteboard.</p>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta">
-    <h2>Připraven na Dobrodružství?</h2>
-    <p>Zaregistruj se zdarma a začni hrát s přáteli ještě dnes!</p>
-    <a href="#" class="btn btn-primary">Vytvořit Účet</a>
+    <h2>Začni hrát</h2>
+    <p>Registrace zabere 30 vteřin, pak rovnou můžeš založit kampaň nebo se připojit k existující.</p>
+    <a href="#" class="btn btn-primary">Registrace</a>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 D&D Online Platform. Vytvořeno pro komunitu hráčů.</p>
+    <p>D&D Online 2025</p>
   </footer>
 
   <script>
-    // Smooth scrolling pro odkazy
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
-    });
-
-    // Animace při scrollování
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.feature-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(30px)';
-      card.style.transition = 'all 0.6s ease';
-      observer.observe(card);
     });
   </script>
 </body>
