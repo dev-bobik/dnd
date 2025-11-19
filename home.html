@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D&D Online - Hraj s kámošema</title>
+  <title>D&D Online - Platforma pro online hraní</title>
   <style>
     * {
       margin: 0;
@@ -12,20 +12,35 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: #fff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f14;
+      color: #e8e8e8;
       min-height: 100vh;
     }
 
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(138, 43, 226, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
     nav {
-      background: #111;
-      padding: 1rem 2rem;
-      border-bottom: 3px solid #8A2BE2;
+      position: sticky;
+      top: 0;
+      background: rgba(15, 15, 20, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+      z-index: 100;
     }
 
     .nav-container {
-      max-width: 1200px;
+      max-width: 1300px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -33,20 +48,30 @@
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #8A2BE2;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: '🎲';
+      font-size: 1.8rem;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
-      color: #ddd;
+      color: #c0c0c0;
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
     }
 
     .nav-links a:hover {
@@ -59,13 +84,15 @@
     }
 
     .btn {
-      padding: 0.5rem 1.2rem;
-      border-radius: 5px;
+      padding: 0.65rem 1.5rem;
+      border-radius: 6px;
       text-decoration: none;
       display: inline-block;
       cursor: pointer;
       border: none;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.2s;
     }
 
     .btn-primary {
@@ -75,144 +102,160 @@
 
     .btn-primary:hover {
       background: #9A3BF2;
+      transform: translateY(-1px);
     }
 
     .btn-secondary {
       background: transparent;
       color: #8A2BE2;
-      border: 2px solid #8A2BE2;
+      border: 1.5px solid #8A2BE2;
     }
 
     .btn-secondary:hover {
-      background: #8A2BE2;
-      color: white;
+      background: rgba(138, 43, 226, 0.1);
     }
 
     .hero {
-      padding: 4rem 2rem;
+      padding: 5rem 2rem 4rem;
       text-align: center;
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
+      position: relative;
     }
 
     .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 3.5rem;
+      margin-bottom: 1.2rem;
       color: #fff;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hero h1 .highlight {
+      color: #8A2BE2;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 2rem;
+      font-size: 1.25rem;
+      color: #b0b0b0;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       justify-content: center;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
     }
 
     .hero .btn {
-      font-size: 1rem;
-      padding: 0.8rem 2rem;
+      font-size: 1.05rem;
+      padding: 0.9rem 2.2rem;
     }
 
     .features {
-      max-width: 1200px;
-      margin: 3rem auto;
+      max-width: 1300px;
+      margin: 4rem auto;
       padding: 0 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
     }
 
     .feature-card {
-      background: #222;
-      border: 2px solid #333;
-      border-radius: 8px;
-      padding: 1.5rem;
+      background: rgba(25, 25, 35, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
     }
 
     .feature-card:hover {
-      border-color: #8A2BE2;
+      border-color: rgba(138, 43, 226, 0.5);
+      background: rgba(30, 30, 40, 0.8);
+      transform: translateY(-3px);
     }
 
     .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      display: block;
     }
 
     .feature-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: #8A2BE2;
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: #fff;
+      font-weight: 600;
     }
 
     .feature-card p {
-      color: #bbb;
-      line-height: 1.5;
-      font-size: 0.95rem;
+      color: #a8a8a8;
+      line-height: 1.6;
+      font-size: 0.98rem;
     }
 
     .stats {
-      max-width: 1000px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: #222;
-      border: 2px solid #8A2BE2;
-      border-radius: 8px;
+      max-width: 1100px;
+      margin: 5rem auto 4rem;
+      padding: 3rem 2rem;
+      background: rgba(138, 43, 226, 0.05);
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      border-radius: 12px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2.5rem;
       text-align: center;
     }
 
     .stat-item h2 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       color: #8A2BE2;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
     }
 
     .stat-item p {
-      color: #bbb;
-      font-size: 1rem;
+      color: #b0b0b0;
+      font-size: 1.05rem;
     }
 
     .cta {
-      max-width: 700px;
-      margin: 4rem auto;
-      padding: 3rem 2rem;
+      max-width: 750px;
+      margin: 5rem auto;
+      padding: 3.5rem 2rem;
       text-align: center;
-      background: #222;
-      border: 2px solid #8A2BE2;
-      border-radius: 8px;
+      background: rgba(25, 25, 35, 0.6);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      border-radius: 12px;
     }
 
     .cta h2 {
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
       color: #fff;
+      font-weight: 700;
     }
 
     .cta p {
-      font-size: 1.1rem;
-      color: #aaa;
-      margin-bottom: 1.5rem;
+      font-size: 1.15rem;
+      color: #b0b0b0;
+      margin-bottom: 2rem;
+      line-height: 1.6;
     }
 
     footer {
-      margin-top: 4rem;
-      padding: 2rem;
+      margin-top: 5rem;
+      padding: 2.5rem;
       text-align: center;
-      border-top: 2px solid #333;
-      background: #111;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 10, 15, 0.8);
     }
 
     footer p {
-      color: #666;
-      font-size: 0.9rem;
+      color: #707070;
+      font-size: 0.95rem;
     }
 
     @media (max-width: 768px) {
@@ -257,79 +300,79 @@
   </nav>
 
   <section class="hero">
-    <h1>🎲 D&D Online</h1>
-    <p>Hraj D&D s kámoši přes internet. Všechno co potřebuješ na jednom místě.</p>
+    <h1>D&D Online <span class="highlight">Platforma</span></h1>
+    <p>Kompletní nástroje pro hraní Dungeons & Dragons online. Character sheety, battle grid, dice roller a správa kampaní na jednom místě.</p>
     <div class="hero-buttons">
-      <a href="#" class="btn btn-primary">Zaregistrovat se</a>
-      <a href="#features" class="btn btn-secondary">Co to umí</a>
+      <a href="#" class="btn btn-primary">Začít hrát zdarma</a>
+      <a href="#features" class="btn btn-secondary">Prozkoumat funkce</a>
     </div>
   </section>
 
   <section class="stats">
     <div class="stat-item">
       <h2>∞</h2>
-      <p>Kampaní</p>
+      <p>Neomezené kampaně</p>
     </div>
     <div class="stat-item">
       <h2>∞</h2>
-      <p>Postav</p>
+      <p>Neomezené postavy</p>
     </div>
     <div class="stat-item">
-      <h2>0 Kč</h2>
-      <p>Cena</p>
+      <h2>Zdarma</h2>
+      <p>Vždy</p>
     </div>
     <div class="stat-item">
       <h2>24/7</h2>
-      <p>Online</p>
+      <p>Dostupnost</p>
     </div>
   </section>
 
   <section class="features" id="features">
     <div class="feature-card">
-      <div class="feature-icon">📜</div>
-      <h3>Character Sheets</h3>
-      <p>Vytvoř si postavu, ulož statistiky, vybavení a level. Všechno se ukládá automaticky.</p>
+      <span class="feature-icon">📜</span>
+      <h3>Character Sheety</h3>
+      <p>Vytváření a správa postav s automatickým ukládáním. Sleduj statistiky, vybavení, levely a celou historii své postavy.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">🗺️</div>
-      <h3>Battle Grid</h3>
-      <p>Bojová mřížka kde můžeš přetahovat figurky. DM nahraje mapu a všichni vidí co se děje.</p>
+      <span class="feature-icon">🗺️</span>
+      <h3>Bojová Mřížka</h3>
+      <p>Interaktivní battle grid s podporou vlastních map a tokenů. Přetahuj figurky, nahraj pozadí a všichni hráči vidí změny v reálném čase.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">🎲</div>
-      <h3>Hod kostkou</h3>
-      <p>Hoď d20, d6 nebo čímkoliv jiným. Všichni ve hře vidí výsledek.</p>
+      <span class="feature-icon">🎲</span>
+      <h3>Dice Roller</h3>
+      <p>Pokročilé házení kostkami se sdílením výsledků. Podpora všech typů kostek včetně automatických kritických hodů.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">👥</div>
-      <h3>Kampaně</h3>
-      <p>Založíš kampaň, přidáš lidi a hrajete. DM má přístup ke všemu, hráči jen ke svým postavám.</p>
+      <span class="feature-icon">👥</span>
+      <h3>Správa Kampaní</h3>
+      <p>Vytvoř kampaň, pozvi hráče a začni hrát. DM má plnou kontrolu, hráči vidí jen to, co mají.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <h3>Real-time</h3>
-      <p>Všechno se sync uje hned. Pohneš figurkou, hodíš kostkou - ostatní to vidí okamžitě.</p>
+      <span class="feature-icon">⚡</span>
+      <h3>Real-time Synchronizace</h3>
+      <p>Všechny akce se synchronizují okamžitě napříč všemi zařízeními. Žádné refreshování, žádné čekání.</p>
     </div>
 
     <div class="feature-card">
-      <div class="feature-icon">🎨</div>
-      <h3>Kreslení</h3>
-      <p>Namaluj na mapu kam jdeš, kde je past nebo cokoliv jinýho. Funguje jak whiteboard.</p>
+      <span class="feature-icon">🎨</span>
+      <h3>Kreslení na Mapu</h3>
+      <p>Kresli přímo na bojovou mapu, ukazuj strategie, označuj past a komunikuj vizuálně s týmem.</p>
     </div>
   </section>
 
   <section class="cta">
-    <h2>Začni hrát</h2>
-    <p>Registrace zabere 30 vteřin, pak rovnou můžeš založit kampaň nebo se připojit k existující.</p>
-    <a href="#" class="btn btn-primary">Registrace</a>
+    <h2>Připraveni začít?</h2>
+    <p>Vytvoř si účet zdarma a během minuty můžeš založit svou první kampaň nebo se připojit k existující.</p>
+    <a href="#" class="btn btn-primary">Vytvořit účet zdarma</a>
   </section>
 
   <footer>
-    <p>D&D Online 2025</p>
+    <p>&copy; 2025 D&D Online Platform</p>
   </footer>
 
   <script>
