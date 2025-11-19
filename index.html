@@ -330,10 +330,13 @@ function createGrid() {
   const aspectRatioStr = gridContainer.style.aspectRatio || '1 / 1';
   const [width, height] = aspectRatioStr.split('/').map(s => parseFloat(s.trim()));
   
-  // Počet políček je podle poměru stran a velikosti buněk
-  const baseSize = cellSize;
-  const columns = Math.round(width * baseSize / 20); // 20 je base multiplier
-  const rows = Math.round(height * baseSize / 20);
+  const containerWidth = gridContainer.clientWidth;
+  const containerHeight = gridContainer.clientHeight;
+  
+  // Počet políček podle poměru stran - cellSize určuje, kolik se jich vejde
+  // Spočítej tak, aby čtverce měly přibližně velikost cellSize
+  const columns = Math.round(containerWidth / cellSize);
+  const rows = Math.round(columns * (height / width)); // Zachovej poměr stran
 
   // Čtvercové buňky
   grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
