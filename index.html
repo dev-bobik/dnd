@@ -447,17 +447,16 @@
     .dice-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      padding: 1.5rem;
-      margin-top: 1rem;
+      gap: 0.5rem;
+      justify-content: flex-start;
+      align-items: center;
     }
 
     .die-result {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.2rem;
       animation: dieAppear 0.3s ease-out;
     }
 
@@ -467,18 +466,18 @@
     }
 
     .die-visual {
-      width: 70px;
-      height: 70px;
+      width: 45px;
+      height: 45px;
       background: white;
-      border: 3px solid #333;
-      border-radius: 10px;
+      border: 2px solid #333;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #333;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 0 20px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 0 15px rgba(0,0,0,0.05);
       position: relative;
     }
 
@@ -516,17 +515,21 @@
     }
 
     .die-label {
-      font-size: 0.8rem;
-      color: #aaa;
+      font-size: 0.65rem;
+      color: #888;
       font-weight: 500;
     }
 
     .result-total {
-      margin-top: 1rem;
-      font-size: 2.5rem;
+      margin-left: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 1.8rem;
       font-weight: bold;
       color: #fff;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: rgba(138, 43, 226, 0.2);
+      border-radius: 8px;
+      border: 2px solid rgba(138, 43, 226, 0.4);
     }
 
     .result-total.critical-success {
@@ -545,14 +548,14 @@
     }
 
     .result-details {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      color: #bbb;
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      color: #888;
     }
 
     .result-message {
-      margin-top: 1rem;
-      font-size: 1.2rem;
+      margin-left: 0.5rem;
+      font-size: 0.9rem;
       font-weight: bold;
       animation: messageAppear 0.5s ease-out;
     }
@@ -632,27 +635,37 @@
       margin: 0.5rem 0;
     }
 
+    /* Dice Roller Container */
+    #diceRoller {
+      background: rgba(20, 20, 20, 0.6);
+      border: 2px solid rgba(138, 43, 226, 0.4);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
     /* Dice Selector Styles */
     .dice-selection {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .dice-select-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(138, 43, 226, 0.3);
-      border-radius: 12px;
-      padding: 1rem 0.5rem;
+      border-radius: 8px;
+      padding: 0.4rem;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.2rem;
       position: relative;
+      min-width: 60px;
     }
 
     .dice-select-btn:hover {
@@ -668,15 +681,15 @@
     }
 
     .dice-icon {
-      width: 50px;
-      height: 50px;
+      width: 35px;
+      height: 35px;
       background: white;
       border: 2px solid #333;
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #333;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -717,24 +730,24 @@
     }
 
     .dice-name {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       color: #aaa;
       font-weight: 500;
     }
 
     .dice-count {
       position: absolute;
-      top: -8px;
-      right: -8px;
+      top: -6px;
+      right: -6px;
       background: #8A2BE2;
       color: white;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: bold;
       opacity: 0;
       transition: opacity 0.2s;
@@ -816,9 +829,12 @@
      <button id="deleteAllTokensBtn" style="margin-top: auto;">
   Smazat všechny tokeny
 </button>
-
+  </div>
+  <div id="main">
+    <h1>DnD Fight Grid</h1>
+    
     <div id="diceRoller">
-      <h3>🎲 Kostky</h3>
+      <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem;">🎲 Kostky</h3>
       <div class="dice-selection">
         <button class="dice-select-btn" data-dice="4" data-sides="4">
           <div class="dice-icon d4">4</div>
@@ -856,12 +872,12 @@
           <div class="dice-count" id="count-d100">0</div>
         </button>
       </div>
-      <button id="rollDiceBtn">🎲 Hodit kostkami</button>
-      <div id="diceResults"></div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <button id="rollDiceBtn" style="flex: 1;">🎲 Hodit kostkami</button>
+        <div id="diceResults" style="flex: 2; min-height: 40px;"></div>
+      </div>
     </div>
-  </div>
-  <div id="main">
-    <h1>DnD Fight Grid</h1>
+    
     <div id="controls">
       <label>Nahrát tokeny: <input type="file" id="upload" accept="image/*" /></label>
       <label>Nahrát pozadí: <input type="file" id="backgroundUpload" accept="image/*" /></label>
