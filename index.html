@@ -389,6 +389,68 @@
     input[type="file"], select {
       margin: 0.5rem 0;
     }
+
+    #contextMenu {
+      position: fixed;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(138, 43, 226, 0.5);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+      min-width: 180px;
+    }
+
+    #contextMenu.visible {
+      display: block;
+    }
+
+    .context-menu-item {
+      padding: 0.6rem 1rem;
+      color: #e0e0e0;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .context-menu-item:hover {
+      background: rgba(138, 43, 226, 0.3);
+      color: white;
+    }
+
+    .context-menu-separator {
+      height: 1px;
+      background: rgba(138, 43, 226, 0.3);
+      margin: 0.5rem 0;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 30px);
+      gap: 6px;
+      padding: 0.5rem;
+    }
+
+    .color-option {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .color-option:hover {
+      transform: scale(1.15);
+      border-color: white;
+      box-shadow: 0 0 10px currentColor;
+    }
   </style>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -514,6 +576,28 @@
       <canvas id="drawLayer"></canvas>
       <div id="grid"></div>
       <div id="tokens-container"></div>
+    </div>
+
+    <div id="contextMenu">
+      <div class="context-menu-item" id="menuResize">📏 Změnit velikost</div>
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" style="font-weight: 600; color: #8A2BE2; pointer-events: none;">Barva ohraničení:</div>
+      <div class="color-grid">
+        <div class="color-option" style="background: #8A2BE2;" data-color="#8A2BE2"></div>
+        <div class="color-option" style="background: #FF1744;" data-color="#FF1744"></div>
+        <div class="color-option" style="background: #00E676;" data-color="#00E676"></div>
+        <div class="color-option" style="background: #FFEA00;" data-color="#FFEA00"></div>
+        <div class="color-option" style="background: #00B0FF;" data-color="#00B0FF"></div>
+        <div class="color-option" style="background: #FF6E40;" data-color="#FF6E40"></div>
+        <div class="color-option" style="background: #E040FB;" data-color="#E040FB"></div>
+        <div class="color-option" style="background: #76FF03;" data-color="#76FF03"></div>
+        <div class="color-option" style="background: #FFFFFF;" data-color="#FFFFFF"></div>
+        <div class="color-option" style="background: #9E9E9E;" data-color="#9E9E9E"></div>
+        <div class="color-option" style="background: #000000; border-color: #666;" data-color="#000000"></div>
+        <div class="color-option" style="background: #795548;" data-color="#795548"></div>
+      </div>
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" id="menuDelete" style="color: #FF1744;">🗑️ Smazat</div>
     </div>
   </div>
     <script>
@@ -738,6 +822,11 @@ upload.addEventListener('change', (e) => {
 
           img.addEventListener('mouseleave', () => {
             db.ref('tokens/' + data.id + '/hovered').set(false);
+          });
+
+          img.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, data.id);
           });
 
           img.addEventListener('dragstart', (e) => {
@@ -1110,6 +1199,78 @@ function toggleCategory(header) {
     header.classList.add('open');
   }
 }
+
+// Context menu
+const contextMenu = document.getElementById('contextMenu');
+let contextMenuTokenId = null;
+
+function showContextMenu(x, y, tokenId) {
+  contextMenuTokenId = tokenId;
+  contextMenu.style.left = x + 'px';
+  contextMenu.style.top = y + 'px';
+  contextMenu.classList.add('visible');
+}
+
+function hideContextMenu() {
+  contextMenu.classList.remove('visible');
+  contextMenuTokenId = null;
+}
+
+// Zavři context menu při kliknutí mimo
+document.addEventListener('click', (e) => {
+  if (!contextMenu.contains(e.target)) {
+    hideContextMenu();
+  }
+});
+
+// Delete token
+document.getElementById('menuDelete').addEventListener('click', () => {
+  if (contextMenuTokenId) {
+    db.ref('tokens/' + contextMenuTokenId).remove();
+    hideContextMenu();
+  }
+});
+
+// Resize token
+document.getElementById('menuResize').addEventListener('click', () => {
+  if (contextMenuTokenId) {
+    const sizes = ['0.5', '1', '1.5', '2', '3'];
+    const sizeLabels = ['Malý (0.5x)', 'Normální (1x)', 'Větší (1.5x)', 'Velký (2x)', 'Obrovský (3x)'];
+    
+    db.ref('tokens/' + contextMenuTokenId).once('value', (snapshot) => {
+      const token = snapshot.val();
+      if (!token) return;
+      
+      const currentSize = token.width / cellSize;
+      const currentIndex = sizes.findIndex(s => Math.abs(parseFloat(s) - currentSize) < 0.1);
+      const nextIndex = (currentIndex + 1) % sizes.length;
+      const newMultiplier = parseFloat(sizes[nextIndex]);
+      
+      const newWidth = cellSize * newMultiplier;
+      const newHeight = cellSize * newMultiplier;
+      
+      db.ref('tokens/' + contextMenuTokenId).update({
+        width: newWidth,
+        height: newHeight
+      });
+    });
+    
+    hideContextMenu();
+  }
+});
+
+// Color options
+document.querySelectorAll('.color-option').forEach(option => {
+  option.addEventListener('click', () => {
+    if (contextMenuTokenId) {
+      const color = option.getAttribute('data-color');
+      db.ref('tokens/' + contextMenuTokenId).update({
+        borderColor: color
+      });
+      hideContextMenu();
+    }
+  });
+});
 
   </script>
 </body>
