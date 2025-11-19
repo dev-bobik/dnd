@@ -1030,6 +1030,25 @@ upload.addEventListener('change', (e) => {
         }
       });
 
+      // Firebase sync fog
+      db.ref('fog').on('child_added', (snapshot) => {
+        const stroke = snapshot.val();
+        const timestamp = snapshot.key;
+        if (stroke && stroke.points) {
+          drawFogStroke(stroke);
+          if (!fogHistory.includes(timestamp)) {
+            fogHistory.push(timestamp);
+          }
+        }
+      });
+
+      db.ref('fog').on('value', (snapshot) => {
+        if (!snapshot.val()) {
+          fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
+          fogHistory = [];
+        }
+      });
+
       // Biblioteka tokeny
       document.querySelectorAll('.library-token').forEach(token => {
         token.addEventListener('dragstart', (e) => {
@@ -1468,25 +1487,6 @@ clearFogBtn.addEventListener('click', () => {
   fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
   db.ref('fog').set(null);
   fogHistory = [];
-});
-
-// Firebase sync fog
-db.ref('fog').on('child_added', (snapshot) => {
-  const stroke = snapshot.val();
-  const timestamp = snapshot.key;
-  if (stroke && stroke.points) {
-    drawFogStroke(stroke);
-    if (!fogHistory.includes(timestamp)) {
-      fogHistory.push(timestamp);
-    }
-  }
-});
-
-db.ref('fog').on('value', (snapshot) => {
-  if (!snapshot.val()) {
-    fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-    fogHistory = [];
-  }
 });
 
 // Context menu
