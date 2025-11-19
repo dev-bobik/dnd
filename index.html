@@ -486,52 +486,58 @@
     }
 
     .die-visual.d4 { 
-      background: linear-gradient(145deg, #ff8a8a 0%, #ff6b6b 100%);
+      background: linear-gradient(145deg, #d32f2f 0%, #b71c1c 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #ff5252;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      clip-path: polygon(50% 15%, 85% 85%, 15% 85%);
+      padding-top: 8px;
     }
     
     .die-visual.d6 { 
-      background: linear-gradient(145deg, #6dd5ed 0%, #2193b0 100%);
+      background: linear-gradient(145deg, #0288d1 0%, #01579b 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #1a7a91;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
     }
     
     .die-visual.d8 { 
-      background: linear-gradient(145deg, #a8edea 0%, #7dd3c0 100%);
+      background: linear-gradient(145deg, #00897b 0%, #004d40 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #6bc4b0;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      clip-path: polygon(50% 5%, 85% 35%, 85% 65%, 50% 95%, 15% 65%, 15% 35%);
     }
     
     .die-visual.d10 { 
-      background: linear-gradient(145deg, #ffa07a 0%, #ff8c69 100%);
+      background: linear-gradient(145deg, #f57c00 0%, #e65100 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #ff7a59;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      clip-path: polygon(30% 10%, 70% 10%, 90% 50%, 70% 90%, 30% 90%, 10% 50%);
     }
     
     .die-visual.d12 { 
-      background: linear-gradient(145deg, #c3aed6 0%, #8e7cc3 100%);
+      background: linear-gradient(145deg, #7b1fa2 0%, #4a148c 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #7d6bb3;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      clip-path: polygon(50% 0%, 80% 15%, 95% 40%, 95% 60%, 80% 85%, 50% 100%, 20% 85%, 5% 60%, 5% 40%, 20% 15%);
     }
     
     .die-visual.d20 { 
-      background: linear-gradient(145deg, #fda085 0%, #f6d365 100%);
+      background: linear-gradient(145deg, #c62828 0%, #b71c1c 100%);
       color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #f5c855;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      clip-path: polygon(50% 0%, 65% 8%, 80% 20%, 90% 35%, 97% 50%, 90% 65%, 80% 80%, 65% 92%, 50% 100%, 35% 92%, 20% 80%, 10% 65%, 3% 50%, 10% 35%, 20% 20%, 35% 8%);
     }
     
     .die-visual.d100 { 
-      background: linear-gradient(145deg, #ffeaa7 0%, #fdcb6e 100%);
-      color: #2c3e50;
-      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
-      border-color: #f4bb51;
+      background: linear-gradient(145deg, #fbc02d 0%, #f57f17 100%);
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: 2px solid #f9a825;
       border-radius: 50%;
     }
 
@@ -740,73 +746,62 @@
       border-color: rgba(138, 43, 226, 0.8);
     }
 
-    .dice-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
-      border: 1px solid #d0d0d0;
-      border-radius: 7px;
-      display: flex;
+    /* Dice styles inspired by rolladie.net */
+    .dice {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       font-weight: bold;
-      color: #2c3e50;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15), 
-                  0 1px 3px rgba(0,0,0,0.1),
-                  inset 0 1px 2px rgba(255,255,255,0.8),
-                  inset 0 -1px 2px rgba(0,0,0,0.05);
-      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
     }
 
-    .dice-icon.d4 { 
-      background: linear-gradient(145deg, #ff8a8a 0%, #ff6b6b 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #ff5252;
+    .dice span {
+      font-size: 1.3rem;
+      z-index: 1;
     }
-    
-    .dice-icon.d6 { 
-      background: linear-gradient(145deg, #6dd5ed 0%, #2193b0 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #1a7a91;
+
+    .dice.d4 {
+      background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+      clip-path: polygon(50% 10%, 90% 90%, 10% 90%);
     }
-    
-    .dice-icon.d8 { 
-      background: linear-gradient(145deg, #a8edea 0%, #7dd3c0 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #6bc4b0;
+
+    .dice.d6 {
+      background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
     }
-    
-    .dice-icon.d10 { 
-      background: linear-gradient(145deg, #ffa07a 0%, #ff8c69 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #ff7a59;
+
+    .dice.d8 {
+      background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
     }
-    
-    .dice-icon.d12 { 
-      background: linear-gradient(145deg, #c3aed6 0%, #8e7cc3 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #7d6bb3;
+
+    .dice.d10 {
+      background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
+      clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
     }
-    
-    .dice-icon.d20 { 
-      background: linear-gradient(145deg, #fda085 0%, #f6d365 100%);
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      border-color: #f5c855;
+
+    .dice.d12 {
+      background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+      clip-path: polygon(50% 0%, 75% 5%, 95% 25%, 100% 50%, 95% 75%, 75% 95%, 50% 100%, 25% 95%, 5% 75%, 0% 50%, 5% 25%, 25% 5%);
     }
-    
-    .dice-icon.d100 { 
-      background: linear-gradient(145deg, #ffeaa7 0%, #fdcb6e 100%);
-      color: #2c3e50;
-      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
-      border-color: #f4bb51;
+
+    .dice.d20 {
+      background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+      clip-path: polygon(50% 0%, 61% 5%, 73% 12%, 83% 22%, 91% 34%, 96% 47%, 98% 60%, 96% 73%, 91% 84%, 83% 92%, 73% 97%, 61% 100%, 50% 100%, 39% 100%, 27% 97%, 17% 92%, 9% 84%, 4% 73%, 2% 60%, 4% 47%, 9% 34%, 17% 22%, 27% 12%, 39% 5%);
+    }
+
+    .dice.d100 {
+      background: linear-gradient(135deg, #fbc02d 0%, #f57f17 100%);
       border-radius: 50%;
+    }
+
+    .dice.d100 span {
+      font-size: 0.9rem;
     }
 
     .dice-name {
@@ -974,37 +969,37 @@
       <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem;">🎲 Kostky</h3>
       <div class="dice-selection">
         <button class="dice-select-btn" data-dice="4" data-sides="4">
-          <div class="dice-icon d4">4</div>
+          <span class="dice d4 _4"><span>4</span></span>
           <div class="dice-name">d4</div>
           <div class="dice-count" id="count-d4">0</div>
         </button>
         <button class="dice-select-btn" data-dice="6" data-sides="6">
-          <div class="dice-icon d6">6</div>
+          <span class="dice d6 _6"><span>6</span></span>
           <div class="dice-name">d6</div>
           <div class="dice-count" id="count-d6">0</div>
         </button>
         <button class="dice-select-btn" data-dice="8" data-sides="8">
-          <div class="dice-icon d8">8</div>
+          <span class="dice d8 _8"><span>8</span></span>
           <div class="dice-name">d8</div>
           <div class="dice-count" id="count-d8">0</div>
         </button>
         <button class="dice-select-btn" data-dice="10" data-sides="10">
-          <div class="dice-icon d10">10</div>
+          <span class="dice d10 _10"><span>10</span></span>
           <div class="dice-name">d10</div>
           <div class="dice-count" id="count-d10">0</div>
         </button>
         <button class="dice-select-btn" data-dice="12" data-sides="12">
-          <div class="dice-icon d12">12</div>
+          <span class="dice d12 _12"><span>12</span></span>
           <div class="dice-name">d12</div>
           <div class="dice-count" id="count-d12">0</div>
         </button>
         <button class="dice-select-btn" data-dice="20" data-sides="20">
-          <div class="dice-icon d20">20</div>
+          <span class="dice d20 _20"><span>20</span></span>
           <div class="dice-name">d20</div>
           <div class="dice-count" id="count-d20">0</div>
         </button>
         <button class="dice-select-btn" data-dice="100" data-sides="100">
-          <div class="dice-icon d100">100</div>
+          <span class="dice d100 _100"><span>100</span></span>
           <div class="dice-name">d100</div>
           <div class="dice-count" id="count-d100">0</div>
         </button>
