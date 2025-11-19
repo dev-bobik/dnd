@@ -548,6 +548,9 @@
         <input type="range" id="brushWidth" min="1" max="50" value="2" step="1">
         <span id="brushWidthValue">2</span>px
       </label>
+      <label id="gmOnlyDrawLabel" style="display: none; background: rgba(255, 68, 68, 0.2); padding: 0.6rem 1rem; border-radius: 10px; border: 2px solid rgba(255, 68, 68, 0.5);">
+        <input type="checkbox" id="gmOnlyDrawToggle"> Kreslit jen pro DM
+      </label>
       <button id="toggleDraw">Režim kreslení</button>
       <button id="undoDraw">Zpět (poslední kresba)</button>
       <button id="clearCanvas">Smazat kresby</button>
@@ -692,12 +695,16 @@ dmModeToggle.addEventListener('change', (e) => {
 
 function updateDMControls() {
   const gmOnlyLabel = document.getElementById('gmOnlyLabel');
+  const gmOnlyDrawLabel = document.getElementById('gmOnlyDrawLabel');
   if (isDMMode) {
     gmOnlyLabel.style.display = 'flex';
+    gmOnlyDrawLabel.style.display = 'flex';
   } else {
     gmOnlyLabel.style.display = 'none';
+    gmOnlyDrawLabel.style.display = 'none';
     // Vypni GM-only režim při vypnutí DM módu
     document.getElementById('gmOnlyToggle').checked = false;
+    document.getElementById('gmOnlyDrawToggle').checked = false;
   }
 }
 
@@ -965,6 +972,10 @@ upload.addEventListener('change', (e) => {
         const stroke = snapshot.val();
         const timestamp = snapshot.key;
         if (stroke && stroke.points) {
+          // Skryj GM-only kresby pro hráče (ne-DM)
+          if (stroke.gmOnly && !isDMMode) {
+            return;
+          }
           drawStroke(stroke);
           // Přidej timestamp do historie, pokud tam ještě není
           if (!drawingHistory.includes(timestamp)) {
@@ -977,6 +988,16 @@ upload.addEventListener('change', (e) => {
         if (!snapshot.val()) {
           ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
           drawingHistory = [];
+        } else {
+          // Překresli vše s respektováním GM-only filtru
+          ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+          const strokes = snapshot.val() || {};
+          Object.entries(strokes).forEach(([timestamp, stroke]) => {
+            if (stroke.gmOnly && !isDMMode) {
+              return;
+            }
+            drawStroke(stroke);
+          });
         }
       });
 
@@ -1059,7 +1080,12 @@ function resizeCanvas() {
   // Překresli všechny tahy po resize
   db.ref('drawing').once('value', (snapshot) => {
     const strokes = snapshot.val() || {};
-    Object.values(strokes).forEach(drawStroke);
+    Object.entries(strokes).forEach(([timestamp, stroke]) => {
+      if (stroke.gmOnly && !isDMMode) {
+        return;
+      }
+      drawStroke(stroke);
+    });
   });
 }
 
@@ -1113,7 +1139,12 @@ undoDrawBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
   db.ref('drawing').once('value', (snapshot) => {
     const strokes = snapshot.val() || {};
-    Object.values(strokes).forEach(drawStroke);
+    Object.entries(strokes).forEach(([timestamp, stroke]) => {
+      if (stroke.gmOnly && !isDMMode) {
+        return;
+      }
+      drawStroke(stroke);
+    });
   });
 });
 
@@ -1161,6 +1192,8 @@ drawCanvas.addEventListener('mouseup', () => {
   drawing = false;
   if (currentStroke.points.length > 1) {
     const timestamp = Date.now();
+    const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
+    currentStroke.gmOnly = gmOnlyDrawChecked;
     db.ref('drawing/' + timestamp).set(currentStroke);
     drawingHistory.push(timestamp);
   }
@@ -1207,6 +1240,8 @@ drawCanvas.addEventListener('touchend', (e) => {
   drawing = false;
   if (currentStroke.points.length > 1) {
     const timestamp = Date.now();
+    const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
+    currentStroke.gmOnly = gmOnlyDrawChecked;
     db.ref('drawing/' + timestamp).set(currentStroke);
     drawingHistory.push(timestamp);
   }
