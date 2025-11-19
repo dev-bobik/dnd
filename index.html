@@ -282,6 +282,10 @@
       z-index: 3; /* nad tokeny */
       touch-action: none; /* zabrání implicitním posunům při kreslení na dotykových zařízeních */
       pointer-events: none; /* defaultně zakázat klikání, zapneme v draw módu */
+    }
+    
+    #drawLayer.active {
+      pointer-events: auto;
     }  
 
 
@@ -804,11 +808,21 @@ brushWidthInput.addEventListener('input', (e) => {
 
 toggleDrawBtn.addEventListener('click', () => {
   drawMode = !drawMode;
-  drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
-  tokensContainer.style.pointerEvents = drawMode ? 'none' : 'auto';
-  document.querySelectorAll('.token').forEach(t => {
-    t.style.pointerEvents = drawMode ? 'none' : 'auto';
-  });
+  
+  if (drawMode) {
+    drawCanvas.classList.add('active');
+    tokensContainer.style.pointerEvents = 'none';
+    document.querySelectorAll('.token').forEach(t => {
+      t.style.pointerEvents = 'none';
+    });
+  } else {
+    drawCanvas.classList.remove('active');
+    tokensContainer.style.pointerEvents = 'auto';
+    document.querySelectorAll('.token').forEach(t => {
+      t.style.pointerEvents = 'auto';
+    });
+  }
+  
   toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
 });
 
