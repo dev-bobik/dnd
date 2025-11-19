@@ -327,9 +327,11 @@ function createGrid() {
   const containerWidth = gridContainer.clientWidth;
   const containerHeight = gridContainer.clientHeight;
 
+  // Počet sloupců a řádků podle velikosti buněk
   const columns = Math.floor(containerWidth / cellSize);
   const rows = Math.floor(containerHeight / cellSize);
 
+  // Čtvercové buňky s fixní velikostí
   grid.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
   grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
 
@@ -462,6 +464,45 @@ upload.addEventListener('change', (e) => {
         const reader = new FileReader();
         reader.onload = function (event) {
           const imageUrl = event.target.result;
+          const img = new Image();
+          img.onload = function() {
+            // Automaticky nastav poměr stran podle obrázku
+            const aspectRatio = img.width / img.height;
+            gridContainer.style.aspectRatio = `${img.width} / ${img.height}`;
+            
+            // Aktualizuj select s poměrem stran
+            const aspectRatioSelect = document.getElementById('aspectRatioSelect');
+            let matchFound = false;
+            
+            // Zkontroluj, jestli odpovídá nějakému preset poměru
+            const presets = {
+              '1/1': 1,
+              '16/9': 16/9,
+              '4/3': 4/3,
+              '3/2': 3/2,
+              '2/1': 2
+            };
+            
+            for (let [key, value] of Object.entries(presets)) {
+              if (Math.abs(aspectRatio - value) < 0.1) {
+                aspectRatioSelect.value = key;
+                matchFound = true;
+                break;
+              }
+            }
+            
+            if (!matchFound) {
+              // Přidej custom option
+              const customOption = document.createElement('option');
+              customOption.value = `${img.width}/${img.height}`;
+              customOption.text = `Vlastní (${img.width}:${img.height})`;
+              customOption.selected = true;
+              aspectRatioSelect.appendChild(customOption);
+            }
+            
+            createGrid();
+          };
+          img.src = imageUrl;
           background.src = imageUrl;
           db.ref('background').set(imageUrl);
         };
