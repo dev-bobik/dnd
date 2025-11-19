@@ -466,47 +466,107 @@
     }
 
     .die-visual {
-      width: 45px;
-      height: 45px;
-      background: white;
-      border: 2px solid #333;
-      border-radius: 6px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: bold;
-      color: #333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 0 15px rgba(0,0,0,0.05);
+      color: #2c3e50;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15), 
+                  0 2px 4px rgba(0,0,0,0.1),
+                  inset 0 1px 2px rgba(255,255,255,0.8),
+                  inset 0 -2px 4px rgba(0,0,0,0.05);
       position: relative;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
     }
 
-    .die-visual.d4 { border-color: #ff6b6b; clip-path: polygon(50% 10%, 90% 90%, 10% 90%); }
-    .die-visual.d6 { border-color: #4ecdc4; }
-    .die-visual.d8 { border-color: #95e1d3; clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%); }
-    .die-visual.d10 { border-color: #f38181; clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%); }
-    .die-visual.d12 { border-color: #aa96da; clip-path: polygon(50% 0%, 90% 20%, 100% 50%, 90% 80%, 50% 100%, 10% 80%, 0% 50%, 10% 20%); }
-    .die-visual.d20 { border-color: #fcbad3; clip-path: polygon(50% 5%, 75% 15%, 95% 35%, 100% 60%, 85% 85%, 60% 95%, 40% 95%, 15% 85%, 0% 60%, 5% 35%, 25% 15%); }
-    .die-visual.d100 { border-color: #ffffd2; border-radius: 50%; }
+    .die-visual.d4 { 
+      background: linear-gradient(145deg, #ff8a8a 0%, #ff6b6b 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #ff5252;
+    }
+    
+    .die-visual.d6 { 
+      background: linear-gradient(145deg, #6dd5ed 0%, #2193b0 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #1a7a91;
+    }
+    
+    .die-visual.d8 { 
+      background: linear-gradient(145deg, #a8edea 0%, #7dd3c0 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #6bc4b0;
+    }
+    
+    .die-visual.d10 { 
+      background: linear-gradient(145deg, #ffa07a 0%, #ff8c69 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #ff7a59;
+    }
+    
+    .die-visual.d12 { 
+      background: linear-gradient(145deg, #c3aed6 0%, #8e7cc3 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #7d6bb3;
+    }
+    
+    .die-visual.d20 { 
+      background: linear-gradient(145deg, #fda085 0%, #f6d365 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #f5c855;
+    }
+    
+    .die-visual.d100 { 
+      background: linear-gradient(145deg, #ffeaa7 0%, #fdcb6e 100%);
+      color: #2c3e50;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+      border-color: #f4bb51;
+      border-radius: 50%;
+    }
 
     .die-visual.critical-success {
-      background: linear-gradient(135deg, #ffd700, #ffed4e);
-      border-color: gold;
-      box-shadow: 0 0 20px gold, 0 4px 8px rgba(0,0,0,0.2);
+      background: linear-gradient(145deg, #ffd700 0%, #ffed4e 50%, #ffa500 100%);
+      border-color: #ffb900;
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(255,255,255,0.6),
+                  inset 0 -2px 4px rgba(0,0,0,0.1);
       animation: dieAppear 0.3s ease-out, pulse 1s ease-in-out infinite;
     }
 
     .die-visual.critical-fail {
-      background: linear-gradient(135deg, #ff4444, #cc0000);
+      background: linear-gradient(145deg, #ff4444 0%, #cc0000 50%, #990000 100%);
       border-color: #8b0000;
       color: white;
-      box-shadow: 0 0 20px red, 0 4px 8px rgba(0,0,0,0.2);
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(255,100,100,0.4),
+                  inset 0 -2px 4px rgba(0,0,0,0.2);
     }
 
     .die-visual.high-roll {
-      background: linear-gradient(135deg, #44ff44, #00cc00);
-      border-color: #006600;
-      box-shadow: 0 0 15px lime, 0 4px 8px rgba(0,0,0,0.2);
+      background: linear-gradient(145deg, #44ff44 0%, #00cc00 50%, #009900 100%);
+      border-color: #008800;
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(100,255,100,0.5),
+                  inset 0 -2px 4px rgba(0,0,0,0.1);
     }
 
     @keyframes pulse {
@@ -681,52 +741,72 @@
     }
 
     .dice-icon {
-      width: 35px;
-      height: 35px;
-      background: white;
-      border: 2px solid #333;
-      border-radius: 6px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+      border: 1px solid #d0d0d0;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      color: #333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      color: #2c3e50;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15), 
+                  0 1px 3px rgba(0,0,0,0.1),
+                  inset 0 1px 2px rgba(255,255,255,0.8),
+                  inset 0 -1px 2px rgba(0,0,0,0.05);
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
     }
 
     .dice-icon.d4 { 
-      border-color: #ff6b6b; 
-      clip-path: polygon(50% 10%, 90% 90%, 10% 90%); 
+      background: linear-gradient(145deg, #ff8a8a 0%, #ff6b6b 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #ff5252;
     }
     
     .dice-icon.d6 { 
-      border-color: #4ecdc4; 
+      background: linear-gradient(145deg, #6dd5ed 0%, #2193b0 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #1a7a91;
     }
     
     .dice-icon.d8 { 
-      border-color: #95e1d3; 
-      clip-path: polygon(50% 0%, 100% 30%, 100% 70%, 50% 100%, 0% 70%, 0% 30%); 
+      background: linear-gradient(145deg, #a8edea 0%, #7dd3c0 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #6bc4b0;
     }
     
     .dice-icon.d10 { 
-      border-color: #f38181; 
-      clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%); 
+      background: linear-gradient(145deg, #ffa07a 0%, #ff8c69 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #ff7a59;
     }
     
     .dice-icon.d12 { 
-      border-color: #aa96da; 
-      clip-path: polygon(50% 0%, 90% 20%, 100% 50%, 90% 80%, 50% 100%, 10% 80%, 0% 50%, 10% 20%); 
+      background: linear-gradient(145deg, #c3aed6 0%, #8e7cc3 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #7d6bb3;
     }
     
     .dice-icon.d20 { 
-      border-color: #fcbad3; 
-      clip-path: polygon(50% 5%, 75% 15%, 95% 35%, 100% 60%, 85% 85%, 60% 95%, 40% 95%, 15% 85%, 0% 60%, 5% 35%, 25% 15%); 
+      background: linear-gradient(145deg, #fda085 0%, #f6d365 100%);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      border-color: #f5c855;
     }
     
     .dice-icon.d100 { 
-      border-color: #ffffd2; 
-      border-radius: 50%; 
+      background: linear-gradient(145deg, #ffeaa7 0%, #fdcb6e 100%);
+      color: #2c3e50;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+      border-color: #f4bb51;
+      border-radius: 50%;
     }
 
     .dice-name {
