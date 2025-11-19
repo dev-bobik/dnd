@@ -282,10 +282,6 @@
       z-index: 3; /* nad tokeny */
       touch-action: none; /* zabrání implicitním posunům při kreslení na dotykových zařízeních */
       pointer-events: none; /* defaultně zakázat klikání, zapneme v draw módu */
-    }
-    
-    #drawLayer.active {
-      pointer-events: auto;
     }  
 
 
@@ -808,21 +804,11 @@ brushWidthInput.addEventListener('input', (e) => {
 
 toggleDrawBtn.addEventListener('click', () => {
   drawMode = !drawMode;
-  
-  if (drawMode) {
-    drawCanvas.classList.add('active');
-    tokensContainer.style.pointerEvents = 'none';
-    document.querySelectorAll('.token').forEach(t => {
-      t.style.pointerEvents = 'none';
-    });
-  } else {
-    drawCanvas.classList.remove('active');
-    tokensContainer.style.pointerEvents = 'auto';
-    document.querySelectorAll('.token').forEach(t => {
-      t.style.pointerEvents = 'auto';
-    });
-  }
-  
+  drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
+  tokensContainer.style.pointerEvents = drawMode ? 'none' : 'auto';
+  document.querySelectorAll('.token').forEach(t => {
+    t.style.pointerEvents = drawMode ? 'none' : 'auto';
+  });
   toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
 });
 
@@ -854,22 +840,10 @@ function drawStroke(stroke) {
   ctx.strokeStyle = stroke.color;
   ctx.lineWidth = stroke.width;
   ctx.beginPath();
-  
-  // Použij quadratic curves pro hladší křivky
   ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-  
-  for (let i = 1; i < stroke.points.length - 1; i++) {
-    const xc = (stroke.points[i].x + stroke.points[i + 1].x) / 2;
-    const yc = (stroke.points[i].y + stroke.points[i + 1].y) / 2;
-    ctx.quadraticCurveTo(stroke.points[i].x, stroke.points[i].y, xc, yc);
+  for (let i = 1; i < stroke.points.length; i++) {
+    ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
   }
-  
-  // Posledni bod
-  if (stroke.points.length > 1) {
-    const lastPoint = stroke.points[stroke.points.length - 1];
-    ctx.lineTo(lastPoint.x, lastPoint.y);
-  }
-  
   ctx.stroke();
 }
 
@@ -891,22 +865,7 @@ drawCanvas.addEventListener('mousemove', (e) => {
   const y = e.clientY - rect.top;
   currentStroke.points.push({ x, y });
   
-  // Vykresluj průběžně během tahu
-  ctx.strokeStyle = currentStroke.color;
-  ctx.lineWidth = currentStroke.width;
-  
-  if (currentStroke.points.length === 2) {
-    ctx.beginPath();
-    ctx.moveTo(currentStroke.points[0].x, currentStroke.points[0].y);
-  }
-  
-  if (currentStroke.points.length > 1) {
-    const prevPoint = currentStroke.points[currentStroke.points.length - 2];
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-  }
+  drawStroke(currentStroke);
 });
 
 drawCanvas.addEventListener('mouseup', () => {
@@ -951,23 +910,7 @@ drawCanvas.addEventListener('touchmove', (e) => {
   e.preventDefault();
   const pos = getTouchPos(e);
   currentStroke.points.push(pos);
-  
-  // Vykresluj průběžně během tahu
-  ctx.strokeStyle = currentStroke.color;
-  ctx.lineWidth = currentStroke.width;
-  
-  if (currentStroke.points.length === 2) {
-    ctx.beginPath();
-    ctx.moveTo(currentStroke.points[0].x, currentStroke.points[0].y);
-  }
-  
-  if (currentStroke.points.length > 1) {
-    const prevPoint = currentStroke.points[currentStroke.points.length - 2];
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-  }
+  drawStroke(currentStroke);
 });
 
 drawCanvas.addEventListener('touchend', (e) => {
