@@ -566,7 +566,7 @@
       <button id="undoDraw">Zpět (poslední kresba)</button>
       <button id="clearCanvas">Smazat kresby</button>
     </div>
-    <div id="controls" id="fogControls" style="display: none;">
+    <div id="controls" style="display: none;">
       <label>Šířka štětce mlhy: 
         <input type="range" id="fogBrushWidth" min="10" max="150" value="50" step="5">
         <span id="fogBrushWidthValue">50</span>px
@@ -718,20 +718,20 @@ dmModeToggle.addEventListener('change', (e) => {
 function updateDMControls() {
   const gmOnlyLabel = document.getElementById('gmOnlyLabel');
   const gmOnlyDrawLabel = document.getElementById('gmOnlyDrawLabel');
-  const fogControls = document.getElementById('fogControls');
+  const fogControlsDiv = document.querySelectorAll('#controls')[2]; // Třetí div s id="controls" (fog controls)
   if (isDMMode) {
     gmOnlyLabel.style.display = 'flex';
     gmOnlyDrawLabel.style.display = 'flex';
-    fogControls.style.display = 'flex';
+    if (fogControlsDiv) fogControlsDiv.style.display = 'flex';
   } else {
     gmOnlyLabel.style.display = 'none';
     gmOnlyDrawLabel.style.display = 'none';
-    fogControls.style.display = 'none';
+    if (fogControlsDiv) fogControlsDiv.style.display = 'none';
     // Vypni GM-only režim při vypnutí DM módu
     document.getElementById('gmOnlyToggle').checked = false;
     document.getElementById('gmOnlyDrawToggle').checked = false;
     // Vypni fog drawing pokud byl zapnutý
-    if (fogDrawing) {
+    if (typeof fogDrawingActive !== 'undefined' && fogDrawingActive) {
       toggleFogDrawBtn.click();
     }
   }
