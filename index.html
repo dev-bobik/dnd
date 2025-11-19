@@ -325,14 +325,17 @@ let cellSize = parseInt(cellSizeSelect.value);
 
 function createGrid() {
   grid.innerHTML = '';
-  const containerWidth = gridContainer.clientWidth;
-  const containerHeight = gridContainer.clientHeight;
+  
+  // Získej aktuální aspect ratio
+  const aspectRatioStr = gridContainer.style.aspectRatio || '1 / 1';
+  const [width, height] = aspectRatioStr.split('/').map(s => parseFloat(s.trim()));
+  
+  // Počet políček je podle poměru stran a velikosti buněk
+  const baseSize = cellSize;
+  const columns = Math.round(width * baseSize / 20); // 20 je base multiplier
+  const rows = Math.round(height * baseSize / 20);
 
-  // Počet sloupců a řádků podle velikosti buněk - vždy čtvercové
-  const columns = Math.round(containerWidth / cellSize);
-  const rows = Math.round(containerHeight / cellSize);
-
-  // Buňky se přizpůsobí, aby byly čtvercové
+  // Čtvercové buňky
   grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
   grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
