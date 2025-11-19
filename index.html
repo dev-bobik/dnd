@@ -429,28 +429,6 @@
       background: rgba(138, 43, 226, 0.3);
       margin: 0.5rem 0;
     }
-
-    .color-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 30px);
-      gap: 6px;
-      padding: 0.5rem;
-    }
-
-    .color-option {
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .color-option:hover {
-      transform: scale(1.15);
-      border-color: white;
-      box-shadow: 0 0 10px currentColor;
-    }
   </style>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -579,22 +557,20 @@
     </div>
 
     <div id="contextMenu">
-      <div class="context-menu-item" id="menuResize">📏 Změnit velikost</div>
+      <div class="context-menu-item" style="font-weight: 600; color: #8A2BE2; pointer-events: none;">Velikost:</div>
+      <div style="padding: 0.5rem 1rem;">
+        <select id="menuResizeSelect" style="width: 100%; background: rgba(10, 10, 15, 0.95); border: 1.5px solid rgba(138, 43, 226, 0.5); color: #e0e0e0; padding: 0.5rem; border-radius: 8px; cursor: pointer;">
+          <option value="0.5">Malý (0.5x)</option>
+          <option value="1">Normální (1x)</option>
+          <option value="1.5">Větší (1.5x)</option>
+          <option value="2">Velký (2x)</option>
+          <option value="3">Obrovský (3x)</option>
+        </select>
+      </div>
       <div class="context-menu-separator"></div>
       <div class="context-menu-item" style="font-weight: 600; color: #8A2BE2; pointer-events: none;">Barva ohraničení:</div>
-      <div class="color-grid">
-        <div class="color-option" style="background: #8A2BE2;" data-color="#8A2BE2"></div>
-        <div class="color-option" style="background: #FF1744;" data-color="#FF1744"></div>
-        <div class="color-option" style="background: #00E676;" data-color="#00E676"></div>
-        <div class="color-option" style="background: #FFEA00;" data-color="#FFEA00"></div>
-        <div class="color-option" style="background: #00B0FF;" data-color="#00B0FF"></div>
-        <div class="color-option" style="background: #FF6E40;" data-color="#FF6E40"></div>
-        <div class="color-option" style="background: #E040FB;" data-color="#E040FB"></div>
-        <div class="color-option" style="background: #76FF03;" data-color="#76FF03"></div>
-        <div class="color-option" style="background: #FFFFFF;" data-color="#FFFFFF"></div>
-        <div class="color-option" style="background: #9E9E9E;" data-color="#9E9E9E"></div>
-        <div class="color-option" style="background: #000000; border-color: #666;" data-color="#000000"></div>
-        <div class="color-option" style="background: #795548;" data-color="#795548"></div>
+      <div style="padding: 0.5rem 1rem;">
+        <input type="color" id="menuColorPicker" style="width: 100%; height: 40px; border: 2px solid rgba(138, 43, 226, 0.5); border-radius: 8px; cursor: pointer; background: transparent;">
       </div>
       <div class="context-menu-separator"></div>
       <div class="context-menu-item" id="menuDelete" style="color: #FF1744;">🗑️ Smazat</div>
@@ -1206,6 +1182,20 @@ let contextMenuTokenId = null;
 
 function showContextMenu(x, y, tokenId) {
   contextMenuTokenId = tokenId;
+  
+  // Načti aktuální hodnoty tokenu
+  db.ref('tokens/' + tokenId).once('value', (snapshot) => {
+    const token = snapshot.val();
+    if (!token) return;
+    
+    // Nastav aktuální velikost v selectu
+    const currentSize = token.width / cellSize;
+    menuResizeSelect.value = currentSize.toString();
+    
+    // Nastav aktuální barvu v color pickeru
+    menuColorPicker.value = token.borderColor || '#8A2BE2';
+  });
+  
   contextMenu.style.left = x + 'px';
   contextMenu.style.top = y + 'px';
   contextMenu.classList.add('visible');
@@ -1231,45 +1221,32 @@ document.getElementById('menuDelete').addEventListener('click', () => {
   }
 });
 
-// Resize token
-document.getElementById('menuResize').addEventListener('click', () => {
+// Resize token select
+const menuResizeSelect = document.getElementById('menuResizeSelect');
+menuResizeSelect.addEventListener('change', (e) => {
   if (contextMenuTokenId) {
-    const sizes = ['0.5', '1', '1.5', '2', '3'];
-    const sizeLabels = ['Malý (0.5x)', 'Normální (1x)', 'Větší (1.5x)', 'Velký (2x)', 'Obrovský (3x)'];
+    const newMultiplier = parseFloat(e.target.value);
+    const newWidth = cellSize * newMultiplier;
+    const newHeight = cellSize * newMultiplier;
     
-    db.ref('tokens/' + contextMenuTokenId).once('value', (snapshot) => {
-      const token = snapshot.val();
-      if (!token) return;
-      
-      const currentSize = token.width / cellSize;
-      const currentIndex = sizes.findIndex(s => Math.abs(parseFloat(s) - currentSize) < 0.1);
-      const nextIndex = (currentIndex + 1) % sizes.length;
-      const newMultiplier = parseFloat(sizes[nextIndex]);
-      
-      const newWidth = cellSize * newMultiplier;
-      const newHeight = cellSize * newMultiplier;
-      
-      db.ref('tokens/' + contextMenuTokenId).update({
-        width: newWidth,
-        height: newHeight
-      });
+    db.ref('tokens/' + contextMenuTokenId).update({
+      width: newWidth,
+      height: newHeight
     });
     
     hideContextMenu();
   }
 });
 
-// Color options
-document.querySelectorAll('.color-option').forEach(option => {
-  option.addEventListener('click', () => {
-    if (contextMenuTokenId) {
-      const color = option.getAttribute('data-color');
-      db.ref('tokens/' + contextMenuTokenId).update({
-        borderColor: color
-      });
-      hideContextMenu();
-    }
-  });
+// Color picker
+const menuColorPicker = document.getElementById('menuColorPicker');
+menuColorPicker.addEventListener('change', (e) => {
+  if (contextMenuTokenId) {
+    db.ref('tokens/' + contextMenuTokenId).update({
+      borderColor: e.target.value
+    });
+    hideContextMenu();
+  }
 });
 
   </script>
