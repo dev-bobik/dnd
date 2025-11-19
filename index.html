@@ -327,13 +327,13 @@ function createGrid() {
   const containerWidth = gridContainer.clientWidth;
   const containerHeight = gridContainer.clientHeight;
 
-  // Počet sloupců a řádků podle velikosti buněk
-  const columns = Math.floor(containerWidth / cellSize);
-  const rows = Math.floor(containerHeight / cellSize);
+  // Počet sloupců a řádků podle velikosti buněk - vždy čtvercové
+  const columns = Math.round(containerWidth / cellSize);
+  const rows = Math.round(containerHeight / cellSize);
 
-  // Čtvercové buňky s fixní velikostí
-  grid.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
-  grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+  // Buňky se přizpůsobí, aby byly čtvercové
+  grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
   for (let i = 0; i < columns * rows; i++) {
     const cell = document.createElement('div');
