@@ -374,17 +374,6 @@
       transition: none;
     }
 
-    #fogCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1.5; /* mezi background a grid */
-      touch-action: none;
-      pointer-events: none;
-    }
-
     #drawLayer {
       position: absolute;
       top: 0;
@@ -566,20 +555,9 @@
       <button id="undoDraw">Zpět (poslední kresba)</button>
       <button id="clearCanvas">Smazat kresby</button>
     </div>
-    <div id="controls" style="display: none;">
-      <label>Šířka štětce mlhy: 
-        <input type="range" id="fogBrushWidth" min="10" max="150" value="50" step="5">
-        <span id="fogBrushWidthValue">50</span>px
-      </label>
-      <button id="toggleFogMode">Režim mlhy: Zakrýt</button>
-      <button id="toggleFogDraw">Začít kreslit mlhu</button>
-      <button id="undoFog">Zpět (poslední tah mlhy)</button>
-      <button id="clearFog">Smazat veškerou mlhu</button>
-    </div>
 
     <div id="grid-container">
       <img id="background" />
-      <canvas id="fogCanvas"></canvas>
       <canvas id="drawLayer"></canvas>
       <div id="grid"></div>
       <div id="tokens-container"></div>
@@ -718,22 +696,15 @@ dmModeToggle.addEventListener('change', (e) => {
 function updateDMControls() {
   const gmOnlyLabel = document.getElementById('gmOnlyLabel');
   const gmOnlyDrawLabel = document.getElementById('gmOnlyDrawLabel');
-  const fogControlsDiv = document.querySelectorAll('#controls')[2]; // Třetí div s id="controls" (fog controls)
   if (isDMMode) {
     gmOnlyLabel.style.display = 'flex';
     gmOnlyDrawLabel.style.display = 'flex';
-    if (fogControlsDiv) fogControlsDiv.style.display = 'flex';
   } else {
     gmOnlyLabel.style.display = 'none';
     gmOnlyDrawLabel.style.display = 'none';
-    if (fogControlsDiv) fogControlsDiv.style.display = 'none';
     // Vypni GM-only režim při vypnutí DM módu
     document.getElementById('gmOnlyToggle').checked = false;
     document.getElementById('gmOnlyDrawToggle').checked = false;
-    // Vypni fog drawing pokud byl zapnutý
-    if (typeof fogDrawingActive !== 'undefined' && fogDrawingActive) {
-      toggleFogDrawBtn.click();
-    }
   }
 }
 
@@ -1030,25 +1001,6 @@ upload.addEventListener('change', (e) => {
         }
       });
 
-      // Firebase sync fog
-      db.ref('fog').on('child_added', (snapshot) => {
-        const stroke = snapshot.val();
-        const timestamp = snapshot.key;
-        if (stroke && stroke.points) {
-          drawFogStroke(stroke);
-          if (!fogHistory.includes(timestamp)) {
-            fogHistory.push(timestamp);
-          }
-        }
-      });
-
-      db.ref('fog').on('value', (snapshot) => {
-        if (!snapshot.val()) {
-          fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-          fogHistory = [];
-        }
-      });
-
       // Biblioteka tokeny
       document.querySelectorAll('.library-token').forEach(token => {
         token.addEventListener('dragstart', (e) => {
@@ -1115,22 +1067,15 @@ deleteAllTokensBtn.addEventListener('click', () => {
 const drawCanvas = document.getElementById('drawLayer');
 const ctx = drawCanvas.getContext('2d');
 
-const fogCanvas = document.getElementById('fogCanvas');
-const fogCtx = fogCanvas.getContext('2d');
-
 function resizeCanvas() {
   // Použij rozměry přímo z gridu, ne z containeru
   const rect = grid.getBoundingClientRect();
   drawCanvas.width = rect.width;
   drawCanvas.height = rect.height;
-  fogCanvas.width = rect.width;
-  fogCanvas.height = rect.height;
   
   // Nastav také CSS rozměry
   drawCanvas.style.width = rect.width + 'px';
   drawCanvas.style.height = rect.height + 'px';
-  fogCanvas.style.width = rect.width + 'px';
-  fogCanvas.style.height = rect.height + 'px';
   
   // Překresli všechny tahy po resize
   db.ref('drawing').once('value', (snapshot) => {
@@ -1141,12 +1086,6 @@ function resizeCanvas() {
       }
       drawStroke(stroke);
     });
-  });
-  
-  // Překresli mlhu
-  db.ref('fog').once('value', (snapshot) => {
-    const fogStrokes = snapshot.val() || {};
-    Object.values(fogStrokes).forEach(drawFogStroke);
   });
 }
 
@@ -1185,11 +1124,6 @@ toggleDrawBtn.addEventListener('click', () => {
     t.style.pointerEvents = drawMode ? 'none' : 'auto';
   });
   toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
-  
-  // Vypni fog drawing pokud je zapnutý
-  if (drawMode && fogDrawingActive) {
-    toggleFogDrawBtn.click();
-  }
 });
 
 undoDrawBtn.addEventListener('click', () => {
@@ -1325,169 +1259,6 @@ function toggleCategory(header) {
     header.classList.add('open');
   }
 }
-
-// Fog of War
-let fogDrawing = false;
-let fogDrawingActive = false;
-let fogMode = 'cover'; // 'cover' nebo 'reveal'
-let currentFogStroke = [];
-let fogHistory = [];
-
-const toggleFogModeBtn = document.getElementById('toggleFogMode');
-const toggleFogDrawBtn = document.getElementById('toggleFogDraw');
-const undoFogBtn = document.getElementById('undoFog');
-const clearFogBtn = document.getElementById('clearFog');
-const fogBrushWidthInput = document.getElementById('fogBrushWidth');
-const fogBrushWidthValue = document.getElementById('fogBrushWidthValue');
-
-fogCtx.lineCap = 'round';
-fogCtx.lineJoin = 'round';
-
-fogBrushWidthInput.addEventListener('input', (e) => {
-  fogBrushWidthValue.textContent = e.target.value;
-});
-
-// Toggle mezi zakrýváním a odhalováním
-toggleFogModeBtn.addEventListener('click', () => {
-  fogMode = fogMode === 'cover' ? 'reveal' : 'cover';
-  toggleFogModeBtn.textContent = fogMode === 'cover' ? 'Režim mlhy: Zakrýt' : 'Režim mlhy: Odhalit';
-});
-
-// Zapnout/vypnout kreslení mlhy
-toggleFogDrawBtn.addEventListener('click', () => {
-  fogDrawingActive = !fogDrawingActive;
-  fogCanvas.style.pointerEvents = fogDrawingActive ? 'auto' : 'none';
-  tokensContainer.style.pointerEvents = fogDrawingActive ? 'none' : 'auto';
-  document.querySelectorAll('.token').forEach(t => {
-    t.style.pointerEvents = fogDrawingActive ? 'none' : 'auto';
-  });
-  toggleFogDrawBtn.textContent = fogDrawingActive ? 'Zastavit kreslení mlhy' : 'Začít kreslit mlhu';
-  
-  // Vypni drawing mode pokud je zapnutý
-  if (fogDrawingActive && drawMode) {
-    toggleDrawBtn.click();
-  }
-});
-
-function drawFogStroke(stroke) {
-  if (stroke.points.length < 2) return;
-  
-  if (stroke.mode === 'cover') {
-    fogCtx.globalCompositeOperation = 'source-over';
-    fogCtx.strokeStyle = 'rgba(0, 0, 0, 1)';
-  } else {
-    fogCtx.globalCompositeOperation = 'destination-out';
-  }
-  
-  fogCtx.lineWidth = stroke.width;
-  fogCtx.beginPath();
-  fogCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
-  for (let i = 1; i < stroke.points.length; i++) {
-    fogCtx.lineTo(stroke.points[i].x, stroke.points[i].y);
-  }
-  fogCtx.stroke();
-  fogCtx.globalCompositeOperation = 'source-over';
-}
-
-fogCanvas.addEventListener('mousedown', (e) => {
-  if (!fogDrawingActive || !isDMMode) return;
-  fogDrawing = true;
-  const rect = fogCanvas.getBoundingClientRect();
-  currentFogStroke = {
-    mode: fogMode,
-    width: parseInt(fogBrushWidthInput.value),
-    points: [{ x: e.clientX - rect.left, y: e.clientY - rect.top }]
-  };
-});
-
-fogCanvas.addEventListener('mousemove', (e) => {
-  if (!fogDrawingActive || !fogDrawing || !isDMMode) return;
-  const rect = fogCanvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  currentFogStroke.points.push({ x, y });
-  
-  drawFogStroke(currentFogStroke);
-});
-
-fogCanvas.addEventListener('mouseup', () => {
-  if (!fogDrawing) return;
-  fogDrawing = false;
-  if (currentFogStroke.points.length > 1) {
-    const timestamp = Date.now();
-    db.ref('fog/' + timestamp).set(currentFogStroke);
-    fogHistory.push(timestamp);
-  }
-});
-
-fogCanvas.addEventListener('mouseleave', () => {
-  if (fogDrawing) {
-    fogDrawing = false;
-  }
-});
-
-// Touch support
-function getFogTouchPos(touchEvent) {
-  const rect = fogCanvas.getBoundingClientRect();
-  const t = touchEvent.touches[0] || touchEvent.changedTouches[0];
-  return {
-    x: t.clientX - rect.left,
-    y: t.clientY - rect.top
-  };
-}
-
-fogCanvas.addEventListener('touchstart', (e) => {
-  if (!fogDrawingActive || !isDMMode) return;
-  e.preventDefault();
-  const pos = getFogTouchPos(e);
-  fogDrawing = true;
-  currentFogStroke = {
-    mode: fogMode,
-    width: parseInt(fogBrushWidthInput.value),
-    points: [pos]
-  };
-});
-
-fogCanvas.addEventListener('touchmove', (e) => {
-  if (!fogDrawingActive || !fogDrawing || !isDMMode) return;
-  e.preventDefault();
-  const pos = getFogTouchPos(e);
-  currentFogStroke.points.push(pos);
-  drawFogStroke(currentFogStroke);
-});
-
-fogCanvas.addEventListener('touchend', (e) => {
-  if (!fogDrawing) return;
-  e.preventDefault();
-  fogDrawing = false;
-  if (currentFogStroke.points.length > 1) {
-    const timestamp = Date.now();
-    db.ref('fog/' + timestamp).set(currentFogStroke);
-    fogHistory.push(timestamp);
-  }
-});
-
-// Undo fog
-undoFogBtn.addEventListener('click', () => {
-  if (fogHistory.length === 0) return;
-  
-  const lastTimestamp = fogHistory.pop();
-  db.ref('fog/' + lastTimestamp).remove();
-  
-  // Překresli canvas bez posledního tahu
-  fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-  db.ref('fog').once('value', (snapshot) => {
-    const strokes = snapshot.val() || {};
-    Object.values(strokes).forEach(drawFogStroke);
-  });
-});
-
-// Clear fog
-clearFogBtn.addEventListener('click', () => {
-  fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-  db.ref('fog').set(null);
-  fogHistory = [];
-});
 
 // Context menu
 const contextMenu = document.getElementById('contextMenu');
