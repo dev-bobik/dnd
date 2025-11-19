@@ -378,20 +378,48 @@ cellSizeSelect.addEventListener('change', () => {
 // Grid toggle
 const gridToggle = document.getElementById('gridToggle');
 gridToggle.addEventListener('change', (e) => {
+  const isVisible = e.target.checked;
   const grid = document.getElementById('grid');
-  if (e.target.checked) {
+  if (isVisible) {
     grid.style.display = 'grid';
   } else {
     grid.style.display = 'none';
   }
+  // Synchronizuj s Firebase
+  db.ref('settings/gridVisible').set(isVisible);
 });
 
 // Aspect ratio
 const aspectRatioSelect = document.getElementById('aspectRatioSelect');
 aspectRatioSelect.addEventListener('change', (e) => {
+  const aspectRatio = e.target.value;
   const gridContainer = document.getElementById('grid-container');
-  gridContainer.style.aspectRatio = e.target.value;
+  gridContainer.style.aspectRatio = aspectRatio;
   createGrid();
+  setTimeout(resizeCanvas, 100);
+  // Synchronizuj s Firebase
+  db.ref('settings/aspectRatio').set(aspectRatio);
+});
+
+// Synchronizace nastavení z Firebase
+db.ref('settings/gridVisible').on('value', (snapshot) => {
+  const isVisible = snapshot.val();
+  if (isVisible !== null) {
+    gridToggle.checked = isVisible;
+    const grid = document.getElementById('grid');
+    grid.style.display = isVisible ? 'grid' : 'none';
+  }
+});
+
+db.ref('settings/aspectRatio').on('value', (snapshot) => {
+  const aspectRatio = snapshot.val();
+  if (aspectRatio) {
+    aspectRatioSelect.value = aspectRatio;
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.style.aspectRatio = aspectRatio;
+    createGrid();
+    setTimeout(resizeCanvas, 100);
+  }
 });
 
 createGrid();
@@ -507,7 +535,11 @@ upload.addEventListener('change', (e) => {
               aspectRatioSelect.appendChild(customOption);
             }
             
+            // Synchronizuj aspect ratio do Firebase
+            db.ref('settings/aspectRatio').set(aspectRatioSelect.value);
+            
             createGrid();
+            setTimeout(resizeCanvas, 100);
           };
           img.src = imageUrl;
           background.src = imageUrl;
