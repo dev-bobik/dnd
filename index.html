@@ -746,62 +746,124 @@
       border-color: rgba(138, 43, 226, 0.8);
     }
 
-    /* Dice styles inspired by rolladie.net */
+    /* Dice styles - 3D with white lines like the images */
     .dice {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 50px;
       height: 50px;
-      border-radius: 8px;
+      border-radius: 10px;
       position: relative;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       font-weight: bold;
       color: white;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
     }
 
     .dice span {
-      font-size: 1.3rem;
-      z-index: 1;
+      font-size: 1.5rem;
+      z-index: 10;
+      position: relative;
     }
 
+    /* D4 - Red triangle with white lines */
     .dice.d4 {
-      background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
-      clip-path: polygon(50% 10%, 90% 90%, 10% 90%);
+      background: 
+        linear-gradient(135deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-135deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        radial-gradient(circle, #c62828 0%, #8e0000 100%);
+      clip-path: polygon(50% 8%, 95% 92%, 5% 92%);
     }
 
+    /* D6 - Blue cube with white edges */
     .dice.d6 {
-      background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+      background: 
+        linear-gradient(to right, white 2px, transparent 2px),
+        linear-gradient(to bottom, white 2px, transparent 2px),
+        linear-gradient(135deg, #2196f3 0%, #0d47a1 100%);
+      background-size: 50% 50%, 50% 50%, 100% 100%;
+      background-position: 0 0, 0 0, 0 0;
+      box-shadow: 
+        inset 2px 0 0 white,
+        inset 0 2px 0 white,
+        inset -2px 0 0 white,
+        inset 0 -2px 0 white,
+        0 4px 8px rgba(0,0,0,0.3);
     }
 
+    /* D8 - Teal octagon with white grid */
     .dice.d8 {
-      background: linear-gradient(135deg, #00897b 0%, #004d40 100%);
-      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      background: 
+        linear-gradient(45deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(135deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-135deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        radial-gradient(circle, #00897b 0%, #004d40 100%);
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
     }
 
+    /* D10 - Orange pentagon with white lines */
     .dice.d10 {
-      background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
-      clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
+      background: 
+        linear-gradient(72deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-72deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(144deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-144deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        radial-gradient(circle, #ff9800 0%, #e65100 100%);
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
     }
 
+    /* D12 - Purple dodecagon with white web */
     .dice.d12 {
-      background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
-      clip-path: polygon(50% 0%, 75% 5%, 95% 25%, 100% 50%, 95% 75%, 75% 95%, 50% 100%, 25% 95%, 5% 75%, 0% 50%, 5% 25%, 25% 5%);
+      background: 
+        linear-gradient(30deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-30deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(60deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-60deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        radial-gradient(circle, #9c27b0 0%, #4a148c 100%);
+      clip-path: polygon(50% 0%, 75% 7%, 93% 25%, 100% 50%, 93% 75%, 75% 93%, 50% 100%, 25% 93%, 7% 75%, 0% 50%, 7% 25%, 25% 7%);
     }
 
+    /* D20 - Red icosahedron with white triangular grid */
     .dice.d20 {
-      background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
-      clip-path: polygon(50% 0%, 61% 5%, 73% 12%, 83% 22%, 91% 34%, 96% 47%, 98% 60%, 96% 73%, 91% 84%, 83% 92%, 73% 97%, 61% 100%, 50% 100%, 39% 100%, 27% 97%, 17% 92%, 9% 84%, 4% 73%, 2% 60%, 4% 47%, 9% 34%, 17% 22%, 27% 12%, 39% 5%);
+      background: 
+        linear-gradient(36deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-36deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(72deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-72deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(108deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-108deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(144deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(-144deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
+        radial-gradient(circle, #d32f2f 0%, #b71c1c 100%);
+      border-radius: 50%;
+      clip-path: circle(48%);
     }
 
+    /* D100 - Yellow/orange circle with radial lines */
     .dice.d100 {
-      background: linear-gradient(135deg, #fbc02d 0%, #f57f17 100%);
+      background: 
+        repeating-conic-gradient(
+          from 0deg,
+          transparent 0deg,
+          transparent 8deg,
+          white 8deg,
+          white 10deg
+        ),
+        radial-gradient(circle, #fdd835 0%, #f57f17 100%);
       border-radius: 50%;
     }
 
     .dice.d100 span {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
     }
 
     .dice-name {
