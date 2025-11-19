@@ -810,6 +810,7 @@ brushWidthInput.addEventListener('input', (e) => {
 toggleDrawBtn.addEventListener('click', () => {
   drawMode = !drawMode;
   drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
+  tokensContainer.style.pointerEvents = drawMode ? 'none' : 'auto';
   document.querySelectorAll('.token').forEach(t => {
     t.style.pointerEvents = drawMode ? 'none' : 'auto';
   });
