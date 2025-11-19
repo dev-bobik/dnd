@@ -362,7 +362,7 @@
       transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .token:hover {
+    .token.hover-active {
       filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.8));
       transform: scale(1.15);
       z-index: 100;
@@ -719,13 +719,26 @@ upload.addEventListener('change', (e) => {
           img.style.position = 'relative';
           img.style.top = '0';
           img.style.left = '0';
+          img.setAttribute('data-token-id', key);
           
           if (data.borderColor) {
             img.style.setProperty('--token-border-color', data.borderColor);
           }
 
+          if (data.hovered) {
+            img.classList.add('hover-active');
+          }
+
           let offsetX, offsetY;
           let isDragging = false;
+
+          img.addEventListener('mouseenter', () => {
+            db.ref('tokens/' + data.id + '/hovered').set(true);
+          });
+
+          img.addEventListener('mouseleave', () => {
+            db.ref('tokens/' + data.id + '/hovered').set(false);
+          });
 
           img.addEventListener('dragstart', (e) => {
             isDragging = true;
@@ -748,6 +761,26 @@ upload.addEventListener('change', (e) => {
 
           wrapper.appendChild(img);
           tokensContainer.appendChild(wrapper);
+        }
+      });
+
+      // Sledování hover stavu tokenů
+      db.ref('tokens').on('child_changed', (snapshot) => {
+        const data = snapshot.val();
+        const tokenId = snapshot.key;
+        const wrappers = Array.from(tokensContainer.children);
+        const wrapper = wrappers.find(w => {
+          const img = w.querySelector('.token');
+          return img && img.getAttribute('data-token-id') === tokenId;
+        });
+        
+        if (wrapper) {
+          const img = wrapper.querySelector('.token');
+          if (data.hovered) {
+            img.classList.add('hover-active');
+          } else {
+            img.classList.remove('hover-active');
+          }
         }
       });
 
