@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D Online - Neumorphic Design</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #e0e5ec;
+      color: #4a5568;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #e0e5ec;
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 
+        5px 5px 10px #a3b1c6,
+        -5px -5px 10px #ffffff;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #667eea;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #4a5568;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #667eea;
+    }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      background: #e0e5ec;
+      color: #4a5568;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 15px;
+      transition: all 0.3s;
+      border: none;
+      box-shadow: 
+        5px 5px 10px #a3b1c6,
+        -5px -5px 10px #ffffff;
+    }
+
+    .btn:hover {
+      box-shadow: 
+        2px 2px 5px #a3b1c6,
+        -2px -2px 5px #ffffff;
+    }
+
+    .btn:active {
+      box-shadow: 
+        inset 3px 3px 7px #a3b1c6,
+        inset -3px -3px 7px #ffffff;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 
+        5px 5px 10px #a3b1c6,
+        -5px -5px 10px #ffffff,
+        inset 0 0 0 rgba(255,255,255,0.5);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 
+        3px 3px 7px #a3b1c6,
+        -3px -3px 7px #ffffff,
+        inset 0 0 0 rgba(255,255,255,0.5);
+    }
+
+    .hero {
+      padding: 6rem 2rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      color: #667eea;
+      font-weight: 700;
+      line-height: 1.1;
+      text-shadow: 
+        3px 3px 6px #a3b1c6,
+        -3px -3px 6px #ffffff;
+    }
+
+    .hero .subtitle {
+      font-size: 1.3rem;
+      color: #764ba2;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #718096;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .hero .btn {
+      font-size: 1rem;
+      padding: 1.1rem 2.5rem;
+    }
+
+    .stats {
+      max-width: 1300px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #e0e5ec;
+      border-radius: 25px;
+      box-shadow: 
+        8px 8px 16px #a3b1c6,
+        -8px -8px 16px #ffffff;
+      transition: all 0.3s;
+    }
+
+    .stat-item:hover {
+      box-shadow: 
+        inset 4px 4px 8px #a3b1c6,
+        inset -4px -4px 8px #ffffff;
+    }
+
+    .stat-item h2 {
+      font-size: 3.5rem;
+      color: #667eea;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .stat-item p {
+      color: #718096;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .features {
+      max-width: 1400px;
+      margin: 6rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .feature-card {
+      background: #e0e5ec;
+      border-radius: 30px;
+      padding: 3rem;
+      transition: all 0.3s;
+      box-shadow: 
+        10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+    }
+
+    .feature-card:hover {
+      box-shadow: 
+        inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+      transform: translateY(-5px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #667eea;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: #718096;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .cta {
+      max-width: 900px;
+      margin: 6rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .cta-box {
+      background: #e0e5ec;
+      border-radius: 40px;
+      padding: 4rem 3rem;
+      box-shadow: 
+        15px 15px 30px #a3b1c6,
+        -15px -15px 30px #ffffff;
+    }
+
+    .cta h2 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #667eea;
+      font-weight: 700;
+    }
+
+    .cta p {
+      font-size: 1.2rem;
+      color: #718096;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    footer {
+      margin-top: 6rem;
+      padding: 3rem;
+      text-align: center;
+      background: #e0e5ec;
+      box-shadow: 
+        0 -5px 10px #a3b1c6,
+        0 5px 10px #ffffff;
+    }
+
+    footer p {
+      color: #a0aec0;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">D&D Online</div>
+      <ul class="nav-links">
+        <li><a href="#features">Funkce</a></li>
+        <li><a href="#campaigns">Kampaně</a></li>
+        <li><a href="#tools">Nástroje</a></li>
+        <li><a href="#about">O Nás</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="#" class="btn">Přihlásit</a>
+        <a href="#" class="btn btn-primary">Registrace</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>D&D Online</h1>
+    <div class="subtitle">Tvoje cesta začíná zde</div>
+    <p>Kompletní platforma pro hraní Dungeons & Dragons online. Character sheety, battle grid, dice roller a správa kampaní na jednom místě.</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn btn-primary">Začít hrát</a>
+      <a href="#features" class="btn">Zjistit více</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>Kampaní</p>
+      </div>
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>Postav</p>
+      </div>
+      <div class="stat-item">
+        <h2>FREE</h2>
+        <p>Navždy</p>
+      </div>
+      <div class="stat-item">
+        <h2>24/7</h2>
+        <p>Online</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <h3>Character Sheets</h3>
+      <p>Vytváření a správa postav s automatickým ukládáním. Sleduj statistiky, vybavení, levely a celou historii své postavy.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Battle Grid</h3>
+      <p>Interaktivní battle grid s podporou vlastních map a tokenů. Přetahuj figurky, nahraj pozadí a všichni hráči vidí změny v reálném čase.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Dice Roller</h3>
+      <p>Pokročilé házení kostkami se sdílením výsledků. Podpora všech typů kostek včetně automatických kritických hodů.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Campaign Management</h3>
+      <p>Vytvoř kampaň, pozvi hráče a začni hrát. DM má plnou kontrolu, hráči vidí jen to, co mají.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Real-time Sync</h3>
+      <p>Všechny akce se synchronizují okamžitě napříč všemi zařízeními. Žádné refreshování, žádné čekání.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Map Drawing</h3>
+      <p>Kresli přímo na bojovou mapu, ukazuj strategie, označuj pasti a komunikuj vizuálně s týmem.</p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-box">
+      <h2>Připraven na dobrodružství?</h2>
+      <p>Vytvoř si účet zdarma a během minuty můžeš založit svou první kampaň nebo se připojit k existující.</p>
+      <a href="#" class="btn btn-primary">Vytvořit účet</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>D&D Online © 2025 | Vytvořeno s láskou pro hráče</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

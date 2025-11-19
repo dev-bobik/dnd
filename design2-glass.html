@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D ONLINE - GLASS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      top: -250px;
+      right: -250px;
+      filter: blur(80px);
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: rgba(138, 43, 226, 0.3);
+      border-radius: 50%;
+      bottom: -200px;
+      left: -200px;
+      filter: blur(100px);
+    }
+
+    nav {
+      position: sticky;
+      top: 20px;
+      margin: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.6rem;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero {
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      font-weight: 800;
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .hero .btn {
+      font-size: 1.1rem;
+      padding: 1rem 2.5rem;
+    }
+
+    .stats {
+      max-width: 1200px;
+      margin: 3rem auto 5rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stats-container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-item h2 {
+      font-size: 3.5rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-item p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.05rem;
+    }
+
+    .features {
+      max-width: 1400px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .cta {
+      max-width: 800px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .cta h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .cta p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding: 3rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">D&D ONLINE</div>
+      <ul class="nav-links">
+        <li><a href="#features">Funkce</a></li>
+        <li><a href="#campaigns">Kampaně</a></li>
+        <li><a href="#tools">Nástroje</a></li>
+        <li><a href="#about">O platformě</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="#" class="btn btn-secondary">Přihlásit se</a>
+        <a href="#" class="btn btn-primary">Registrace</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>D&D Online Platforma</h1>
+    <p>Kompletní nástroje pro hraní Dungeons & Dragons online. Character sheety, battle grid, dice roller a správa kampaní na jednom místě.</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn btn-primary">Začít hrát zdarma</a>
+      <a href="#features" class="btn btn-secondary">Prozkoumat funkce</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-container">
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>Neomezené kampaně</p>
+      </div>
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>Neomezené postavy</p>
+      </div>
+      <div class="stat-item">
+        <h2>Zdarma</h2>
+        <p>Vždy</p>
+      </div>
+      <div class="stat-item">
+        <h2>24/7</h2>
+        <p>Dostupnost</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <h3>Character Sheety</h3>
+      <p>Vytváření a správa postav s automatickým ukládáním. Sleduj statistiky, vybavení, levely a celou historii své postavy.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Bojová Mřížka</h3>
+      <p>Interaktivní battle grid s podporou vlastních map a tokenů. Přetahuj figurky, nahraj pozadí a všichni hráči vidí změny v reálném čase.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Dice Roller</h3>
+      <p>Pokročilé házení kostkami se sdílením výsledků. Podpora všech typů kostek včetně automatických kritických hodů.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Správa Kampaní</h3>
+      <p>Vytvoř kampaň, pozvi hráče a začni hrát. DM má plnou kontrolu, hráči vidí jen to, co mají.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Real-time Synchronizace</h3>
+      <p>Všechny akce se synchronizují okamžitě napříč všemi zařízeními. Žádné refreshování, žádné čekání.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Kreslení na Mapu</h3>
+      <p>Kresli přímo na bojovou mapu, ukazuj strategie, označuj pasti a komunikuj vizuálně s týmem.</p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-container">
+      <h2>Připraveni začít?</h2>
+      <p>Vytvoř si účet zdarma a během minuty můžeš založit svou první kampaň nebo se připojit k existující.</p>
+      <a href="#" class="btn btn-primary">Vytvořit účet zdarma</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 D&D Online Platform</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D ONLINE - TERMINAL</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; }
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    body {
+      font-family: 'Courier New', 'Consolas', monospace;
+      background: #000;
+      color: #00ff41;
+      min-height: 100vh;
+      position: relative;
+      animation: flicker 0.15s infinite;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 255, 65, 0.03) 51%
+      );
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 255, 65, 0.1);
+      box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+      animation: scanline 6s linear infinite;
+      pointer-events: none;
+      z-index: 1001;
+    }
+
+    nav {
+      background: rgba(0, 20, 0, 0.8);
+      padding: 1rem 2rem;
+      border-bottom: 2px solid #00ff41;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ff41;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+    }
+
+    .logo::before {
+      content: '> ';
+      color: #00ff41;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #00ff41;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-links a::before {
+      content: '[';
+      margin-right: 3px;
+    }
+
+    .nav-links a::after {
+      content: ']';
+      margin-left: 3px;
+    }
+
+    .nav-links a:hover {
+      text-shadow: 0 0 10px rgba(0, 255, 65, 1);
+    }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.5rem;
+      border: 2px solid #00ff41;
+      background: transparent;
+      color: #00ff41;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: #00ff41;
+      transition: width 0.3s;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      width: 100%;
+    }
+
+    .btn:hover {
+      color: #000;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+    }
+
+    .btn-primary {
+      background: #00ff41;
+      color: #000;
+    }
+
+    .btn-primary::before {
+      background: #000;
+    }
+
+    .btn-primary:hover {
+      background: #000;
+      color: #00ff41;
+    }
+
+    .hero {
+      padding: 5rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      color: #00ff41;
+      font-weight: bold;
+      line-height: 1.2;
+      text-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+      position: relative;
+    }
+
+    .hero h1::after {
+      content: '_';
+      animation: blink 1s infinite;
+      margin-left: 5px;
+    }
+
+    .terminal-line {
+      margin-bottom: 0.5rem;
+    }
+
+    .terminal-line::before {
+      content: '$ ';
+      color: #00ff41;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #00cc33;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stats {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      background: rgba(0, 20, 0, 0.5);
+      border: 2px solid #00ff41;
+      padding: 3rem 2rem;
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid #00ff41;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-item h2 {
+      font-size: 3.5rem;
+      color: #00ff41;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 15px rgba(0, 255, 65, 0.8);
+    }
+
+    .stat-item p {
+      color: #00cc33;
+      font-size: 1rem;
+    }
+
+    .features {
+      max-width: 1400px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(0, 20, 0, 0.6);
+      border: 1px solid #00ff41;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: rgba(0, 255, 65, 0.1);
+      transition: width 0.3s;
+    }
+
+    .feature-card:hover::before {
+      width: 100%;
+    }
+
+    .feature-card:hover {
+      border-color: #00ff41;
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+      transform: translateX(5px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #00ff41;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card h3::before {
+      content: '>> ';
+    }
+
+    .feature-card p {
+      color: #00cc33;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta {
+      max-width: 900px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .cta-box {
+      background: rgba(0, 20, 0, 0.6);
+      border: 2px solid #00ff41;
+      padding: 4rem 3rem;
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #00ff41;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+    }
+
+    .cta h2::before {
+      content: '# ';
+    }
+
+    .cta p {
+      font-size: 1.1rem;
+      color: #00cc33;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding: 2.5rem;
+      text-align: center;
+      border-top: 2px solid #00ff41;
+      background: rgba(0, 20, 0, 0.8);
+    }
+
+    footer p {
+      color: #00cc33;
+      font-size: 0.9rem;
+    }
+
+    footer p::before {
+      content: '// ';
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">D&D_ONLINE</div>
+      <ul class="nav-links">
+        <li><a href="#features">funkce</a></li>
+        <li><a href="#campaigns">kampane</a></li>
+        <li><a href="#tools">nastroje</a></li>
+        <li><a href="#about">o_platforme</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="#" class="btn btn-secondary">prihlasit</a>
+        <a href="#" class="btn btn-primary">registrace</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>D&D_ONLINE.exe</h1>
+    <div class="terminal-line">Initializing platform...</div>
+    <div class="terminal-line">Loading modules... [OK]</div>
+    <div class="terminal-line">Connecting to server... [OK]</div>
+    <p style="margin-top: 2rem;">
+      Kompletní nástroje pro hraní Dungeons & Dragons online.<br>
+      Character sheety, battle grid, dice roller a správa kampaní<br>
+      na jednom místě.
+    </p>
+    <div class="hero-buttons">
+      <a href="#" class="btn btn-primary">EXECUTE: start_game.sh</a>
+      <a href="#features" class="btn">./explore --features</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>campaigns.max</p>
+      </div>
+      <div class="stat-item">
+        <h2>∞</h2>
+        <p>characters.max</p>
+      </div>
+      <div class="stat-item">
+        <h2>FREE</h2>
+        <p>price.value</p>
+      </div>
+      <div class="stat-item">
+        <h2>24/7</h2>
+        <p>uptime.status</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <h3>character_sheets.mod</h3>
+      <p>Vytváření a správa postav s automatickým ukládáním. Sleduj statistiky, vybavení, levely a celou historii své postavy.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>battle_grid.sys</h3>
+      <p>Interaktivní battle grid s podporou vlastních map a tokenů. Přetahuj figurky, nahraj pozadí a všichni hráči vidí změny v reálném čase.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>dice_roller.exe</h3>
+      <p>Pokročilé házení kostkami se sdílením výsledků. Podpora všech typů kostek včetně automatických kritických hodů.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>campaign_manager.dll</h3>
+      <p>Vytvoř kampaň, pozvi hráče a začni hrát. DM má plnou kontrolu, hráči vidí jen to, co mají.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>realtime_sync.io</h3>
+      <p>Všechny akce se synchronizují okamžitě napříč všemi zařízeními. Žádné refreshování, žádné čekání.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>map_drawing.js</h3>
+      <p>Kresli přímo na bojovou mapu, ukazuj strategie, označuj pasti a komunikuj vizuálně s týmem.</p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-box">
+      <h2>READY TO START?</h2>
+      <p>
+        $ sudo create_account --free<br>
+        Vytvoř si účet zdarma a během minuty můžeš založit<br>
+        svou první kampaň nebo se připojit k existující.
+      </p>
+      <a href="#" class="btn btn-primary">./register.sh --now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>D&D_ONLINE © 2025 | status: operational</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

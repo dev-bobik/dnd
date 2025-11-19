@@ -795,6 +795,11 @@
     var db = firebase.database();
     var auth = firebase.auth();
   </script>
+  <!-- 3D Dice Libraries -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/cannon.min.js"></script>
+  <script src="libs/teal.js"></script>
+  <script src="dice.js"></script>
 </head>
 <body>
   <div id="sidebar">
@@ -909,111 +914,27 @@
       <div id="tokens-container"></div>
     </div>
 
-    <div id="diceRoller">
-      <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem;">🎲 Kostky</h3>
-      <div class="dice-selection">
-        <button class="dice-select-btn" data-dice="4" data-sides="4">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d4" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#e53935;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#c62828;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d4)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="36" font-weight="bold">4</text>
-          </svg>
-          <div class="dice-name">d4</div>
-          <div class="dice-count" id="count-d4">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="6" data-sides="6">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d6" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#42a5f5;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#1976d2;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d6)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="36" font-weight="bold">6</text>
-          </svg>
-          <div class="dice-name">d6</div>
-          <div class="dice-count" id="count-d6">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="8" data-sides="8">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d8" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#26a69a;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#00897b;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d8)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="36" font-weight="bold">8</text>
-          </svg>
-          <div class="dice-name">d8</div>
-          <div class="dice-count" id="count-d8">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="10" data-sides="10">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d10" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ff9800;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#f57c00;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d10)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="32" font-weight="bold">10</text>
-          </svg>
-          <div class="dice-name">d10</div>
-          <div class="dice-count" id="count-d10">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="12" data-sides="12">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d12" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ab47bc;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#8e24aa;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d12)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="32" font-weight="bold">12</text>
-          </svg>
-          <div class="dice-name">d12</div>
-          <div class="dice-count" id="count-d12">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="20" data-sides="20">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d20" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ffd54f;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#ffa726;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d20)" rx="8"/>
-            <text x="50" y="65" text-anchor="middle" fill="white" font-size="32" font-weight="bold">20</text>
-          </svg>
-          <div class="dice-name">d20</div>
-          <div class="dice-count" id="count-d20">0</div>
-        </button>
-        <button class="dice-select-btn" data-dice="100" data-sides="100">
-          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
-            <defs>
-              <linearGradient id="grad-d100" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#66bb6a;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#43a047;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <rect x="10" y="10" width="80" height="80" fill="url(#grad-d100)" rx="8"/>
-            <text x="50" y="62" text-anchor="middle" fill="white" font-size="26" font-weight="bold">100</text>
-          </svg>
-          <div class="dice-name">d100</div>
-          <div class="dice-count" id="count-d100">0</div>
-        </button>
-      </div>
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <button id="rollDiceBtn" style="flex: 1; background: linear-gradient(135deg, #8A2BE2 0%, #6A1BB2 100%); border: 2px solid #A040F0; padding: 0.8rem 1.5rem; font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer; color: white; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4); transition: all 0.3s ease;">🎲 Hodit kostkami</button>
-        <div id="diceResults" style="flex: 2; min-height: 40px;"></div>
+    <div id="diceRoller" style="background: rgba(20, 20, 20, 0.6); border: 2px solid rgba(138, 43, 226, 0.4); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; min-height: 350px; position: relative; max-width: 1400px; width: 100%;">
+      <div style="display: flex; gap: 1rem; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.2rem; color: #8A2BE2;">🎲 3D Hod Kostkami</h3>
+          <input type="text" id="textInput" 
+            spellcheck="false"
+            inputmode="none"
+            virtualkeyboardpolicy="manual"
+            value="1d20"
+            style="width: 100%; padding: 12px; background: rgba(26, 26, 29, 0.9); border: 2px solid #8A2BE2; color: #8A2BE2; font-size: 18px; text-align: center; border-radius: 5px; outline: none;">
+          <div id="result" style="color: #8A2BE2; text-align: center; font-size: 36px; font-weight: 700; text-shadow: 0 0 10px rgba(138, 43, 226, 0.5); min-height: 50px; padding: 1rem; background: rgba(138, 43, 226, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;"></div>
+          <button id="rollButton" onclick="diceMain.rollDice()" style="background: linear-gradient(135deg, #8A2BE2 0%, #6A1BB2 100%); color: white; border: 2px solid #A040F0; padding: 1rem 2rem; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4); width: 100%;">🎲 Hodit Kostkami</button>
+          <div id="swipeInstructions" style="display: none; color: #8A2BE2; text-align: center; font-size: 13px; text-shadow: 0 0 10px rgba(138, 43, 226, 0.8); background: rgba(0, 0, 0, 0.5); padding: 0.4rem; border-radius: 6px;">
+            Přejeď myší pro hod kostkami
+          </div>
+          <div id="diceLimit" style="display:none; background: rgba(197, 160, 89, 0.95); color: #0f0f10; padding: 10px 20px; border-radius: 10px; text-align: center; font-weight: 700;">
+            Příliš mnoho kostek! <br> 
+            [Limit: 20]
+          </div>
+        </div>
+        <div id="diceRollerCanvas" style="flex: 2; min-height: 320px; position: relative; border: 2px solid rgba(138, 43, 226, 0.3); border-radius: 8px; background: rgba(0, 0, 0, 0.3);"></div>
       </div>
     </div>
 
@@ -1501,6 +1422,8 @@ upload.addEventListener('change', (e) => {
       .then(() => {
         console.log("✅ Přihlášen anonymně");
         startRealtimeSync();
+        // Initialize 3D dice roller
+        diceMain.init();
       })
       .catch((error) => {
         console.error("❌ Chyba přihlášení:", error);
@@ -1717,248 +1640,99 @@ function toggleCategory(header) {
   }
 }
 
-// Dice Roller
-const diceCounts = {
-  d4: 0,
-  d6: 0,
-  d8: 0,
-  d10: 0,
-  d12: 0,
-  d20: 0,
-  d100: 0
-};
+// 3D Dice Roller
+var diceMain = (function() {
+    var that = {}; 
+    var elem = {}; 
+    var box = null;
 
-// Dice selection buttons
-document.querySelectorAll('.dice-select-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const dice = btn.getAttribute('data-dice');
-    const key = 'd' + dice;
-    diceCounts[key]++;
-    
-    const countElement = document.getElementById('count-' + key);
-    countElement.textContent = diceCounts[key];
-    countElement.classList.add('active');
-    btn.classList.add('active');
-  });
-  
-  // Right click to decrease
-  btn.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    const dice = btn.getAttribute('data-dice');
-    const key = 'd' + dice;
-    
-    if (diceCounts[key] > 0) {
-      diceCounts[key]--;
-      const countElement = document.getElementById('count-' + key);
-      countElement.textContent = diceCounts[key];
-      
-      if (diceCounts[key] === 0) {
-        countElement.classList.remove('active');
-        btn.classList.remove('active');
-      }
+    that.init = function() {
+        elem.container = document.getElementById('diceRollerCanvas');
+        elem.result = document.getElementById('result');
+        elem.textInput = document.getElementById('textInput'); 
+        elem.rollButton = document.getElementById('rollButton');
+        elem.diceLimit = document.getElementById('diceLimit');
+        elem.swipeInstructions = document.getElementById('swipeInstructions');
+
+        box = new DICE.dice_box(elem.container);
+        
+        // Bind swipe to canvas for drag-to-roll
+        box.bind_swipe(elem.container, before_roll, after_roll);
+
+        elem.textInput.addEventListener('input', function(ev) { 
+            box.setDice(elem.textInput.value);
+        });
+        
+        elem.textInput.addEventListener('change', function(ev) {
+            show_instructions(true);
+        });
+
+        box.setDice(elem.textInput.value);
+        show_instructions(true);
     }
-  });
-});
 
-// Roll dice
-const rollDiceBtn = document.getElementById('rollDiceBtn');
-const diceResults = document.getElementById('diceResults');
-
-rollDiceBtn.addEventListener('click', () => {
-  // Zkontroluj jestli jsou nějaké kostky vybrané
-  const totalDice = Object.values(diceCounts).reduce((a, b) => a + b, 0);
-  if (totalDice === 0) {
-    alert('Vyber nejdřív kostky!');
-    return;
-  }
-  
-  // Hodit kostkami
-  const rolls = [];
-  let total = 0;
-  let criticalSuccess = false;
-  let criticalFail = false;
-  let highRoll = false;
-  
-  for (let diceType in diceCounts) {
-    const count = diceCounts[diceType];
-    if (count === 0) continue;
-    
-    const sides = parseInt(diceType.substring(1));
-    for (let i = 0; i < count; i++) {
-      const roll = Math.floor(Math.random() * sides) + 1;
-      rolls.push({ type: diceType, value: roll, max: sides });
-      total += roll;
-      
-      // Detekce kritických hodů
-      if (roll === sides && sides === 20) criticalSuccess = true;
-      if (roll === 1 && sides === 20) criticalFail = true;
-      if (roll >= sides * 0.8 && sides >= 10) highRoll = true;
-    }
-  }
-  
-  // Uloz do Firebase
-  const rollData = {
-    rolls,
-    total,
-    criticalSuccess,
-    criticalFail,
-    highRoll,
-    timestamp: Date.now()
-  };
-  
-  db.ref('diceRolls').push(rollData);
-});
-
-// Poslouchej hody z Firebase
-db.ref('diceRolls').limitToLast(1).on('child_added', (snapshot) => {
-  const rollData = snapshot.val();
-  displayDiceRoll(rollData);
-  
-  // Smaž staré hody (uchovávej jen posledních 10)
-  db.ref('diceRolls').once('value', (snap) => {
-    const rolls = snap.val();
-    if (rolls && Object.keys(rolls).length > 10) {
-      const oldestKey = Object.keys(rolls)[0];
-      db.ref('diceRolls/' + oldestKey).remove();
-    }
-  });
-});
-
-function displayDiceRoll(rollData) {
-  diceResults.innerHTML = '';
-  
-  // Container pro kostky
-  const diceContainer = document.createElement('div');
-  diceContainer.className = 'dice-container';
-  
-  // Barvy pro kostky
-  const diceColors = {
-    'd4': ['#e53935', '#c62828'],
-    'd6': ['#42a5f5', '#1976d2'],
-    'd8': ['#26a69a', '#00897b'],
-    'd10': ['#ff9800', '#f57c00'],
-    'd12': ['#ab47bc', '#8e24aa'],
-    'd20': ['#ffd54f', '#ffa726'],
-    'd100': ['#66bb6a', '#43a047']
-  };
-  
-  // Vytvoř jednoduché 2D kostky s výsledky
-  rollData.rolls.forEach((roll, index) => {
-    setTimeout(() => {
-      const dieResult = document.createElement('div');
-      dieResult.className = 'die-result';
-      
-      const dieVisual = document.createElement('div');
-      dieVisual.className = `die-visual ${roll.type}`;
-      dieVisual.textContent = roll.value;
-      
-      // Aplikuj barevný gradient
-      const colors = diceColors[roll.type] || ['#c62828', '#c62828'];
-      dieVisual.style.background = `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
-      
-      // Aplikuj speciální efekty
-      if (roll.value === roll.max && roll.max === 20) {
-        dieVisual.classList.add('critical-success');
-        createSparkles(dieResult, 'gold');
-      } else if (roll.value === 1 && roll.max === 20) {
-        dieVisual.classList.add('critical-fail');
-      } else if (roll.value >= roll.max * 0.8 && roll.max >= 10) {
-        dieVisual.classList.add('high-roll');
-      }
-      
-      const dieLabel = document.createElement('div');
-      dieLabel.className = 'die-label';
-      dieLabel.textContent = roll.type;
-      
-      dieResult.appendChild(dieVisual);
-      dieResult.appendChild(dieLabel);
-      diceContainer.appendChild(dieResult);
-    }, index * 100);
-  });
-  
-  diceResults.appendChild(diceContainer);
-  
-  // Po animaci všech kostek zobraz celkový výsledek
-  setTimeout(() => {
-    // Celkový výsledek
-    const totalDiv = document.createElement('div');
-    totalDiv.className = 'result-total';
-    totalDiv.textContent = rollData.total;
-    
-    if (rollData.criticalSuccess) {
-      totalDiv.classList.add('critical-success');
-    } else if (rollData.criticalFail) {
-      totalDiv.classList.add('critical-fail');
-    } else if (rollData.highRoll) {
-      totalDiv.classList.add('high-roll');
+    that.rollDice = function() {
+        let inputVal = elem.textInput.value;
+        
+        // d100 handling
+        if(inputVal.includes('d100')) {
+            let dIdx = inputVal.indexOf('d100');
+            let numD100 = '';
+            for(let i = dIdx - 1; i >= 0; i--) {
+                let digit = inputVal[i];
+                if(!isNaN(digit)) {
+                    numD100 = digit + numD100;
+                } else {
+                    break;
+                }                
+            }
+            if(numD100 === '') numD100 = '1';
+            for(let i = 0; i < numD100; i++) {
+                inputVal += '+d9';
+            }
+        }
+        
+        let d = DICE.parse_notation(inputVal);
+        let numDice = d.set.length;
+        if(numDice > 20) {
+            elem.diceLimit.style.display = 'block';
+            setTimeout(() => {
+                elem.diceLimit.style.display = 'none';
+            }, 3000);
+        } else {
+            box.setDice(inputVal);
+            box.start_throw(before_roll, after_roll);
+        }
     }
     
-    diceResults.appendChild(totalDiv);
-    
-    // Detaily hodů
-    const detailsDiv = document.createElement('div');
-    detailsDiv.className = 'result-details';
-    
-    const rollsByType = {};
-    rollData.rolls.forEach(roll => {
-      if (!rollsByType[roll.type]) rollsByType[roll.type] = [];
-      rollsByType[roll.type].push(roll.value);
-    });
-    
-    const detailsText = Object.entries(rollsByType)
-      .map(([type, values]) => `${type}: [${values.join(', ')}]`)
-      .join(' | ');
-    
-    detailsDiv.textContent = detailsText;
-    
-    if (rollData.criticalSuccess) {
-      const critText = document.createElement('div');
-      critText.className = 'result-message';
-      critText.style.color = 'gold';
-      critText.textContent = '✨✨✨ CRITICAL SUCCESS! ✨✨✨';
-      diceResults.appendChild(critText);
-    } else if (rollData.criticalFail) {
-      const failText = document.createElement('div');
-      failText.className = 'result-message';
-      failText.style.color = '#ff4444';
-      failText.textContent = '💥💥 CRITICAL FAIL! 💥💥';
-      diceResults.appendChild(failText);
+    function show_instructions(show) {
+        if(show && elem.swipeInstructions) {
+            elem.swipeInstructions.style.display = 'block';
+            elem.rollButton.style.display = 'inline-block';
+        } else if(elem.swipeInstructions) {
+            elem.swipeInstructions.style.display = 'none';
+        }
     }
-    
-    diceResults.appendChild(detailsDiv);
-  }, rollData.rolls.length * 100 + 500);
-}
 
-function createSparkles(container, color) {
-  const sparklesDiv = document.createElement('div');
-  sparklesDiv.className = 'sparkles';
-  
-  for (let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle';
-      sparkle.textContent = '✨';
-      
-      const angle = (i / 8) * Math.PI * 2;
-      const distance = 60;
-      const tx = Math.cos(angle) * distance;
-      const ty = Math.sin(angle) * distance;
-      
-      sparkle.style.setProperty('--tx', tx + 'px');
-      sparkle.style.setProperty('--ty', ty + 'px');
-      sparkle.style.left = '50%';
-      sparkle.style.top = '50%';
-      sparkle.style.color = color;
-      
-      sparklesDiv.appendChild(sparkle);
-      
-      setTimeout(() => sparkle.remove(), 1000);
-    }, i * 50);
-  }
-  
-  container.appendChild(sparklesDiv);
-  setTimeout(() => sparklesDiv.remove(), 1500);
-}
+    function before_roll(notation) {
+        elem.rollButton.style.display = 'none';
+        show_instructions(false);
+        elem.result.innerHTML = 'Hází se...';       
+        return null;
+    }
+
+    function after_roll(notation) {
+        elem.rollButton.style.display = 'inline-block';
+        show_instructions(true);
+        if(notation.result[0] < 0) {
+            elem.result.innerHTML = "Kostky spadly ze stolu 😅";
+        } else {
+            elem.result.innerHTML = notation.resultString;
+        }
+    }
+
+    return that;
+}());
 
 // Context menu
 const contextMenu = document.getElementById('contextMenu');
