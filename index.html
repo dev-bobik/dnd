@@ -443,6 +443,185 @@
       50% { filter: drop-shadow(0 0 30px lime); transform: scale(1.15); }
     }
 
+    /* 3D Dice Styles */
+    .dice-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+      perspective: 1200px;
+    }
+
+    .die-wrapper {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      display: inline-block;
+    }
+
+    .die-scene {
+      width: 100%;
+      height: 100%;
+      perspective: 600px;
+    }
+
+    .die-cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: diceRoll3D 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .die-face {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+      border: 2px solid #333;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .die-face.front  { transform: rotateY(  0deg) translateZ(40px); }
+    .die-face.back   { transform: rotateY(180deg) translateZ(40px); }
+    .die-face.right  { transform: rotateY( 90deg) translateZ(40px); }
+    .die-face.left   { transform: rotateY(-90deg) translateZ(40px); }
+    .die-face.top    { transform: rotateX( 90deg) translateZ(40px); }
+    .die-face.bottom { transform: rotateX(-90deg) translateZ(40px); }
+
+    /* Dots for d6 */
+    .die-dots {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      padding: 12px;
+      gap: 4px;
+    }
+
+    .die-dots.dots-1 { grid-template: 1fr / 1fr; }
+    .die-dots.dots-2,
+    .die-dots.dots-3 { grid-template: repeat(3, 1fr) / 1fr; }
+    .die-dots.dots-4,
+    .die-dots.dots-5,
+    .die-dots.dots-6 { grid-template: repeat(3, 1fr) / repeat(2, 1fr); }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: #333;
+      border-radius: 50%;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .die-dots.dots-1 .dot { grid-area: 2 / 1; margin: auto; }
+    .die-dots.dots-2 .dot:nth-child(1) { grid-area: 1 / 1; }
+    .die-dots.dots-2 .dot:nth-child(2) { grid-area: 3 / 1; justify-self: end; }
+    .die-dots.dots-3 .dot:nth-child(1) { grid-area: 1 / 1; }
+    .die-dots.dots-3 .dot:nth-child(2) { grid-area: 2 / 1; justify-self: center; }
+    .die-dots.dots-3 .dot:nth-child(3) { grid-area: 3 / 1; justify-self: end; }
+    .die-dots.dots-4 .dot:nth-child(1) { grid-area: 1 / 1; }
+    .die-dots.dots-4 .dot:nth-child(2) { grid-area: 1 / 2; }
+    .die-dots.dots-4 .dot:nth-child(3) { grid-area: 3 / 1; }
+    .die-dots.dots-4 .dot:nth-child(4) { grid-area: 3 / 2; }
+    .die-dots.dots-5 .dot:nth-child(1) { grid-area: 1 / 1; }
+    .die-dots.dots-5 .dot:nth-child(2) { grid-area: 1 / 2; }
+    .die-dots.dots-5 .dot:nth-child(3) { grid-area: 2 / 1 / 2 / 3; justify-self: center; }
+    .die-dots.dots-5 .dot:nth-child(4) { grid-area: 3 / 1; }
+    .die-dots.dots-5 .dot:nth-child(5) { grid-area: 3 / 2; }
+    .die-dots.dots-6 .dot:nth-child(1) { grid-area: 1 / 1; }
+    .die-dots.dots-6 .dot:nth-child(2) { grid-area: 1 / 2; }
+    .die-dots.dots-6 .dot:nth-child(3) { grid-area: 2 / 1; }
+    .die-dots.dots-6 .dot:nth-child(4) { grid-area: 2 / 2; }
+    .die-dots.dots-6 .dot:nth-child(5) { grid-area: 3 / 1; }
+    .die-dots.dots-6 .dot:nth-child(6) { grid-area: 3 / 2; }
+
+    @keyframes diceRoll3D {
+      0% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(0px);
+      }
+      25% {
+        transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) translateY(-30px);
+      }
+      50% {
+        transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) translateY(-10px);
+      }
+      75% {
+        transform: rotateX(900deg) rotateY(540deg) rotateZ(270deg) translateY(-5px);
+      }
+      85% {
+        transform: rotateX(var(--final-x)) rotateY(var(--final-y)) rotateZ(var(--final-z)) translateY(-3px);
+      }
+      92% {
+        transform: rotateX(var(--final-x)) rotateY(var(--final-y)) rotateZ(var(--final-z)) translateY(0px);
+      }
+      96% {
+        transform: rotateX(var(--final-x)) rotateY(var(--final-y)) rotateZ(var(--final-z)) translateY(-2px);
+      }
+      100% {
+        transform: rotateX(var(--final-x)) rotateY(var(--final-y)) rotateZ(var(--final-z)) translateY(0px);
+      }
+    }
+
+    /* Special effects for critical rolls */
+    .die-wrapper.critical-success .die-cube {
+      animation: diceRoll3D 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+                 glowGold 1s ease-in-out infinite 1.5s;
+    }
+
+    .die-wrapper.critical-success .die-face {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      box-shadow: 0 0 30px gold, inset 0 0 20px rgba(255,215,0,0.3);
+    }
+
+    .die-wrapper.critical-fail .die-cube {
+      animation: diceRoll3D 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+                 shakeRed 0.6s ease-out 1.5s;
+    }
+
+    .die-wrapper.critical-fail .die-face {
+      background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+      color: white;
+      box-shadow: 0 0 30px red, inset 0 0 20px rgba(255,0,0,0.3);
+    }
+
+    .die-wrapper.critical-fail .dot {
+      background: white;
+    }
+
+    .die-wrapper.high-roll .die-cube {
+      animation: diceRoll3D 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+                 glowGreen 0.8s ease-out 1.5s;
+    }
+
+    .die-wrapper.high-roll .die-face {
+      background: linear-gradient(135deg, #44ff44 0%, #00cc00 100%);
+      box-shadow: 0 0 30px lime, inset 0 0 20px rgba(0,255,0,0.3);
+    }
+
+    @keyframes glowGold {
+      0%, 100% { filter: drop-shadow(0 0 20px gold); }
+      50% { filter: drop-shadow(0 0 40px gold) drop-shadow(0 0 60px gold); }
+    }
+
+    @keyframes shakeRed {
+      0%, 100% { transform: translate(0, 0); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 0); }
+      20%, 40%, 60%, 80% { transform: translate(5px, 0); }
+    }
+
+    @keyframes glowGreen {
+      0%, 100% { filter: drop-shadow(0 0 15px lime); }
+      50% { filter: drop-shadow(0 0 30px lime); }
+    }
+
     .sparkles {
       position: absolute;
       width: 100%;
@@ -1512,6 +1691,158 @@ db.ref('diceRolls').limitToLast(1).on('child_added', (snapshot) => {
   });
 });
 
+// Rotační mapy pro všechny typy kostek
+const diceRotations = {
+  d4: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 180, y: 0, z: 0 },
+    3: { x: 90, y: 0, z: 0 },
+    4: { x: -90, y: 0, z: 0 }
+  },
+  d6: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 0, y: 180, z: 0 },
+    3: { x: 0, y: -90, z: 0 },
+    4: { x: 0, y: 90, z: 0 },
+    5: { x: -90, y: 0, z: 0 },
+    6: { x: 90, y: 0, z: 0 }
+  },
+  d8: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 0, y: 90, z: 0 },
+    3: { x: 0, y: 180, z: 0 },
+    4: { x: 0, y: -90, z: 0 },
+    5: { x: 90, y: 0, z: 0 },
+    6: { x: -90, y: 0, z: 0 },
+    7: { x: 45, y: 45, z: 0 },
+    8: { x: -45, y: -45, z: 0 }
+  },
+  d10: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 0, y: 36, z: 0 },
+    3: { x: 0, y: 72, z: 0 },
+    4: { x: 0, y: 108, z: 0 },
+    5: { x: 0, y: 144, z: 0 },
+    6: { x: 0, y: 180, z: 0 },
+    7: { x: 0, y: -144, z: 0 },
+    8: { x: 0, y: -108, z: 0 },
+    9: { x: 0, y: -72, z: 0 },
+    10: { x: 0, y: -36, z: 0 }
+  },
+  d12: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 0, y: 60, z: 0 },
+    3: { x: 0, y: 120, z: 0 },
+    4: { x: 0, y: 180, z: 0 },
+    5: { x: 0, y: -120, z: 0 },
+    6: { x: 0, y: -60, z: 0 },
+    7: { x: 60, y: 0, z: 0 },
+    8: { x: 60, y: 60, z: 0 },
+    9: { x: 60, y: 120, z: 0 },
+    10: { x: -60, y: 0, z: 0 },
+    11: { x: -60, y: 60, z: 0 },
+    12: { x: -60, y: 120, z: 0 }
+  },
+  d20: {
+    1: { x: 0, y: 0, z: 0 },
+    2: { x: 0, y: 72, z: 0 },
+    3: { x: 0, y: 144, z: 0 },
+    4: { x: 0, y: -144, z: 0 },
+    5: { x: 0, y: -72, z: 0 },
+    6: { x: 36, y: 0, z: 0 },
+    7: { x: 36, y: 72, z: 0 },
+    8: { x: 36, y: 144, z: 0 },
+    9: { x: 36, y: -144, z: 0 },
+    10: { x: 36, y: -72, z: 0 },
+    11: { x: -36, y: 0, z: 0 },
+    12: { x: -36, y: 72, z: 0 },
+    13: { x: -36, y: 144, z: 0 },
+    14: { x: -36, y: -144, z: 0 },
+    15: { x: -36, y: -72, z: 0 },
+    16: { x: 72, y: 36, z: 0 },
+    17: { x: 72, y: -36, z: 0 },
+    18: { x: -72, y: 36, z: 0 },
+    19: { x: -72, y: -36, z: 0 },
+    20: { x: 180, y: 0, z: 0 }
+  },
+  d100: {
+    // d100 použije stejné rotace jako d10
+  }
+};
+
+// Kopíruj d10 rotace pro d100
+for (let i = 1; i <= 10; i++) {
+  diceRotations.d100[i * 10] = diceRotations.d10[i === 10 ? 10 : i];
+}
+
+function createDieFace(value, isD6 = false) {
+  const face = document.createElement('div');
+  face.className = 'die-face';
+  
+  if (isD6 && value >= 1 && value <= 6) {
+    // Pro d6 použij tečky
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = `die-dots dots-${value}`;
+    for (let i = 0; i < value; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dotsContainer.appendChild(dot);
+    }
+    face.appendChild(dotsContainer);
+  } else {
+    // Pro ostatní kostky použij čísla
+    face.textContent = value;
+  }
+  
+  return face;
+}
+
+function create3DDie(roll) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'die-wrapper';
+  
+  const scene = document.createElement('div');
+  scene.className = 'die-scene';
+  
+  const cube = document.createElement('div');
+  cube.className = 'die-cube';
+  
+  // Aplikuj speciální efekty
+  if (roll.value === roll.max && roll.max === 20) {
+    wrapper.classList.add('critical-success');
+    createSparkles(wrapper, 'gold');
+  } else if (roll.value === 1 && roll.max === 20) {
+    wrapper.classList.add('critical-fail');
+  } else if (roll.value >= roll.max * 0.8 && roll.max >= 10) {
+    wrapper.classList.add('high-roll');
+  }
+  
+  // Vytvoř 6 stěn kostky
+  const isD6 = roll.type === 'd6';
+  const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+  const faceValues = isD6 ? [1, 6, 3, 4, 5, 2] : [roll.value, roll.max, roll.value, roll.max, roll.value, roll.max];
+  
+  faces.forEach((position, index) => {
+    const face = createDieFace(faceValues[index], isD6);
+    face.classList.add(position);
+    cube.appendChild(face);
+  });
+  
+  // Nastav rotaci pro zobrazení správné hodnoty
+  const rotation = diceRotations[roll.type] && diceRotations[roll.type][roll.value] 
+    ? diceRotations[roll.type][roll.value]
+    : { x: 0, y: 0, z: 0 };
+  
+  cube.style.setProperty('--final-x', `${rotation.x}deg`);
+  cube.style.setProperty('--final-y', `${rotation.y}deg`);
+  cube.style.setProperty('--final-z', `${rotation.z}deg`);
+  
+  scene.appendChild(cube);
+  wrapper.appendChild(scene);
+  
+  return wrapper;
+}
+
 function displayDiceRoll(rollData) {
   diceResults.innerHTML = '';
   
@@ -1519,58 +1850,11 @@ function displayDiceRoll(rollData) {
   const diceContainer = document.createElement('div');
   diceContainer.className = 'dice-container';
   
-  // Vytvoř animované kostky s čísly
+  // Vytvoř 3D animované kostky
   rollData.rolls.forEach((roll, index) => {
     setTimeout(() => {
-      const dieWrapper = document.createElement('div');
-      dieWrapper.style.position = 'relative';
-      dieWrapper.style.display = 'inline-block';
-      
-      const die = document.createElement('div');
-      die.className = 'single-die';
-      // Použij různé emoji podle typu kostky pro vizuální rozmanitost
-      const diceEmojis = {
-        d4: '▲',
-        d6: '🎲',
-        d8: '🔸',
-        d10: '🔹',
-        d12: '⬢',
-        d20: '⬣',
-        d100: '🎯'
-      };
-      die.textContent = diceEmojis[roll.type] || '🎲';
-      die.style.animationDelay = `${index * 0.1}s`;
-      
-      // Aplikuj speciální efekty
-      if (roll.value === roll.max && roll.max === 20) {
-        die.classList.add('critical-success');
-        createSparkles(dieWrapper, 'gold');
-      } else if (roll.value === 1 && roll.max === 20) {
-        die.classList.add('critical-fail');
-      } else if (roll.value >= roll.max * 0.8 && roll.max >= 10) {
-        die.classList.add('high-roll');
-      }
-      
-      // Číslo na kostce
-      const valueSpan = document.createElement('div');
-      valueSpan.className = 'die-value';
-      valueSpan.textContent = roll.value;
-      valueSpan.style.animationDelay = `${index * 0.1 + 1.2}s`;
-      
-      if (roll.value === roll.max && roll.max === 20) {
-        valueSpan.style.color = 'gold';
-        valueSpan.style.textShadow = '0 0 20px gold, 2px 2px 0 rgba(0,0,0,0.5)';
-      } else if (roll.value === 1 && roll.max === 20) {
-        valueSpan.style.color = '#ff4444';
-        valueSpan.style.textShadow = '0 0 20px red, 2px 2px 0 rgba(0,0,0,0.5)';
-      } else if (roll.value >= roll.max * 0.8) {
-        valueSpan.style.color = '#44ff44';
-        valueSpan.style.textShadow = '0 0 15px lime, 2px 2px 0 rgba(0,0,0,0.5)';
-      }
-      
-      dieWrapper.appendChild(die);
-      dieWrapper.appendChild(valueSpan);
-      diceContainer.appendChild(dieWrapper);
+      const die = create3DDie(roll);
+      diceContainer.appendChild(die);
     }, index * 150);
   });
   
