@@ -493,22 +493,8 @@ const tokenSizeSelect = document.getElementById('tokenSizeSelect');
 tokenSizeSelect.addEventListener('change', (e) => {
   tokenSizeMultiplier = parseFloat(e.target.value);
   
-  document.querySelectorAll('.token').forEach(token => {
-    const baseSize = cellSize;
-    const newSize = baseSize * tokenSizeMultiplier;
-    token.style.width = `${newSize}px`;
-    token.style.height = `${newSize}px`;
-    
-    const tokenId = Object.entries(db._root._value.tokens || {}).find(([_, t]) => t.src === token.src)?.[0];
-    if (tokenId) {
-      db.ref('tokens/' + tokenId).update({
-        width: newSize,
-        height: newSize
-      });
-    }
-  });
-  
-  // Synchronizuj s Firebase
+  // Pouze synchronizuj nastavení do Firebase
+  // Neměň existující tokeny - velikost se použije jen pro nové tokeny
   db.ref('settings/tokenSizeMultiplier').set(tokenSizeMultiplier);
 });
 
