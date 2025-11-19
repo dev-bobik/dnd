@@ -247,10 +247,19 @@
       aspect-ratio: 1 / 1;
     }
 
+    #tokens-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
     .token {
       position: absolute;
       cursor: grab;
-      z-index: 2;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 8px rgba(138, 43, 226, 0.3));
       transition: all 0.2s ease;
       pointer-events: auto;
@@ -402,6 +411,7 @@
       <img id="background" />
       <canvas id="drawLayer"></canvas>
       <div id="grid"></div>
+      <div id="tokens-container"></div>
     </div>
   </div>
     <script>
@@ -579,6 +589,8 @@ upload.addEventListener('change', (e) => {
     const backgroundInput = document.getElementById('backgroundUpload');
     const background = document.getElementById('background');
 
+    const tokensContainer = document.getElementById('tokens-container');
+
     function startRealtimeSync() {
       db.ref('tokens').on('value', (snapshot) => {
         const tokens = snapshot.val() || {};
@@ -603,13 +615,13 @@ upload.addEventListener('change', (e) => {
           });
 
           img.addEventListener('dragend', (e) => {
-            const rect = grid.getBoundingClientRect();
+            const rect = tokensContainer.getBoundingClientRect();
             const newLeft = e.clientX - rect.left - offsetX;
             const newTop = e.clientY - rect.top - offsetY;
             db.ref('tokens/' + data.id).update({ left: newLeft, top: newTop });
           });
 
-          grid.appendChild(img);
+          tokensContainer.appendChild(img);
         }
       });
 
@@ -699,10 +711,10 @@ upload.addEventListener('change', (e) => {
       });
 
       // Grid dragover a drop
-      grid.addEventListener('dragover', (e) => e.preventDefault());
-      grid.addEventListener('drop', (e) => {
+      tokensContainer.addEventListener('dragover', (e) => e.preventDefault());
+      tokensContainer.addEventListener('drop', (e) => {
         e.preventDefault();
-        const rect = grid.getBoundingClientRect();
+        const rect = tokensContainer.getBoundingClientRect();
         const tokenId = e.dataTransfer.getData('tokenId'); 
         const src = e.dataTransfer.getData('src');          
 
@@ -743,8 +755,8 @@ deleteAllTokensBtn.addEventListener('click', () => {
     db.ref('tokens').remove()
       .then(() => {
         console.log('Všechny tokeny smazány');
-        // Odeber všechny tokeny z gridu i lokálně
-        document.querySelectorAll('#grid .token').forEach(t => t.remove());
+        // Odeber všechny tokeny i lokálně
+        document.querySelectorAll('.token').forEach(t => t.remove());
       })
       .catch(console.error);
   }
