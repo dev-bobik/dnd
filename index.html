@@ -502,6 +502,70 @@
      <button id="deleteAllTokensBtn" style="margin-top: auto;">
   Smazat všechny tokeny
 </button>
+
+    <div id="diceRoller">
+      <h3>🎲 Kostky</h3>
+      <div class="dice-controls">
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="4">d4</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="4">−</button>
+            <span class="dice-count-display" id="count-d4">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="4">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="6">d6</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="6">−</button>
+            <span class="dice-count-display" id="count-d6">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="6">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="8">d8</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="8">−</button>
+            <span class="dice-count-display" id="count-d8">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="8">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="10">d10</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="10">−</button>
+            <span class="dice-count-display" id="count-d10">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="10">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="12">d12</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="12">−</button>
+            <span class="dice-count-display" id="count-d12">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="12">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="20">d20</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="20">−</button>
+            <span class="dice-count-display" id="count-d20">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="20">+</button>
+          </div>
+        </div>
+        <div class="dice-type-row">
+          <button class="dice-type-btn" data-dice="100">d100</button>
+          <div class="dice-count-control">
+            <button class="dice-count-btn" data-action="decrease" data-dice="100">−</button>
+            <span class="dice-count-display" id="count-d100">0</span>
+            <button class="dice-count-btn" data-action="increase" data-dice="100">+</button>
+          </div>
+        </div>
+      </div>
+      <button id="rollDiceBtn">🎲 Hodit kostkami</button>
+      <div id="diceResults"></div>
+    </div>
   </div>
   <div id="main">
     <h1>DnD Fight Grid</h1>
@@ -1001,6 +1065,9 @@ upload.addEventListener('change', (e) => {
         }
       });
 
+      // Inicializace dice roller listener
+      // (Listener je již připojen výše, jen se ujistíme že Firebase je připojen)
+      
       // Biblioteka tokeny
       document.querySelectorAll('.library-token').forEach(token => {
         token.addEventListener('dragstart', (e) => {
@@ -1258,6 +1325,184 @@ function toggleCategory(header) {
     content.style.display = 'flex';
     header.classList.add('open');
   }
+}
+
+// Dice Roller
+const diceCounts = {
+  d4: 0,
+  d6: 0,
+  d8: 0,
+  d10: 0,
+  d12: 0,
+  d20: 0,
+  d100: 0
+};
+
+// Dice count controls
+document.querySelectorAll('.dice-count-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const action = btn.getAttribute('data-action');
+    const dice = btn.getAttribute('data-dice');
+    const key = 'd' + dice;
+    
+    if (action === 'increase') {
+      diceCounts[key]++;
+    } else if (action === 'decrease' && diceCounts[key] > 0) {
+      diceCounts[key]--;
+    }
+    
+    document.getElementById('count-' + key).textContent = diceCounts[key];
+  });
+});
+
+// Quick add dice type button
+document.querySelectorAll('.dice-type-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const dice = btn.getAttribute('data-dice');
+    const key = 'd' + dice;
+    diceCounts[key]++;
+    document.getElementById('count-' + key).textContent = diceCounts[key];
+  });
+});
+
+// Roll dice
+const rollDiceBtn = document.getElementById('rollDiceBtn');
+const diceResults = document.getElementById('diceResults');
+
+rollDiceBtn.addEventListener('click', () => {
+  // Zkontroluj jestli jsou nějaké kostky vybrané
+  const totalDice = Object.values(diceCounts).reduce((a, b) => a + b, 0);
+  if (totalDice === 0) {
+    alert('Vyber nejdřív kostky!');
+    return;
+  }
+  
+  // Hodit kostkami
+  const rolls = [];
+  let total = 0;
+  let criticalSuccess = false;
+  let criticalFail = false;
+  let highRoll = false;
+  
+  for (let diceType in diceCounts) {
+    const count = diceCounts[diceType];
+    if (count === 0) continue;
+    
+    const sides = parseInt(diceType.substring(1));
+    for (let i = 0; i < count; i++) {
+      const roll = Math.floor(Math.random() * sides) + 1;
+      rolls.push({ type: diceType, value: roll, max: sides });
+      total += roll;
+      
+      // Detekce kritických hodů
+      if (roll === sides && sides === 20) criticalSuccess = true;
+      if (roll === 1 && sides === 20) criticalFail = true;
+      if (roll >= sides * 0.8 && sides >= 10) highRoll = true;
+    }
+  }
+  
+  // Uloz do Firebase
+  const rollData = {
+    rolls,
+    total,
+    criticalSuccess,
+    criticalFail,
+    highRoll,
+    timestamp: Date.now()
+  };
+  
+  db.ref('diceRolls').push(rollData);
+});
+
+// Poslouchej hody z Firebase
+db.ref('diceRolls').limitToLast(1).on('child_added', (snapshot) => {
+  const rollData = snapshot.val();
+  displayDiceRoll(rollData);
+  
+  // Smaž staré hody (uchovávej jen posledních 10)
+  db.ref('diceRolls').once('value', (snap) => {
+    const rolls = snap.val();
+    if (rolls && Object.keys(rolls).length > 10) {
+      const oldestKey = Object.keys(rolls)[0];
+      db.ref('diceRolls/' + oldestKey).remove();
+    }
+  });
+});
+
+function displayDiceRoll(rollData) {
+  diceResults.innerHTML = '';
+  
+  // Animace kostky
+  const diceIcon = document.createElement('div');
+  diceIcon.className = 'dice-animation';
+  diceIcon.textContent = '🎲';
+  
+  if (rollData.criticalSuccess) {
+    diceIcon.classList.add('critical-success');
+  } else if (rollData.criticalFail) {
+    diceIcon.classList.add('critical-fail');
+  } else if (rollData.highRoll) {
+    diceIcon.classList.add('high-roll');
+  }
+  
+  diceResults.appendChild(diceIcon);
+  
+  // Po animaci zobraz výsledek
+  setTimeout(() => {
+    diceResults.innerHTML = '';
+    
+    // Celkový výsledek
+    const totalDiv = document.createElement('div');
+    totalDiv.className = 'result-total';
+    totalDiv.textContent = rollData.total;
+    
+    if (rollData.criticalSuccess) {
+      totalDiv.style.color = 'gold';
+      totalDiv.style.textShadow = '0 0 30px gold';
+    } else if (rollData.criticalFail) {
+      totalDiv.style.color = 'red';
+      totalDiv.style.textShadow = '0 0 30px red';
+    } else if (rollData.highRoll) {
+      totalDiv.style.color = 'lime';
+      totalDiv.style.textShadow = '0 0 20px lime';
+    }
+    
+    diceResults.appendChild(totalDiv);
+    
+    // Detaily hodů
+    const detailsDiv = document.createElement('div');
+    detailsDiv.className = 'result-details';
+    
+    const rollsByType = {};
+    rollData.rolls.forEach(roll => {
+      if (!rollsByType[roll.type]) rollsByType[roll.type] = [];
+      rollsByType[roll.type].push(roll.value);
+    });
+    
+    const detailsText = Object.entries(rollsByType)
+      .map(([type, values]) => `${type}: [${values.join(', ')}]`)
+      .join(' | ');
+    
+    detailsDiv.textContent = detailsText;
+    
+    if (rollData.criticalSuccess) {
+      const critText = document.createElement('div');
+      critText.style.color = 'gold';
+      critText.style.fontWeight = 'bold';
+      critText.style.marginTop = '0.5rem';
+      critText.textContent = '✨ CRITICAL SUCCESS! ✨';
+      diceResults.appendChild(critText);
+    } else if (rollData.criticalFail) {
+      const failText = document.createElement('div');
+      failText.style.color = 'red';
+      failText.style.fontWeight = 'bold';
+      failText.style.marginTop = '0.5rem';
+      failText.textContent = '💥 CRITICAL FAIL! 💥';
+      diceResults.appendChild(failText);
+    }
+    
+    diceResults.appendChild(detailsDiv);
+  }, 600);
 }
 
 // Context menu
