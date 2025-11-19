@@ -596,8 +596,15 @@ const drawCanvas = document.getElementById('drawLayer');
 const ctx = drawCanvas.getContext('2d');
 
 function resizeCanvas() {
-  drawCanvas.width = gridContainer.clientWidth;
-  drawCanvas.height = gridContainer.clientHeight;
+  const rect = gridContainer.getBoundingClientRect();
+  drawCanvas.width = rect.width;
+  drawCanvas.height = rect.height;
+  
+  // Překresli všechny tahy po resize
+  db.ref('drawing').once('value', (snapshot) => {
+    const strokes = snapshot.val() || {};
+    Object.values(strokes).forEach(drawStroke);
+  });
 }
 
 resizeCanvas();
