@@ -746,124 +746,9 @@
       border-color: rgba(138, 43, 226, 0.8);
     }
 
-    /* Dice styles - 3D with white lines like the images */
-    .dice {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      position: relative;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-    }
-
-    .dice span {
-      font-size: 1.5rem;
-      z-index: 10;
-      position: relative;
-    }
-
-    /* D4 - Red triangle with white lines */
-    .dice.d4 {
-      background: 
-        linear-gradient(135deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-135deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        radial-gradient(circle, #c62828 0%, #8e0000 100%);
-      clip-path: polygon(50% 8%, 95% 92%, 5% 92%);
-    }
-
-    /* D6 - Blue cube with white edges */
-    .dice.d6 {
-      background: 
-        linear-gradient(to right, white 2px, transparent 2px),
-        linear-gradient(to bottom, white 2px, transparent 2px),
-        linear-gradient(135deg, #2196f3 0%, #0d47a1 100%);
-      background-size: 50% 50%, 50% 50%, 100% 100%;
-      background-position: 0 0, 0 0, 0 0;
-      box-shadow: 
-        inset 2px 0 0 white,
-        inset 0 2px 0 white,
-        inset -2px 0 0 white,
-        inset 0 -2px 0 white,
-        0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    /* D8 - Teal octagon with white grid */
-    .dice.d8 {
-      background: 
-        linear-gradient(45deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-45deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(135deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-135deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        radial-gradient(circle, #00897b 0%, #004d40 100%);
-      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    }
-
-    /* D10 - Orange pentagon with white lines */
-    .dice.d10 {
-      background: 
-        linear-gradient(72deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-72deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(144deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-144deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        radial-gradient(circle, #ff9800 0%, #e65100 100%);
-      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    }
-
-    /* D12 - Purple dodecagon with white web */
-    .dice.d12 {
-      background: 
-        linear-gradient(30deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-30deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(60deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-60deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        radial-gradient(circle, #9c27b0 0%, #4a148c 100%);
-      clip-path: polygon(50% 0%, 75% 7%, 93% 25%, 100% 50%, 93% 75%, 75% 93%, 50% 100%, 25% 93%, 7% 75%, 0% 50%, 7% 25%, 25% 7%);
-    }
-
-    /* D20 - Red icosahedron with white triangular grid */
-    .dice.d20 {
-      background: 
-        linear-gradient(36deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-36deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(72deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-72deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(108deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-108deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(144deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(-144deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(0deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, white 48%, white 52%, transparent 52%),
-        radial-gradient(circle, #d32f2f 0%, #b71c1c 100%);
-      border-radius: 50%;
-      clip-path: circle(48%);
-    }
-
-    /* D100 - Yellow/orange circle with radial lines */
-    .dice.d100 {
-      background: 
-        repeating-conic-gradient(
-          from 0deg,
-          transparent 0deg,
-          transparent 8deg,
-          white 8deg,
-          white 10deg
-        ),
-        radial-gradient(circle, #fdd835 0%, #f57f17 100%);
-      border-radius: 50%;
-    }
-
-    .dice.d100 span {
-      font-size: 1.1rem;
+    /* SVG Dice Icons */
+    .dice-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
     .dice-name {
@@ -1031,37 +916,96 @@
       <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem;">🎲 Kostky</h3>
       <div class="dice-selection">
         <button class="dice-select-btn" data-dice="4" data-sides="4">
-          <span class="dice d4 _4"><span>4</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <polygon points="50,10 90,90 10,90" fill="#c62828" stroke="white" stroke-width="3"/>
+            <text x="50" y="65" text-anchor="middle" fill="white" font-size="32" font-weight="bold">4</text>
+          </svg>
           <div class="dice-name">d4</div>
           <div class="dice-count" id="count-d4">0</div>
         </button>
         <button class="dice-select-btn" data-dice="6" data-sides="6">
-          <span class="dice d6 _6"><span>6</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <rect x="10" y="10" width="80" height="80" fill="#1976d2" stroke="white" stroke-width="3"/>
+            <text x="50" y="63" text-anchor="middle" fill="white" font-size="32" font-weight="bold">6</text>
+          </svg>
           <div class="dice-name">d6</div>
           <div class="dice-count" id="count-d6">0</div>
         </button>
         <button class="dice-select-btn" data-dice="8" data-sides="8">
-          <span class="dice d8 _8"><span>8</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <g fill="#c62828">
+              <polygon points="50,5 85,30 85,70 50,95 15,70 15,30" fill="#c62828"/>
+              <line x1="50" y1="5" x2="50" y2="95" stroke="white" stroke-width="2.5"/>
+              <line x1="15" y1="30" x2="85" y2="70" stroke="white" stroke-width="2.5"/>
+              <line x1="85" y1="30" x2="15" y2="70" stroke="white" stroke-width="2.5"/>
+              <line x1="15" y1="30" x2="85" y2="30" stroke="white" stroke-width="2.5"/>
+              <line x1="15" y1="70" x2="85" y2="70" stroke="white" stroke-width="2.5"/>
+            </g>
+            <text x="50" y="60" text-anchor="middle" fill="white" font-size="28" font-weight="bold">8</text>
+          </svg>
           <div class="dice-name">d8</div>
           <div class="dice-count" id="count-d8">0</div>
         </button>
         <button class="dice-select-btn" data-dice="10" data-sides="10">
-          <span class="dice d10 _10"><span>10</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <g transform="rotate(45 50 50)">
+              <rect x="20" y="20" width="60" height="60" fill="#c62828"/>
+              <line x1="20" y1="50" x2="80" y2="50" stroke="white" stroke-width="2.5"/>
+              <line x1="50" y1="20" x2="50" y2="80" stroke="white" stroke-width="2.5"/>
+              <line x1="20" y1="20" x2="80" y2="80" stroke="white" stroke-width="2.5"/>
+              <line x1="80" y1="20" x2="20" y2="80" stroke="white" stroke-width="2.5"/>
+            </g>
+            <text x="50" y="60" text-anchor="middle" fill="white" font-size="26" font-weight="bold">10</text>
+          </svg>
           <div class="dice-name">d10</div>
           <div class="dice-count" id="count-d10">0</div>
         </button>
         <button class="dice-select-btn" data-dice="12" data-sides="12">
-          <span class="dice d12 _12"><span>12</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <g fill="#c62828">
+              <polygon points="50,8 71,18 88,35 92,58 80,78 58,92 42,92 20,78 8,58 12,35 29,18" fill="#c62828"/>
+              <line x1="50" y1="8" x2="50" y2="92" stroke="white" stroke-width="2.5"/>
+              <line x1="12" y1="35" x2="88" y2="35" stroke="white" stroke-width="2.5"/>
+              <line x1="12" y1="65" x2="88" y2="65" stroke="white" stroke-width="2.5" transform="translate(0 -7)"/>
+              <line x1="29" y1="18" x2="71" y2="82" stroke="white" stroke-width="2.5"/>
+              <line x1="71" y1="18" x2="29" y2="82" stroke="white" stroke-width="2.5"/>
+            </g>
+            <text x="50" y="60" text-anchor="middle" fill="white" font-size="26" font-weight="bold">12</text>
+          </svg>
           <div class="dice-name">d12</div>
           <div class="dice-count" id="count-d12">0</div>
         </button>
         <button class="dice-select-btn" data-dice="20" data-sides="20">
-          <span class="dice d20 _20"><span>20</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <g fill="#c62828">
+              <polygon points="50,5 71,15 85,30 92,50 85,70 71,85 50,95 29,85 15,70 8,50 15,30 29,15" fill="#c62828"/>
+              <line x1="50" y1="5" x2="50" y2="95" stroke="white" stroke-width="2.5"/>
+              <line x1="8" y1="50" x2="92" y2="50" stroke="white" stroke-width="2.5"/>
+              <line x1="15" y1="30" x2="85" y2="70" stroke="white" stroke-width="2.5"/>
+              <line x1="85" y1="30" x2="15" y2="70" stroke="white" stroke-width="2.5"/>
+              <line x1="29" y1="15" x2="71" y2="85" stroke="white" stroke-width="2.5"/>
+              <line x1="71" y1="15" x2="29" y2="85" stroke="white" stroke-width="2.5"/>
+              <polygon points="50,5 71,15 50,30 29,15" stroke="white" stroke-width="2" fill="none"/>
+              <polygon points="50,95 71,85 50,70 29,85" stroke="white" stroke-width="2" fill="none"/>
+            </g>
+            <text x="50" y="60" text-anchor="middle" fill="white" font-size="26" font-weight="bold">20</text>
+          </svg>
           <div class="dice-name">d20</div>
           <div class="dice-count" id="count-d20">0</div>
         </button>
         <button class="dice-select-btn" data-dice="100" data-sides="100">
-          <span class="dice d100 _100"><span>100</span></span>
+          <svg class="dice-icon" viewBox="0 0 100 100" width="50" height="50">
+            <circle cx="50" cy="50" r="42" fill="#c62828"/>
+            <g stroke="white" stroke-width="2.5" fill="none">
+              <line x1="50" y1="8" x2="50" y2="92"/>
+              <line x1="8" y1="50" x2="92" y2="50"/>
+              <line x1="20" y1="20" x2="80" y2="80"/>
+              <line x1="80" y1="20" x2="20" y2="80"/>
+              <circle cx="50" cy="50" r="30"/>
+              <circle cx="50" cy="50" r="18"/>
+            </g>
+            <text x="50" y="58" text-anchor="middle" fill="white" font-size="20" font-weight="bold">100</text>
+          </svg>
           <div class="dice-name">d100</div>
           <div class="dice-count" id="count-d100">0</div>
         </button>
