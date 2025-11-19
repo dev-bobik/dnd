@@ -282,11 +282,11 @@
       <label>Nahrát pozadí: <input type="file" id="backgroundUpload" accept="image/*" /></label>
       <label>Velikost polí:
         <select id="cellSizeSelect">
-          <option value="25">25px (40x40)</option>
-          <option value="33">33px (30x30)</option>
-          <option value="50" selected>50px (20x20)</option>
-          <option value="100">100px (10x10)</option>
-          <option value="200">200px (5x5)</option>
+          <option value="20">Minimální (20px)</option>
+          <option value="40">Malá (40px)</option>
+          <option value="60" selected>Střední (60px)</option>
+          <option value="80">Velká (80px)</option>
+          <option value="100">Maximální (100px)</option>
         </select>
       </label>
       <label><input type="checkbox" id="gridToggle" checked> Zobrazit mřížku</label>
@@ -330,8 +330,8 @@ function createGrid() {
   const columns = Math.floor(containerWidth / cellSize);
   const rows = Math.floor(containerHeight / cellSize);
 
-  grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+  grid.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
 
   for (let i = 0; i < columns * rows; i++) {
     const cell = document.createElement('div');
