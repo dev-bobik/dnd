@@ -171,6 +171,7 @@
       width: 1200px;
       max-width: 90vw;
       margin-bottom: 2rem;
+      transition: aspect-ratio 0.3s ease;
     }
 
     #background {
@@ -288,6 +289,16 @@
           <option value="200">200px (5x5)</option>
         </select>
       </label>
+      <label><input type="checkbox" id="gridToggle" checked> Zobrazit mřížku</label>
+      <label>Poměr stran:
+        <select id="aspectRatioSelect">
+          <option value="1/1" selected>Čtverec (1:1)</option>
+          <option value="16/9">Obdelník 16:9</option>
+          <option value="4/3">Obdelník 4:3</option>
+          <option value="3/2">Obdelník 3:2</option>
+          <option value="2/1">Široký 2:1</option>
+        </select>
+      </label>
     </div>
     <div id="controls">
       <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
@@ -353,6 +364,25 @@ cellSizeSelect.addEventListener('change', () => {
       });
     }
   });
+});
+
+// Grid toggle
+const gridToggle = document.getElementById('gridToggle');
+gridToggle.addEventListener('change', (e) => {
+  const grid = document.getElementById('grid');
+  if (e.target.checked) {
+    grid.style.display = 'grid';
+  } else {
+    grid.style.display = 'none';
+  }
+});
+
+// Aspect ratio
+const aspectRatioSelect = document.getElementById('aspectRatioSelect');
+aspectRatioSelect.addEventListener('change', (e) => {
+  const gridContainer = document.getElementById('grid-container');
+  gridContainer.style.aspectRatio = e.target.value;
+  createGrid();
 });
 
 createGrid();
