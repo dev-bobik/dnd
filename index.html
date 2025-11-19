@@ -538,6 +538,9 @@
       </label>
       <label>Barva ohraničení: <input type="color" id="tokenBorderColor" value="#8A2BE2"></label>
       <label><input type="checkbox" id="dmModeToggle"> DM režim</label>
+      <label id="gmOnlyLabel" style="display: none; background: rgba(255, 68, 68, 0.2); padding: 0.6rem 1rem; border-radius: 10px; border: 2px solid rgba(255, 68, 68, 0.5);">
+        <input type="checkbox" id="gmOnlyToggle"> Přidat jen pro DM (hráči neuvidí)
+      </label>
     </div>
     <div id="controls">
       <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
@@ -664,13 +667,39 @@ tokenSizeSelect.addEventListener('change', (e) => {
 
 // DM Mode
 let isDMMode = false;
+const DM_PASSWORD = 'dm123'; // Heslo pro DM režim
 const dmModeToggle = document.getElementById('dmModeToggle');
+
 dmModeToggle.addEventListener('change', (e) => {
-  isDMMode = e.target.checked;
-  // Každý uživatel má vlastní DM režim lokálně
-  // Není potřeba synchronizovat do Firebase
-  console.log('DM Mode:', isDMMode ? 'Zapnuto' : 'Vypnuto');
+  if (e.target.checked) {
+    // Pokus o zapnutí DM režimu - vyžaduje heslo
+    const password = prompt('Zadej DM heslo:');
+    if (password === DM_PASSWORD) {
+      isDMMode = true;
+      console.log('DM Mode: Zapnuto');
+      updateDMControls();
+    } else {
+      alert('Nesprávné heslo!');
+      e.target.checked = false;
+      isDMMode = false;
+    }
+  } else {
+    isDMMode = false;
+    console.log('DM Mode: Vypnuto');
+    updateDMControls();
+  }
 });
+
+function updateDMControls() {
+  const gmOnlyLabel = document.getElementById('gmOnlyLabel');
+  if (isDMMode) {
+    gmOnlyLabel.style.display = 'flex';
+  } else {
+    gmOnlyLabel.style.display = 'none';
+    // Vypni GM-only režim při vypnutí DM módu
+    document.getElementById('gmOnlyToggle').checked = false;
+  }
+}
 
 // Aspect ratio
 const aspectRatioSelect = document.getElementById('aspectRatioSelect');
@@ -745,6 +774,7 @@ upload.addEventListener('change', (e) => {
   const reader = new FileReader();
   reader.onload = function (event) {
     const id = Date.now();
+    const gmOnlyChecked = document.getElementById('gmOnlyToggle').checked;
     const tokenData = {
       id,
       src: event.target.result,
@@ -752,7 +782,8 @@ upload.addEventListener('change', (e) => {
       left: 0,
       width: cellSize,
       height: cellSize,
-      borderColor: currentTokenBorderColor
+      borderColor: currentTokenBorderColor,
+      gmOnly: gmOnlyChecked
     };
     db.ref('tokens/' + id).set(tokenData);
   };
@@ -773,6 +804,11 @@ upload.addEventListener('change', (e) => {
         document.querySelectorAll('.token').forEach(el => el.remove());
         for (let key in tokens) {
           const data = tokens[key];
+          
+          // Skryj GM-only tokeny pro hráče (ne-DM)
+          if (data.gmOnly && !isDMMode) {
+            continue;
+          }
           const wrapper = document.createElement('div');
           wrapper.style.position = 'absolute';
           wrapper.style.top = `${data.top}px`;
@@ -968,6 +1004,7 @@ upload.addEventListener('change', (e) => {
           });
         } else if (src) {
           const id = Date.now();
+          const gmOnlyChecked = document.getElementById('gmOnlyToggle').checked;
           db.ref('tokens/' + id).set({
             id,
             src,
@@ -975,7 +1012,8 @@ upload.addEventListener('change', (e) => {
             left: e.clientX - rect.left,
             width: cellSize * tokenSizeMultiplier,
             height: cellSize * tokenSizeMultiplier,
-            borderColor: currentTokenBorderColor
+            borderColor: currentTokenBorderColor,
+            gmOnly: gmOnlyChecked
           });
         }
       });
