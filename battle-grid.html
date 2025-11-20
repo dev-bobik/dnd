@@ -1,0 +1,1812 @@
+
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DnD Battle Grid</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+      background-attachment: fixed;
+      color: white;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(30, 144, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '🐉';
+      position: fixed;
+      font-size: 600px;
+      opacity: 0.02;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #sidebar {
+      width: 200px;
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(10px);
+      border-right: 2px solid rgba(138, 43, 226, 0.3);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      position: relative;
+      z-index: 1;
+      box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    #sidebar h3 {
+      color: #8A2BE2;
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    }
+
+    .library-token {
+      width: 50px;
+      height: 50px;
+      cursor: grab;
+      border: 2px solid rgba(138, 43, 226, 0.5);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .library-token:hover {
+      transform: scale(1.1);
+      border-color: #8A2BE2;
+      box-shadow: 0 5px 20px rgba(138, 43, 226, 0.6);
+    }
+
+    .category {
+      margin-bottom: 0.5rem;
+    }
+
+    .category-header {
+      color: #8A2BE2;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .category-header:hover {
+      background: rgba(138, 43, 226, 0.2);
+    }
+
+    .category-header span {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      margin-right: 0.5rem;
+    }
+
+    .category-header.open span {
+      transform: rotate(90deg);
+    }
+
+    .category-content {
+      padding-left: 1rem;
+      padding-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      padding-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+      overflow-y: auto;
+    }
+
+    #main h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #8A2BE2, #1E90FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+    }
+
+    #controls {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      background: rgba(15, 15, 15, 0.85);
+      backdrop-filter: blur(15px);
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      border: 2px solid rgba(138, 43, 226, 0.4);
+      flex-wrap: wrap;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    #controls label {
+      color: #e0e0e0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    #controls label:hover {
+      background: rgba(138, 43, 226, 0.1);
+    }
+
+    #controls select,
+    #controls input[type="file"] {
+      background: rgba(10, 10, 15, 0.95);
+      border: 1.5px solid rgba(138, 43, 226, 0.5);
+      color: #e0e0e0;
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    #controls select option {
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    #controls select:hover,
+    #controls input[type="file"]:hover {
+      border-color: #8A2BE2;
+      box-shadow: 0 0 12px rgba(138, 43, 226, 0.3);
+    }
+
+    #controls select:focus {
+      outline: none;
+      border-color: #8A2BE2;
+      box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+    }
+
+    #controls input[type="color"] {
+      width: 50px;
+      height: 38px;
+      border: 2px solid rgba(138, 43, 226, 0.5);
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    #controls input[type="color"]:hover {
+      border-color: #8A2BE2;
+      box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
+      transform: scale(1.05);
+    }
+
+    #controls input[type="range"] {
+      accent-color: #8A2BE2;
+      cursor: pointer;
+    }
+
+    #controls input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #8A2BE2;
+    }
+
+    #controls button {
+      background: linear-gradient(135deg, #8A2BE2 0%, #6B1EB3 100%);
+      border: none;
+      color: white;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #controls button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    #controls button:hover::before {
+      left: 100%;
+    }
+
+    #controls button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      background: linear-gradient(135deg, #9A3BF2 0%, #7B2EC3 100%);
+    }
+
+    #controls button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 10px rgba(138, 43, 226, 0.4);
+    }
+
+    #deleteAllTokensBtn {
+      background: linear-gradient(135deg, #c92a2a 0%, #a61e1e 100%) !important;
+      box-shadow: 0 4px 15px rgba(201, 42, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    #deleteAllTokensBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 25px rgba(201, 42, 42, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+      background: linear-gradient(135deg, #d93636 0%, #b62828 100%) !important;
+    }
+
+    #deleteAllTokensBtn:active {
+      transform: translateY(0);
+    }
+
+    #grid-container {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 1200px;
+      max-width: 90vw;
+      margin-bottom: 2rem;
+      transition: aspect-ratio 0.3s ease;
+    }
+
+    #background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #grid {
+      display: grid;
+      gap: 1px;
+      background-color: transparent;
+      border: 2px solid rgba(138, 43, 226, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+      pointer-events: none;
+    }
+    
+    #grid.visible {
+      pointer-events: auto;
+    }
+
+    .cell {
+      background-color: transparent; 
+      border: 1px solid rgba(0, 0, 0, 0.8); 
+      position: relative;
+      aspect-ratio: 1 / 1;
+    }
+
+    #tokens-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .token {
+      position: absolute;
+      cursor: grab;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+      pointer-events: auto;
+      border-radius: 8px;
+      border: 3px solid var(--token-border-color, #8A2BE2);
+      box-shadow: 0 0 15px var(--token-border-color, rgba(138, 43, 226, 0.4));
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .token.hover-active {
+      filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.8));
+      transform: scale(1.15);
+      z-index: 100;
+      box-shadow: 0 0 25px var(--token-border-color, rgba(138, 43, 226, 0.7));
+    }
+
+    .token:active {
+      cursor: grabbing;
+      transition: none;
+    }
+
+    #drawLayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3; /* nad tokeny */
+      touch-action: none; /* zabrání implicitním posunům při kreslení na dotykových zařízeních */
+      pointer-events: none; /* defaultně zakázat klikání, zapneme v draw módu */
+    }  
+
+
+    input[type="file"], select {
+      margin: 0.5rem 0;
+    }
+
+    .critical-success {
+      animation: criticalSuccess 1s ease-out infinite;
+    }
+
+    @keyframes criticalSuccess {
+      0%, 100% { 
+        filter: drop-shadow(0 0 20px gold) drop-shadow(0 0 40px gold);
+      }
+      25% { 
+        filter: drop-shadow(0 0 40px gold) drop-shadow(0 0 60px gold);
+        transform: scale(1.15) rotate(5deg);
+      }
+      50% { 
+        filter: drop-shadow(0 0 60px gold) drop-shadow(0 0 80px gold);
+        transform: scale(1.25) rotate(-5deg);
+      }
+      75% { 
+        filter: drop-shadow(0 0 40px gold) drop-shadow(0 0 60px gold);
+        transform: scale(1.15) rotate(3deg);
+      }
+    }
+
+    .critical-fail {
+      animation: criticalFail 0.6s ease-out;
+    }
+
+    @keyframes criticalFail {
+      0%, 100% { 
+        filter: drop-shadow(0 0 15px red) brightness(1);
+        transform: translateX(0) rotate(0deg);
+      }
+      10% { transform: translateX(-15px) rotate(-8deg); }
+      20% { transform: translateX(15px) rotate(8deg); }
+      30% { transform: translateX(-12px) rotate(-6deg); }
+      40% { transform: translateX(12px) rotate(6deg); }
+      50% { 
+        filter: drop-shadow(0 0 30px red) brightness(0.7);
+        transform: translateX(-8px) rotate(-4deg);
+      }
+      60% { transform: translateX(8px) rotate(4deg); }
+      70% { transform: translateX(-4px) rotate(-2deg); }
+      80% { transform: translateX(4px) rotate(2deg); }
+    }
+
+    .high-roll {
+      animation: highRoll 0.8s ease-out;
+    }
+
+    @keyframes highRoll {
+      0%, 100% { filter: drop-shadow(0 0 15px lime); }
+      50% { filter: drop-shadow(0 0 30px lime); transform: scale(1.15); }
+    }
+
+    /* Simple 2D Dice Styles */
+    .dice-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .die-result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      animation: dieAppear 0.3s ease-out;
+    }
+
+    @keyframes dieAppear {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .die-visual {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .die-visual.d4 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d6 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d8 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d10 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d12 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d20 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+    
+    .die-visual.d100 { 
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 8px;
+    }
+
+    .die-visual.critical-success {
+      background: linear-gradient(145deg, #ffd700 0%, #ffed4e 50%, #ffa500 100%);
+      border-color: #ffb900;
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(255,255,255,0.6),
+                  inset 0 -2px 4px rgba(0,0,0,0.1);
+      animation: dieAppear 0.3s ease-out, pulse 1s ease-in-out infinite;
+    }
+
+    .die-visual.critical-fail {
+      background: linear-gradient(145deg, #ff4444 0%, #cc0000 50%, #990000 100%);
+      border-color: #8b0000;
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(255,100,100,0.4),
+                  inset 0 -2px 4px rgba(0,0,0,0.2);
+    }
+
+    .die-visual.high-roll {
+      background: linear-gradient(145deg, #44ff44 0%, #00cc00 50%, #009900 100%);
+      border-color: #008800;
+      color: white;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 
+                  0 4px 12px rgba(0,0,0,0.3),
+                  inset 0 1px 2px rgba(100,255,100,0.5),
+                  inset 0 -2px 4px rgba(0,0,0,0.1);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .die-label {
+      font-size: 0.65rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .result-total {
+      margin-left: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: rgba(138, 43, 226, 0.2);
+      border-radius: 8px;
+      border: 2px solid rgba(138, 43, 226, 0.4);
+    }
+
+    .result-total.critical-success {
+      color: gold;
+      text-shadow: 0 0 20px gold, 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    #rollDiceBtn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6);
+      background: linear-gradient(135deg, #9A3BF2 0%, #7B2EC3 100%);
+    }
+
+    #rollDiceBtn:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 2px 10px rgba(138, 43, 226, 0.4);
+    }
+
+    .result-total.critical-fail {
+      color: #ff4444;
+      text-shadow: 0 0 20px red, 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .result-total.high-roll {
+      color: #44ff44;
+      text-shadow: 0 0 15px lime, 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .result-details {
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .result-message {
+      margin-left: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      animation: messageAppear 0.5s ease-out;
+    }
+
+    @keyframes messageAppear {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: sparkle 1s ease-out forwards;
+    }
+
+    @keyframes sparkle {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(var(--tx), var(--ty)) scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(0);
+      }
+    }
+
+    #contextMenu {
+      position: fixed;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(138, 43, 226, 0.5);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+      min-width: 180px;
+    }
+
+    #contextMenu.visible {
+      display: block;
+    }
+
+    .context-menu-item {
+      padding: 0.6rem 1rem;
+      color: #e0e0e0;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .context-menu-item:hover {
+      background: rgba(138, 43, 226, 0.3);
+      color: white;
+    }
+
+    .context-menu-separator {
+      height: 1px;
+      background: rgba(138, 43, 226, 0.3);
+      margin: 0.5rem 0;
+    }
+
+    /* Dice Roller Container */
+    #diceRoller {
+      background: rgba(20, 20, 20, 0.6);
+      border: 2px solid rgba(138, 43, 226, 0.4);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Dice Selector Styles */
+    .dice-selection {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dice-select-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(138, 43, 226, 0.3);
+      border-radius: 8px;
+      padding: 0.4rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      position: relative;
+      min-width: 60px;
+    }
+
+    .dice-select-btn:hover {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+    }
+
+    .dice-select-btn.active {
+      background: rgba(138, 43, 226, 0.3);
+      border-color: rgba(138, 43, 226, 0.8);
+    }
+
+    /* SVG Dice Icons */
+    .dice-icon {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .dice-name {
+      font-size: 0.7rem;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    .dice-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #8A2BE2;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .dice-count.active {
+      opacity: 1;
+    }
+  </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
+      authDomain: "heil-47dc3.firebaseapp.com",
+      databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
+      projectId: "heil-47dc3",
+      storageBucket: "heil-47dc3.appspot.com",
+      messagingSenderId: "204548727050",
+      appId: "1:204548727050:web:14066e11908a1fd97f9af3",
+      measurementId: "G-TJZZDNCV05"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+  </script>
+  <!-- 3D Dice Libraries -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/cannon.min.js"></script>
+  <script src="libs/teal.js"></script>
+  <script src="dice.js"></script>
+</head>
+<body>
+  <div id="sidebar">
+    <h3>Knihovna</h3>
+    
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Characters
+      </div>
+      <div class="category-content" style="display: none;">
+        <img src="https://i.redd.it/axxsavk41ot21.jpg" class="library-token" draggable="true">
+        <img src="https://media.discordapp.net/attachments/1328441040730062951/1438654654102900799/image.png?ex=691eeb4e&is=691d99ce&hm=85344af798a39fa464110c7196f13d2696596f07e605e44157a482d66901dced&=&format=webp&quality=lossless&width=886&height=930" class="library-token" draggable="true">
+        <img src="https://cdn.discordapp.com/attachments/1328441040730062951/1438606380553736334/image.png?ex=691ebe59&is=691d6cd9&hm=a2227a7ff2fde46d0f444bf00b1ed896df7b315f3917a20c960846f10e270b62&" class="library-token" draggable="true">
+        <img src="https://cdn.discordapp.com/attachments/1328441040730062951/1433534878124867704/rhae.webp?ex=691ec024&is=691d6ea4&hm=29ddfbfd8a8078afbe0b18883758cf6466fd93bd09e5580c67cea86e0f2bcc76&" class="library-token" draggable="true">
+        <img src="https://cdn.discordapp.com/attachments/1328441040730062951/1433534352796684308/image.png?ex=691ebfa7&is=691d6e27&hm=511d11cfa6a779440ccdfacda239c1ff7f2af4ad10722e573b28aca274bcf55e&" class="library-token" draggable="true">
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Objects
+      </div>
+      <div class="category-content" style="display: none;">
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Items
+      </div>
+      <div class="category-content" style="display: none;">
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Enemies
+      </div>
+      <div class="category-content" style="display: none;">
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span>▶</span> Others
+      </div>
+      <div class="category-content" style="display: none;">
+      </div>
+    </div>
+
+     <button id="deleteAllTokensBtn" style="margin-top: auto;">
+  Smazat všechny tokeny
+</button>
+  </div>
+  <div id="main">
+    <h1>DnD Fight Grid</h1>
+    <div id="controls">
+      <label>Nahrát tokeny: <input type="file" id="upload" accept="image/*" /></label>
+      <label>Nahrát pozadí: <input type="file" id="backgroundUpload" accept="image/*" /></label>
+      <label>Velikost polí:
+        <select id="cellSizeSelect">
+          <option value="20">Minimální (20px)</option>
+          <option value="40">Malá (40px)</option>
+          <option value="60" selected>Střední (60px)</option>
+          <option value="80">Velká (80px)</option>
+          <option value="100">Maximální (100px)</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="gridToggle" checked> Zobrazit mřížku</label>
+      <label>Poměr stran:
+        <select id="aspectRatioSelect">
+          <option value="1/1" selected>Čtverec (1:1)</option>
+          <option value="16/9">Obdelník 16:9</option>
+          <option value="4/3">Obdelník 4:3</option>
+          <option value="3/2">Obdelník 3:2</option>
+          <option value="2/1">Široký 2:1</option>
+        </select>
+      </label>
+      <label>Velikost tokenů:
+        <select id="tokenSizeSelect">
+          <option value="0.5">Malé (0.5x)</option>
+          <option value="1" selected>Normální (1x)</option>
+          <option value="1.5">Větší (1.5x)</option>
+          <option value="2">Velké (2x)</option>
+          <option value="3">Obrovské (3x)</option>
+        </select>
+      </label>
+      <label>Barva ohraničení: <input type="color" id="tokenBorderColor" value="#8A2BE2"></label>
+      <label><input type="checkbox" id="dmModeToggle"> DM režim</label>
+      <label id="gmOnlyLabel" style="display: none; background: rgba(255, 68, 68, 0.2); padding: 0.6rem 1rem; border-radius: 10px; border: 2px solid rgba(255, 68, 68, 0.5);">
+        <input type="checkbox" id="gmOnlyToggle"> Přidat jen pro DM (hráči neuvidí)
+      </label>
+    </div>
+    <div id="controls">
+      <label>Barva kreslení: <input type="color" id="drawColor" value="#ff0000"></label>
+      <label>Šířka pera: 
+        <input type="range" id="brushWidth" min="1" max="50" value="2" step="1">
+        <span id="brushWidthValue">2</span>px
+      </label>
+      <label id="gmOnlyDrawLabel" style="display: none; background: rgba(255, 68, 68, 0.2); padding: 0.6rem 1rem; border-radius: 10px; border: 2px solid rgba(255, 68, 68, 0.5);">
+        <input type="checkbox" id="gmOnlyDrawToggle"> Kreslit jen pro DM
+      </label>
+      <button id="toggleDraw">Režim kreslení</button>
+      <button id="undoDraw">Zpět (poslední kresba)</button>
+      <button id="clearCanvas">Smazat kresby</button>
+    </div>
+
+    <div id="grid-container">
+      <img id="background" />
+      <canvas id="drawLayer"></canvas>
+      <div id="grid"></div>
+      <div id="tokens-container"></div>
+    </div>
+
+    <div id="diceRoller" style="background: rgba(20, 20, 20, 0.6); border: 2px solid rgba(138, 43, 226, 0.4); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; min-height: 350px; position: relative; max-width: 1400px; width: 100%;">
+      <div style="display: flex; gap: 1rem; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.2rem; color: #8A2BE2;">🎲 3D Hod Kostkami</h3>
+          <input type="text" id="textInput" 
+            spellcheck="false"
+            inputmode="none"
+            virtualkeyboardpolicy="manual"
+            value="1d20"
+            style="width: 100%; padding: 12px; background: rgba(26, 26, 29, 0.9); border: 2px solid #8A2BE2; color: #8A2BE2; font-size: 18px; text-align: center; border-radius: 5px; outline: none;">
+          <div id="result" style="color: #8A2BE2; text-align: center; font-size: 36px; font-weight: 700; text-shadow: 0 0 10px rgba(138, 43, 226, 0.5); min-height: 50px; padding: 1rem; background: rgba(138, 43, 226, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;"></div>
+          <button id="rollButton" onclick="diceMain.rollDice()" style="background: linear-gradient(135deg, #8A2BE2 0%, #6A1BB2 100%); color: white; border: 2px solid #A040F0; padding: 1rem 2rem; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4); width: 100%;">🎲 Hodit Kostkami</button>
+          <div id="swipeInstructions" style="display: none; color: #8A2BE2; text-align: center; font-size: 13px; text-shadow: 0 0 10px rgba(138, 43, 226, 0.8); background: rgba(0, 0, 0, 0.5); padding: 0.4rem; border-radius: 6px;">
+            Přejeď myší pro hod kostkami
+          </div>
+          <div id="diceLimit" style="display:none; background: rgba(197, 160, 89, 0.95); color: #0f0f10; padding: 10px 20px; border-radius: 10px; text-align: center; font-weight: 700;">
+            Příliš mnoho kostek! <br> 
+            [Limit: 20]
+          </div>
+        </div>
+        <div id="diceRollerCanvas" style="flex: 2; min-height: 320px; position: relative; border: 2px solid rgba(138, 43, 226, 0.3); border-radius: 8px; background: rgba(0, 0, 0, 0.3);"></div>
+      </div>
+    </div>
+
+    <div id="contextMenu">
+      <div class="context-menu-item" style="font-weight: 600; color: #8A2BE2; pointer-events: none;">Velikost:</div>
+      <div style="padding: 0.5rem 1rem;">
+        <select id="menuResizeSelect" style="width: 100%; background: rgba(10, 10, 15, 0.95); border: 1.5px solid rgba(138, 43, 226, 0.5); color: #e0e0e0; padding: 0.5rem; border-radius: 8px; cursor: pointer;">
+          <option value="0.5">Malý (0.5x)</option>
+          <option value="1">Normální (1x)</option>
+          <option value="1.5">Větší (1.5x)</option>
+          <option value="2">Velký (2x)</option>
+          <option value="3">Obrovský (3x)</option>
+        </select>
+      </div>
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" style="font-weight: 600; color: #8A2BE2; pointer-events: none;">Barva ohraničení:</div>
+      <div style="padding: 0.5rem 1rem;">
+        <input type="color" id="menuColorPicker" style="width: 100%; height: 40px; border: 2px solid rgba(138, 43, 226, 0.5); border-radius: 8px; cursor: pointer; background: transparent;">
+      </div>
+      <div class="context-menu-separator"></div>
+      <div class="context-menu-item" id="menuDelete" style="color: #FF1744;">🗑️ Smazat</div>
+    </div>
+  </div>
+    <script>
+const grid = document.getElementById('grid');
+const gridContainer = document.getElementById('grid-container');
+const cellSizeSelect = document.getElementById('cellSizeSelect');
+let cellSize = parseInt(cellSizeSelect.value);
+
+function createGrid() {
+  grid.innerHTML = '';
+  
+  // Získej aktuální aspect ratio
+  const aspectRatioStr = gridContainer.style.aspectRatio || '1 / 1';
+  const [width, height] = aspectRatioStr.split('/').map(s => parseFloat(s.trim()));
+  
+  const containerWidth = gridContainer.clientWidth;
+  const containerHeight = gridContainer.clientHeight;
+  
+  // Počet políček podle poměru stran - cellSize určuje, kolik se jich vejde
+  // Spočítej tak, aby čtverce měly přibližně velikost cellSize
+  const columns = Math.round(containerWidth / cellSize);
+  const rows = Math.round(columns * (height / width)); // Zachovej poměr stran
+
+  // Čtvercové buňky
+  grid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  for (let i = 0; i < columns * rows; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    grid.appendChild(cell);
+  }
+}
+
+cellSizeSelect.addEventListener('change', () => {
+  const newCellSize = parseInt(cellSizeSelect.value);
+  const scale = newCellSize / cellSize;
+  cellSize = newCellSize;
+  createGrid();
+
+  document.querySelectorAll('.token').forEach(token => {
+    const newLeft = parseFloat(token.style.left) * scale;
+    const newTop = parseFloat(token.style.top) * scale;
+    token.style.width = `${cellSize}px`;
+    token.style.height = `${cellSize}px`;
+    token.style.left = `${newLeft}px`;
+    token.style.top = `${newTop}px`;
+
+    const tokenId = Object.entries(db._root._value.tokens || {}).find(([_, t]) => t.src === token.src)?.[0];
+    if (tokenId) {
+      db.ref('tokens/' + tokenId).update({
+        top: newTop,
+        left: newLeft,
+        width: cellSize,
+        height: cellSize
+      });
+    }
+  });
+});
+
+// Grid toggle
+const gridToggle = document.getElementById('gridToggle');
+gridToggle.addEventListener('change', (e) => {
+  const isVisible = e.target.checked;
+  const grid = document.getElementById('grid');
+  if (isVisible) {
+    grid.style.display = 'grid';
+    grid.classList.add('visible');
+  } else {
+    grid.style.display = 'none';
+    grid.classList.remove('visible');
+  }
+  // Synchronizuj s Firebase
+  db.ref('settings/gridVisible').set(isVisible);
+});
+
+// Token size
+let tokenSizeMultiplier = 1;
+const tokenSizeSelect = document.getElementById('tokenSizeSelect');
+tokenSizeSelect.addEventListener('change', (e) => {
+  tokenSizeMultiplier = parseFloat(e.target.value);
+  
+  // Pouze synchronizuj nastavení do Firebase
+  // Neměň existující tokeny - velikost se použije jen pro nové tokeny
+  db.ref('settings/tokenSizeMultiplier').set(tokenSizeMultiplier);
+});
+
+// DM Mode
+let isDMMode = false;
+const DM_PASSWORD = 'dm123'; // Heslo pro DM režim
+const dmModeToggle = document.getElementById('dmModeToggle');
+
+dmModeToggle.addEventListener('change', (e) => {
+  if (e.target.checked) {
+    // Pokus o zapnutí DM režimu - vyžaduje heslo
+    const password = prompt('Zadej DM heslo:');
+    if (password === DM_PASSWORD) {
+      isDMMode = true;
+      console.log('DM Mode: Zapnuto');
+      updateDMControls();
+    } else {
+      alert('Nesprávné heslo!');
+      e.target.checked = false;
+      isDMMode = false;
+    }
+  } else {
+    isDMMode = false;
+    console.log('DM Mode: Vypnuto');
+    updateDMControls();
+  }
+});
+
+function updateDMControls() {
+  const gmOnlyLabel = document.getElementById('gmOnlyLabel');
+  const gmOnlyDrawLabel = document.getElementById('gmOnlyDrawLabel');
+  if (isDMMode) {
+    gmOnlyLabel.style.display = 'flex';
+    gmOnlyDrawLabel.style.display = 'flex';
+  } else {
+    gmOnlyLabel.style.display = 'none';
+    gmOnlyDrawLabel.style.display = 'none';
+    // Vypni GM-only režim při vypnutí DM módu
+    document.getElementById('gmOnlyToggle').checked = false;
+    document.getElementById('gmOnlyDrawToggle').checked = false;
+  }
+}
+
+// Aspect ratio
+const aspectRatioSelect = document.getElementById('aspectRatioSelect');
+aspectRatioSelect.addEventListener('change', (e) => {
+  const aspectRatio = e.target.value;
+  const gridContainer = document.getElementById('grid-container');
+  gridContainer.style.aspectRatio = aspectRatio;
+  createGrid();
+  setTimeout(resizeCanvas, 100);
+  // Synchronizuj s Firebase
+  db.ref('settings/aspectRatio').set(aspectRatio);
+});
+
+// Synchronizace nastavení z Firebase
+db.ref('settings/gridVisible').on('value', (snapshot) => {
+  const isVisible = snapshot.val();
+  if (isVisible !== null) {
+    gridToggle.checked = isVisible;
+    const grid = document.getElementById('grid');
+    grid.style.display = isVisible ? 'grid' : 'none';
+    if (isVisible) {
+      grid.classList.add('visible');
+    } else {
+      grid.classList.remove('visible');
+    }
+  }
+});
+
+db.ref('settings/tokenSizeMultiplier').on('value', (snapshot) => {
+  const multiplier = snapshot.val();
+  if (multiplier !== null) {
+    tokenSizeMultiplier = multiplier;
+    tokenSizeSelect.value = multiplier.toString();
+  }
+});
+
+db.ref('settings/aspectRatio').on('value', (snapshot) => {
+  const aspectRatio = snapshot.val();
+  if (aspectRatio) {
+    aspectRatioSelect.value = aspectRatio;
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.style.aspectRatio = aspectRatio;
+    createGrid();
+    setTimeout(resizeCanvas, 100);
+  }
+});
+
+db.ref('settings/tokenBorderColor').on('value', (snapshot) => {
+  const color = snapshot.val();
+  if (color) {
+    currentTokenBorderColor = color;
+    tokenBorderColorInput.value = color;
+  }
+});
+
+createGrid();
+
+const upload = document.getElementById('upload');
+
+const tokenBorderColorInput = document.getElementById('tokenBorderColor');
+let currentTokenBorderColor = '#8A2BE2';
+
+tokenBorderColorInput.addEventListener('change', (e) => {
+  currentTokenBorderColor = e.target.value;
+  db.ref('settings/tokenBorderColor').set(currentTokenBorderColor);
+});
+
+upload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const id = Date.now();
+    const gmOnlyChecked = document.getElementById('gmOnlyToggle').checked;
+    const tokenData = {
+      id,
+      src: event.target.result,
+      top: 0,
+      left: 0,
+      width: cellSize,
+      height: cellSize,
+      borderColor: currentTokenBorderColor,
+      gmOnly: gmOnlyChecked
+    };
+    db.ref('tokens/' + id).set(tokenData);
+  };
+
+  reader.readAsDataURL(file);
+  e.target.value = "";
+});
+
+
+    const backgroundInput = document.getElementById('backgroundUpload');
+    const background = document.getElementById('background');
+
+    const tokensContainer = document.getElementById('tokens-container');
+
+    function startRealtimeSync() {
+      db.ref('tokens').on('value', (snapshot) => {
+        const tokens = snapshot.val() || {};
+        document.querySelectorAll('.token').forEach(el => el.remove());
+        for (let key in tokens) {
+          const data = tokens[key];
+          
+          // Skryj GM-only tokeny pro hráče (ne-DM)
+          if (data.gmOnly && !isDMMode) {
+            continue;
+          }
+          const wrapper = document.createElement('div');
+          wrapper.style.position = 'absolute';
+          wrapper.style.top = `${data.top}px`;
+          wrapper.style.left = `${data.left}px`;
+          wrapper.style.width = `${data.width}px`;
+          wrapper.style.height = `${data.height}px`;
+          wrapper.style.transition = 'top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+          
+          const img = document.createElement('img');
+          img.src = data.src;
+          img.classList.add('token');
+          img.draggable = true;
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.position = 'relative';
+          img.style.top = '0';
+          img.style.left = '0';
+          img.setAttribute('data-token-id', key);
+          
+          if (data.borderColor) {
+            img.style.setProperty('--token-border-color', data.borderColor);
+          }
+
+          if (data.hovered) {
+            img.classList.add('hover-active');
+          }
+
+          let offsetX, offsetY;
+          let isDragging = false;
+
+          img.addEventListener('mouseenter', () => {
+            db.ref('tokens/' + data.id + '/hovered').set(true);
+          });
+
+          img.addEventListener('mouseleave', () => {
+            db.ref('tokens/' + data.id + '/hovered').set(false);
+          });
+
+          img.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, data.id);
+          });
+
+          img.addEventListener('dragstart', (e) => {
+            isDragging = true;
+            wrapper.style.transition = 'none';
+            offsetX = e.offsetX;
+            offsetY = e.offsetY;
+            e.dataTransfer.setData('tokenId', data.id);
+          });
+
+          img.addEventListener('dragend', (e) => {
+            setTimeout(() => {
+              isDragging = false;
+              wrapper.style.transition = 'top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            }, 50);
+            const rect = tokensContainer.getBoundingClientRect();
+            const newLeft = e.clientX - rect.left - offsetX;
+            const newTop = e.clientY - rect.top - offsetY;
+            db.ref('tokens/' + data.id).update({ left: newLeft, top: newTop });
+          });
+
+          wrapper.appendChild(img);
+          tokensContainer.appendChild(wrapper);
+        }
+      });
+
+      // Sledování hover stavu tokenů
+      db.ref('tokens').on('child_changed', (snapshot) => {
+        const data = snapshot.val();
+        const tokenId = snapshot.key;
+        const wrappers = Array.from(tokensContainer.children);
+        const wrapper = wrappers.find(w => {
+          const img = w.querySelector('.token');
+          return img && img.getAttribute('data-token-id') === tokenId;
+        });
+        
+        if (wrapper) {
+          const img = wrapper.querySelector('.token');
+          if (data.hovered) {
+            img.classList.add('hover-active');
+          } else {
+            img.classList.remove('hover-active');
+          }
+        }
+      });
+
+      db.ref('background').on('value', (snapshot) => {
+        if (snapshot.val()) {
+          background.src = snapshot.val();
+        }
+      });
+
+      backgroundInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const imageUrl = event.target.result;
+          const img = new Image();
+          img.onload = function() {
+            // Automaticky nastav poměr stran podle obrázku
+            const aspectRatio = img.width / img.height;
+            gridContainer.style.aspectRatio = `${img.width} / ${img.height}`;
+            
+            // Aktualizuj select s poměrem stran
+            const aspectRatioSelect = document.getElementById('aspectRatioSelect');
+            let matchFound = false;
+            
+            // Zkontroluj, jestli odpovídá nějakému preset poměru
+            const presets = {
+              '1/1': 1,
+              '16/9': 16/9,
+              '4/3': 4/3,
+              '3/2': 3/2,
+              '2/1': 2
+            };
+            
+            for (let [key, value] of Object.entries(presets)) {
+              if (Math.abs(aspectRatio - value) < 0.1) {
+                aspectRatioSelect.value = key;
+                matchFound = true;
+                break;
+              }
+            }
+            
+            if (!matchFound) {
+              // Přidej custom option
+              const customOption = document.createElement('option');
+              customOption.value = `${img.width}/${img.height}`;
+              customOption.text = `Vlastní (${img.width}:${img.height})`;
+              customOption.selected = true;
+              aspectRatioSelect.appendChild(customOption);
+            }
+            
+            // Synchronizuj aspect ratio do Firebase
+            db.ref('settings/aspectRatio').set(aspectRatioSelect.value);
+            
+            createGrid();
+            setTimeout(resizeCanvas, 100);
+          };
+          img.src = imageUrl;
+          background.src = imageUrl;
+          db.ref('background').set(imageUrl);
+        };
+
+        reader.readAsDataURL(file);
+        e.target.value = "";
+      });
+
+      // Kreslení - načítej strokes z databáze
+      db.ref('drawing').on('child_added', (snapshot) => {
+        const stroke = snapshot.val();
+        const timestamp = snapshot.key;
+        if (stroke && stroke.points) {
+          // Skryj GM-only kresby pro hráče (ne-DM)
+          if (stroke.gmOnly && !isDMMode) {
+            return;
+          }
+          drawStroke(stroke);
+          // Přidej timestamp do historie, pokud tam ještě není
+          if (!drawingHistory.includes(timestamp)) {
+            drawingHistory.push(timestamp);
+          }
+        }
+      });
+
+      db.ref('drawing').on('value', (snapshot) => {
+        if (!snapshot.val()) {
+          ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+          drawingHistory = [];
+        } else {
+          // Překresli vše s respektováním GM-only filtru
+          ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+          const strokes = snapshot.val() || {};
+          Object.entries(strokes).forEach(([timestamp, stroke]) => {
+            if (stroke.gmOnly && !isDMMode) {
+              return;
+            }
+            drawStroke(stroke);
+          });
+        }
+      });
+
+      // Inicializace dice roller listener
+      // (Listener je již připojen výše, jen se ujistíme že Firebase je připojen)
+      
+      // Biblioteka tokeny
+      document.querySelectorAll('.library-token').forEach(token => {
+        token.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('src', token.src);
+        });
+      });
+
+      // Grid dragover a drop
+      tokensContainer.addEventListener('dragover', (e) => e.preventDefault());
+      tokensContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const rect = tokensContainer.getBoundingClientRect();
+        const tokenId = e.dataTransfer.getData('tokenId'); 
+        const src = e.dataTransfer.getData('src');          
+
+        if (tokenId) {
+          const newLeft = e.clientX - rect.left;
+          const newTop = e.clientY - rect.top;
+          db.ref('tokens/' + tokenId).update({
+            left: newLeft,
+            top: newTop
+          });
+        } else if (src) {
+          const id = Date.now();
+          const gmOnlyChecked = document.getElementById('gmOnlyToggle').checked;
+          db.ref('tokens/' + id).set({
+            id,
+            src,
+            top: e.clientY - rect.top,
+            left: e.clientX - rect.left,
+            width: cellSize * tokenSizeMultiplier,
+            height: cellSize * tokenSizeMultiplier,
+            borderColor: currentTokenBorderColor,
+            gmOnly: gmOnlyChecked
+          });
+        }
+      });
+    }
+
+    firebase.auth().signInAnonymously()
+      .then(() => {
+        console.log("✅ Přihlášen anonymně");
+        startRealtimeSync();
+        // Initialize 3D dice roller
+        diceMain.init();
+      })
+      .catch((error) => {
+        console.error("❌ Chyba přihlášení:", error);
+      });
+
+    const deleteAllTokensBtn = document.getElementById('deleteAllTokensBtn');
+
+deleteAllTokensBtn.addEventListener('click', () => {
+  if (confirm('Opravdu chcete smazat všechny tokeny z mřížky?')) {
+    db.ref('tokens').remove()
+      .then(() => {
+        console.log('Všechny tokeny smazány');
+        // Odeber všechny tokeny i lokálně
+        document.querySelectorAll('.token').forEach(t => t.remove());
+      })
+      .catch(console.error);
+  }
+});
+
+
+const drawCanvas = document.getElementById('drawLayer');
+const ctx = drawCanvas.getContext('2d');
+
+function resizeCanvas() {
+  // Použij rozměry přímo z gridu, ne z containeru
+  const rect = grid.getBoundingClientRect();
+  drawCanvas.width = rect.width;
+  drawCanvas.height = rect.height;
+  
+  // Nastav také CSS rozměry
+  drawCanvas.style.width = rect.width + 'px';
+  drawCanvas.style.height = rect.height + 'px';
+  
+  // Překresli všechny tahy po resize
+  db.ref('drawing').once('value', (snapshot) => {
+    const strokes = snapshot.val() || {};
+    Object.entries(strokes).forEach(([timestamp, stroke]) => {
+      if (stroke.gmOnly && !isDMMode) {
+        return;
+      }
+      drawStroke(stroke);
+    });
+  });
+}
+
+// Resize po vytvoření gridu
+setTimeout(resizeCanvas, 100);
+
+window.addEventListener('resize', () => {
+  createGrid();
+  setTimeout(resizeCanvas, 100);
+});
+
+let drawing = false;
+let drawMode = false;
+let currentStroke = [];
+let drawingHistory = []; // Pro sledování pořadí kreseb
+
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+const drawColorInput = document.getElementById('drawColor');
+const toggleDrawBtn = document.getElementById('toggleDraw');
+const undoDrawBtn = document.getElementById('undoDraw');
+const clearCanvasBtn = document.getElementById('clearCanvas');
+const brushWidthInput = document.getElementById('brushWidth');
+const brushWidthValue = document.getElementById('brushWidthValue');
+
+brushWidthInput.addEventListener('input', (e) => {
+  brushWidthValue.textContent = e.target.value;
+});
+
+toggleDrawBtn.addEventListener('click', () => {
+  drawMode = !drawMode;
+  drawCanvas.style.pointerEvents = drawMode ? 'auto' : 'none';
+  tokensContainer.style.pointerEvents = drawMode ? 'none' : 'auto';
+  document.querySelectorAll('.token').forEach(t => {
+    t.style.pointerEvents = drawMode ? 'none' : 'auto';
+  });
+  toggleDrawBtn.textContent = drawMode ? 'Vypnout kreslení' : 'Režim kreslení';
+});
+
+undoDrawBtn.addEventListener('click', () => {
+  if (drawingHistory.length === 0) return;
+  
+  // Odeber poslední timestamp z historie
+  const lastTimestamp = drawingHistory.pop();
+  
+  // Smaž z Firebase
+  db.ref('drawing/' + lastTimestamp).remove();
+  
+  // Překresli canvas bez poslední kresby
+  ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  db.ref('drawing').once('value', (snapshot) => {
+    const strokes = snapshot.val() || {};
+    Object.entries(strokes).forEach(([timestamp, stroke]) => {
+      if (stroke.gmOnly && !isDMMode) {
+        return;
+      }
+      drawStroke(stroke);
+    });
+  });
+});
+
+clearCanvasBtn.addEventListener('click', () => {
+  ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  db.ref('drawing').set(null);
+  drawingHistory = [];
+});
+
+function drawStroke(stroke) {
+  if (stroke.points.length < 2) return;
+  ctx.strokeStyle = stroke.color;
+  ctx.lineWidth = stroke.width;
+  ctx.beginPath();
+  ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+  for (let i = 1; i < stroke.points.length; i++) {
+    ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+  }
+  ctx.stroke();
+}
+
+drawCanvas.addEventListener('mousedown', (e) => {
+  if (!drawMode) return;
+  drawing = true;
+  const rect = drawCanvas.getBoundingClientRect();
+  currentStroke = {
+    color: drawColorInput.value,
+    width: parseInt(brushWidthInput.value),
+    points: [{ x: e.clientX - rect.left, y: e.clientY - rect.top }]
+  };
+});
+
+drawCanvas.addEventListener('mousemove', (e) => {
+  if (!drawMode || !drawing) return;
+  const rect = drawCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  currentStroke.points.push({ x, y });
+  
+  drawStroke(currentStroke);
+});
+
+drawCanvas.addEventListener('mouseup', () => {
+  if (!drawing) return;
+  drawing = false;
+  if (currentStroke.points.length > 1) {
+    const timestamp = Date.now();
+    const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
+    currentStroke.gmOnly = gmOnlyDrawChecked;
+    db.ref('drawing/' + timestamp).set(currentStroke);
+    drawingHistory.push(timestamp);
+  }
+});
+
+drawCanvas.addEventListener('mouseleave', () => {
+  if (drawing) {
+    drawing = false;
+  }
+});
+
+function getTouchPos(touchEvent) {
+  const rect = drawCanvas.getBoundingClientRect();
+  const t = touchEvent.touches[0] || touchEvent.changedTouches[0];
+  return {
+    x: t.clientX - rect.left,
+    y: t.clientY - rect.top
+  };
+}
+
+drawCanvas.addEventListener('touchstart', (e) => {
+  if (!drawMode) return;
+  e.preventDefault();
+  const pos = getTouchPos(e);
+  drawing = true;
+  currentStroke = {
+    color: drawColorInput.value,
+    width: parseInt(brushWidthInput.value),
+    points: [pos]
+  };
+});
+
+drawCanvas.addEventListener('touchmove', (e) => {
+  if (!drawMode || !drawing) return;
+  e.preventDefault();
+  const pos = getTouchPos(e);
+  currentStroke.points.push(pos);
+  drawStroke(currentStroke);
+});
+
+drawCanvas.addEventListener('touchend', (e) => {
+  if (!drawing) return;
+  e.preventDefault();
+  drawing = false;
+  if (currentStroke.points.length > 1) {
+    const timestamp = Date.now();
+    const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
+    currentStroke.gmOnly = gmOnlyDrawChecked;
+    db.ref('drawing/' + timestamp).set(currentStroke);
+    drawingHistory.push(timestamp);
+  }
+});
+
+function toggleCategory(header) {
+  const content = header.nextElementSibling;
+  const isOpen = content.style.display === 'flex';
+  
+  if (isOpen) {
+    content.style.display = 'none';
+    header.classList.remove('open');
+  } else {
+    content.style.display = 'flex';
+    header.classList.add('open');
+  }
+}
+
+// 3D Dice Roller
+var diceMain = (function() {
+    var that = {}; 
+    var elem = {}; 
+    var box = null;
+
+    that.init = function() {
+        elem.container = document.getElementById('diceRollerCanvas');
+        elem.result = document.getElementById('result');
+        elem.textInput = document.getElementById('textInput'); 
+        elem.rollButton = document.getElementById('rollButton');
+        elem.diceLimit = document.getElementById('diceLimit');
+        elem.swipeInstructions = document.getElementById('swipeInstructions');
+
+        box = new DICE.dice_box(elem.container);
+        
+        // Bind swipe to canvas for drag-to-roll
+        box.bind_swipe(elem.container, before_roll, after_roll);
+
+        elem.textInput.addEventListener('input', function(ev) { 
+            box.setDice(elem.textInput.value);
+        });
+        
+        elem.textInput.addEventListener('change', function(ev) {
+            show_instructions(true);
+        });
+
+        box.setDice(elem.textInput.value);
+        show_instructions(true);
+    }
+
+    that.rollDice = function() {
+        let inputVal = elem.textInput.value;
+        
+        // d100 handling
+        if(inputVal.includes('d100')) {
+            let dIdx = inputVal.indexOf('d100');
+            let numD100 = '';
+            for(let i = dIdx - 1; i >= 0; i--) {
+                let digit = inputVal[i];
+                if(!isNaN(digit)) {
+                    numD100 = digit + numD100;
+                } else {
+                    break;
+                }                
+            }
+            if(numD100 === '') numD100 = '1';
+            for(let i = 0; i < numD100; i++) {
+                inputVal += '+d9';
+            }
+        }
+        
+        let d = DICE.parse_notation(inputVal);
+        let numDice = d.set.length;
+        if(numDice > 20) {
+            elem.diceLimit.style.display = 'block';
+            setTimeout(() => {
+                elem.diceLimit.style.display = 'none';
+            }, 3000);
+        } else {
+            box.setDice(inputVal);
+            box.start_throw(before_roll, after_roll);
+        }
+    }
+    
+    function show_instructions(show) {
+        if(show && elem.swipeInstructions) {
+            elem.swipeInstructions.style.display = 'block';
+            elem.rollButton.style.display = 'inline-block';
+        } else if(elem.swipeInstructions) {
+            elem.swipeInstructions.style.display = 'none';
+        }
+    }
+
+    function before_roll(notation) {
+        elem.rollButton.style.display = 'none';
+        show_instructions(false);
+        elem.result.innerHTML = 'Hází se...';       
+        return null;
+    }
+
+    function after_roll(notation) {
+        elem.rollButton.style.display = 'inline-block';
+        show_instructions(true);
+        if(notation.result[0] < 0) {
+            elem.result.innerHTML = "Kostky spadly ze stolu 😅";
+        } else {
+            elem.result.innerHTML = notation.resultString;
+        }
+    }
+
+    return that;
+}());
+
+// Context menu
+const contextMenu = document.getElementById('contextMenu');
+let contextMenuTokenId = null;
+
+function showContextMenu(x, y, tokenId) {
+  contextMenuTokenId = tokenId;
+  
+  // Načti aktuální hodnoty tokenu
+  db.ref('tokens/' + tokenId).once('value', (snapshot) => {
+    const token = snapshot.val();
+    if (!token) return;
+    
+    // Nastav aktuální velikost v selectu
+    const currentSize = token.width / cellSize;
+    menuResizeSelect.value = currentSize.toString();
+    
+    // Nastav aktuální barvu v color pickeru
+    menuColorPicker.value = token.borderColor || '#8A2BE2';
+  });
+  
+  contextMenu.style.left = x + 'px';
+  contextMenu.style.top = y + 'px';
+  contextMenu.classList.add('visible');
+}
+
+function hideContextMenu() {
+  contextMenu.classList.remove('visible');
+  contextMenuTokenId = null;
+}
+
+// Zavři context menu při kliknutí mimo
+document.addEventListener('click', (e) => {
+  if (!contextMenu.contains(e.target)) {
+    hideContextMenu();
+  }
+});
+
+// Delete token
+document.getElementById('menuDelete').addEventListener('click', () => {
+  if (contextMenuTokenId) {
+    db.ref('tokens/' + contextMenuTokenId).remove();
+    hideContextMenu();
+  }
+});
+
+// Resize token select
+const menuResizeSelect = document.getElementById('menuResizeSelect');
+menuResizeSelect.addEventListener('change', (e) => {
+  if (contextMenuTokenId) {
+    const newMultiplier = parseFloat(e.target.value);
+    const newWidth = cellSize * newMultiplier;
+    const newHeight = cellSize * newMultiplier;
+    
+    db.ref('tokens/' + contextMenuTokenId).update({
+      width: newWidth,
+      height: newHeight
+    });
+    
+    hideContextMenu();
+  }
+});
+
+// Color picker
+const menuColorPicker = document.getElementById('menuColorPicker');
+menuColorPicker.addEventListener('change', (e) => {
+  if (contextMenuTokenId) {
+    db.ref('tokens/' + contextMenuTokenId).update({
+      borderColor: e.target.value
+    });
+    hideContextMenu();
+  }
+});
+
+  </script>
+</body>
+</html>
