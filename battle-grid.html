@@ -68,6 +68,29 @@
       text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
     }
 
+    .back-home-btn {
+      background: linear-gradient(135deg, #8A2BE2 0%, #6B1EB3 100%);
+      border: none;
+      color: white;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.35);
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .back-home-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(138, 43, 226, 0.6);
+      background: linear-gradient(135deg, #9A3BF2 0%, #7B2EC3 100%);
+    }
+
     .library-token {
       width: 50px;
       height: 50px;
@@ -803,6 +826,8 @@
 </head>
 <body>
   <div id="sidebar">
+    <a href="index.html" class="back-home-btn">🏠 Zpět na hlavní stránku</a>
+    
     <h3>Knihovna</h3>
     
     <div class="category">
