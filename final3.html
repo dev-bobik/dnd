@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Online | Theme Switcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #000;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* Theme Variables */
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+            --nav-bg: rgba(20, 10, 10, 0.7);
+            --card-bg: rgba(20, 10, 10, 0.95);
+            --overlay: linear-gradient(to bottom, rgba(20, 10, 10, 0.3), rgba(0, 0, 0, 0.6));
+            --border-top: #ff6b35;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --nav-bg: rgba(42, 26, 13, 0.7);
+            --card-bg: rgba(20, 20, 20, 0.95);
+            --overlay: rgba(0, 0, 0, 0.6);
+            --border-top: #c5a059;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+            --nav-bg: rgba(10, 20, 35, 0.7);
+            --card-bg: rgba(15, 25, 40, 0.95);
+            --overlay: linear-gradient(to bottom, rgba(10, 20, 35, 0.3), rgba(0, 0, 0, 0.6));
+            --border-top: #00bfff;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+            --nav-bg: rgba(15, 30, 15, 0.7);
+            --card-bg: rgba(20, 30, 20, 0.95);
+            --overlay: linear-gradient(to bottom, rgba(15, 30, 15, 0.3), rgba(0, 0, 0, 0.6));
+            --border-top: #32cd32;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+            --nav-bg: rgba(20, 10, 25, 0.7);
+            --card-bg: rgba(20, 10, 25, 0.95);
+            --overlay: linear-gradient(to bottom, rgba(20, 10, 25, 0.3), rgba(0, 0, 0, 0.6));
+            --border-top: #9370db;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: relative;
+        }
+
+        .theme-toggle-btn {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            background: var(--primary);
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary);
+            backdrop-filter: blur(10px);
+            z-index: 1002;
+        }
+
+        .theme-options.show {
+            display: flex;
+        }
+
+        .theme-options button {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-options button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-options button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--primary);
+            transition: all 0.5s ease;
+        }
+
+        nav .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border: 1px solid var(--primary);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 3px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--primary);
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay);
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            text-transform: uppercase;
+            text-shadow: 0 5px 15px rgba(0,0,0,1), 0 0 20px var(--primary);
+            margin-bottom: 1rem;
+            transition: all 0.5s ease;
+        }
+
+        h1 { font-size: 4rem; letter-spacing: 5px; }
+        h2 { font-size: 3rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px; }
+        p { font-size: 1.2rem; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+
+        /* Dynamic backgrounds based on theme */
+
+        body.fantasy-theme .sky-section {
+            background-image: url('Firefly_Gemini Flash_červený drak letící na potemňující obloze 493984.png');
+        }
+        body.steampunk-theme .sky-section {
+            background-image: url('Generated Image November 19, 2025 - 10_13PM.png');
+        }
+        body.winter-theme .sky-section {
+            background-image: url('bílý drak.png');
+        }
+        body.nature-theme .sky-section {
+            background-image: url('Firefly_Gemini Flash_Epic fantasy scene of massive floating islands in the sky, ancient primeval nature ma 24604.png');
+        }
+        body.gothic-theme .sky-section {
+            background-image: url('Firefly_Gemini Flash_Epic dark fantasy scene of massive gothic vampire castle floating in stormy night sky 2704.png');
+        }
+
+        body.fantasy-theme .surface-section {
+            background-image: url('město.jpg');
+        }
+        body.fantasy-theme .dungeon-section {
+            background-image: url('dungeon.jpg');
+        }
+
+        body.steampunk-theme .surface-section {
+            background-image: url('Generated Image November 19, 2025 - 10_14PM.png');
+        }
+        body.steampunk-theme .dungeon-section {
+            background-image: url('Generated Image November 19, 2025 - 10_15PM.png');
+        }
+
+        body.winter-theme .surface-section {
+            background-image: url('zimní město.png');
+        }
+        body.winter-theme .dungeon-section {
+            background-image: url('zimní jeskyně.png');
+        }
+
+        body.nature-theme .surface-section {
+            background-image: url('zelené město.png');
+        }
+        body.nature-theme .dungeon-section {
+            background-image: url('Firefly_Gemini Flash_Deep underground root cave system, ancient primeval dungeon atmosphere. Massive gnarl 2704.png');
+        }
+
+        body.gothic-theme .surface-section {
+            background-image: url('Firefly_Gemini Flash_Medieval cursed town from elevated aerial perspective, dark gothic horror atmosphere. 2704.png');
+        }
+        body.gothic-theme .dungeon-section {
+            background-image: url('Firefly_Gemini Flash_Deep underground vampire crypt dungeon, extremely dark gothic horror atmosphere. Mass 467976.png');
+        }
+
+        .sky-section {
+            padding-top: 0;
+            background-position: center top;
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            transition: background-image 0.5s ease;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: bounce 2s infinite;
+            color: var(--primary);
+            font-size: 2rem;
+            text-shadow: 0 0 20px var(--primary);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .surface-section {
+            border-top: 5px solid var(--primary);
+            box-shadow: inset 0 5px 30px var(--primary);
+            background-position: center center;
+            background-size: cover;
+            transition: background-image 0.5s ease;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 20px var(--secondary);
+        }
+
+        .feature-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px var(--primary), 0 0 20px var(--secondary);
+            border-color: var(--primary);
+        }
+
+        body.fantasy-theme .feature-card::after,
+        body.fantasy-theme .feature-card::before {
+            content: '🔥'; 
+            position: absolute; 
+            font-size: 0.9rem;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        body.steampunk-theme .feature-card::after,
+        body.steampunk-theme .feature-card::before {
+            content: '⚙'; 
+            position: absolute; 
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        body.winter-theme .feature-card::after,
+        body.winter-theme .feature-card::before {
+            content: '❄️'; 
+            position: absolute; 
+            font-size: 0.9rem;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        body.nature-theme .feature-card::after,
+        body.nature-theme .feature-card::before {
+            content: '🍃'; 
+            position: absolute; 
+            font-size: 0.9rem;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        body.gothic-theme .feature-card::after,
+        body.gothic-theme .feature-card::before {
+            content: '🦇'; 
+            position: absolute; 
+            font-size: 0.9rem;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .feature-card::after { top: 10px; right: 10px; }
+        .feature-card::before { top: 10px; left: 10px; }
+        
+        .feature-card h3 {
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .dungeon-section {
+            border-top: 5px solid var(--secondary);
+            box-shadow: inset 0 5px 30px var(--secondary);
+            background-position: center center;
+            background-size: cover;
+            transition: background-image 0.5s ease;
+        }
+
+        /* Animated element */
+        .magic-circle {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.2;
+            z-index: 2;
+            animation: spin-reverse 40s linear infinite;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 60px var(--primary), inset 0 0 60px var(--secondary);
+            transition: all 0.5s ease;
+        }
+
+        .magic-circle::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--secondary);
+        }
+
+        .magic-circle::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        @keyframes spin-reverse { 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+        .btn-play {
+            margin-top: 1rem;
+            padding: 18px 45px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5), 0 0 20px var(--primary);
+            transition: all 0.3s ease;
+            display: inline-block;
+            border-radius: 3px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .btn-play:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 30px var(--primary), 0 0 40px var(--secondary);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            nav .nav-links { display: none; }
+            h1 { font-size: 3rem !important; }
+            h2 { font-size: 2rem !important; }
+            .card-container { grid-template-columns: 1fr; }
+            .btn-play { font-size: 1rem; padding: 15px 30px; }
+            .theme-toggle {
+                gap: 5px;
+            }
+            .theme-toggle button {
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
+            }
+            .nav-cta {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+    </style>
+</head>
+<body class="fantasy-theme">
+    <!-- Navigace -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="logo">D&D ONLINE</a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Domů</a></li>
+                <li><a href="#features">Funkce</a></li>
+                <li><a href="#start">Začít Hrát</a></li>
+            </ul>
+            
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="#registrace" class="nav-cta">Registrace</a>
+                
+                <div class="theme-toggle">
+                    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+                    <div class="theme-options" id="theme-options">
+                        <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+                        <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+                        <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+                        <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+                        <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SEKCE 1: NEBE -->
+    <section class="sky-section" id="home">
+        <div class="content">
+            <h1>D&D ONLINE</h1>
+            <p style="font-family: 'Cinzel'; font-size: 1.8rem; color: #fff; margin-bottom: 1rem;">Tvoje epická kampaň začíná zde</p>
+            <p style="font-size: 1.2rem; color: #ddd; max-width: 600px; margin: 0 auto;" id="hero-text">
+                Klasický D&D svět plný dobrodružství, magie a legend. 
+                Vytvoř postavu, najdi družinu a vydej se na quest svého života.
+            </p>
+        </div>
+        <div class="scroll-hint">⬇</div>
+    </section>
+
+    <!-- SEKCE 2: MĚSTO -->
+    <section class="surface-section" id="features">
+        <div class="content">
+            <h2 id="section2-title">Fantasy Town</h2>
+            <p id="section2-desc">Přistáli jste ve středověkém městečku. Taverny plné dobrodruhů, guildy hledající hrdiny a obchodníci nabízející vybavení.</p>
+            
+            <div class="card-container">
+                <div class="feature-card">
+                    <h3>Kampaně</h3>
+                    <p>Vytvářej a spravuj své D&D kampaně. Sleduj postup, organizuj setkání a veď svou družinu k vítězství.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Postavy</h3>
+                    <p>Kompletní systém pro tvorbu a správu postav. Všechny třídy, rasy a vybavení z Player's Handbook.</p>
+                </div>
+                <div class="feature-card" style="cursor: pointer;" onclick="window.location.href='battlegrid.html'">
+                    <h3>Bojová Mřížka</h3>
+                    <p>Interaktivní battle grid pro taktické souboje. Real-time synchronizace pro celou družinu.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Hod Kostkami</h3>
+                    <p>Pokročilý dice roller podle pravidel D&D 5e. Historie hodů, automatické výpočty a kritické zásahy.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Chat</h3>
+                    <p>Real-time chat pro komunikaci během hry. Sdílej strategie a užívej si společné dobrodružství.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Databáze</h3>
+                    <p>Rozsáhlá databáze monster, kouzel a magic items. Rychlé vyhledávání během hry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEKCE 3: DUNGEON -->
+    <section class="dungeon-section" id="start">
+        <div class="magic-circle"></div>
+        
+        <div class="content">
+            <h2>Začni Své Dobrodružství</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 1rem;">Hluboko pod městem leží prastaré dungeons plné monster, pokladů a zapomenuté magie.</p>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">Tisíce dobrodruhů už započalo svou legendu. Budeš další?</p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="#registrace" class="btn-play">VYTVOŘIT ÚČET</a>
+                <a href="#login" class="btn-play" style="background: linear-gradient(to bottom, #5e4b35, #3d2f22); border-color: #5e4b35;">PŘIHLÁSIT SE</a>
+            </div>
+            
+            <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">1,247+</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Aktivních Hráčů</p>
+                </div>
+                <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">89</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Běžících Kampaní</p>
+                </div>
+                <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">3,421</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Vytvořených Postav</p>
+                </div>
+                <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">24/7</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Online Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Load saved theme from localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+            setTheme(savedTheme);
+        });
+
+        // Close theme menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeOptions = document.getElementById('theme-options');
+            if (themeToggle && !themeToggle.contains(e.target)) {
+                themeOptions.classList.remove('show');
+            }
+        });
+
+        function toggleThemeMenu() {
+            const themeOptions = document.getElementById('theme-options');
+            themeOptions.classList.toggle('show');
+        }
+
+        function selectTheme(theme) {
+            setTheme(theme);
+            document.getElementById('theme-options').classList.remove('show');
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const buttons = {
+                fantasy: document.getElementById('btn-fantasy'),
+                steampunk: document.getElementById('btn-steampunk'),
+                winter: document.getElementById('btn-winter'),
+                nature: document.getElementById('btn-nature'),
+                gothic: document.getElementById('btn-gothic')
+            };
+            const themeEmojis = {
+                fantasy: '🐉',
+                steampunk: '⚙',
+                winter: '❄️',
+                nature: '🌿',
+                gothic: '🦇'
+            };
+            const heroText = document.getElementById('hero-text');
+            const section2Title = document.getElementById('section2-title');
+            const section2Desc = document.getElementById('section2-desc');
+            const currentThemeBtn = document.getElementById('current-theme-btn');
+
+            // Remove all theme classes
+            body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+            
+            // Add selected theme
+            body.classList.add(theme + '-theme');
+            
+            // Update button states
+            Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+            buttons[theme].classList.add('active');
+            
+            // Update main toggle button emoji
+            currentThemeBtn.textContent = themeEmojis[theme];
+            
+            // Update text content based on theme
+            const themeContent = {
+                fantasy: {
+                    hero: 'Klasický D&D svět plný dobrodružství, magie a legend. Vytvoř postavu, najdi družinu a vydej se na quest svého života.',
+                    title: 'Fantasy Town',
+                    desc: 'Přistáli jste ve středověkém městečku. Taverny plné dobrodruhů, guildy hledající hrdiny a obchodníci nabízející vybavení.'
+                },
+                steampunk: {
+                    hero: 'Steampunk fantasy svět plný dobrodružství, magie a mechanických divů. Vytvoř postavu, najdi družinu a vydej se na quest svého života.',
+                    title: 'Guild District',
+                    desc: 'Přistáli jste v centru města. Guildy nabírají dobrodruhy, kováři kují zbraně a čarodějové nabízejí svoje služby.'
+                },
+                winter: {
+                    hero: 'Mrazivé severské království plné ledu a sněhu. Vydej se na nebezpečnou cestu ledovými pláněmi a zamrzlými dungeons.',
+                    title: 'Frozen Town',
+                    desc: 'Severské město pokryté sněhem. Vikingští válečníci, teplé taverny a ledoví obchodníci čekají na odvážné dobrodruhy.'
+                },
+                nature: {
+                    hero: 'Magický svět druidů a létajících ostrovů. Objevuj prastaré lesy a tajemství přírody v tomto kouzelném království.',
+                    title: 'Druidic Grove',
+                    desc: 'Elfské město ve větvích obřích stromů. Druidové, lesní strážci a zvířecí společníci žijí v harmonii s přírodou.'
+                },
+                gothic: {
+                    hero: 'Temný svět upírů a nemrtvých. Prozkoumej prokleté hrady a tajemné krypty v této gotické noční můře.',
+                    title: 'Cursed Town',
+                    desc: 'Prokleté město zahalené mlhou. Upíři, kostlivci a temné bytosti obývají tyto strašidelné ulice.'
+                }
+            };
+            
+            heroText.textContent = themeContent[theme].hero;
+            section2Title.textContent = themeContent[theme].title;
+            section2Desc.textContent = themeContent[theme].desc;
+            
+            // Save theme to localStorage
+            localStorage.setItem('dnd-theme', theme);
+        }
+    </script>
+</body>
+</html>
