@@ -110,25 +110,28 @@
       right: 0;
       bottom: 0;
       background: 
-        url('Firefly_Gemini Flash_červený drak letící na potemňující obloze 493984.png') center center / cover no-repeat,
         radial-gradient(ellipse at 20% 30%, var(--glow-color) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 70%, var(--glow-color) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
       transition: background 0.5s ease;
-      opacity: 0.15;
     }
 
     body::after {
-      content: '🐉';
+      content: '';
       position: fixed;
-      font-size: 600px;
-      opacity: 0.02;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-15deg);
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: 
+        url('Firefly_Gemini Flash_červený drak letící na potemňující obloze 493984.png') right center / contain no-repeat;
+      opacity: 0.25;
       pointer-events: none;
       z-index: 0;
+      transition: opacity 0.5s ease;
+      mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0) 100%);
     }
 
     #sidebar {
