@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DnD Dice Roller</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2rem;
+      color: white;
+      position: relative;
+      transition: all 0.5s ease;
+    }
+
+    /* Theme Variables */
+    body.fantasy-theme {
+      --primary: #ff6b35;
+      --secondary: #8b0000;
+      --accent: #d4af37;
+      --bg-gradient: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+      --card-bg: rgba(30, 10, 10, 0.8);
+      --border-color: rgba(255, 107, 53, 0.5);
+      --button-gradient: linear-gradient(135deg, #ff6b35 0%, #d4af37 100%);
+      --glow-color: rgba(255, 107, 53, 0.4);
+    }
+
+    body.steampunk-theme {
+      --primary: #c5a059;
+      --secondary: #8b6f47;
+      --accent: #d4a574;
+      --bg-gradient: linear-gradient(135deg, #1a1410 0%, #2a1f16 50%, #1a1410 100%);
+      --card-bg: rgba(30, 25, 20, 0.8);
+      --border-color: rgba(197, 160, 89, 0.5);
+      --button-gradient: linear-gradient(135deg, #c5a059 0%, #8b6f47 100%);
+      --glow-color: rgba(197, 160, 89, 0.4);
+    }
+
+    body.winter-theme {
+      --primary: #00bfff;
+      --secondary: #4169e1;
+      --accent: #87ceeb;
+      --bg-gradient: linear-gradient(135deg, #0a1420 0%, #0f1f30 50%, #0a1420 100%);
+      --card-bg: rgba(15, 25, 40, 0.8);
+      --border-color: rgba(0, 191, 255, 0.5);
+      --button-gradient: linear-gradient(135deg, #00bfff 0%, #4169e1 100%);
+      --glow-color: rgba(0, 191, 255, 0.4);
+    }
+
+    body.nature-theme {
+      --primary: #00ff88;
+      --secondary: #00aa55;
+      --accent: #66ff99;
+      --bg-gradient: linear-gradient(135deg, #0a1a0a 0%, #0f2a0f 50%, #0a1a0a 100%);
+      --card-bg: rgba(15, 35, 15, 0.8);
+      --border-color: rgba(0, 255, 136, 0.5);
+      --button-gradient: linear-gradient(135deg, #00ff88 0%, #00aa55 100%);
+      --glow-color: rgba(0, 255, 136, 0.4);
+    }
+
+    body.gothic-theme {
+      --primary: #9d4edd;
+      --secondary: #5a189a;
+      --accent: #c77dff;
+      --bg-gradient: linear-gradient(135deg, #10001a 0%, #1a0028 50%, #10001a 100%);
+      --card-bg: rgba(20, 0, 35, 0.8);
+      --border-color: rgba(157, 78, 221, 0.5);
+      --button-gradient: linear-gradient(135deg, #9d4edd 0%, #5a189a 100%);
+      --glow-color: rgba(157, 78, 221, 0.4);
+    }
+
+    body:not([class*="-theme"]) {
+      --primary: #8A2BE2;
+      --secondary: #6B1EB3;
+      --accent: #A040F0;
+      --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+      --card-bg: rgba(20, 20, 20, 0.8);
+      --border-color: rgba(138, 43, 226, 0.5);
+      --button-gradient: linear-gradient(135deg, #8A2BE2 0%, #6B1EB3 100%);
+      --glow-color: rgba(138, 43, 226, 0.4);
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 30%, var(--glow-color) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, var(--glow-color) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.5s ease;
+    }
+
+    body::after {
+      content: '🎲';
+      position: fixed;
+      font-size: 600px;
+      opacity: 0.02;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1400px;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: var(--button-gradient);
+      border: none;
+      color: white;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--glow-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px var(--glow-color);
+      filter: brightness(1.1);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+    }
+
+    .theme-toggle-btn {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      background: var(--primary);
+      border: 2px solid var(--primary);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .theme-options {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-options.show {
+      display: flex;
+    }
+
+    .theme-options button {
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+      font-size: 1.3rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-options button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary);
+      transform: scale(1.1);
+    }
+
+    .theme-options button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 30px var(--glow-color));
+    }
+
+    #diceRoller {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+    }
+
+    .dice-container {
+      display: flex;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .dice-controls {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .dice-controls h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--glow-color);
+    }
+
+    #textInput {
+      width: 100%;
+      padding: 14px;
+      background: rgba(26, 26, 29, 0.9);
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      font-size: 20px;
+      text-align: center;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #textInput:focus {
+      box-shadow: 0 0 20px var(--glow-color);
+      transform: scale(1.02);
+    }
+
+    #result {
+      color: var(--primary);
+      text-align: center;
+      font-size: 48px;
+      font-weight: 700;
+      text-shadow: 0 0 10px var(--glow-color);
+      min-height: 80px;
+      padding: 1.5rem;
+      background: var(--glow-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border-color);
+    }
+
+    #rollButton {
+      background: var(--button-gradient);
+      color: white;
+      border: 2px solid var(--primary);
+      padding: 1.2rem 2.5rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--glow-color);
+      width: 100%;
+    }
+
+    #rollButton:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px var(--glow-color);
+      filter: brightness(1.1);
+    }
+
+    #rollButton:active {
+      transform: translateY(0);
+    }
+
+    #swipeInstructions {
+      display: none;
+      color: var(--primary);
+      text-align: center;
+      font-size: 14px;
+      text-shadow: 0 0 10px var(--glow-color);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.6rem;
+      border-radius: 8px;
+    }
+
+    #diceLimit {
+      display: none;
+      background: rgba(197, 160, 89, 0.95);
+      color: #0f0f10;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    #diceRollerCanvas {
+      flex: 2;
+      min-height: 400px;
+      position: relative;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .dice-container {
+        flex-direction: column;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+
+      #diceRollerCanvas {
+        min-height: 300px;
+      }
+    }
+  </style>
+  <!-- 3D Dice Libraries -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/cannon.min.js"></script>
+  <script src="libs/teal.js"></script>
+  <script src="dice.js"></script>
+</head>
+<body>
+  <a href="index.html" class="back-btn">🏠 Zpět na hlavní stránku</a>
+  
+  <div class="theme-toggle">
+    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+    <div class="theme-options" id="theme-options">
+      <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+      <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+      <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+      <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+      <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>🎲 DnD Dice Roller</h1>
+    
+    <div id="diceRoller">
+      <div class="dice-container">
+        <div class="dice-controls">
+          <h3>🎲 3D Hod Kostkami</h3>
+          <input type="text" id="textInput" 
+            spellcheck="false"
+            inputmode="none"
+            virtualkeyboardpolicy="manual"
+            value="1d20"
+            placeholder="např. 2d20+5">
+          <div id="result"></div>
+          <button id="rollButton" onclick="diceMain.rollDice()">🎲 Hodit Kostkami</button>
+          <div id="swipeInstructions">
+            Přejeď myší pro hod kostkami
+          </div>
+          <div id="diceLimit">
+            Příliš mnoho kostek!<br>
+            [Limit: 20]
+          </div>
+        </div>
+        <div id="diceRollerCanvas"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Switcher
+    function toggleThemeMenu() {
+      const themeOptions = document.getElementById('theme-options');
+      themeOptions.classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+      setTheme(theme);
+      toggleThemeMenu();
+    }
+
+    function setTheme(theme) {
+      const body = document.body;
+      const buttons = {
+        fantasy: document.getElementById('btn-fantasy'),
+        steampunk: document.getElementById('btn-steampunk'),
+        winter: document.getElementById('btn-winter'),
+        nature: document.getElementById('btn-nature'),
+        gothic: document.getElementById('btn-gothic')
+      };
+      const themeEmojis = {
+        fantasy: '🐉',
+        steampunk: '⚙',
+        winter: '❄️',
+        nature: '🌿',
+        gothic: '🦇'
+      };
+      const currentThemeBtn = document.getElementById('current-theme-btn');
+
+      body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+      body.classList.add(theme + '-theme');
+      
+      Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+      buttons[theme].classList.add('active');
+      
+      currentThemeBtn.textContent = themeEmojis[theme];
+      localStorage.setItem('diceRollerTheme', theme);
+    }
+
+    // Load saved theme
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('diceRollerTheme') || 'fantasy';
+      setTheme(savedTheme);
+      diceMain.init();
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const themeToggle = document.querySelector('.theme-toggle');
+      const themeOptions = document.getElementById('theme-options');
+      if (themeToggle && !themeToggle.contains(e.target)) {
+        themeOptions.classList.remove('show');
+      }
+    });
+
+    // 3D Dice Roller
+    var diceMain = (function() {
+      var that = {}; 
+      var elem = {}; 
+      var box = null;
+
+      that.init = function() {
+        elem.container = document.getElementById('diceRollerCanvas');
+        elem.result = document.getElementById('result');
+        elem.textInput = document.getElementById('textInput'); 
+        elem.rollButton = document.getElementById('rollButton');
+        elem.diceLimit = document.getElementById('diceLimit');
+        elem.swipeInstructions = document.getElementById('swipeInstructions');
+
+        box = new DICE.dice_box(elem.container);
+        box.bind_swipe(elem.container, before_roll, after_roll);
+
+        elem.textInput.addEventListener('input', function(ev) { 
+          box.setDice(elem.textInput.value);
+        });
+        
+        elem.textInput.addEventListener('change', function(ev) {
+          show_instructions(true);
+        });
+
+        box.setDice(elem.textInput.value);
+        show_instructions(true);
+      }
+
+      that.rollDice = function() {
+        let inputVal = elem.textInput.value;
+        
+        if(inputVal.includes('d100')) {
+          let dIdx = inputVal.indexOf('d100');
+          let numD100 = '';
+          for(let i = dIdx - 1; i >= 0; i--) {
+            let digit = inputVal[i];
+            if(!isNaN(digit)) {
+              numD100 = digit + numD100;
+            } else {
+              break;
+            }                
+          }
+          if(numD100 === '') numD100 = '1';
+          for(let i = 0; i < numD100; i++) {
+            inputVal += '+d9';
+          }
+        }
+        
+        let d = DICE.parse_notation(inputVal);
+        let numDice = d.set.length;
+        if(numDice > 20) {
+          elem.diceLimit.style.display = 'block';
+          setTimeout(() => {
+            elem.diceLimit.style.display = 'none';
+          }, 3000);
+        } else {
+          box.setDice(inputVal);
+          box.start_throw(before_roll, after_roll);
+        }
+      }
+      
+      function show_instructions(show) {
+        if(show && elem.swipeInstructions) {
+          elem.swipeInstructions.style.display = 'block';
+          elem.rollButton.style.display = 'inline-block';
+        } else if(elem.swipeInstructions) {
+          elem.swipeInstructions.style.display = 'none';
+        }
+      }
+
+      function before_roll(notation) {
+        elem.rollButton.style.display = 'none';
+        show_instructions(false);
+        elem.result.innerHTML = 'Hází se...';       
+        return null;
+      }
+
+      function after_roll(notation) {
+        elem.rollButton.style.display = 'inline-block';
+        show_instructions(true);
+        if(notation.result[0] < 0) {
+          elem.result.innerHTML = "Kostky spadly ze stolu 😅";
+        } else {
+          elem.result.innerHTML = notation.resultString;
+        }
+      }
+
+      return that;
+    }());
+  </script>
+</body>
+</html>
