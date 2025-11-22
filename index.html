@@ -212,6 +212,199 @@
             box-shadow: 0 5px 20px var(--primary);
         }
 
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .user-info img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 50, 50, 0.8);
+            border: 1px solid #ff3232;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 50, 50, 1);
+            box-shadow: 0 0 15px rgba(255, 50, 50, 0.6);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--primary);
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: #ff3232;
+        }
+
+        .modal-content h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--primary);
+            border-color: var(--accent);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px var(--primary);
+        }
+
+        .auth-error {
+            background: rgba(255, 50, 50, 0.2);
+            border: 2px solid #ff3232;
+            color: #ff6666;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
         /* Sections */
         section {
             position: relative;
@@ -531,7 +724,13 @@
             </ul>
             
             <div style="display: flex; align-items: center; gap: 1.5rem;">
-                <a href="#registrace" class="nav-cta">Registrace</a>
+                <div id="auth-section">
+                    <button class="nav-cta" id="login-btn" onclick="openAuthModal()">Přihlásit se</button>
+                    <div class="user-info" id="user-info" style="display: none;">
+                        <span id="user-email"></span>
+                        <button class="logout-btn" onclick="logoutUser()">Odhlásit</button>
+                    </div>
+                </div>
                 
                 <div class="theme-toggle">
                     <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
@@ -726,6 +925,202 @@
             // Save theme to localStorage
             localStorage.setItem('dnd-theme', theme);
         }
+    </script>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">×</button>
+            <h2>🎲 D&D Online</h2>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Přihlášení</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Registrace</button>
+            </div>
+
+            <div class="auth-error" id="auth-error"></div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active" onsubmit="loginUser(event)">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required placeholder="tvuj@email.cz">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Heslo</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="submit-btn">Přihlásit se</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form" onsubmit="registerUser(event)">
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required placeholder="tvuj@email.cz">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Heslo</label>
+                    <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="register-password-confirm">Potvrzení hesla</label>
+                    <input type="password" id="register-password-confirm" required placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="submit-btn">Registrovat</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script>
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
+            authDomain: "heil-47dc3.firebaseapp.com",
+            databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
+            projectId: "heil-47dc3",
+            storageBucket: "heil-47dc3.appspot.com",
+            messagingSenderId: "204548727050",
+            appId: "1:204548727050:web:14066e11908a1fd97f9af3",
+            measurementId: "G-TJZZDNCV05"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Auth state observer
+        auth.onAuthStateChanged((user) => {
+            const loginBtn = document.getElementById('login-btn');
+            const userInfo = document.getElementById('user-info');
+            const userEmail = document.getElementById('user-email');
+            
+            if (user) {
+                loginBtn.style.display = 'none';
+                userInfo.style.display = 'flex';
+                userEmail.textContent = user.email;
+            } else {
+                loginBtn.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+        });
+
+        // Modal functions
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.add('show');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('show');
+            hideAuthError();
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabs = document.querySelectorAll('.auth-tab');
+            
+            hideAuthError();
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                tabs[1].classList.add('active');
+                tabs[0].classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+        }
+
+        function showAuthError(message) {
+            const errorDiv = document.getElementById('auth-error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
+        function hideAuthError() {
+            const errorDiv = document.getElementById('auth-error');
+            errorDiv.classList.remove('show');
+        }
+
+        // Login
+        function loginUser(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    closeAuthModal();
+                    document.getElementById('login-form').reset();
+                })
+                .catch((error) => {
+                    let message = 'Chyba při přihlášení';
+                    if (error.code === 'auth/user-not-found') {
+                        message = 'Uživatel s tímto emailem neexistuje';
+                    } else if (error.code === 'auth/wrong-password') {
+                        message = 'Nesprávné heslo';
+                    } else if (error.code === 'auth/invalid-email') {
+                        message = 'Neplatný email';
+                    }
+                    showAuthError(message);
+                });
+        }
+
+        // Register
+        function registerUser(event) {
+            event.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const passwordConfirm = document.getElementById('register-password-confirm').value;
+            
+            if (password !== passwordConfirm) {
+                showAuthError('Hesla se neshodují');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAuthError('Heslo musí mít alespoň 6 znaků');
+                return;
+            }
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    closeAuthModal();
+                    document.getElementById('register-form').reset();
+                })
+                .catch((error) => {
+                    let message = 'Chyba při registraci';
+                    if (error.code === 'auth/email-already-in-use') {
+                        message = 'Tento email je již registrován';
+                    } else if (error.code === 'auth/invalid-email') {
+                        message = 'Neplatný email';
+                    } else if (error.code === 'auth/weak-password') {
+                        message = 'Heslo je příliš slabé';
+                    }
+                    showAuthError(message);
+                });
+        }
+
+        // Logout
+        function logoutUser() {
+            auth.signOut().then(() => {
+                console.log('Uživatel odhlášen');
+            }).catch((error) => {
+                console.error('Chyba při odhlášení:', error);
+            });
+        }
+
+        // Close modal on background click
+        document.getElementById('auth-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'auth-modal') {
+                closeAuthModal();
+            }
+        });
     </script>
 </body>
 </html>
