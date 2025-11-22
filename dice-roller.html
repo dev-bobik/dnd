@@ -31,6 +31,7 @@
       --border-color: rgba(255, 107, 53, 0.5);
       --button-gradient: linear-gradient(135deg, #ff6b35 0%, #d4af37 100%);
       --glow-color: rgba(255, 107, 53, 0.4);
+      --canvas-bg: url('https://images.unsplash.com/photo-1541185933-55000f9c1c6e?w=800&q=80');
     }
 
     body.steampunk-theme {
@@ -42,6 +43,7 @@
       --border-color: rgba(197, 160, 89, 0.5);
       --button-gradient: linear-gradient(135deg, #c5a059 0%, #8b6f47 100%);
       --glow-color: rgba(197, 160, 89, 0.4);
+      --canvas-bg: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80');
     }
 
     body.winter-theme {
@@ -53,6 +55,7 @@
       --border-color: rgba(0, 191, 255, 0.5);
       --button-gradient: linear-gradient(135deg, #00bfff 0%, #4169e1 100%);
       --glow-color: rgba(0, 191, 255, 0.4);
+      --canvas-bg: url('https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=800&q=80');
     }
 
     body.nature-theme {
@@ -64,6 +67,7 @@
       --border-color: rgba(0, 255, 136, 0.5);
       --button-gradient: linear-gradient(135deg, #00ff88 0%, #00aa55 100%);
       --glow-color: rgba(0, 255, 136, 0.4);
+      --canvas-bg: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80');
     }
 
     body.gothic-theme {
@@ -75,6 +79,7 @@
       --border-color: rgba(157, 78, 221, 0.5);
       --button-gradient: linear-gradient(135deg, #9d4edd 0%, #5a189a 100%);
       --glow-color: rgba(157, 78, 221, 0.4);
+      --canvas-bg: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80');
     }
 
     body:not([class*="-theme"]) {
@@ -358,7 +363,11 @@
       position: relative;
       border: 2px solid var(--border-color);
       border-radius: 12px;
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--canvas-bg, rgba(0, 0, 0, 0.3));
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.6);
     }
 
     @media (max-width: 768px) {
