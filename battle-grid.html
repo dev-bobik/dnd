@@ -110,11 +110,13 @@
       right: 0;
       bottom: 0;
       background: 
+        url('Firefly_Gemini Flash_červený drak letící na potemňující obloze 493984.png') center center / cover no-repeat,
         radial-gradient(ellipse at 20% 30%, var(--glow-color) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 70%, var(--glow-color) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
       transition: background 0.5s ease;
+      opacity: 0.15;
     }
 
     body::after {
@@ -1008,11 +1010,6 @@
           <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
         </div>
       </div>
-    </div>
-    
-    <!-- Dekorativní obrázek -->
-    <div style="width: 100%; height: 120px; border-radius: 10px; overflow: hidden; margin-bottom: 1rem; border: 2px solid var(--border-color); box-shadow: 0 4px 15px var(--glow-color);">
-      <img src="Firefly_Gemini Flash_červený drak letící na potemňující obloze 493984.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
     </div>
     
     <h3>Knihovna</h3>
