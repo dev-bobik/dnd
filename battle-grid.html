@@ -29,6 +29,7 @@
       --grid-border: rgba(255, 107, 53, 0.6);
       --button-gradient: linear-gradient(135deg, #ff6b35 0%, #d4af37 100%);
       --glow-color: rgba(255, 107, 53, 0.4);
+      --canvas-bg: url('dice1%20(1).jpg');
     }
 
     body.steampunk-theme {
@@ -42,6 +43,7 @@
       --grid-border: rgba(197, 160, 89, 0.6);
       --button-gradient: linear-gradient(135deg, #c5a059 0%, #8b6f47 100%);
       --glow-color: rgba(197, 160, 89, 0.4);
+      --canvas-bg: url('dice1%20(2).jpg');
     }
 
     body.winter-theme {
@@ -55,6 +57,7 @@
       --grid-border: rgba(0, 191, 255, 0.6);
       --button-gradient: linear-gradient(135deg, #00bfff 0%, #4169e1 100%);
       --glow-color: rgba(0, 191, 255, 0.4);
+      --canvas-bg: url('dice1%20(3).jpg');
     }
 
     body.nature-theme {
@@ -68,6 +71,7 @@
       --grid-border: rgba(0, 255, 136, 0.6);
       --button-gradient: linear-gradient(135deg, #00ff88 0%, #00aa55 100%);
       --glow-color: rgba(0, 255, 136, 0.4);
+      --canvas-bg: url('dice1%20(4).jpg');
     }
 
     body.gothic-theme {
@@ -81,6 +85,7 @@
       --grid-border: rgba(157, 78, 221, 0.6);
       --button-gradient: linear-gradient(135deg, #9d4edd 0%, #5a189a 100%);
       --glow-color: rgba(157, 78, 221, 0.4);
+      --canvas-bg: url('dice1%20(5).jpg');
     }
 
     /* Default theme if none selected */
@@ -1141,7 +1146,7 @@
             [Limit: 20]
           </div>
         </div>
-        <div id="diceRollerCanvas" style="flex: 2; min-height: 320px; position: relative; border: 2px solid rgba(138, 43, 226, 0.3); border-radius: 8px; background: rgba(0, 0, 0, 0.3);"></div>
+        <div id="diceRollerCanvas" style="flex: 2; min-height: 320px; position: relative; border: 2px solid var(--border-color); border-radius: 8px; background: var(--canvas-bg, rgba(0, 0, 0, 0.3)); background-size: cover; background-position: center; background-blend-mode: overlay; background-color: rgba(0, 0, 0, 0.6);"></div>
       </div>
     </div>
 
