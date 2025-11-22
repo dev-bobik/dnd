@@ -892,24 +892,80 @@
       opacity: 1;
     }
 
-    /* Theme Menu */
-    #themeToggleBtn:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 25px var(--glow-color);
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: relative;
     }
 
-    #themeMenu.open {
-      right: 10px !important;
+    .theme-toggle-btn {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      background: var(--primary);
+      border: 2px solid var(--primary);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px var(--primary);
     }
 
-    .theme-option:hover {
-      transform: translateX(5px);
-      filter: brightness(1.2);
+    .theme-toggle-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--primary);
     }
 
-    .theme-option.active {
-      filter: brightness(1.3);
-      box-shadow: 0 0 15px currentColor;
+    .theme-options {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary);
+      backdrop-filter: blur(10px);
+      z-index: 1002;
+    }
+
+    .theme-options.show {
+      display: flex;
+    }
+
+    .theme-options button {
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+      font-size: 1.3rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-options button.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary);
+      transform: scale(1.1);
+    }
+
+    .theme-options button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
     }
   </style>
   <!-- Firebase SDK -->
@@ -942,35 +998,14 @@
     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
       <a href="index.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">🏠 Zpět na hlavní stránku</a>
       
-      <!-- Theme Switcher Button -->
-      <button id="themeToggleBtn" style="background: var(--button-gradient); border: none; color: white; padding: 0.7rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: 0 4px 15px var(--glow-color); position: relative;">
-        🎨
-      </button>
-    </div>
-    
-    <!-- Theme Menu (hidden by default) -->
-    <div id="themeMenu" style="position: absolute; right: -250px; top: 60px; width: 220px; background: var(--card-bg); backdrop-filter: blur(15px); border: 2px solid var(--border-color); border-radius: 12px; padding: 1rem; transition: right 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8); z-index: 1000;">
-      <h4 style="margin: 0 0 0.8rem 0; font-size: 1rem; color: var(--primary); text-align: center;">Výběr tématu</h4>
-      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-        <div class="theme-option" data-theme="fantasy" style="background: rgba(255, 107, 53, 0.1); border: 2px solid rgba(255, 107, 53, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;">🔥</span>
-          <span style="color: #ff6b35; font-weight: 600;">Fantasy</span>
-        </div>
-        <div class="theme-option" data-theme="steampunk" style="background: rgba(197, 160, 89, 0.1); border: 2px solid rgba(197, 160, 89, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;">⚙️</span>
-          <span style="color: #c5a059; font-weight: 600;">Steampunk</span>
-        </div>
-        <div class="theme-option" data-theme="winter" style="background: rgba(0, 191, 255, 0.1); border: 2px solid rgba(0, 191, 255, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;">❄️</span>
-          <span style="color: #00bfff; font-weight: 600;">Winter</span>
-        </div>
-        <div class="theme-option" data-theme="nature" style="background: rgba(0, 255, 136, 0.1); border: 2px solid rgba(0, 255, 136, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;">🌿</span>
-          <span style="color: #00ff88; font-weight: 600;">Nature</span>
-        </div>
-        <div class="theme-option" data-theme="gothic" style="background: rgba(157, 78, 221, 0.1); border: 2px solid rgba(157, 78, 221, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;">🦇</span>
-          <span style="color: #9d4edd; font-weight: 600;">Gothic</span>
+      <div class="theme-toggle">
+        <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+        <div class="theme-options" id="theme-options">
+          <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+          <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+          <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+          <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+          <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
         </div>
       </div>
     </div>
@@ -1980,22 +2015,46 @@ menuColorPicker.addEventListener('change', (e) => {
 });
 
 // Theme Switcher
+function toggleThemeMenu() {
+  const themeOptions = document.getElementById('theme-options');
+  themeOptions.classList.toggle('show');
+}
+
+function selectTheme(theme) {
+  setTheme(theme);
+  toggleThemeMenu();
+}
+
 function setTheme(theme) {
-  // Odstraň všechny theme třídy
-  document.body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+  const body = document.body;
+  const buttons = {
+    fantasy: document.getElementById('btn-fantasy'),
+    steampunk: document.getElementById('btn-steampunk'),
+    winter: document.getElementById('btn-winter'),
+    nature: document.getElementById('btn-nature'),
+    gothic: document.getElementById('btn-gothic')
+  };
+  const themeEmojis = {
+    fantasy: '🐉',
+    steampunk: '⚙',
+    winter: '❄️',
+    nature: '🌿',
+    gothic: '🦇'
+  };
+  const currentThemeBtn = document.getElementById('current-theme-btn');
+
+  // Remove all theme classes
+  body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
   
-  // Přidej novou theme třídu
-  if (theme) {
-    document.body.classList.add(theme + '-theme');
-  }
+  // Add selected theme
+  body.classList.add(theme + '-theme');
   
-  // Aktualizuj aktivní theme option
-  document.querySelectorAll('.theme-option').forEach(option => {
-    option.classList.remove('active');
-    if (option.getAttribute('data-theme') === theme) {
-      option.classList.add('active');
-    }
-  });
+  // Update button states
+  Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+  buttons[theme].classList.add('active');
+  
+  // Update main toggle button emoji
+  currentThemeBtn.textContent = themeEmojis[theme];
   
   // Ulož do localStorage
   localStorage.setItem('battleGridTheme', theme);
@@ -2004,36 +2063,19 @@ function setTheme(theme) {
   db.ref('settings/theme').set(theme);
 }
 
-function toggleThemeMenu() {
-  const menu = document.getElementById('themeMenu');
-  menu.classList.toggle('open');
-}
-
-// Načti theme při načtení stránky
-document.addEventListener('DOMContentLoaded', () => {
+// Load saved theme from localStorage
+window.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('battleGridTheme') || 'fantasy';
   setTheme(savedTheme);
-  
-  // Toggle button
-  document.getElementById('themeToggleBtn').addEventListener('click', toggleThemeMenu);
-  
-  // Event listenery pro theme options
-  document.querySelectorAll('.theme-option').forEach(option => {
-    option.addEventListener('click', () => {
-      const theme = option.getAttribute('data-theme');
-      setTheme(theme);
-      toggleThemeMenu(); // Zavři menu po výběru
-    });
-  });
-  
-  // Zavři menu při kliknutí mimo
-  document.addEventListener('click', (e) => {
-    const menu = document.getElementById('themeMenu');
-    const btn = document.getElementById('themeToggleBtn');
-    if (!menu.contains(e.target) && !btn.contains(e.target)) {
-      menu.classList.remove('open');
-    }
-  });
+});
+
+// Close theme menu when clicking outside
+document.addEventListener('click', (e) => {
+  const themeToggle = document.querySelector('.theme-toggle');
+  const themeOptions = document.getElementById('theme-options');
+  if (themeToggle && !themeToggle.contains(e.target)) {
+    themeOptions.classList.remove('show');
+  }
 });
 
 // Synchronizace tématu z Firebase
