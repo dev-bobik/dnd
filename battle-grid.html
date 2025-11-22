@@ -892,16 +892,24 @@
       opacity: 1;
     }
 
-    /* Theme Circles */
-    .theme-circle:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 15px currentColor;
+    /* Theme Menu */
+    #themeToggleBtn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 25px var(--glow-color);
     }
 
-    .theme-circle.active {
-      transform: scale(1.2);
-      box-shadow: 0 0 20px currentColor;
-      border-width: 3px !important;
+    #themeMenu.open {
+      right: 10px !important;
+    }
+
+    .theme-option:hover {
+      transform: translateX(5px);
+      filter: brightness(1.2);
+    }
+
+    .theme-option.active {
+      filter: brightness(1.3);
+      box-shadow: 0 0 15px currentColor;
     }
   </style>
   <!-- Firebase SDK -->
@@ -932,15 +940,38 @@
 <body>
   <div id="sidebar">
     <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-      <a href="index.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">🏠 Zpět</a>
+      <a href="index.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">🏠 Zpět na hlavní stránku</a>
       
-      <!-- Theme Circles -->
-      <div style="display: flex; gap: 0.3rem;">
-        <div class="theme-circle" data-theme="fantasy" style="background: linear-gradient(135deg, #ff6b35, #d4af37); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255, 107, 53, 0.5); transition: all 0.3s ease;" title="Fantasy"></div>
-        <div class="theme-circle" data-theme="steampunk" style="background: linear-gradient(135deg, #c5a059, #8b6f47); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(197, 160, 89, 0.5); transition: all 0.3s ease;" title="Steampunk"></div>
-        <div class="theme-circle" data-theme="winter" style="background: linear-gradient(135deg, #00bfff, #4169e1); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(0, 191, 255, 0.5); transition: all 0.3s ease;" title="Winter"></div>
-        <div class="theme-circle" data-theme="nature" style="background: linear-gradient(135deg, #00ff88, #00aa55); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(0, 255, 136, 0.5); transition: all 0.3s ease;" title="Nature"></div>
-        <div class="theme-circle" data-theme="gothic" style="background: linear-gradient(135deg, #9d4edd, #5a189a); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(157, 78, 221, 0.5); transition: all 0.3s ease;" title="Gothic"></div>
+      <!-- Theme Switcher Button -->
+      <button id="themeToggleBtn" style="background: var(--button-gradient); border: none; color: white; padding: 0.7rem; border-radius: 10px; cursor: pointer; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: 0 4px 15px var(--glow-color); position: relative;">
+        🎨
+      </button>
+    </div>
+    
+    <!-- Theme Menu (hidden by default) -->
+    <div id="themeMenu" style="position: absolute; right: -250px; top: 60px; width: 220px; background: var(--card-bg); backdrop-filter: blur(15px); border: 2px solid var(--border-color); border-radius: 12px; padding: 1rem; transition: right 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8); z-index: 1000;">
+      <h4 style="margin: 0 0 0.8rem 0; font-size: 1rem; color: var(--primary); text-align: center;">Výběr tématu</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <div class="theme-option" data-theme="fantasy" style="background: rgba(255, 107, 53, 0.1); border: 2px solid rgba(255, 107, 53, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">🔥</span>
+          <span style="color: #ff6b35; font-weight: 600;">Fantasy</span>
+        </div>
+        <div class="theme-option" data-theme="steampunk" style="background: rgba(197, 160, 89, 0.1); border: 2px solid rgba(197, 160, 89, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">⚙️</span>
+          <span style="color: #c5a059; font-weight: 600;">Steampunk</span>
+        </div>
+        <div class="theme-option" data-theme="winter" style="background: rgba(0, 191, 255, 0.1); border: 2px solid rgba(0, 191, 255, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">❄️</span>
+          <span style="color: #00bfff; font-weight: 600;">Winter</span>
+        </div>
+        <div class="theme-option" data-theme="nature" style="background: rgba(0, 255, 136, 0.1); border: 2px solid rgba(0, 255, 136, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">🌿</span>
+          <span style="color: #00ff88; font-weight: 600;">Nature</span>
+        </div>
+        <div class="theme-option" data-theme="gothic" style="background: rgba(157, 78, 221, 0.1); border: 2px solid rgba(157, 78, 221, 0.3); padding: 0.6rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">🦇</span>
+          <span style="color: #9d4edd; font-weight: 600;">Gothic</span>
+        </div>
       </div>
     </div>
     
@@ -1958,11 +1989,11 @@ function setTheme(theme) {
     document.body.classList.add(theme + '-theme');
   }
   
-  // Aktualizuj aktivní kolečko
-  document.querySelectorAll('.theme-circle').forEach(circle => {
-    circle.classList.remove('active');
-    if (circle.getAttribute('data-theme') === theme) {
-      circle.classList.add('active');
+  // Aktualizuj aktivní theme option
+  document.querySelectorAll('.theme-option').forEach(option => {
+    option.classList.remove('active');
+    if (option.getAttribute('data-theme') === theme) {
+      option.classList.add('active');
     }
   });
   
@@ -1973,17 +2004,35 @@ function setTheme(theme) {
   db.ref('settings/theme').set(theme);
 }
 
+function toggleThemeMenu() {
+  const menu = document.getElementById('themeMenu');
+  menu.classList.toggle('open');
+}
+
 // Načti theme při načtení stránky
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('battleGridTheme') || 'fantasy';
   setTheme(savedTheme);
   
-  // Event listenery pro kolečka
-  document.querySelectorAll('.theme-circle').forEach(circle => {
-    circle.addEventListener('click', () => {
-      const theme = circle.getAttribute('data-theme');
+  // Toggle button
+  document.getElementById('themeToggleBtn').addEventListener('click', toggleThemeMenu);
+  
+  // Event listenery pro theme options
+  document.querySelectorAll('.theme-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const theme = option.getAttribute('data-theme');
       setTheme(theme);
+      toggleThemeMenu(); // Zavři menu po výběru
     });
+  });
+  
+  // Zavři menu při kliknutí mimo
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('themeMenu');
+    const btn = document.getElementById('themeToggleBtn');
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
+    }
   });
 });
 
