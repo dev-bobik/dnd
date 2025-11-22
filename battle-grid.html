@@ -891,6 +891,18 @@
     .dice-count.active {
       opacity: 1;
     }
+
+    /* Theme Circles */
+    .theme-circle:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .theme-circle.active {
+      transform: scale(1.2);
+      box-shadow: 0 0 20px currentColor;
+      border-width: 3px !important;
+    }
   </style>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -919,18 +931,17 @@
 </head>
 <body>
   <div id="sidebar">
-    <a href="index.html" class="back-home-btn">🏠 Zpět na hlavní stránku</a>
-    
-    <!-- Theme Switcher -->
-    <div style="margin-bottom: 1rem; padding: 0.8rem; background: var(--card-bg); border-radius: 10px; border: 2px solid var(--border-color);">
-      <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9rem; color: var(--primary);">🎨 Téma</h4>
-      <select id="themeSelect" style="width: 100%; padding: 0.5rem; background: rgba(10, 10, 15, 0.95); border: 1.5px solid var(--border-color); color: #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">
-        <option value="fantasy">🔥 Fantasy</option>
-        <option value="steampunk">⚙️ Steampunk</option>
-        <option value="winter">❄️ Winter</option>
-        <option value="nature">🌿 Nature</option>
-        <option value="gothic">🦇 Gothic</option>
-      </select>
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+      <a href="index.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">🏠 Zpět</a>
+      
+      <!-- Theme Circles -->
+      <div style="display: flex; gap: 0.3rem;">
+        <div class="theme-circle" data-theme="fantasy" style="background: linear-gradient(135deg, #ff6b35, #d4af37); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255, 107, 53, 0.5); transition: all 0.3s ease;" title="Fantasy"></div>
+        <div class="theme-circle" data-theme="steampunk" style="background: linear-gradient(135deg, #c5a059, #8b6f47); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(197, 160, 89, 0.5); transition: all 0.3s ease;" title="Steampunk"></div>
+        <div class="theme-circle" data-theme="winter" style="background: linear-gradient(135deg, #00bfff, #4169e1); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(0, 191, 255, 0.5); transition: all 0.3s ease;" title="Winter"></div>
+        <div class="theme-circle" data-theme="nature" style="background: linear-gradient(135deg, #00ff88, #00aa55); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(0, 255, 136, 0.5); transition: all 0.3s ease;" title="Nature"></div>
+        <div class="theme-circle" data-theme="gothic" style="background: linear-gradient(135deg, #9d4edd, #5a189a); cursor: pointer; width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(157, 78, 221, 0.5); transition: all 0.3s ease;" title="Gothic"></div>
+      </div>
     </div>
     
     <h3>Knihovna</h3>
@@ -1947,6 +1958,14 @@ function setTheme(theme) {
     document.body.classList.add(theme + '-theme');
   }
   
+  // Aktualizuj aktivní kolečko
+  document.querySelectorAll('.theme-circle').forEach(circle => {
+    circle.classList.remove('active');
+    if (circle.getAttribute('data-theme') === theme) {
+      circle.classList.add('active');
+    }
+  });
+  
   // Ulož do localStorage
   localStorage.setItem('battleGridTheme', theme);
   
@@ -1957,25 +1976,22 @@ function setTheme(theme) {
 // Načti theme při načtení stránky
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('battleGridTheme') || 'fantasy';
-  const themeSelect = document.getElementById('themeSelect');
-  themeSelect.value = savedTheme;
   setTheme(savedTheme);
-});
-
-// Event listener pro změnu tématu
-document.getElementById('themeSelect').addEventListener('change', (e) => {
-  setTheme(e.target.value);
+  
+  // Event listenery pro kolečka
+  document.querySelectorAll('.theme-circle').forEach(circle => {
+    circle.addEventListener('click', () => {
+      const theme = circle.getAttribute('data-theme');
+      setTheme(theme);
+    });
+  });
 });
 
 // Synchronizace tématu z Firebase
 db.ref('settings/theme').on('value', (snapshot) => {
   const theme = snapshot.val();
-  if (theme) {
-    const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect.value !== theme) {
-      themeSelect.value = theme;
-      setTheme(theme);
-    }
+  if (theme && localStorage.getItem('battleGridTheme') !== theme) {
+    setTheme(theme);
   }
 });
 
