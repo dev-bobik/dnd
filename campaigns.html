@@ -301,6 +301,52 @@
             background: rgba(255, 50, 50, 0.6);
         }
 
+        .friend-request-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-accept {
+            background: rgba(0, 255, 136, 0.3);
+            border: 1px solid #00ff88;
+            color: #66ff99;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-accept:hover {
+            background: rgba(0, 255, 136, 0.5);
+        }
+
+        .btn-decline {
+            background: rgba(255, 50, 50, 0.3);
+            border: 1px solid #ff3232;
+            color: #ff6666;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-decline:hover {
+            background: rgba(255, 50, 50, 0.5);
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             .grid { grid-template-columns: 1fr; }
@@ -323,10 +369,18 @@
         <div class="friends-section">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <h2 class="section-title" style="margin: 0;">👥 Přátelé</h2>
-                <button class="btn btn-small" onclick="openAddFriendModal()">+ Přidat Přítele</button>
+                <button class="btn btn-small" onclick="openAddFriendModal()">+ Poslat Žádost o Přátelství</button>
             </div>
+            
+            <!-- Friend Requests -->
+            <div id="friend-requests-section" style="margin-bottom: 2rem; display: none;">
+                <h3 style="color: #d4af37; margin-bottom: 1rem; font-size: 1.2rem;">📩 Žádosti o přátelství</h3>
+                <div id="friend-requests-list"></div>
+            </div>
+
+            <!-- Friends List -->
             <div class="friends-list" id="friends-list">
-                <p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Přidej je pomocí jejich uživatelského jména!</p>
+                <p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Pošli žádost o přátelství!</p>
             </div>
         </div>
 
@@ -381,13 +435,13 @@
     <div id="add-friend-modal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAddFriendModal()">×</button>
-            <h2>Přidat Přítele</h2>
-            <form onsubmit="addFriend(event)">
+            <h2>Poslat Žádost o Přátelství</h2>
+            <form onsubmit="sendFriendRequest(event)">
                 <div class="form-group">
                     <label for="friend-username">Uživatelské jméno</label>
                     <input type="text" id="friend-username" required placeholder="Zadej username přítele">
                 </div>
-                <button type="submit" class="btn" style="width: 100%;">Přidat</button>
+                <button type="submit" class="btn" style="width: 100%;">Poslat Žádost</button>
             </form>
         </div>
     </div>
@@ -459,13 +513,35 @@
             }
         }
 
+        // Load friend requests
+        function loadFriendRequests() {
+            const requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
+            const requestsSection = document.getElementById('friend-requests-section');
+            const requestsList = document.getElementById('friend-requests-list');
+
+            if (requests.length === 0) {
+                requestsSection.style.display = 'none';
+            } else {
+                requestsSection.style.display = 'block';
+                requestsList.innerHTML = requests.map(requester => `
+                    <div class="friend-request-card">
+                        <span class="friend-name">👤 ${requester} chce být tvůj přítel</span>
+                        <div class="request-buttons">
+                            <button class="btn-accept" onclick="acceptFriendRequest('${requester}')">✓ Přijmout</button>
+                            <button class="btn-decline" onclick="declineFriendRequest('${requester}')">✗ Odmítnout</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
         // Load friends
         function loadFriends() {
             const friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
             const friendsListDiv = document.getElementById('friends-list');
 
             if (friends.length === 0) {
-                friendsListDiv.innerHTML = '<p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Přidej je pomocí jejich uživatelského jména!</p>';
+                friendsListDiv.innerHTML = '<p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Pošli žádost o přátelství!</p>';
             } else {
                 friendsListDiv.innerHTML = friends.map(friend => `
                     <div class="friend-card">
@@ -541,8 +617,8 @@
             loadCampaigns();
         }
 
-        // Add friend
-        function addFriend(event) {
+        // Send friend request
+        function sendFriendRequest(event) {
             event.preventDefault();
             const friendUsername = document.getElementById('friend-username').value;
             const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
@@ -553,7 +629,7 @@
             }
 
             if (friendUsername === currentUser) {
-                alert('Nemůžeš přidat sám sebe!');
+                alert('Nemůžeš poslat žádost sám sobě!');
                 return;
             }
 
@@ -564,19 +640,72 @@
                 return;
             }
 
-            friends.push(friendUsername);
-            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(friends));
+            // Check if request already sent
+            const theirRequests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${friendUsername}`) || '[]');
+            if (theirRequests.includes(currentUser)) {
+                alert('Žádost už byla odeslána!');
+                return;
+            }
+
+            // Check if they already sent you a request
+            const myRequests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
+            if (myRequests.includes(friendUsername)) {
+                alert('Tento uživatel ti už poslal žádost! Najdeš ji v sekci žádostí.');
+                return;
+            }
+
+            // Add request to their list
+            theirRequests.push(currentUser);
+            localStorage.setItem(`dnd-friend-requests-${friendUsername}`, JSON.stringify(theirRequests));
+            
+            alert(`Žádost o přátelství odeslána uživateli ${friendUsername}!`);
             closeAddFriendModal();
             document.getElementById('friend-username').value = '';
+        }
+
+        // Accept friend request
+        function acceptFriendRequest(requester) {
+            // Add to both friends lists
+            const myFriends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
+            const theirFriends = JSON.parse(localStorage.getItem(`dnd-friends-${requester}`) || '[]');
+            
+            myFriends.push(requester);
+            theirFriends.push(currentUser);
+            
+            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(myFriends));
+            localStorage.setItem(`dnd-friends-${requester}`, JSON.stringify(theirFriends));
+            
+            // Remove request
+            let requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
+            requests = requests.filter(r => r !== requester);
+            localStorage.setItem(`dnd-friend-requests-${currentUser}`, JSON.stringify(requests));
+            
             loadFriends();
+            loadFriendRequests();
+        }
+
+        // Decline friend request
+        function declineFriendRequest(requester) {
+            let requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
+            requests = requests.filter(r => r !== requester);
+            localStorage.setItem(`dnd-friend-requests-${currentUser}`, JSON.stringify(requests));
+            loadFriendRequests();
         }
 
         // Remove friend
         function removeFriend(friendUsername) {
             if (!confirm(`Opravdu chceš odebrat ${friendUsername} z přátel?`)) return;
-            let friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
-            friends = friends.filter(f => f !== friendUsername);
-            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(friends));
+            
+            // Remove from both friends lists
+            let myFriends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
+            let theirFriends = JSON.parse(localStorage.getItem(`dnd-friends-${friendUsername}`) || '[]');
+            
+            myFriends = myFriends.filter(f => f !== friendUsername);
+            theirFriends = theirFriends.filter(f => f !== currentUser);
+            
+            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(myFriends));
+            localStorage.setItem(`dnd-friends-${friendUsername}`, JSON.stringify(theirFriends));
+            
             loadFriends();
         }
 
@@ -617,6 +746,7 @@
         // Load on page load
         loadCampaigns();
         loadFriends();
+        loadFriendRequests();
     </script>
 </body>
 </html>
