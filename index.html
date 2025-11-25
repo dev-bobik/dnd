@@ -943,8 +943,8 @@
             <!-- Login Form -->
             <form id="login-form" class="auth-form active" onsubmit="loginUser(event)">
                 <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required placeholder="tvuj@email.cz">
+                    <label for="login-username">Uživatelské jméno</label>
+                    <input type="text" id="login-username" required placeholder="tvoje_jmeno">
                 </div>
                 <div class="form-group">
                     <label for="login-password">Heslo</label>
@@ -956,55 +956,42 @@
             <!-- Register Form -->
             <form id="register-form" class="auth-form" onsubmit="registerUser(event)">
                 <div class="form-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" required placeholder="tvuj@email.cz">
+                    <label for="register-username">Uživatelské jméno</label>
+                    <input type="text" id="register-username" required placeholder="tvoje_jmeno" minlength="3">
                 </div>
                 <div class="form-group">
                     <label for="register-password">Heslo</label>
-                    <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                    <input type="password" id="register-password" required placeholder="••••••••" minlength="4">
                 </div>
                 <div class="form-group">
                     <label for="register-password-confirm">Potvrzení hesla</label>
-                    <input type="password" id="register-password-confirm" required placeholder="••••••••" minlength="6">
+                    <input type="password" id="register-password-confirm" required placeholder="••••••••" minlength="4">
                 </div>
                 <button type="submit" class="submit-btn">Registrovat</button>
             </form>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script>
-        // Firebase config
-        const firebaseConfig = {
-            apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
-            authDomain: "heil-47dc3.firebaseapp.com",
-            databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
-            projectId: "heil-47dc3",
-            storageBucket: "heil-47dc3.appspot.com",
-            messagingSenderId: "204548727050",
-            appId: "1:204548727050:web:14066e11908a1fd97f9af3",
-            measurementId: "G-TJZZDNCV05"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Auth state observer
-        auth.onAuthStateChanged((user) => {
+        // Check if user is logged in
+        function checkAuthState() {
+            const currentUser = localStorage.getItem('currentUser');
             const loginBtn = document.getElementById('login-btn');
             const userInfo = document.getElementById('user-info');
             const userEmail = document.getElementById('user-email');
             
-            if (user) {
+            if (currentUser) {
                 loginBtn.style.display = 'none';
                 userInfo.style.display = 'flex';
-                userEmail.textContent = user.email;
+                userEmail.textContent = currentUser;
             } else {
                 loginBtn.style.display = 'block';
                 userInfo.style.display = 'none';
             }
-        });
+        }
+
+        // Check auth on page load
+        window.addEventListener('DOMContentLoaded', checkAuthState);
 
         // Modal functions
         function openAuthModal() {
@@ -1050,31 +1037,33 @@
         // Login
         function loginUser(event) {
             event.preventDefault();
-            const email = document.getElementById('login-email').value;
+            const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
             
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    closeAuthModal();
-                    document.getElementById('login-form').reset();
-                })
-                .catch((error) => {
-                    let message = 'Chyba při přihlášení';
-                    if (error.code === 'auth/user-not-found') {
-                        message = 'Uživatel s tímto emailem neexistuje';
-                    } else if (error.code === 'auth/wrong-password') {
-                        message = 'Nesprávné heslo';
-                    } else if (error.code === 'auth/invalid-email') {
-                        message = 'Neplatný email';
-                    }
-                    showAuthError(message);
-                });
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            
+            if (!users[username]) {
+                showAuthError('Uživatel neexistuje');
+                return;
+            }
+            
+            if (users[username] !== password) {
+                showAuthError('Nesprávné heslo');
+                return;
+            }
+            
+            // Login successful
+            localStorage.setItem('currentUser', username);
+            closeAuthModal();
+            document.getElementById('login-form').reset();
+            checkAuthState();
         }
 
         // Register
         function registerUser(event) {
             event.preventDefault();
-            const email = document.getElementById('register-email').value;
+            const username = document.getElementById('register-username').value;
             const password = document.getElementById('register-password').value;
             const passwordConfirm = document.getElementById('register-password-confirm').value;
             
@@ -1083,36 +1072,37 @@
                 return;
             }
             
-            if (password.length < 6) {
-                showAuthError('Heslo musí mít alespoň 6 znaků');
+            if (username.length < 3) {
+                showAuthError('Uživatelské jméno musí mít alespoň 3 znaky');
                 return;
             }
             
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    closeAuthModal();
-                    document.getElementById('register-form').reset();
-                })
-                .catch((error) => {
-                    let message = 'Chyba při registraci';
-                    if (error.code === 'auth/email-already-in-use') {
-                        message = 'Tento email je již registrován';
-                    } else if (error.code === 'auth/invalid-email') {
-                        message = 'Neplatný email';
-                    } else if (error.code === 'auth/weak-password') {
-                        message = 'Heslo je příliš slabé';
-                    }
-                    showAuthError(message);
-                });
+            if (password.length < 4) {
+                showAuthError('Heslo musí mít alespoň 4 znaky');
+                return;
+            }
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            
+            if (users[username]) {
+                showAuthError('Toto uživatelské jméno je již použito');
+                return;
+            }
+            
+            // Register successful
+            users[username] = password;
+            localStorage.setItem('dnd-users', JSON.stringify(users));
+            localStorage.setItem('currentUser', username);
+            closeAuthModal();
+            document.getElementById('register-form').reset();
+            checkAuthState();
         }
 
         // Logout
         function logoutUser() {
-            auth.signOut().then(() => {
-                console.log('Uživatel odhlášen');
-            }).catch((error) => {
-                console.error('Chyba při odhlášení:', error);
-            });
+            localStorage.removeItem('currentUser');
+            checkAuthState();
         }
 
         // Close modal on background click
