@@ -957,7 +957,8 @@
             <form id="register-form" class="auth-form" onsubmit="registerUser(event)">
                 <div class="form-group">
                     <label for="register-username">Uživatelské jméno</label>
-                    <input type="text" id="register-username" required placeholder="tvoje_jmeno" minlength="3">
+                    <input type="text" id="register-username" required placeholder="tvoje_jmeno" minlength="3" oninput="checkUsernameAvailability()">
+                    <small id="username-check" style="display: none; margin-top: 0.5rem; font-size: 0.9rem;"></small>
                 </div>
                 <div class="form-group">
                     <label for="register-password">Heslo</label>
@@ -967,7 +968,7 @@
                     <label for="register-password-confirm">Potvrzení hesla</label>
                     <input type="password" id="register-password-confirm" required placeholder="••••••••" minlength="4">
                 </div>
-                <button type="submit" class="submit-btn">Registrovat</button>
+                <button type="submit" class="submit-btn" id="register-submit-btn">Registrovat</button>
             </form>
         </div>
     </div>
@@ -1060,6 +1061,33 @@
             checkAuthState();
         }
 
+        // Check username availability
+        function checkUsernameAvailability() {
+            const username = document.getElementById('register-username').value;
+            const checkEl = document.getElementById('username-check');
+            const submitBtn = document.getElementById('register-submit-btn');
+            
+            if (username.length < 3) {
+                checkEl.style.display = 'none';
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            
+            if (users[username]) {
+                checkEl.textContent = '❌ Toto jméno je již použito';
+                checkEl.style.color = '#ff6666';
+                checkEl.style.display = 'block';
+                submitBtn.disabled = true;
+            } else {
+                checkEl.textContent = '✅ Jméno je volné';
+                checkEl.style.color = '#66ff66';
+                checkEl.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        }
+
         // Register
         function registerUser(event) {
             event.preventDefault();
@@ -1096,6 +1124,7 @@
             localStorage.setItem('currentUser', username);
             closeAuthModal();
             document.getElementById('register-form').reset();
+            document.getElementById('username-check').style.display = 'none';
             checkAuthState();
         }
 
