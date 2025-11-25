@@ -767,7 +767,7 @@
             <p id="section2-desc">Přistáli jste ve středověkém městečku. Taverny plné dobrodruhů, guildy hledající hrdiny a obchodníci nabízející vybavení.</p>
             
             <div class="card-container">
-                <div class="feature-card">
+                <div class="feature-card" style="cursor: pointer;" onclick="checkLoginAndRedirect('campaigns.html')">
                     <h3>Kampaně</h3>
                     <p>Vytvářej a spravuj své D&D kampaně. Sleduj postup, organizuj setkání a veď svou družinu k vítězství.</p>
                 </div>
@@ -1136,6 +1136,16 @@
         function logoutUser() {
             localStorage.removeItem('currentUser');
             checkAuthState();
+        }
+
+        // Check login and redirect
+        function checkLoginAndRedirect(url) {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                openAuthModal();
+            } else {
+                window.location.href = url;
+            }
         }
 
         // Close modal on background click
