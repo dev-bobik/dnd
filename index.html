@@ -720,6 +720,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Domů</a></li>
                 <li><a href="#features">Funkce</a></li>
+                <li><a href="campaigns.html" id="campaigns-link" style="display: none;">Kampaně</a></li>
                 <li><a href="#start">Začít Hrát</a></li>
             </ul>
             
@@ -980,14 +981,17 @@
             const loginBtn = document.getElementById('login-btn');
             const userInfo = document.getElementById('user-info');
             const userEmail = document.getElementById('user-email');
+            const campaignsLink = document.getElementById('campaigns-link');
             
             if (currentUser) {
                 loginBtn.style.display = 'none';
                 userInfo.style.display = 'flex';
                 userEmail.textContent = currentUser;
+                if (campaignsLink) campaignsLink.style.display = 'block';
             } else {
                 loginBtn.style.display = 'block';
                 userInfo.style.display = 'none';
+                if (campaignsLink) campaignsLink.style.display = 'none';
             }
         }
 

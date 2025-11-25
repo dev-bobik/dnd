@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kampaně - D&D Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 30%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 70%, rgba(255, 107, 53, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #ff6b35;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #ff6b35 0%, #d4af37 100%);
+            border: 2px solid #ff6b35;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 107, 53, 0.2);
+            border: 2px solid #ff6b35;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(30, 10, 10, 0.8);
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
+            border-color: #ff6b35;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .card-info {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .card-code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            color: #d4af37;
+        }
+
+        .card-players {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .player-tag {
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #ff6b35;
+            margin: 2rem 0 1.5rem 0;
+            text-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(30, 10, 10, 0.95);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 107, 53, 0.5);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.8rem;
+            color: #ff6b35;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: #ff3232;
+        }
+
+        .modal h2 {
+            font-family: 'Cinzel', serif;
+            color: #ff6b35;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Lora', serif;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .friends-section {
+            background: rgba(30, 10, 10, 0.6);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .friends-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .friend-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .friend-name {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .btn-remove {
+            background: rgba(255, 50, 50, 0.3);
+            border: 1px solid #ff3232;
+            color: #ff6666;
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-remove:hover {
+            background: rgba(255, 50, 50, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .header-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 Moje Kampaně</h1>
+            <div class="header-buttons">
+                <button class="btn" onclick="openCreateCampaignModal()">+ Vytvořit Kampaň</button>
+                <button class="btn btn-secondary" onclick="openJoinCampaignModal()">Připojit se ke Kampani</button>
+                <a href="index.html" class="btn btn-secondary">← Domů</a>
+            </div>
+        </header>
+
+        <!-- Friends Section -->
+        <div class="friends-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 class="section-title" style="margin: 0;">👥 Přátelé</h2>
+                <button class="btn btn-small" onclick="openAddFriendModal()">+ Přidat Přítele</button>
+            </div>
+            <div class="friends-list" id="friends-list">
+                <p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Přidej je pomocí jejich uživatelského jména!</p>
+            </div>
+        </div>
+
+        <!-- My Campaigns (as DM) -->
+        <h2 class="section-title">⚔️ Moje Kampaně (jako DM)</h2>
+        <div class="grid" id="my-campaigns">
+            <div class="empty-state">Zatím jsi nevytvořil žádnou kampaň. Vytvoř svou první kampaň!</div>
+        </div>
+
+        <!-- Campaigns as Player -->
+        <h2 class="section-title">🎭 Kampaně (jako Hráč)</h2>
+        <div class="grid" id="player-campaigns">
+            <div class="empty-state">Zatím nejsi členem žádné kampaně. Připoj se pomocí kódu!</div>
+        </div>
+    </div>
+
+    <!-- Create Campaign Modal -->
+    <div id="create-campaign-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCreateCampaignModal()">×</button>
+            <h2>Vytvořit Novou Kampaň</h2>
+            <form onsubmit="createCampaign(event)">
+                <div class="form-group">
+                    <label for="campaign-name">Název Kampaně</label>
+                    <input type="text" id="campaign-name" required placeholder="Např. Pán prstenů">
+                </div>
+                <div class="form-group">
+                    <label for="campaign-description">Popis</label>
+                    <textarea id="campaign-description" placeholder="Krátký popis kampaně..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Vytvořit Kampaň</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Campaign Modal -->
+    <div id="join-campaign-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeJoinCampaignModal()">×</button>
+            <h2>Připojit se ke Kampani</h2>
+            <form onsubmit="joinCampaign(event)">
+                <div class="form-group">
+                    <label for="campaign-code">Kód Kampaně</label>
+                    <input type="text" id="campaign-code" required placeholder="Např. ABC123" style="text-transform: uppercase;">
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Připojit se</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Friend Modal -->
+    <div id="add-friend-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAddFriendModal()">×</button>
+            <h2>Přidat Přítele</h2>
+            <form onsubmit="addFriend(event)">
+                <div class="form-group">
+                    <label for="friend-username">Uživatelské jméno</label>
+                    <input type="text" id="friend-username" required placeholder="Zadej username přítele">
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Přidat</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+
+        // Generate random campaign code
+        function generateCampaignCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Load campaigns
+        function loadCampaigns() {
+            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+            const myCampaignsDiv = document.getElementById('my-campaigns');
+            const playerCampaignsDiv = document.getElementById('player-campaigns');
+
+            const myCampaigns = Object.values(campaigns).filter(c => c.dm === currentUser);
+            const playerCampaigns = Object.values(campaigns).filter(c => c.players.includes(currentUser) && c.dm !== currentUser);
+
+            // My campaigns (as DM)
+            if (myCampaigns.length === 0) {
+                myCampaignsDiv.innerHTML = '<div class="empty-state">Zatím jsi nevytvořil žádnou kampaň. Vytvoř svou první kampaň!</div>';
+            } else {
+                myCampaignsDiv.innerHTML = myCampaigns.map(campaign => `
+                    <div class="card">
+                        <h3>${campaign.name}</h3>
+                        <p class="card-info">${campaign.description || 'Bez popisu'}</p>
+                        <div class="card-code">
+                            <strong>Kód:</strong> ${campaign.code}
+                        </div>
+                        <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
+                        <p class="card-info"><strong>Hráči:</strong></p>
+                        <div class="card-players">
+                            ${campaign.players.map(p => `<span class="player-tag">${p}</span>`).join('')}
+                        </div>
+                        <div class="card-buttons">
+                            <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
+                            <button class="btn btn-small btn-secondary" onclick="deleteCampaign('${campaign.code}')">Smazat</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Player campaigns
+            if (playerCampaigns.length === 0) {
+                playerCampaignsDiv.innerHTML = '<div class="empty-state">Zatím nejsi členem žádné kampaně. Připoj se pomocí kódu!</div>';
+            } else {
+                playerCampaignsDiv.innerHTML = playerCampaigns.map(campaign => `
+                    <div class="card">
+                        <h3>${campaign.name}</h3>
+                        <p class="card-info">${campaign.description || 'Bez popisu'}</p>
+                        <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
+                        <p class="card-info"><strong>Hráči:</strong></p>
+                        <div class="card-players">
+                            ${campaign.players.map(p => `<span class="player-tag">${p}</span>`).join('')}
+                        </div>
+                        <div class="card-buttons">
+                            <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
+                            <button class="btn btn-small btn-secondary" onclick="leaveCampaign('${campaign.code}')">Opustit</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Load friends
+        function loadFriends() {
+            const friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
+            const friendsListDiv = document.getElementById('friends-list');
+
+            if (friends.length === 0) {
+                friendsListDiv.innerHTML = '<p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Přidej je pomocí jejich uživatelského jména!</p>';
+            } else {
+                friendsListDiv.innerHTML = friends.map(friend => `
+                    <div class="friend-card">
+                        <span class="friend-name">👤 ${friend}</span>
+                        <button class="btn-remove" onclick="removeFriend('${friend}')">Odebrat</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Create campaign
+        function createCampaign(event) {
+            event.preventDefault();
+            const name = document.getElementById('campaign-name').value;
+            const description = document.getElementById('campaign-description').value;
+            const code = generateCampaignCode();
+
+            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+            campaigns[code] = {
+                code: code,
+                name: name,
+                description: description,
+                dm: currentUser,
+                players: [currentUser],
+                createdAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
+            closeCreateCampaignModal();
+            document.getElementById('campaign-name').value = '';
+            document.getElementById('campaign-description').value = '';
+            loadCampaigns();
+        }
+
+        // Join campaign
+        function joinCampaign(event) {
+            event.preventDefault();
+            const code = document.getElementById('campaign-code').value.toUpperCase();
+            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+
+            if (!campaigns[code]) {
+                alert('Kampaň s tímto kódem neexistuje!');
+                return;
+            }
+
+            if (campaigns[code].players.includes(currentUser)) {
+                alert('Už jsi členem této kampaně!');
+                return;
+            }
+
+            campaigns[code].players.push(currentUser);
+            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
+            closeJoinCampaignModal();
+            document.getElementById('campaign-code').value = '';
+            loadCampaigns();
+        }
+
+        // Delete campaign
+        function deleteCampaign(code) {
+            if (!confirm('Opravdu chceš smazat tuto kampaň?')) return;
+            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+            delete campaigns[code];
+            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
+            loadCampaigns();
+        }
+
+        // Leave campaign
+        function leaveCampaign(code) {
+            if (!confirm('Opravdu chceš opustit tuto kampaň?')) return;
+            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+            campaigns[code].players = campaigns[code].players.filter(p => p !== currentUser);
+            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
+            loadCampaigns();
+        }
+
+        // Add friend
+        function addFriend(event) {
+            event.preventDefault();
+            const friendUsername = document.getElementById('friend-username').value;
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+
+            if (!users[friendUsername]) {
+                alert('Uživatel s tímto jménem neexistuje!');
+                return;
+            }
+
+            if (friendUsername === currentUser) {
+                alert('Nemůžeš přidat sám sebe!');
+                return;
+            }
+
+            const friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
+            
+            if (friends.includes(friendUsername)) {
+                alert('Tento uživatel už je tvůj přítel!');
+                return;
+            }
+
+            friends.push(friendUsername);
+            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(friends));
+            closeAddFriendModal();
+            document.getElementById('friend-username').value = '';
+            loadFriends();
+        }
+
+        // Remove friend
+        function removeFriend(friendUsername) {
+            if (!confirm(`Opravdu chceš odebrat ${friendUsername} z přátel?`)) return;
+            let friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
+            friends = friends.filter(f => f !== friendUsername);
+            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(friends));
+            loadFriends();
+        }
+
+        // Modal functions
+        function openCreateCampaignModal() {
+            document.getElementById('create-campaign-modal').classList.add('show');
+        }
+
+        function closeCreateCampaignModal() {
+            document.getElementById('create-campaign-modal').classList.remove('show');
+        }
+
+        function openJoinCampaignModal() {
+            document.getElementById('join-campaign-modal').classList.add('show');
+        }
+
+        function closeJoinCampaignModal() {
+            document.getElementById('join-campaign-modal').classList.remove('show');
+        }
+
+        function openAddFriendModal() {
+            document.getElementById('add-friend-modal').classList.add('show');
+        }
+
+        function closeAddFriendModal() {
+            document.getElementById('add-friend-modal').classList.remove('show');
+        }
+
+        // Close modals on background click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        });
+
+        // Load on page load
+        loadCampaigns();
+        loadFriends();
+    </script>
+</body>
+</html>
