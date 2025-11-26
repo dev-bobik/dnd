@@ -991,6 +991,21 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
     var auth = firebase.auth();
+
+    // Get campaign code from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const campaignCode = urlParams.get('campaign');
+    
+    // If no campaign code, redirect to campaigns page
+    if (!campaignCode) {
+      alert('Chybí kód kampaně! Budete přesměrováni na stránku kampaní.');
+      window.location.href = 'campaigns.html';
+    }
+
+    // Create campaign-specific database reference
+    function getCampaignRef(path) {
+      return db.ref('campaigns/' + campaignCode + '/' + path);
+    }
   </script>
   <!-- 3D Dice Libraries -->
   <script src="libs/three.min.js"></script>
@@ -1000,17 +1015,20 @@
 </head>
 <body>
   <div id="sidebar">
-    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-      <a href="index.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">🏠 Zpět na hlavní stránku</a>
-      
-      <div class="theme-toggle">
-        <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
-        <div class="theme-options" id="theme-options">
-          <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
-          <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
-          <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
-          <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
-          <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+      <h2 id="campaign-name-display" style="margin: 0; font-size: 1.2rem; color: var(--accent); text-align: center;">Kampaň: <span id="campaign-code-display"></span></h2>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <a href="campaigns.html" class="back-home-btn" style="flex: 1; margin-bottom: 0;">← Zpět na kampaně</a>
+        
+        <div class="theme-toggle">
+          <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+          <div class="theme-options" id="theme-options">
+            <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+            <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+            <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+            <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+            <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1218,7 +1236,7 @@ cellSizeSelect.addEventListener('change', () => {
 
     const tokenId = Object.entries(db._root._value.tokens || {}).find(([_, t]) => t.src === token.src)?.[0];
     if (tokenId) {
-      db.ref('tokens/' + tokenId).update({
+      getCampaignRef('tokens/' + tokenId).update({
         top: newTop,
         left: newLeft,
         width: cellSize,
@@ -1241,7 +1259,7 @@ gridToggle.addEventListener('change', (e) => {
     grid.classList.remove('visible');
   }
   // Synchronizuj s Firebase
-  db.ref('settings/gridVisible').set(isVisible);
+  getCampaignRef('settings/gridVisible').set(isVisible);
 });
 
 // Token size
@@ -1252,7 +1270,7 @@ tokenSizeSelect.addEventListener('change', (e) => {
   
   // Pouze synchronizuj nastavení do Firebase
   // Neměň existující tokeny - velikost se použije jen pro nové tokeny
-  db.ref('settings/tokenSizeMultiplier').set(tokenSizeMultiplier);
+  getCampaignRef('settings/tokenSizeMultiplier').set(tokenSizeMultiplier);
 });
 
 // DM Mode
@@ -1304,11 +1322,11 @@ aspectRatioSelect.addEventListener('change', (e) => {
   createGrid();
   setTimeout(resizeCanvas, 100);
   // Synchronizuj s Firebase
-  db.ref('settings/aspectRatio').set(aspectRatio);
+  getCampaignRef('settings/aspectRatio').set(aspectRatio);
 });
 
 // Synchronizace nastavení z Firebase
-db.ref('settings/gridVisible').on('value', (snapshot) => {
+getCampaignRef('settings/gridVisible').on('value', (snapshot) => {
   const isVisible = snapshot.val();
   if (isVisible !== null) {
     gridToggle.checked = isVisible;
@@ -1322,7 +1340,7 @@ db.ref('settings/gridVisible').on('value', (snapshot) => {
   }
 });
 
-db.ref('settings/tokenSizeMultiplier').on('value', (snapshot) => {
+getCampaignRef('settings/tokenSizeMultiplier').on('value', (snapshot) => {
   const multiplier = snapshot.val();
   if (multiplier !== null) {
     tokenSizeMultiplier = multiplier;
@@ -1330,7 +1348,7 @@ db.ref('settings/tokenSizeMultiplier').on('value', (snapshot) => {
   }
 });
 
-db.ref('settings/aspectRatio').on('value', (snapshot) => {
+getCampaignRef('settings/aspectRatio').on('value', (snapshot) => {
   const aspectRatio = snapshot.val();
   if (aspectRatio) {
     aspectRatioSelect.value = aspectRatio;
@@ -1341,7 +1359,7 @@ db.ref('settings/aspectRatio').on('value', (snapshot) => {
   }
 });
 
-db.ref('settings/tokenBorderColor').on('value', (snapshot) => {
+getCampaignRef('settings/tokenBorderColor').on('value', (snapshot) => {
   const color = snapshot.val();
   if (color) {
     currentTokenBorderColor = color;
@@ -1358,7 +1376,7 @@ let currentTokenBorderColor = '#8A2BE2';
 
 tokenBorderColorInput.addEventListener('change', (e) => {
   currentTokenBorderColor = e.target.value;
-  db.ref('settings/tokenBorderColor').set(currentTokenBorderColor);
+  getCampaignRef('settings/tokenBorderColor').set(currentTokenBorderColor);
 });
 
 upload.addEventListener('change', (e) => {
@@ -1379,7 +1397,7 @@ upload.addEventListener('change', (e) => {
       borderColor: currentTokenBorderColor,
       gmOnly: gmOnlyChecked
     };
-    db.ref('tokens/' + id).set(tokenData);
+    getCampaignRef('tokens/' + id).set(tokenData);
   };
 
   reader.readAsDataURL(file);
@@ -1393,7 +1411,7 @@ upload.addEventListener('change', (e) => {
     const tokensContainer = document.getElementById('tokens-container');
 
     function startRealtimeSync() {
-      db.ref('tokens').on('value', (snapshot) => {
+      getCampaignRef('tokens').on('value', (snapshot) => {
         const tokens = snapshot.val() || {};
         document.querySelectorAll('.token').forEach(el => el.remove());
         for (let key in tokens) {
@@ -1434,11 +1452,11 @@ upload.addEventListener('change', (e) => {
           let isDragging = false;
 
           img.addEventListener('mouseenter', () => {
-            db.ref('tokens/' + data.id + '/hovered').set(true);
+            getCampaignRef('tokens/' + data.id + '/hovered').set(true);
           });
 
           img.addEventListener('mouseleave', () => {
-            db.ref('tokens/' + data.id + '/hovered').set(false);
+            getCampaignRef('tokens/' + data.id + '/hovered').set(false);
           });
 
           img.addEventListener('contextmenu', (e) => {
@@ -1462,7 +1480,7 @@ upload.addEventListener('change', (e) => {
             const rect = tokensContainer.getBoundingClientRect();
             const newLeft = e.clientX - rect.left - offsetX;
             const newTop = e.clientY - rect.top - offsetY;
-            db.ref('tokens/' + data.id).update({ left: newLeft, top: newTop });
+            getCampaignRef('tokens/' + data.id).update({ left: newLeft, top: newTop });
           });
 
           wrapper.appendChild(img);
@@ -1471,7 +1489,7 @@ upload.addEventListener('change', (e) => {
       });
 
       // Sledování hover stavu tokenů
-      db.ref('tokens').on('child_changed', (snapshot) => {
+      getCampaignRef('tokens').on('child_changed', (snapshot) => {
         const data = snapshot.val();
         const tokenId = snapshot.key;
         const wrappers = Array.from(tokensContainer.children);
@@ -1490,7 +1508,7 @@ upload.addEventListener('change', (e) => {
         }
       });
 
-      db.ref('background').on('value', (snapshot) => {
+      getCampaignRef('background').on('value', (snapshot) => {
         if (snapshot.val()) {
           background.src = snapshot.val();
         }
@@ -1540,14 +1558,14 @@ upload.addEventListener('change', (e) => {
             }
             
             // Synchronizuj aspect ratio do Firebase
-            db.ref('settings/aspectRatio').set(aspectRatioSelect.value);
+            getCampaignRef('settings/aspectRatio').set(aspectRatioSelect.value);
             
             createGrid();
             setTimeout(resizeCanvas, 100);
           };
           img.src = imageUrl;
           background.src = imageUrl;
-          db.ref('background').set(imageUrl);
+          getCampaignRef('background').set(imageUrl);
         };
 
         reader.readAsDataURL(file);
@@ -1555,7 +1573,7 @@ upload.addEventListener('change', (e) => {
       });
 
       // Kreslení - načítej strokes z databáze
-      db.ref('drawing').on('child_added', (snapshot) => {
+      getCampaignRef('drawing').on('child_added', (snapshot) => {
         const stroke = snapshot.val();
         const timestamp = snapshot.key;
         if (stroke && stroke.points) {
@@ -1571,7 +1589,7 @@ upload.addEventListener('change', (e) => {
         }
       });
 
-      db.ref('drawing').on('value', (snapshot) => {
+      getCampaignRef('drawing').on('value', (snapshot) => {
         if (!snapshot.val()) {
           ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
           drawingHistory = [];
@@ -1609,14 +1627,14 @@ upload.addEventListener('change', (e) => {
         if (tokenId) {
           const newLeft = e.clientX - rect.left;
           const newTop = e.clientY - rect.top;
-          db.ref('tokens/' + tokenId).update({
+          getCampaignRef('tokens/' + tokenId).update({
             left: newLeft,
             top: newTop
           });
         } else if (src) {
           const id = Date.now();
           const gmOnlyChecked = document.getElementById('gmOnlyToggle').checked;
-          db.ref('tokens/' + id).set({
+          getCampaignRef('tokens/' + id).set({
             id,
             src,
             top: e.clientY - rect.top,
@@ -1630,9 +1648,19 @@ upload.addEventListener('change', (e) => {
       });
     }
 
+    // Display campaign code
+    document.getElementById('campaign-code-display').textContent = campaignCode;
+
+    // Load campaign name from localStorage
+    const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
+    const campaign = Object.values(campaigns).find(c => c.code === campaignCode);
+    if (campaign) {
+      document.getElementById('campaign-name-display').innerHTML = `⚔️ ${campaign.name}`;
+    }
+
     firebase.auth().signInAnonymously()
       .then(() => {
-        console.log("✅ Přihlášen anonymně");
+        console.log("✅ Přihlášen anonymně do kampaně:", campaignCode);
         startRealtimeSync();
         // Initialize 3D dice roller
         diceMain.init();
@@ -1645,7 +1673,7 @@ upload.addEventListener('change', (e) => {
 
 deleteAllTokensBtn.addEventListener('click', () => {
   if (confirm('Opravdu chcete smazat všechny tokeny z mřížky?')) {
-    db.ref('tokens').remove()
+    getCampaignRef('tokens').remove()
       .then(() => {
         console.log('Všechny tokeny smazány');
         // Odeber všechny tokeny i lokálně
@@ -1670,7 +1698,7 @@ function resizeCanvas() {
   drawCanvas.style.height = rect.height + 'px';
   
   // Překresli všechny tahy po resize
-  db.ref('drawing').once('value', (snapshot) => {
+  getCampaignRef('drawing').once('value', (snapshot) => {
     const strokes = snapshot.val() || {};
     Object.entries(strokes).forEach(([timestamp, stroke]) => {
       if (stroke.gmOnly && !isDMMode) {
@@ -1725,11 +1753,11 @@ undoDrawBtn.addEventListener('click', () => {
   const lastTimestamp = drawingHistory.pop();
   
   // Smaž z Firebase
-  db.ref('drawing/' + lastTimestamp).remove();
+  getCampaignRef('drawing/' + lastTimestamp).remove();
   
   // Překresli canvas bez poslední kresby
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
-  db.ref('drawing').once('value', (snapshot) => {
+  getCampaignRef('drawing').once('value', (snapshot) => {
     const strokes = snapshot.val() || {};
     Object.entries(strokes).forEach(([timestamp, stroke]) => {
       if (stroke.gmOnly && !isDMMode) {
@@ -1742,7 +1770,7 @@ undoDrawBtn.addEventListener('click', () => {
 
 clearCanvasBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
-  db.ref('drawing').set(null);
+  getCampaignRef('drawing').set(null);
   drawingHistory = [];
 });
 
@@ -1786,7 +1814,7 @@ drawCanvas.addEventListener('mouseup', () => {
     const timestamp = Date.now();
     const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
     currentStroke.gmOnly = gmOnlyDrawChecked;
-    db.ref('drawing/' + timestamp).set(currentStroke);
+    getCampaignRef('drawing/' + timestamp).set(currentStroke);
     drawingHistory.push(timestamp);
   }
 });
@@ -1834,7 +1862,7 @@ drawCanvas.addEventListener('touchend', (e) => {
     const timestamp = Date.now();
     const gmOnlyDrawChecked = document.getElementById('gmOnlyDrawToggle').checked;
     currentStroke.gmOnly = gmOnlyDrawChecked;
-    db.ref('drawing/' + timestamp).set(currentStroke);
+    getCampaignRef('drawing/' + timestamp).set(currentStroke);
     drawingHistory.push(timestamp);
   }
 });
@@ -1954,7 +1982,7 @@ function showContextMenu(x, y, tokenId) {
   contextMenuTokenId = tokenId;
   
   // Načti aktuální hodnoty tokenu
-  db.ref('tokens/' + tokenId).once('value', (snapshot) => {
+  getCampaignRef('tokens/' + tokenId).once('value', (snapshot) => {
     const token = snapshot.val();
     if (!token) return;
     
@@ -1986,7 +2014,7 @@ document.addEventListener('click', (e) => {
 // Delete token
 document.getElementById('menuDelete').addEventListener('click', () => {
   if (contextMenuTokenId) {
-    db.ref('tokens/' + contextMenuTokenId).remove();
+    getCampaignRef('tokens/' + contextMenuTokenId).remove();
     hideContextMenu();
   }
 });
@@ -1999,7 +2027,7 @@ menuResizeSelect.addEventListener('change', (e) => {
     const newWidth = cellSize * newMultiplier;
     const newHeight = cellSize * newMultiplier;
     
-    db.ref('tokens/' + contextMenuTokenId).update({
+    getCampaignRef('tokens/' + contextMenuTokenId).update({
       width: newWidth,
       height: newHeight
     });
@@ -2012,7 +2040,7 @@ menuResizeSelect.addEventListener('change', (e) => {
 const menuColorPicker = document.getElementById('menuColorPicker');
 menuColorPicker.addEventListener('change', (e) => {
   if (contextMenuTokenId) {
-    db.ref('tokens/' + contextMenuTokenId).update({
+    getCampaignRef('tokens/' + contextMenuTokenId).update({
       borderColor: e.target.value
     });
     hideContextMenu();
@@ -2065,7 +2093,7 @@ function setTheme(theme) {
   localStorage.setItem('battleGridTheme', theme);
   
   // Synchronizuj s Firebase
-  db.ref('settings/theme').set(theme);
+  getCampaignRef('settings/theme').set(theme);
 }
 
 // Load saved theme from localStorage
@@ -2084,7 +2112,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Synchronizace tématu z Firebase
-db.ref('settings/theme').on('value', (snapshot) => {
+getCampaignRef('settings/theme').on('value', (snapshot) => {
   const theme = snapshot.val();
   if (theme && localStorage.getItem('battleGridTheme') !== theme) {
     setTheme(theme);
