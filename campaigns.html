@@ -486,27 +486,21 @@
 <body>
     <div class="container">
         <header>
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <h1>🎲 Kampaně</h1>
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span id="username-display" style="color: var(--accent); font-weight: 600; font-size: 1.1rem;"></span>
-                    <button class="btn btn-small" onclick="openSettingsModal()" title="Nastavení účtu">⚙️</button>
-                    <div class="theme-toggle">
-                        <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
-                        <div class="theme-options" id="theme-menu">
-                            <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
-                            <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
-                            <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
-                            <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
-                            <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
-                        </div>
-                    </div>
-                    <a href="index.html" class="btn btn-secondary">← Domů</a>
-                </div>
-            </div>
+            <h1>🎲 Moje Kampaně</h1>
             <div class="header-buttons">
                 <button class="btn" onclick="openCreateCampaignModal()">+ Vytvořit Kampaň</button>
                 <button class="btn btn-secondary" onclick="openJoinCampaignModal()">Připojit se ke Kampani</button>
+                <div class="theme-toggle">
+                    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+                    <div class="theme-options" id="theme-menu">
+                        <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+                        <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+                        <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+                        <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+                        <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+                    </div>
+                </div>
+                <a href="index.html" class="btn btn-secondary">← Domů</a>
             </div>
         </header>
 
@@ -723,9 +717,6 @@
             alert('✅ Heslo bylo úspěšně změněno!');
             closeSettingsModal();
         }
-
-        // Display username
-        document.getElementById('username-display').textContent = currentUser;
 
         // Generate random campaign code
         function generateCampaignCode() {
