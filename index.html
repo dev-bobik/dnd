@@ -710,6 +710,11 @@
         }
 
     </style>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 </head>
 <body class="fantasy-theme">
     <!-- Navigace -->
@@ -811,31 +816,69 @@
             
             <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
                 <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
-                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">1,247+</h3>
-                    <p style="color: #ccc; font-size: 0.95rem;">Aktivních Hráčů</p>
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;" id="stat-users">0</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Registrovaných Hráčů</p>
                 </div>
                 <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
-                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">89</h3>
-                    <p style="color: #ccc; font-size: 0.95rem;">Běžících Kampaní</p>
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;" id="stat-campaigns">0</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Vytvořených Kampaní</p>
                 </div>
                 <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
-                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">3,421</h3>
-                    <p style="color: #ccc; font-size: 0.95rem;">Vytvořených Postav</p>
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;" id="stat-friends">0</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Aktivních Přátelství</p>
                 </div>
                 <div style="text-align: center; padding: 20px; background: var(--card-bg); border: 1px solid var(--primary); backdrop-filter: blur(5px);">
-                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">24/7</h3>
-                    <p style="color: #ccc; font-size: 0.95rem;">Online Support</p>
+                    <h3 style="font-family: 'Cinzel'; color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">5</h3>
+                    <p style="color: #ccc; font-size: 0.95rem;">Dostupných Témat</p>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
-        // Load saved theme from localStorage
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
+            authDomain: "heil-47dc3.firebaseapp.com",
+            databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
+            projectId: "heil-47dc3",
+            storageBucket: "heil-47dc3.appspot.com",
+            messagingSenderId: "204548727050",
+            appId: "1:204548727050:web:14066e11908a1fd97f9af3",
+            measurementId: "G-TJZZDNCV05"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
+        // Load saved theme and update stats
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
             setTheme(savedTheme);
+            updateStats();
+            checkAuthState();
         });
+
+        // Update statistics from Firebase
+        function updateStats() {
+            // Count registered users
+            db.ref('users').once('value', (snapshot) => {
+                const userCount = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+                document.getElementById('stat-users').textContent = userCount;
+            });
+
+            // Count total campaigns
+            db.ref('campaigns').once('value', (snapshot) => {
+                const campaignCount = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+                document.getElementById('stat-campaigns').textContent = campaignCount;
+            });
+
+            // Count total friendships
+            db.ref('friendships').once('value', (snapshot) => {
+                const friendshipCount = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+                document.getElementById('stat-friends').textContent = friendshipCount;
+            });
+        }
 
         // Close theme menu when clicking outside
         document.addEventListener('click', (e) => {
@@ -1015,21 +1058,10 @@
         function changePassword(event) {
             event.preventDefault();
             
-            const currentUser = localStorage.getItem('currentUser');
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
             const newPasswordConfirm = document.getElementById('new-password-confirm').value;
             const errorDiv = document.getElementById('password-error');
-            
-            // Get users from localStorage
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
-            
-            // Verify current password
-            if (users[currentUser] !== currentPassword) {
-                errorDiv.textContent = '❌ Současné heslo je nesprávné';
-                errorDiv.classList.add('show');
-                return;
-            }
             
             // Verify new passwords match
             if (newPassword !== newPasswordConfirm) {
@@ -1045,36 +1077,48 @@
                 return;
             }
             
-            // Update password
-            users[currentUser] = newPassword;
-            localStorage.setItem('dnd-users', JSON.stringify(users));
+            // Reauthenticate and update password in Firebase
+            const user = auth.currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
             
-            alert('✅ Heslo bylo úspěšně změněno!');
-            closeSettingsModal();
+            user.reauthenticateWithCredential(credential)
+                .then(() => {
+                    return user.updatePassword(newPassword);
+                })
+                .then(() => {
+                    alert('✅ Heslo bylo úspěšně změněno!');
+                    closeSettingsModal();
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/wrong-password') {
+                        errorDiv.textContent = '❌ Současné heslo je nesprávné';
+                    } else {
+                        errorDiv.textContent = '❌ Chyba: ' + error.message;
+                    }
+                    errorDiv.classList.add('show');
+                });
         }
 
-        // Check if user is logged in
+        // Check if user is logged in (Firebase Auth)
         function checkAuthState() {
-            const currentUser = localStorage.getItem('currentUser');
-            const loginBtn = document.getElementById('login-btn');
-            const userInfo = document.getElementById('user-info');
-            const userEmail = document.getElementById('user-email');
-            const campaignsLink = document.getElementById('campaigns-link');
-            
-            if (currentUser) {
-                loginBtn.style.display = 'none';
-                userInfo.style.display = 'flex';
-                userEmail.textContent = currentUser;
-                if (campaignsLink) campaignsLink.style.display = 'block';
-            } else {
-                loginBtn.style.display = 'block';
-                userInfo.style.display = 'none';
-                if (campaignsLink) campaignsLink.style.display = 'none';
-            }
+            auth.onAuthStateChanged((user) => {
+                const loginBtn = document.getElementById('login-btn');
+                const userInfo = document.getElementById('user-info');
+                const userEmail = document.getElementById('user-email');
+                const campaignsLink = document.getElementById('campaigns-link');
+                
+                if (user) {
+                    loginBtn.style.display = 'none';
+                    userInfo.style.display = 'flex';
+                    userEmail.textContent = user.displayName || user.email.split('@')[0];
+                    if (campaignsLink) campaignsLink.style.display = 'block';
+                } else {
+                    loginBtn.style.display = 'block';
+                    userInfo.style.display = 'none';
+                    if (campaignsLink) campaignsLink.style.display = 'none';
+                }
+            });
         }
-
-        // Check auth on page load
-        window.addEventListener('DOMContentLoaded', checkAuthState);
 
         // Modal functions
         function openAuthModal() {
@@ -1117,33 +1161,32 @@
             errorDiv.classList.remove('show');
         }
 
-        // Login
+        // Login with Firebase
         function loginUser(event) {
             event.preventDefault();
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
             
-            // Get users from localStorage
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            // Create email from username
+            const email = username + '@dnd-online.local';
             
-            if (!users[username]) {
-                showAuthError('Uživatel neexistuje');
-                return;
-            }
-            
-            if (users[username] !== password) {
-                showAuthError('Nesprávné heslo');
-                return;
-            }
-            
-            // Login successful
-            localStorage.setItem('currentUser', username);
-            closeAuthModal();
-            document.getElementById('login-form').reset();
-            checkAuthState();
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    closeAuthModal();
+                    document.getElementById('login-form').reset();
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/user-not-found') {
+                        showAuthError('Uživatel neexistuje');
+                    } else if (error.code === 'auth/wrong-password') {
+                        showAuthError('Nesprávné heslo');
+                    } else {
+                        showAuthError('Chyba přihlášení: ' + error.message);
+                    }
+                });
         }
 
-        // Check username availability
+        // Check username availability (Firebase)
         function checkUsernameAvailability() {
             const username = document.getElementById('register-username').value;
             const checkEl = document.getElementById('username-check');
@@ -1155,22 +1198,26 @@
                 return;
             }
             
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            const email = username + '@dnd-online.local';
             
-            if (users[username]) {
-                checkEl.textContent = '❌ Toto jméno je již použito';
-                checkEl.style.color = '#ff6666';
-                checkEl.style.display = 'block';
-                submitBtn.disabled = true;
-            } else {
-                checkEl.textContent = '✅ Jméno je volné';
-                checkEl.style.color = '#66ff66';
-                checkEl.style.display = 'block';
-                submitBtn.disabled = false;
-            }
+            // Check if username exists in Firebase
+            db.ref('usernames/' + username).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        checkEl.textContent = '❌ Toto jméno je již použito';
+                        checkEl.style.color = '#ff6666';
+                        checkEl.style.display = 'block';
+                        submitBtn.disabled = true;
+                    } else {
+                        checkEl.textContent = '✅ Jméno je volné';
+                        checkEl.style.color = '#66ff66';
+                        checkEl.style.display = 'block';
+                        submitBtn.disabled = false;
+                    }
+                });
         }
 
-        // Register
+        // Register with Firebase
         function registerUser(event) {
             event.preventDefault();
             const username = document.getElementById('register-username').value;
@@ -1187,43 +1234,65 @@
                 return;
             }
             
-            if (password.length < 4) {
-                showAuthError('Heslo musí mít alespoň 4 znaky');
+            if (password.length < 6) {
+                showAuthError('Heslo musí mít alespoň 6 znaků (požadavek Firebase)');
                 return;
             }
             
-            // Get users from localStorage
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            const email = username + '@dnd-online.local';
             
-            if (users[username]) {
-                showAuthError('Toto uživatelské jméno je již použito');
-                return;
-            }
-            
-            // Register successful
-            users[username] = password;
-            localStorage.setItem('dnd-users', JSON.stringify(users));
-            localStorage.setItem('currentUser', username);
-            closeAuthModal();
-            document.getElementById('register-form').reset();
-            document.getElementById('username-check').style.display = 'none';
-            checkAuthState();
+            // Create user in Firebase
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // Update display name
+                    return user.updateProfile({
+                        displayName: username
+                    }).then(() => {
+                        // Save username to database
+                        return db.ref('usernames/' + username).set(user.uid);
+                    }).then(() => {
+                        // Create user profile
+                        return db.ref('users/' + user.uid).set({
+                            username: username,
+                            email: email,
+                            createdAt: Date.now()
+                        });
+                    });
+                })
+                .then(() => {
+                    closeAuthModal();
+                    document.getElementById('register-form').reset();
+                    document.getElementById('username-check').style.display = 'none';
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        showAuthError('Toto uživatelské jméno je již použito');
+                    } else if (error.code === 'auth/weak-password') {
+                        showAuthError('Heslo je příliš slabé');
+                    } else {
+                        showAuthError('Chyba registrace: ' + error.message);
+                    }
+                });
         }
 
-        // Logout
+        // Logout from Firebase
         function logoutUser() {
-            localStorage.removeItem('currentUser');
-            checkAuthState();
+            auth.signOut().then(() => {
+                console.log('Uživatel odhlášen');
+            });
         }
 
         // Check login and redirect
         function checkLoginAndRedirect(url) {
-            const currentUser = localStorage.getItem('currentUser');
-            if (!currentUser) {
-                openAuthModal();
-            } else {
-                window.location.href = url;
-            }
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    openAuthModal();
+                } else {
+                    window.location.href = url;
+                }
+            });
         }
 
         // Close modal on background click
