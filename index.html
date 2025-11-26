@@ -728,7 +728,7 @@
                 <div id="auth-section">
                     <button class="nav-cta" id="login-btn" onclick="openAuthModal()">Přihlásit se</button>
                     <div class="user-info" id="user-info" style="display: none;">
-                        <span id="user-email"></span>
+                        <span id="user-email" style="cursor: pointer;" onclick="openSettingsModal()" title="Nastavení účtu"></span>
                         <button class="logout-btn" onclick="logoutUser()">Odhlásit</button>
                     </div>
                 </div>
@@ -928,6 +928,30 @@
         }
     </script>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSettingsModal()">×</button>
+            <h2>⚙️ Nastavení</h2>
+            <form onsubmit="changePassword(event)">
+                <div class="form-group">
+                    <label for="current-password">Současné heslo</label>
+                    <input type="password" id="current-password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Nové heslo</label>
+                    <input type="password" id="new-password" required placeholder="••••••••" minlength="4">
+                </div>
+                <div class="form-group">
+                    <label for="new-password-confirm">Potvrzení nového hesla</label>
+                    <input type="password" id="new-password-confirm" required placeholder="••••••••" minlength="4">
+                </div>
+                <div id="password-error" class="auth-error"></div>
+                <button type="submit" class="submit-btn">Změnit Heslo</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Auth Modal -->
     <div id="auth-modal" class="modal">
         <div class="modal-content">
@@ -975,6 +999,60 @@
     </div>
 
     <script>
+        // Settings Modal
+        function openSettingsModal() {
+            document.getElementById('settings-modal').classList.add('show');
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('new-password-confirm').value = '';
+            document.getElementById('password-error').classList.remove('show');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.remove('show');
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            
+            const currentUser = localStorage.getItem('currentUser');
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const newPasswordConfirm = document.getElementById('new-password-confirm').value;
+            const errorDiv = document.getElementById('password-error');
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            
+            // Verify current password
+            if (users[currentUser] !== currentPassword) {
+                errorDiv.textContent = '❌ Současné heslo je nesprávné';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            // Verify new passwords match
+            if (newPassword !== newPasswordConfirm) {
+                errorDiv.textContent = '❌ Nová hesla se neshodují';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            // Verify new password is different
+            if (currentPassword === newPassword) {
+                errorDiv.textContent = '❌ Nové heslo musí být odlišné od současného';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            // Update password
+            users[currentUser] = newPassword;
+            localStorage.setItem('dnd-users', JSON.stringify(users));
+            
+            alert('✅ Heslo bylo úspěšně změněno!');
+            closeSettingsModal();
+        }
+
         // Check if user is logged in
         function checkAuthState() {
             const currentUser = localStorage.getItem('currentUser');
@@ -1152,6 +1230,12 @@
         document.getElementById('auth-modal').addEventListener('click', (e) => {
             if (e.target.id === 'auth-modal') {
                 closeAuthModal();
+            }
+        });
+
+        document.getElementById('settings-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'settings-modal') {
+                closeSettingsModal();
             }
         });
     </script>
