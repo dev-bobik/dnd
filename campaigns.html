@@ -8,22 +8,74 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* Theme Variables */
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+            --bg-gradient: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+            --glow-color: rgba(255, 107, 53, 0.2);
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --bg-gradient: linear-gradient(135deg, #1a1410 0%, #2a1f16 50%, #1a1410 100%);
+            --glow-color: rgba(197, 160, 89, 0.2);
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+            --bg-gradient: linear-gradient(135deg, #0a1420 0%, #0f1f30 50%, #0a1420 100%);
+            --glow-color: rgba(0, 191, 255, 0.2);
+        }
+
+        body.nature-theme {
+            --primary: #00ff88;
+            --secondary: #00aa55;
+            --accent: #66ff99;
+            --bg-gradient: linear-gradient(135deg, #0a1a0a 0%, #0f2a0f 50%, #0a1a0a 100%);
+            --glow-color: rgba(0, 255, 136, 0.2);
+        }
+
+        body.gothic-theme {
+            --primary: #9d4edd;
+            --secondary: #5a189a;
+            --accent: #c77dff;
+            --bg-gradient: linear-gradient(135deg, #10001a 0%, #1a0028 50%, #10001a 100%);
+            --glow-color: rgba(157, 78, 221, 0.2);
+        }
+
+        body:not([class*="-theme"]) {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+            --bg-gradient: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+            --glow-color: rgba(255, 107, 53, 0.2);
+        }
+
         body {
             font-family: 'Lora', serif;
-            background: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: #fff;
             min-height: 100vh;
             padding: 2rem;
+            transition: all 0.5s ease;
         }
 
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at 20% 30%, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 70%, rgba(255, 107, 53, 0.2) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 30%, var(--glow-color) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 70%, var(--glow-color) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
+            transition: background 0.5s ease;
         }
 
         .container {
@@ -45,37 +97,114 @@
         h1 {
             font-family: 'Cinzel', serif;
             font-size: 2.5rem;
-            color: #ff6b35;
-            text-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
         }
 
         .header-buttons {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
         .btn {
             padding: 0.7rem 1.5rem;
-            background: linear-gradient(135deg, #ff6b35 0%, #d4af37 100%);
-            border: 2px solid #ff6b35;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border: 2px solid var(--primary);
             color: white;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 4px 15px var(--primary);
             text-decoration: none;
             display: inline-block;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+            box-shadow: 0 6px 25px var(--primary);
         }
 
         .btn-secondary {
-            background: rgba(255, 107, 53, 0.2);
-            border: 2px solid #ff6b35;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+        }
+
+        .theme-toggle-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            background: var(--primary);
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: rgba(30, 10, 10, 0.95);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .theme-options.show {
+            display: flex;
+        }
+
+        .theme-options button {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-options button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-options button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
         }
 
         .grid {
@@ -87,7 +216,7 @@
 
         .card {
             background: rgba(30, 10, 10, 0.8);
-            border: 2px solid rgba(255, 107, 53, 0.5);
+            border: 2px solid var(--primary);
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -97,13 +226,13 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
-            border-color: #ff6b35;
+            box-shadow: 0 12px 40px var(--primary);
+            border-color: var(--primary);
         }
 
         .card h3 {
             font-family: 'Cinzel', serif;
-            color: #ff6b35;
+            color: var(--primary);
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
@@ -156,9 +285,9 @@
         .section-title {
             font-family: 'Cinzel', serif;
             font-size: 2rem;
-            color: #ff6b35;
+            color: var(--primary);
             margin: 2rem 0 1.5rem 0;
-            text-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+            text-shadow: 0 0 15px var(--primary);
         }
 
         .empty-state {
@@ -188,12 +317,12 @@
 
         .modal-content {
             background: rgba(30, 10, 10, 0.95);
-            border: 2px solid #ff6b35;
+            border: 2px solid var(--primary);
             border-radius: 15px;
             padding: 2rem;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 107, 53, 0.5);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--primary);
             position: relative;
         }
 
@@ -202,7 +331,7 @@
             top: 1rem;
             right: 1rem;
             font-size: 1.8rem;
-            color: #ff6b35;
+            color: var(--primary);
             cursor: pointer;
             background: none;
             border: none;
@@ -216,9 +345,9 @@
 
         .modal h2 {
             font-family: 'Cinzel', serif;
-            color: #ff6b35;
+            color: var(--primary);
             margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+            text-shadow: 0 0 20px var(--primary);
         }
 
         .form-group {
@@ -227,7 +356,7 @@
 
         .form-group label {
             display: block;
-            color: #ff6b35;
+            color: var(--primary);
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
@@ -237,7 +366,7 @@
             width: 100%;
             padding: 0.8rem;
             background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 107, 53, 0.5);
+            border: 2px solid var(--primary);
             border-radius: 8px;
             color: #fff;
             font-size: 1rem;
@@ -252,13 +381,13 @@
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #ff6b35;
-            box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
         }
 
         .friends-section {
             background: rgba(30, 10, 10, 0.6);
-            border: 2px solid rgba(255, 107, 53, 0.3);
+            border: 2px solid var(--primary);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 3rem;
@@ -273,7 +402,7 @@
 
         .friend-card {
             background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 107, 53, 0.5);
+            border: 2px solid var(--primary);
             padding: 1rem;
             border-radius: 8px;
             min-width: 200px;
@@ -283,7 +412,7 @@
         }
 
         .friend-name {
-            color: #d4af37;
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -361,6 +490,17 @@
             <div class="header-buttons">
                 <button class="btn" onclick="openCreateCampaignModal()">+ Vytvořit Kampaň</button>
                 <button class="btn btn-secondary" onclick="openJoinCampaignModal()">Připojit se ke Kampani</button>
+                <button class="btn btn-secondary" onclick="openSettingsModal()">⚙️ Nastavení</button>
+                <div class="theme-toggle">
+                    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Změnit téma">🐉</button>
+                    <div class="theme-options" id="theme-menu">
+                        <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+                        <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+                        <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+                        <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+                        <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+                    </div>
+                </div>
                 <a href="index.html" class="btn btn-secondary">← Domů</a>
             </div>
         </header>
@@ -446,11 +586,137 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSettingsModal()">×</button>
+            <h2>⚙️ Nastavení</h2>
+            <form onsubmit="changePassword(event)">
+                <div class="form-group">
+                    <label for="current-password">Současné heslo</label>
+                    <input type="password" id="current-password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Nové heslo</label>
+                    <input type="password" id="new-password" required placeholder="••••••••" minlength="4">
+                </div>
+                <div class="form-group">
+                    <label for="new-password-confirm">Potvrzení nového hesla</label>
+                    <input type="password" id="new-password-confirm" required placeholder="••••••••" minlength="4">
+                </div>
+                <div id="password-error" style="color: #ff6666; margin-bottom: 1rem; display: none;"></div>
+                <button type="submit" class="btn" style="width: 100%;">Změnit Heslo</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Check if user is logged in
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             window.location.href = 'index.html';
+        }
+
+        // Theme Management
+        function toggleThemeMenu() {
+            const menu = document.getElementById('theme-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectTheme(theme) {
+            document.body.className = theme + '-theme';
+            localStorage.setItem('dnd-theme', theme);
+            document.getElementById('theme-menu').style.display = 'none';
+            
+            // Update button emoji
+            const emojis = {
+                'fantasy': '🐉',
+                'steampunk': '⚙',
+                'winter': '❄️',
+                'nature': '🌿',
+                'gothic': '🦇'
+            };
+            document.getElementById('current-theme-btn').textContent = emojis[theme];
+        }
+
+        function setTheme() {
+            const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+            document.body.className = savedTheme + '-theme';
+            
+            // Update button emoji
+            const emojis = {
+                'fantasy': '🐉',
+                'steampunk': '⚙',
+                'winter': '❄️',
+                'nature': '🌿',
+                'gothic': '🦇'
+            };
+            document.getElementById('current-theme-btn').textContent = emojis[savedTheme];
+        }
+
+        // Close theme menu when clicking outside
+        window.addEventListener('click', function(event) {
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeMenu = document.getElementById('theme-menu');
+            if (!themeToggle.contains(event.target)) {
+                themeMenu.style.display = 'none';
+            }
+        });
+
+        // Initialize theme
+        setTheme();
+
+        // Settings Modal
+        function openSettingsModal() {
+            document.getElementById('settings-modal').style.display = 'flex';
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('new-password-confirm').value = '';
+            document.getElementById('password-error').style.display = 'none';
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').style.display = 'none';
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const newPasswordConfirm = document.getElementById('new-password-confirm').value;
+            const errorDiv = document.getElementById('password-error');
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
+            
+            // Verify current password
+            if (users[currentUser] !== currentPassword) {
+                errorDiv.textContent = '❌ Současné heslo je nesprávné';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Verify new passwords match
+            if (newPassword !== newPasswordConfirm) {
+                errorDiv.textContent = '❌ Nová hesla se neshodují';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Verify new password is different
+            if (currentPassword === newPassword) {
+                errorDiv.textContent = '❌ Nové heslo musí být odlišné od současného';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Update password
+            users[currentUser] = newPassword;
+            localStorage.setItem('dnd-users', JSON.stringify(users));
+            
+            alert('✅ Heslo bylo úspěšně změněno!');
+            closeSettingsModal();
         }
 
         // Generate random campaign code
