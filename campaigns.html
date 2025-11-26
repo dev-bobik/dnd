@@ -482,6 +482,10 @@
             .header-buttons { flex-direction: column; }
         }
     </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -610,24 +614,30 @@
     </div>
 
     <script>
-        // Check if user is logged in
-        const currentUser = localStorage.getItem('currentUser');
-        if (!currentUser) {
-            window.location.href = 'index.html';
-        }
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
+            authDomain: "heil-47dc3.firebaseapp.com",
+            databaseURL: "https://heil-47dc3-default-rtdb.firebaseio.com",
+            projectId: "heil-47dc3",
+            storageBucket: "heil-47dc3.appspot.com",
+            messagingSenderId: "204548727050",
+            appId: "1:204548727050:web:14066e11908a1fd97f9af3",
+            measurementId: "G-TJZZDNCV05"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
 
-        // Theme Management
+        // Theme Management (unchanged)
         function toggleThemeMenu() {
             const menu = document.getElementById('theme-menu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
-
         function selectTheme(theme) {
             document.body.className = theme + '-theme';
             localStorage.setItem('dnd-theme', theme);
             document.getElementById('theme-menu').style.display = 'none';
-            
-            // Update button emoji
             const emojis = {
                 'fantasy': '🐉',
                 'steampunk': '⚙',
@@ -637,12 +647,9 @@
             };
             document.getElementById('current-theme-btn').textContent = emojis[theme];
         }
-
         function setTheme() {
             const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
             document.body.className = savedTheme + '-theme';
-            
-            // Update button emoji
             const emojis = {
                 'fantasy': '🐉',
                 'steampunk': '⚙',
@@ -652,8 +659,6 @@
             };
             document.getElementById('current-theme-btn').textContent = emojis[savedTheme];
         }
-
-        // Close theme menu when clicking outside
         window.addEventListener('click', function(event) {
             const themeToggle = document.querySelector('.theme-toggle');
             const themeMenu = document.getElementById('theme-menu');
@@ -661,11 +666,29 @@
                 themeMenu.style.display = 'none';
             }
         });
-
-        // Initialize theme
         setTheme();
 
-        // Settings Modal
+        // Auth state and user info
+        let currentUser = null;
+        let currentUsername = null;
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+            } else {
+                currentUser = user;
+                // Get username from profile or database
+                db.ref('users/' + user.uid).once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        currentUsername = snapshot.val().username;
+                        loadCampaigns();
+                        loadFriends();
+                        loadFriendRequests();
+                    }
+                });
+            }
+        });
+
+        // Settings Modal (Firebase)
         function openSettingsModal() {
             document.getElementById('settings-modal').style.display = 'flex';
             document.getElementById('current-password').value = '';
@@ -673,49 +696,41 @@
             document.getElementById('new-password-confirm').value = '';
             document.getElementById('password-error').style.display = 'none';
         }
-
         function closeSettingsModal() {
             document.getElementById('settings-modal').style.display = 'none';
         }
-
         function changePassword(event) {
             event.preventDefault();
-            
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
             const newPasswordConfirm = document.getElementById('new-password-confirm').value;
             const errorDiv = document.getElementById('password-error');
-            
-            // Get users from localStorage
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
-            
-            // Verify current password
-            if (users[currentUser] !== currentPassword) {
-                errorDiv.textContent = '❌ Současné heslo je nesprávné';
-                errorDiv.style.display = 'block';
-                return;
-            }
-            
-            // Verify new passwords match
             if (newPassword !== newPasswordConfirm) {
                 errorDiv.textContent = '❌ Nová hesla se neshodují';
                 errorDiv.style.display = 'block';
                 return;
             }
-            
-            // Verify new password is different
             if (currentPassword === newPassword) {
                 errorDiv.textContent = '❌ Nové heslo musí být odlišné od současného';
                 errorDiv.style.display = 'block';
                 return;
             }
-            
-            // Update password
-            users[currentUser] = newPassword;
-            localStorage.setItem('dnd-users', JSON.stringify(users));
-            
-            alert('✅ Heslo bylo úspěšně změněno!');
-            closeSettingsModal();
+            const user = auth.currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+            user.reauthenticateWithCredential(credential)
+                .then(() => user.updatePassword(newPassword))
+                .then(() => {
+                    alert('✅ Heslo bylo úspěšně změněno!');
+                    closeSettingsModal();
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/wrong-password') {
+                        errorDiv.textContent = '❌ Současné heslo je nesprávné';
+                    } else {
+                        errorDiv.textContent = '❌ Chyba: ' + error.message;
+                    }
+                    errorDiv.style.display = 'block';
+                });
         }
 
         // Generate random campaign code
@@ -723,283 +738,255 @@
             return Math.random().toString(36).substring(2, 8).toUpperCase();
         }
 
-        // Load campaigns
+        // Load campaigns from Firebase
         function loadCampaigns() {
-            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
             const myCampaignsDiv = document.getElementById('my-campaigns');
             const playerCampaignsDiv = document.getElementById('player-campaigns');
-
-            const myCampaigns = Object.values(campaigns).filter(c => c.dm === currentUser);
-            const playerCampaigns = Object.values(campaigns).filter(c => c.players.includes(currentUser) && c.dm !== currentUser);
-
-            // My campaigns (as DM)
-            if (myCampaigns.length === 0) {
-                myCampaignsDiv.innerHTML = '<div class="empty-state">Zatím jsi nevytvořil žádnou kampaň. Vytvoř svou první kampaň!</div>';
-            } else {
-                myCampaignsDiv.innerHTML = myCampaigns.map(campaign => `
-                    <div class="card">
-                        <h3>${campaign.name}</h3>
-                        <p class="card-info">${campaign.description || 'Bez popisu'}</p>
-                        <div class="card-code">
-                            <strong>Kód:</strong> ${campaign.code}
+            db.ref('campaigns').once('value', (snapshot) => {
+                const campaigns = snapshot.exists() ? snapshot.val() : {};
+                const campaignList = Object.values(campaigns);
+                const myCampaigns = campaignList.filter(c => c.dm === currentUsername);
+                const playerCampaigns = campaignList.filter(c => c.players && c.players.includes(currentUsername) && c.dm !== currentUsername);
+                // My campaigns (as DM)
+                if (myCampaigns.length === 0) {
+                    myCampaignsDiv.innerHTML = '<div class="empty-state">Zatím jsi nevytvořil žádnou kampaň. Vytvoř svou první kampaň!</div>';
+                } else {
+                    myCampaignsDiv.innerHTML = myCampaigns.map(campaign => `
+                        <div class="card">
+                            <h3>${campaign.name}</h3>
+                            <p class="card-info">${campaign.description || 'Bez popisu'}</p>
+                            <div class="card-code">
+                                <strong>Kód:</strong> ${campaign.code}
+                            </div>
+                            <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
+                            <p class="card-info"><strong>Hráči:</strong></p>
+                            <div class="card-players">
+                                ${(campaign.players || []).map(p => `<span class="player-tag">${p}</span>`).join('')}
+                            </div>
+                            <div class="card-buttons">
+                                <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
+                                <button class="btn btn-small btn-secondary" onclick="deleteCampaign('${campaign.code}')">Smazat</button>
+                            </div>
                         </div>
-                        <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
-                        <p class="card-info"><strong>Hráči:</strong></p>
-                        <div class="card-players">
-                            ${campaign.players.map(p => `<span class="player-tag">${p}</span>`).join('')}
+                    `).join('');
+                }
+                // Player campaigns
+                if (playerCampaigns.length === 0) {
+                    playerCampaignsDiv.innerHTML = '<div class="empty-state">Zatím nejsi členem žádné kampaně. Připoj se pomocí kódu!</div>';
+                } else {
+                    playerCampaignsDiv.innerHTML = playerCampaigns.map(campaign => `
+                        <div class="card">
+                            <h3>${campaign.name}</h3>
+                            <p class="card-info">${campaign.description || 'Bez popisu'}</p>
+                            <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
+                            <p class="card-info"><strong>Hráči:</strong></p>
+                            <div class="card-players">
+                                ${(campaign.players || []).map(p => `<span class="player-tag">${p}</span>`).join('')}
+                            </div>
+                            <div class="card-buttons">
+                                <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
+                                <button class="btn btn-small btn-secondary" onclick="leaveCampaign('${campaign.code}')">Opustit</button>
+                            </div>
                         </div>
-                        <div class="card-buttons">
-                            <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
-                            <button class="btn btn-small btn-secondary" onclick="deleteCampaign('${campaign.code}')">Smazat</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            // Player campaigns
-            if (playerCampaigns.length === 0) {
-                playerCampaignsDiv.innerHTML = '<div class="empty-state">Zatím nejsi členem žádné kampaně. Připoj se pomocí kódu!</div>';
-            } else {
-                playerCampaignsDiv.innerHTML = playerCampaigns.map(campaign => `
-                    <div class="card">
-                        <h3>${campaign.name}</h3>
-                        <p class="card-info">${campaign.description || 'Bez popisu'}</p>
-                        <p class="card-info"><strong>DM:</strong> ${campaign.dm}</p>
-                        <p class="card-info"><strong>Hráči:</strong></p>
-                        <div class="card-players">
-                            ${campaign.players.map(p => `<span class="player-tag">${p}</span>`).join('')}
-                        </div>
-                        <div class="card-buttons">
-                            <button class="btn btn-small" onclick="window.location.href='battle-grid.html?campaign=${campaign.code}'">Otevřít Battle Grid</button>
-                            <button class="btn btn-small btn-secondary" onclick="leaveCampaign('${campaign.code}')">Opustit</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
+                    `).join('');
+                }
+            });
         }
 
-        // Load friend requests
+        // Load friend requests from Firebase
         function loadFriendRequests() {
-            const requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
             const requestsSection = document.getElementById('friend-requests-section');
             const requestsList = document.getElementById('friend-requests-list');
-
-            if (requests.length === 0) {
-                requestsSection.style.display = 'none';
-            } else {
-                requestsSection.style.display = 'block';
-                requestsList.innerHTML = requests.map(requester => `
-                    <div class="friend-request-card">
-                        <span class="friend-name">👤 ${requester} chce být tvůj přítel</span>
-                        <div class="request-buttons">
-                            <button class="btn-accept" onclick="acceptFriendRequest('${requester}')">✓ Přijmout</button>
-                            <button class="btn-decline" onclick="declineFriendRequest('${requester}')">✗ Odmítnout</button>
+            db.ref('friendRequests/' + currentUsername).once('value', (snapshot) => {
+                const requests = snapshot.exists() ? Object.keys(snapshot.val()) : [];
+                if (requests.length === 0) {
+                    requestsSection.style.display = 'none';
+                } else {
+                    requestsSection.style.display = 'block';
+                    requestsList.innerHTML = requests.map(requester => `
+                        <div class="friend-request-card">
+                            <span class="friend-name">👤 ${requester} chce být tvůj přítel</span>
+                            <div class="request-buttons">
+                                <button class="btn-accept" onclick="acceptFriendRequest('${requester}')">✓ Přijmout</button>
+                                <button class="btn-decline" onclick="declineFriendRequest('${requester}')">✗ Odmítnout</button>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
-            }
+                    `).join('');
+                }
+            });
         }
 
-        // Load friends
+        // Load friends from Firebase
         function loadFriends() {
-            const friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
             const friendsListDiv = document.getElementById('friends-list');
-
-            if (friends.length === 0) {
-                friendsListDiv.innerHTML = '<p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Pošli žádost o přátelství!</p>';
-            } else {
-                friendsListDiv.innerHTML = friends.map(friend => `
-                    <div class="friend-card">
-                        <span class="friend-name">👤 ${friend}</span>
-                        <button class="btn-remove" onclick="removeFriend('${friend}')">Odebrat</button>
-                    </div>
-                `).join('');
-            }
+            db.ref('friendships/' + currentUsername).once('value', (snapshot) => {
+                const friends = snapshot.exists() ? Object.keys(snapshot.val()) : [];
+                if (friends.length === 0) {
+                    friendsListDiv.innerHTML = '<p class="empty-state" style="width: 100%;">Nemáš zatím žádné přátele. Pošli žádost o přátelství!</p>';
+                } else {
+                    friendsListDiv.innerHTML = friends.map(friend => `
+                        <div class="friend-card">
+                            <span class="friend-name">👤 ${friend}</span>
+                            <button class="btn-remove" onclick="removeFriend('${friend}')">Odebrat</button>
+                        </div>
+                    `).join('');
+                }
+            });
         }
 
-        // Create campaign
+        // Create campaign in Firebase
         function createCampaign(event) {
             event.preventDefault();
             const name = document.getElementById('campaign-name').value;
             const description = document.getElementById('campaign-description').value;
             const code = generateCampaignCode();
-
-            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
-            campaigns[code] = {
+            const campaignData = {
                 code: code,
                 name: name,
                 description: description,
-                dm: currentUser,
-                players: [currentUser],
-                createdAt: new Date().toISOString()
+                dm: currentUsername,
+                players: [currentUsername],
+                createdAt: Date.now()
             };
-
-            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
-            closeCreateCampaignModal();
-            document.getElementById('campaign-name').value = '';
-            document.getElementById('campaign-description').value = '';
-            loadCampaigns();
+            db.ref('campaigns/' + code).set(campaignData).then(() => {
+                closeCreateCampaignModal();
+                document.getElementById('campaign-name').value = '';
+                document.getElementById('campaign-description').value = '';
+                loadCampaigns();
+            });
         }
 
-        // Join campaign
+        // Join campaign in Firebase
         function joinCampaign(event) {
             event.preventDefault();
             const code = document.getElementById('campaign-code').value.toUpperCase();
-            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
-
-            if (!campaigns[code]) {
-                alert('Kampaň s tímto kódem neexistuje!');
-                return;
-            }
-
-            if (campaigns[code].players.includes(currentUser)) {
-                alert('Už jsi členem této kampaně!');
-                return;
-            }
-
-            campaigns[code].players.push(currentUser);
-            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
-            closeJoinCampaignModal();
-            document.getElementById('campaign-code').value = '';
-            loadCampaigns();
+            db.ref('campaigns/' + code).once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    alert('Kampaň s tímto kódem neexistuje!');
+                    return;
+                }
+                const campaign = snapshot.val();
+                if (campaign.players && campaign.players.includes(currentUsername)) {
+                    alert('Už jsi členem této kampaně!');
+                    return;
+                }
+                const updatedPlayers = campaign.players ? [...campaign.players, currentUsername] : [currentUsername];
+                db.ref('campaigns/' + code + '/players').set(updatedPlayers).then(() => {
+                    closeJoinCampaignModal();
+                    document.getElementById('campaign-code').value = '';
+                    loadCampaigns();
+                });
+            });
         }
 
-        // Delete campaign
+        // Delete campaign in Firebase
         function deleteCampaign(code) {
             if (!confirm('Opravdu chceš smazat tuto kampaň?')) return;
-            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
-            delete campaigns[code];
-            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
-            loadCampaigns();
+            db.ref('campaigns/' + code).remove().then(() => {
+                loadCampaigns();
+            });
         }
 
-        // Leave campaign
+        // Leave campaign in Firebase
         function leaveCampaign(code) {
             if (!confirm('Opravdu chceš opustit tuto kampaň?')) return;
-            const campaigns = JSON.parse(localStorage.getItem('dnd-campaigns') || '{}');
-            campaigns[code].players = campaigns[code].players.filter(p => p !== currentUser);
-            localStorage.setItem('dnd-campaigns', JSON.stringify(campaigns));
-            loadCampaigns();
+            db.ref('campaigns/' + code).once('value', (snapshot) => {
+                if (!snapshot.exists()) return;
+                const campaign = snapshot.val();
+                const updatedPlayers = (campaign.players || []).filter(p => p !== currentUsername);
+                db.ref('campaigns/' + code + '/players').set(updatedPlayers).then(() => {
+                    loadCampaigns();
+                });
+            });
         }
 
-        // Send friend request
+        // Send friend request in Firebase
         function sendFriendRequest(event) {
             event.preventDefault();
             const friendUsername = document.getElementById('friend-username').value;
-            const users = JSON.parse(localStorage.getItem('dnd-users') || '{}');
-
-            if (!users[friendUsername]) {
-                alert('Uživatel s tímto jménem neexistuje!');
-                return;
-            }
-
-            if (friendUsername === currentUser) {
-                alert('Nemůžeš poslat žádost sám sobě!');
-                return;
-            }
-
-            const friends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
-            
-            if (friends.includes(friendUsername)) {
-                alert('Tento uživatel už je tvůj přítel!');
-                return;
-            }
-
-            // Check if request already sent
-            const theirRequests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${friendUsername}`) || '[]');
-            if (theirRequests.includes(currentUser)) {
-                alert('Žádost už byla odeslána!');
-                return;
-            }
-
-            // Check if they already sent you a request
-            const myRequests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
-            if (myRequests.includes(friendUsername)) {
-                alert('Tento uživatel ti už poslal žádost! Najdeš ji v sekci žádostí.');
-                return;
-            }
-
-            // Add request to their list
-            theirRequests.push(currentUser);
-            localStorage.setItem(`dnd-friend-requests-${friendUsername}`, JSON.stringify(theirRequests));
-            
-            alert(`Žádost o přátelství odeslána uživateli ${friendUsername}!`);
-            closeAddFriendModal();
-            document.getElementById('friend-username').value = '';
+            // Check if user exists
+            db.ref('usernames/' + friendUsername).once('value', (snapshot) => {
+                if (!snapshot.exists()) {
+                    alert('Uživatel s tímto jménem neexistuje!');
+                    return;
+                }
+                if (friendUsername === currentUsername) {
+                    alert('Nemůžeš poslat žádost sám sobě!');
+                    return;
+                }
+                db.ref('friendships/' + currentUsername + '/' + friendUsername).once('value', (snap) => {
+                    if (snap.exists()) {
+                        alert('Tento uživatel už je tvůj přítel!');
+                        return;
+                    }
+                    db.ref('friendRequests/' + friendUsername + '/' + currentUsername).once('value', (reqSnap) => {
+                        if (reqSnap.exists()) {
+                            alert('Žádost už byla odeslána!');
+                            return;
+                        }
+                        db.ref('friendRequests/' + currentUsername + '/' + friendUsername).once('value', (myReqSnap) => {
+                            if (myReqSnap.exists()) {
+                                alert('Tento uživatel ti už poslal žádost! Najdeš ji v sekci žádostí.');
+                                return;
+                            }
+                            db.ref('friendRequests/' + friendUsername + '/' + currentUsername).set(true).then(() => {
+                                alert(`Žádost o přátelství odeslána uživateli ${friendUsername}!`);
+                                closeAddFriendModal();
+                                document.getElementById('friend-username').value = '';
+                            });
+                        });
+                    });
+                });
+            });
         }
 
-        // Accept friend request
+        // Accept friend request in Firebase
         function acceptFriendRequest(requester) {
             // Add to both friends lists
-            const myFriends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
-            const theirFriends = JSON.parse(localStorage.getItem(`dnd-friends-${requester}`) || '[]');
-            
-            myFriends.push(requester);
-            theirFriends.push(currentUser);
-            
-            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(myFriends));
-            localStorage.setItem(`dnd-friends-${requester}`, JSON.stringify(theirFriends));
-            
+            db.ref('friendships/' + currentUsername + '/' + requester).set(true);
+            db.ref('friendships/' + requester + '/' + currentUsername).set(true);
             // Remove request
-            let requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
-            requests = requests.filter(r => r !== requester);
-            localStorage.setItem(`dnd-friend-requests-${currentUser}`, JSON.stringify(requests));
-            
-            loadFriends();
-            loadFriendRequests();
+            db.ref('friendRequests/' + currentUsername + '/' + requester).remove().then(() => {
+                loadFriends();
+                loadFriendRequests();
+            });
         }
 
-        // Decline friend request
+        // Decline friend request in Firebase
         function declineFriendRequest(requester) {
-            let requests = JSON.parse(localStorage.getItem(`dnd-friend-requests-${currentUser}`) || '[]');
-            requests = requests.filter(r => r !== requester);
-            localStorage.setItem(`dnd-friend-requests-${currentUser}`, JSON.stringify(requests));
-            loadFriendRequests();
+            db.ref('friendRequests/' + currentUsername + '/' + requester).remove().then(() => {
+                loadFriendRequests();
+            });
         }
 
-        // Remove friend
+        // Remove friend in Firebase
         function removeFriend(friendUsername) {
             if (!confirm(`Opravdu chceš odebrat ${friendUsername} z přátel?`)) return;
-            
-            // Remove from both friends lists
-            let myFriends = JSON.parse(localStorage.getItem(`dnd-friends-${currentUser}`) || '[]');
-            let theirFriends = JSON.parse(localStorage.getItem(`dnd-friends-${friendUsername}`) || '[]');
-            
-            myFriends = myFriends.filter(f => f !== friendUsername);
-            theirFriends = theirFriends.filter(f => f !== currentUser);
-            
-            localStorage.setItem(`dnd-friends-${currentUser}`, JSON.stringify(myFriends));
-            localStorage.setItem(`dnd-friends-${friendUsername}`, JSON.stringify(theirFriends));
-            
-            loadFriends();
+            db.ref('friendships/' + currentUsername + '/' + friendUsername).remove();
+            db.ref('friendships/' + friendUsername + '/' + currentUsername).remove().then(() => {
+                loadFriends();
+            });
         }
 
-        // Modal functions
+        // Modal functions (unchanged)
         function openCreateCampaignModal() {
             document.getElementById('create-campaign-modal').classList.add('show');
         }
-
         function closeCreateCampaignModal() {
             document.getElementById('create-campaign-modal').classList.remove('show');
         }
-
         function openJoinCampaignModal() {
             document.getElementById('join-campaign-modal').classList.add('show');
         }
-
         function closeJoinCampaignModal() {
             document.getElementById('join-campaign-modal').classList.remove('show');
         }
-
         function openAddFriendModal() {
             document.getElementById('add-friend-modal').classList.add('show');
         }
-
         function closeAddFriendModal() {
             document.getElementById('add-friend-modal').classList.remove('show');
         }
-
-        // Close modals on background click
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -1007,11 +994,7 @@
                 }
             });
         });
-
-        // Load on page load
-        loadCampaigns();
-        loadFriends();
-        loadFriendRequests();
+        // Initial load is triggered by auth state
     </script>
 </body>
 </html>
