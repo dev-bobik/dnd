@@ -780,7 +780,19 @@
                     <h3>Postavy</h3>
                     <p>Kompletní systém pro tvorbu a správu postav. Všechny třídy, rasy a vybavení z Player's Handbook.</p>
                 </div>
-                <div class="feature-card" style="cursor: pointer;" onclick="window.location.href='battle-grid.html'">
+                <div class="feature-card" style="cursor: pointer;" onclick="openBattleGridModal()">
+                        <!-- Battle Grid Modal -->
+                        <div id="battle-grid-modal" class="modal">
+                            <div class="modal-content">
+                                <button class="modal-close" onclick="closeBattleGridModal()">×</button>
+                                <h2>🗺️ Výběr Bojové Mřížky</h2>
+                                <p style="margin-bottom: 1.5rem; color: #ccc;">Vyberte, ke které mřížce se chcete připojit:</p>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <button class="submit-btn" onclick="joinExampleGrid()">Připojit se k veřejné mřížce (ukázka)</button>
+                                    <button class="submit-btn" id="user-grid-btn" style="display: none;" onclick="joinUserGrid()">Připojit se ke své mřížce</button>
+                                </div>
+                            </div>
+                        </div>
                     <h3>Bojová Mřížka</h3>
                     <p>Interaktivní battle grid pro taktické souboje. Real-time synchronizace pro celou družinu.</p>
                 </div>
@@ -811,7 +823,7 @@
             
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <a href="#registrace" class="btn-play">VYTVOŘIT ÚČET</a>
-                <a href="#login" class="btn-play" style="background: linear-gradient(to bottom, #5e4b35, #3d2f22); border-color: #5e4b35;">PŘIHLÁSIT SE</a>
+                <button class="btn-play" style="background: linear-gradient(to bottom, #5e4b35, #3d2f22); border-color: #5e4b35;" onclick="openAuthModal()">Přihlásit se</button>
             </div>
             
             <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
@@ -836,6 +848,38 @@
     </section>
 
     <script>
+                // Battle Grid Modal
+                function openBattleGridModal() {
+                    document.getElementById('battle-grid-modal').classList.add('show');
+                    // Zobrazit tlačítko pro uživatele, pokud je přihlášen
+                    const user = auth.currentUser;
+                    document.getElementById('user-grid-btn').style.display = user ? 'block' : 'none';
+                }
+
+                function closeBattleGridModal() {
+                    document.getElementById('battle-grid-modal').classList.remove('show');
+                }
+
+                function joinExampleGrid() {
+                    window.location.href = 'battle-grid.html?grid=example';
+                }
+
+                function joinUserGrid() {
+                    const user = auth.currentUser;
+                    if (user) {
+                        // Každý uživatel má svůj grid pojmenovaný podle UID
+                        window.location.href = 'battle-grid.html?grid=' + user.uid;
+                    }
+                }
+
+                // Zavření modalu klikem na pozadí
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.getElementById('battle-grid-modal').addEventListener('click', function(e) {
+                        if (e.target.id === 'battle-grid-modal') {
+                            closeBattleGridModal();
+                        }
+                    });
+                });
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
@@ -1284,15 +1328,14 @@
             });
         }
 
-        // Check login and redirect
+        // Check login and redirect (instant)
         function checkLoginAndRedirect(url) {
-            auth.onAuthStateChanged((user) => {
-                if (!user) {
-                    openAuthModal();
-                } else {
-                    window.location.href = url;
-                }
-            });
+            const user = auth.currentUser;
+            if (!user) {
+                openAuthModal();
+            } else {
+                window.location.href = url;
+            }
         }
 
         // Close modal on background click
