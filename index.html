@@ -247,19 +247,19 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 10000;
+            z-index: 99999;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(7px);
+            align-items: center;
+            justify-content: center;
         }
 
         .modal.show {
             display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .modal-content {
@@ -850,7 +850,8 @@
     <script>
                 // Battle Grid Modal
                 function openBattleGridModal() {
-                    document.getElementById('battle-grid-modal').classList.add('show');
+                    const modal = document.getElementById('battle-grid-modal');
+                    modal.classList.add('show');
                     // Zobrazit tlačítko pro uživatele, pokud je přihlášen
                     const user = auth.currentUser;
                     document.getElementById('user-grid-btn').style.display = user ? 'block' : 'none';
@@ -861,13 +862,14 @@
                 }
 
                 function joinExampleGrid() {
+                    closeBattleGridModal();
                     window.location.href = 'battle-grid.html?grid=example';
                 }
 
                 function joinUserGrid() {
                     const user = auth.currentUser;
                     if (user) {
-                        // Každý uživatel má svůj grid pojmenovaný podle UID
+                        closeBattleGridModal();
                         window.location.href = 'battle-grid.html?grid=' + user.uid;
                     }
                 }
@@ -875,7 +877,7 @@
                 // Zavření modalu klikem na pozadí
                 document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('battle-grid-modal').addEventListener('click', function(e) {
-                        if (e.target.id === 'battle-grid-modal') {
+                        if (e.target === this) {
                             closeBattleGridModal();
                         }
                     });
