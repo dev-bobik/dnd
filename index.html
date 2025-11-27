@@ -781,12 +781,12 @@
                     <p>Kompletní systém pro tvorbu a správu postav. Všechny třídy, rasy a vybavení z Player's Handbook.</p>
                 </div>
                 <div class="feature-card" style="cursor: pointer;" onclick="openBattleGridModal()">
-                        <!-- Battle Grid Modal -->
+                        <!-- Battle Grid Modal (mimo feature-card, na konci body) -->
                         <div id="battle-grid-modal" class="modal">
-                            <div class="modal-content">
-                                <button class="modal-close" onclick="closeBattleGridModal()">×</button>
-                                <h2>🗺️ Výběr Bojové Mřížky</h2>
-                                <p style="margin-bottom: 1.5rem; color: #ccc;">Vyberte, ke které mřížce se chcete připojit:</p>
+                            <div class="modal-content" style="background: var(--card-bg); border: 2px solid var(--primary); border-radius: 18px; padding: 2.5rem 2rem; min-width: 320px; max-width: 95vw; box-shadow: 0 10px 50px rgba(0,0,0,0.95), 0 0 30px var(--primary); position: relative;">
+                                <button class="modal-close" onclick="closeBattleGridModal()" style="position:absolute;top:1rem;right:1rem;font-size:2rem;color:var(--primary);background:none;border:none;cursor:pointer;">×</button>
+                                <h2 style="font-family:'Cinzel',serif;color:var(--primary);text-align:center;margin-bottom:1.5rem;font-size:2rem;text-shadow:0 0 20px var(--primary);">🗺️ Výběr Bojové Mřížky</h2>
+                                <p style="margin-bottom: 1.5rem; color: #ccc; text-align:center;">Vyberte, ke které mřížce se chcete připojit:</p>
                                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                                     <button class="submit-btn" onclick="joinExampleGrid()">Připojit se k veřejné mřížce (ukázka)</button>
                                     <button class="submit-btn" id="user-grid-btn" style="display: none;" onclick="joinUserGrid()">Připojit se ke své mřížce</button>
@@ -848,40 +848,40 @@
     </section>
 
     <script>
-                // Battle Grid Modal
-                function openBattleGridModal() {
-                    const modal = document.getElementById('battle-grid-modal');
-                    modal.classList.add('show');
-                    // Zobrazit tlačítko pro uživatele, pokud je přihlášen
-                    const user = auth.currentUser;
-                    document.getElementById('user-grid-btn').style.display = user ? 'block' : 'none';
-                }
+        // Battle Grid Modal
+        function openBattleGridModal() {
+            const modal = document.getElementById('battle-grid-modal');
+            modal.classList.add('show');
+            // Zobrazit tlačítko pro uživatele, pokud je přihlášen
+            const user = auth.currentUser;
+            document.getElementById('user-grid-btn').style.display = user ? 'block' : 'none';
+        }
 
-                function closeBattleGridModal() {
-                    document.getElementById('battle-grid-modal').classList.remove('show');
-                }
+        function closeBattleGridModal() {
+            document.getElementById('battle-grid-modal').classList.remove('show');
+        }
 
-                function joinExampleGrid() {
+        function joinExampleGrid() {
+            closeBattleGridModal();
+            window.location.href = 'battle-grid.html?grid=example';
+        }
+
+        function joinUserGrid() {
+            const user = auth.currentUser;
+            if (user) {
+                closeBattleGridModal();
+                window.location.href = 'battle-grid.html?grid=' + user.uid;
+            }
+        }
+
+        // Zavření modalu klikem na pozadí
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('battle-grid-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
                     closeBattleGridModal();
-                    window.location.href = 'battle-grid.html?grid=example';
                 }
-
-                function joinUserGrid() {
-                    const user = auth.currentUser;
-                    if (user) {
-                        closeBattleGridModal();
-                        window.location.href = 'battle-grid.html?grid=' + user.uid;
-                    }
-                }
-
-                // Zavření modalu klikem na pozadí
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('battle-grid-modal').addEventListener('click', function(e) {
-                        if (e.target === this) {
-                            closeBattleGridModal();
-                        }
-                    });
-                });
+            });
+        });
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCIZjiTltMTVktH4qTuW4iclUqFwuIbU9E",
