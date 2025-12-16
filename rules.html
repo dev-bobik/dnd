@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Pravidla | D&D 5e Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #000;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 2rem;
+            border-bottom: 3px solid #8A2BE2;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #8A2BE2;
+            text-shadow: 0 0 20px #8A2BE2;
+        }
+
+        .back-btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #8A2BE2, #6B1EB3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #8A2BE2;
+        }
+
+        /* Feature Sections */
+        .feature {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .feature.offcolor {
+            background: #ffe68c;
+            color: #000;
+        }
+
+        .feature.offcolor a {
+            color: #000;
+        }
+
+        .feature h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .feature p {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Grid Layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .col-sm-2 {
+            flex: 0 0 calc(16.66% - 2rem);
+            min-width: 150px;
+            padding: 1rem;
+        }
+
+        .col-sm-3 {
+            flex: 0 0 calc(25% - 2rem);
+            min-width: 200px;
+            padding: 1rem;
+        }
+
+        .col-sm-4 {
+            flex: 0 0 calc(33.33% - 2rem);
+            min-width: 250px;
+            padding: 1rem;
+        }
+
+        .col-md-5 {
+            flex: 0 0 calc(41.66% - 2rem);
+            min-width: 300px;
+        }
+
+        .col-md-7 {
+            flex: 0 0 calc(58.33% - 2rem);
+            min-width: 400px;
+        }
+
+        /* Icons */
+        .fa {
+            color: #8A2BE2;
+            margin-bottom: 1rem;
+        }
+
+        .feature.offcolor .fa {
+            color: #000;
+        }
+
+        /* Links */
+        a {
+            color: #8A2BE2;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: #A040F0;
+            text-decoration: underline;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 0.5rem 0;
+        }
+
+        /* Section Headers */
+        h6 {
+            font-weight: bold;
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            background: linear-gradient(135deg, #1a0a0a 0%, #2a0505 50%, #1a0000 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .intro-section h1 {
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+        }
+
+        /* Quick Links Grid */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .quick-link-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(138, 43, 226, 0.1);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .quick-link-item:hover {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: #8A2BE2;
+            transform: translateY(-5px);
+        }
+
+        .quick-link-item .fa {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .feature h1 {
+                font-size: 2rem;
+            }
+
+            .feature h2 {
+                font-size: 1.5rem;
+            }
+
+            .col-sm-2, .col-sm-3, .col-sm-4, .col-md-5, .col-md-7 {
+                flex: 0 0 100%;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 1rem;
+            }
+        }
+
+        /* Text alignment */
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>⚔️ D&D 5e Pravidla</h1>
+            <a href="index.html" class="back-btn">← Zpět na hlavní stránku</a>
+        </div>
+    </header>
+
+    <!-- Intro Section -->
+    <div class="intro-section">
+        <h1>Vítejte v referenčním průvodci D&D 5e</h1>
+        <p>Zde najdete kompletní pravidla pro vytváření postav a hraní Dungeons & Dragons 5. edice. 
+        Vyberte si rasu, třídu a další aspekty vaší postavy. Všechny vybrané prvky se automaticky 
+        propojí s tvorbou postavy a aktualizují vaše statistiky.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div style="background: #ffe68c; padding: 3rem 0;">
+        <div class="row">
+            <div class="col-sm-2">
+                <p><i class="fas fa-book fa-4x"></i></p>
+                <h3><a href="#spells">Kouzla</a></h3>
+            </div>
+            <div class="col-sm-2">
+                <p><i class="fas fa-users fa-4x"></i></p>
+                <h3><a href="#races">Rasy</a></h3>
+            </div>
+            <div class="col-sm-2">
+                <p><i class="fas fa-university fa-4x"></i></p>
+                <h3><a href="#backgrounds">Backgroundy</a></h3>
+            </div>
+            <div class="col-sm-2">
+                <p><i class="fas fa-magic fa-4x"></i></p>
+                <h3><a href="#classes">Třídy</a></h3>
+            </div>
+            <div class="col-sm-2">
+                <p><i class="fas fa-flask fa-4x"></i></p>
+                <h3><a href="#items">Předměty</a></h3>
+            </div>
+            <div class="col-sm-2">
+                <p><i class="fas fa-unlock-alt fa-4x"></i></p>
+                <h3><a href="#feats">Featy</a></h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spells Section -->
+    <div class="feature" id="spells">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <p><i class="fas fa-book" style="font-size: 12em;"></i></p>
+            </div>
+            <div class="col-sm-3">
+                <h1>Všechna Kouzla</h1>
+                <p>• Kouzla Umělce<br>
+                • Kouzla Barda<br>
+                • Kouzla Klerika<br>
+                • Kouzla Druida<br>
+                • Kouzla Paladina<br>
+                • Kouzla Rangera<br>
+                • Kouzla Čaroděje<br>
+                • Kouzla Warlocka<br>
+                • Kouzla Kouzelníka</p>
+            </div>
+            <div class="col-sm-3">
+                <h1>Školy Magie</h1>
+                <p>• Vymítání<br>
+                • Vyvolávání<br>
+                • Věštění<br>
+                • Očarování<br>
+                • Zaklínání<br>
+                • Iluze<br>
+                • Nekromancie<br>
+                • Transmutace</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Races Section -->
+    <div class="feature offcolor" id="races">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <p><i class="fas fa-users" style="font-size: 10em;"></i></p>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h2>Běžné Rasy</h2>
+                        <p>• Dračí rod<br>
+                        • Trpaslík<br>
+                        • Elf<br>
+                        • Gnom<br>
+                        • Půlelf<br>
+                        • Půlork<br>
+                        • Půlčík<br>
+                        • Člověk<br>
+                        • Tiefling</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h2>Exotické Rasy</h2>
+                        <p>• Aarakokra<br>
+                        • Aasimar<br>
+                        • Changeling<br>
+                        • Hluboký gnom<br>
+                        • Duergar<br>
+                        • Eladrin<br>
+                        • Víla<br>
+                        • Firbolg<br>
+                        • Genasi<br>
+                        • Githyanki<br>
+                        • Githzerai<br>
+                        • Goliáš<br>
+                        • Harengon<br>
+                        • Kenku<br>
+                        • Satyr<br>
+                        • Tabaxi<br>
+                        • Triton</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h2>Monstrózní Rasy</h2>
+                        <p>• Bugbear<br>
+                        • Kentaur<br>
+                        • Goblin<br>
+                        • Hobgoblin<br>
+                        • Kobold<br>
+                        • Ještěrčí lidé<br>
+                        • Minotaurus<br>
+                        • Ork<br>
+                        • Měněnec<br>
+                        • Yuan-ti</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Classes Section -->
+    <div class="feature" id="classes">
+        <h1>Třídy</h1>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><i class="fas fa-cogs"></i> Umělec</h2>
+                <p><em>Tvůrci magií zabudovaných do předmětů, umělci jsou definováni svou vynalézavostí.</em></p>
+                <h6>Specializace</h6>
+                <p>• Alchymista<br>
+                • Zbrojíř<br>
+                • Dělostřelec<br>
+                • Bojový kovář</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-tint"></i> Barbar</h2>
+                <p><em>Pro některé jejich vztek pramení z komunití s divokými zvířecími duchy.</em></p>
+                <h6>Specializace</h6>
+                <p>• Cesta předků<br>
+                • Cesta bojovníka<br>
+                • Cesta šelmy<br>
+                • Cesta berserkra<br>
+                • Cesta obra<br>
+                • Cesta bouřlivého hérolda<br>
+                • Cesta totemuového válečníka<br>
+                • Cesta divoké magie<br>
+                • Cesta zázračníka</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-music"></i> Bard</h2>
+                <p><em>Ať už učenec, skald nebo podvodník, bard tkáč magii skrze slova a hudbu.</em></p>
+                <h6>Specializace</h6>
+                <p>• Kolegium tvorby<br>
+                • Kolegium výřečnosti<br>
+                • Kolegium glamouru<br>
+                • Kolegium znalostí<br>
+                • Kolegium duchů<br>
+                • Kolegium mečů<br>
+                • Kolegium statečnosti<br>
+                • Kolegium šepotů</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><i class="fas fa-plus-circle"></i> Klerik</h2>
+                <p><em>Klerici jsou prostředníky mezi smrtelným světem a vzdálenými sférami bohů.</em></p>
+                <h6>Specializace</h6>
+                <p>• Doména tajemství<br>
+                • Doména smrti<br>
+                • Doména kovárny<br>
+                • Doména hrobu<br>
+                • Doména znalostí<br>
+                • Doména života<br>
+                • Doména světla<br>
+                • Doména přírody<br>
+                • Doména řádu<br>
+                • Doména míru<br>
+                • Doména bouře<br>
+                • Doména klamu<br>
+                • Doména soumraku<br>
+                • Doména války</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-leaf"></i> Druid</h2>
+                <p><em>Ať už volají po elementálních silách přírody nebo napodobují tvory zvířecího světa.</em></p>
+                <h6>Specializace</h6>
+                <p>• Kruh snů<br>
+                • Kruh země<br>
+                • Kruh měsíce<br>
+                • Kruh pastýře<br>
+                • Kruh výtrusů<br>
+                • Kruh hvězd<br>
+                • Kruh divoké ohně</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-gavel"></i> Bojovník</h2>
+                <p><em>Bojovníci sdílejí bezkonkurenční mistrovství se zbraněmi a zbrojí.</em></p>
+                <h6>Specializace</h6>
+                <p>• Mystický lukostřelec<br>
+                • Šlechtic<br>
+                • Bojový mistr<br>
+                • Kavalírský bojovník<br>
+                • Šampion<br>
+                • Rytíř ozvěn<br>
+                • Eldritský rytíř<br>
+                • Psi válečník<br>
+                • Runový rytíř<br>
+                • Samuraj</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><i class="fas fa-spinner"></i> Mnich</h2>
+                <p><em>Mniši jsou spojeni ve své schopnosti magicky využívat energii, která proudí v jejich tělech.</em></p>
+                <h6>Specializace</h6>
+                <p>• Cesta milosrdenství<br>
+                • Cesta vznášejícího se draka<br>
+                • Cesta astrálního já<br>
+                • Cesta opilého mistra<br>
+                • Cesta čtyř elementů<br>
+                • Cesta kensei<br>
+                • Cesta dlouhé smrti<br>
+                • Cesta otevřené ruky<br>
+                • Cesta stínu<br>
+                • Cesta sluneční duše</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-shield"></i> Paladin</h2>
+                <p><em>Ať už přísahal před oltářem boha a za svědka kněze, přísaha paladina je mocné pouto.</em></p>
+                <h6>Specializace</h6>
+                <p>• Přísaha prastarých<br>
+                • Přísaha dobytí<br>
+                • Přísaha koruny<br>
+                • Přísaha oddanosti<br>
+                • Přísaha slávy<br>
+                • Přísaha vykoupení<br>
+                • Přísaha pomsty<br>
+                • Přísaha strážců<br>
+                • Přísahaolomník</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-paw"></i> Ranger</h2>
+                <p><em>Daleko od shonu měst a vesnic, rangeři udržují svou neustálou stráž.</em></p>
+                <h6>Specializace</h6>
+                <p>• Pán šelem<br>
+                • Dračí strážce<br>
+                • Vílí poutník<br>
+                • Temný stopař<br>
+                • Chodec horizontu<br>
+                • Lovec<br>
+                • Lovec monster<br>
+                • Vládce roje</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><i class="fas fa-eye"></i> Lotr</h2>
+                <p><em>Lotři spoléhají na dovednosti, nenápadnost a zranitelnosti svých nepřátel.</em></p>
+                <h6>Specializace</h6>
+                <p>• Mystický trikster<br>
+                • Vrah<br>
+                • Vyšetřovatel<br>
+                • Mozek<br>
+                • Fantom<br>
+                • Zvěd<br>
+                • Duševní nůž<br>
+                • Šermíř<br>
+                • Zloděj</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-bolt"></i> Čaroděj</h2>
+                <p><em>Čarodějové nesou magické právo udělené jim exotickou krví nebo vlivem.</em></p>
+                <h6>Specializace</h6>
+                <p>• Aberantní mysl<br>
+                • Hodinková duše<br>
+                • Dračí krevní linie<br>
+                • Božská duše<br>
+                • Lunární čarodějství<br>
+                • Stínová magie<br>
+                • Bouřlivé čarodějství<br>
+                • Divoká magie</p>
+            </div>
+            <div class="col-sm-4">
+                <h2><i class="fas fa-sun-o"></i> Warlock</h2>
+                <p><em>Warlockové jsou hledači znalostí skrytých v látce multivesmíru.</em></p>
+                <h6>Specializace</h6>
+                <p>• Arcivíla<br>
+                • Nebeský<br>
+                • Bezedný<br>
+                • Běs<br>
+                • Džin<br>
+                • Prastarý<br>
+                • Hexblade<br>
+                • Nemrtvý<br>
+                • Neumírající</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><i class="fas fa-magic"></i> Kouzelník</h2>
+                <p><em>Kouzelníci jsou nejvyšší uživatelé magie, definováni a sjednoceni kouzly, která sesílají.</em></p>
+                <h6>Specializace</h6>
+                <p>• Škola vymítání<br>
+                • Škola šermování čepelí<br>
+                • Škola chronurgie<br>
+                • Škola vyvolávání<br>
+                • Škola věštění<br>
+                • Škola očarování<br>
+                • Škola zaklínání<br>
+                • Škola graviturgie<br>
+                • Škola iluzí<br>
+                • Škola nekromancie<br>
+                • Řád písařů<br>
+                • Škola transmutace<br>
+                • Škola válečné magie</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Items Section -->
+    <div class="feature offcolor" id="items">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <p><i class="fas fa-flask" style="font-size: 12em;"></i></p>
+            </div>
+            <div class="col-sm-3">
+                <h1>Předměty</h1>
+                <p>• Dobrodružné vybavení<br>
+                • Zbroj a štíty<br>
+                • Drobnosti<br>
+                • Zbraně<br>
+                • Střelné zbraně<br>
+                • Výbušniny<br>
+                • Zázračné předměty<br>
+                • Měna<br>
+                • Jedy<br>
+                • Nástroje<br>
+                • Obléhací vybavení</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feats Section -->
+    <div class="feature" id="feats">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <p><i class="fas fa-unlock-alt" style="font-size: 10em;"></i></p>
+            </div>
+            <div class="col-md-7">
+                <h1>Featy</h1>
+                <p>Featy představují talent nebo specializaci poskytující postavě speciální schopnosti. 
+                Nahrazují zvýšení hodnot vlastností při dosažení určitých úrovní.</p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h6>Běžné Featy</h6>
+                        <p>• Herec<br>
+                        • Pohotový<br>
+                        • Atlet<br>
+                        • Nabíječ<br>
+                        • Drtič<br>
+                        • Obratný duelista<br>
+                        • Dvojitý bojovník<br>
+                        • Průzkumník jeskyní<br>
+                        • Odolný<br>
+                        • Mistr zbraní</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Pokračování</h6>
+                        <p>• Inspirující vůdce<br>
+                        • Bystrá mysl<br>
+                        • Lingvista<br>
+                        • Šťastný<br>
+                        • Lovec mágů<br>
+                        • Mobilní<br>
+                        • Mistr pólovky<br>
+                        • Ostrostřelec<br>
+                        • Mistr štítu<br>
+                        • Šikovný</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Další</h6>
+                        <p>• Odolný<br>
+                        • Sniper kouzel<br>
+                        • Hospodský rváč<br>
+                        • Telekinetický<br>
+                        • Houževnatý<br>
+                        • Bojový mág<br>
+                        • A mnoho dalších...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backgrounds Section -->
+    <div class="feature offcolor" id="backgrounds">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <p><i class="fas fa-university" style="font-size: 10em;"></i></p>
+            </div>
+            <div class="col-md-7">
+                <h1>Backgroundy</h1>
+                <p>Background představuje historii vaší postavy a pomáhá definovat, kdo jste.</p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h6>Běžné</h6>
+                        <p>• Akolyta<br>
+                        • Šarlatán<br>
+                        • Kriminálník<br>
+                        • Bavič<br>
+                        • Lidový hrdina<br>
+                        • Cechovní řemeslník<br>
+                        • Poustevník<br>
+                        • Šlechtic<br>
+                        • Tulák<br>
+                        • Námořník<br>
+                        • Voják<br>
+                        • Tuláček</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Specializované</h6>
+                        <p>• Archeolog<br>
+                        • Antropolog<br>
+                        • Dvorní úředník<br>
+                        • Frakční agent<br>
+                        • Gladiátor<br>
+                        • Vyšetřovatel<br>
+                        • Rytíř<br>
+                        • Žoldnéř<br>
+                        • Pirát<br>
+                        • Mudrc<br>
+                        • Špion</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h6>Exotické</h6>
+                        <p>• Lovec monster<br>
+                        • Městský strážce<br>
+                        • Kmenový řemeslník<br>
+                        • Uzobraný učenec<br>
+                        • Daleký cestovatel<br>
+                        • Lovčí kopce<br>
+                        • A další...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Info -->
+    <div class="feature">
+        <h2>Postupně přidáváme další obsah</h2>
+        <p>Tato stránka se neustále rozšiřuje. Brzy zde najdete detailní popisy všech ras, tříd, kouzel a dalšího obsahu D&D 5e.</p>
+    </div>
+
+</body>
+</html>
