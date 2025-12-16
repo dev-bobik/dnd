@@ -994,12 +994,15 @@
 
     // Get campaign code from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const campaignCode = urlParams.get('campaign');
+    let campaignCode = urlParams.get('campaign');
     
-    // If no campaign code, redirect to campaigns page
+    // If no campaign code, use test grid with code 00000
     if (!campaignCode) {
-      alert('Chybí kód kampaně! Budete přesměrováni na stránku kampaní.');
-      window.location.href = 'campaigns.html';
+      campaignCode = '00000';
+      // Show info message about test grid
+      setTimeout(() => {
+        alert('Nacházíte se na testovací mřížce (kód: 00000).\n\nPokud chcete pracovat s konkrétní kampaní, připojte se k ní na stránce Kampaně.');
+      }, 500);
     }
 
     // Create campaign-specific database reference
