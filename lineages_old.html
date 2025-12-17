@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Lineages - DND 5th Edition</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--fonts/awesome/3.2.1/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style type="text/css" id="internal-style">
+        @import url(https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--bootstrap/3.2.0/bootstrap.min.css);
+        @import url(https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--theme/bootstrap-base/css/style.css);
+        @import url(https://dnd5e.wdfiles.com/local--theme/standard-yellow/style.css);
+    </style>
+    
+    <style>
+        /* Theme Variables */
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+            --bg-gradient: linear-gradient(135deg, #1a0a0a 0%, #0a0000 100%);
+            --card-bg: rgba(20, 10, 10, 0.95);
+            --card-hover: rgba(255, 107, 53, 0.1);
+            --border-color: rgba(255, 107, 53, 0.3);
+            --shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --bg-gradient: linear-gradient(135deg, #2a1a0d 0%, #1a1000 100%);
+            --card-bg: rgba(42, 26, 13, 0.95);
+            --card-hover: rgba(197, 160, 89, 0.1);
+            --border-color: rgba(197, 160, 89, 0.3);
+            --shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+            --bg-gradient: linear-gradient(135deg, #0a1423 0%, #000a14 100%);
+            --card-bg: rgba(15, 25, 40, 0.95);
+            --card-hover: rgba(0, 191, 255, 0.1);
+            --border-color: rgba(0, 191, 255, 0.3);
+            --shadow: 0 4px 15px rgba(0, 191, 255, 0.2);
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+            --bg-gradient: linear-gradient(135deg, #0f1e0f 0%, #0a140a 100%);
+            --card-bg: rgba(20, 30, 20, 0.95);
+            --card-hover: rgba(50, 205, 50, 0.1);
+            --border-color: rgba(50, 205, 50, 0.3);
+            --shadow: 0 4px 15px rgba(50, 205, 50, 0.2);
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+            --bg-gradient: linear-gradient(135deg, #140a19 0%, #0a000f 100%);
+            --card-bg: rgba(20, 10, 25, 0.95);
+            --card-hover: rgba(147, 112, 219, 0.1);
+            --border-color: rgba(147, 112, 219, 0.3);
+            --shadow: 0 4px 15px rgba(147, 112, 219, 0.2);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .theme-toggle-btn {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            background: var(--primary);
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px var(--primary);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 65px;
+            right: 0;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-options.show {
+            display: flex;
+        }
+
+        .theme-options button {
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #e0e0e0;
+            font-size: 1.4rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-options button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-options button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Google Translate Widget */
+        #google_translate_element {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        #google_translate_element:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        #google_translate_element select {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        #google_translate_element select:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: var(--accent);
+        }
+
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
+        }
+
+        /* Enhanced theme-aware styling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            transition: background 0.3s ease;
+            background: var(--bg-gradient) !important;
+        }
+
+        .header-wrap {
+            border-bottom: 2px solid var(--primary) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+            background: rgba(0, 0, 0, 0.85) !important;
+        }
+
+        .site-title h1 a span {
+            color: var(--primary) !important;
+            font-family: 'Cinzel', serif !important;
+            text-shadow: 0 0 10px var(--primary) !important;
+        }
+
+        .navbar-default {
+            background: rgba(0, 0, 0, 0.85) !important;
+            border-color: var(--primary) !important;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            color: var(--primary) !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary) !important;
+            font-family: 'Cinzel', serif !important;
+        }
+
+        a {
+            color: var(--primary) !important;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent) !important;
+        }
+
+        .btn, .button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            border: 2px solid var(--primary) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+            transition: all 0.2s ease;
+            color: #fff !important;
+        }
+
+        .btn:hover, .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--primary) !important;
+        }
+
+        .page-title {
+            border-bottom: 2px solid var(--primary) !important;
+            background: var(--card-bg);
+            padding: 15px !important;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px !important;
+        }
+
+        .side-bar {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            padding: 15px;
+        }
+
+        .main-content {
+            background: rgba(20, 20, 30, 0.85) !important;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        #page-content {
+            color: #e8e8e8 !important;
+        }
+
+        #page-content p,
+        #page-content em,
+        #page-content strong {
+            color: #f0f0f0 !important;
+            line-height: 1.7;
+        }
+
+        .wiki-content-table td {
+            color: #f5f5f5 !important;
+        }
+
+        /* Table styling */
+        .wiki-content-table {
+            width: 100%;
+            margin: 20px 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .wiki-content-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .wiki-content-table td:hover {
+            background: var(--card-hover);
+        }
+
+        /* TOC styling */
+        #toc {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 0 0 20px 20px;
+            float: right;
+            width: 300px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        #toc .title {
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #toc-action-bar {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #toc-action-bar a {
+            font-size: 0.9rem;
+            padding: 5px 10px;
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+            }
+            .theme-toggle-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.3rem;
+            }
+            #google_translate_element {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px;
+            }
+            #toc {
+                float: none;
+                width: 100%;
+                margin: 0 0 20px 0;
+            }
+        }
+    </style>
+</head>
+<body id="html-body" class="fantasy-theme">
+<div id="skrollr-body">
+
+<!-- Theme Toggle Button -->
+<div class="theme-toggle">
+    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
+    <div class="theme-options" id="theme-options">
+        <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+        <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+        <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+        <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+        <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Google Translate Widget -->
+<div id="google_translate_element"></div>
+
+<a name="page-top"></a>
+
+<div class="container-wrap-wrap">
+<div class="container-wrap">
+ 
+<header class="header-wrap" role="banner">
+  <div class="container header">
+    <div class="site-title">
+      <h1><a href="rules.html"><span>DND 5th Edition</span></a></h1>
+      <h2><span>community wiki</span></h2>
+    </div>
+  </div>
+  
+  <nav class="top-bar-wrap navbar navbar-default" role="navigation">
+    <div class="container top-bar">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-top-target">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="rules.html">Home</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="header-extra-div-1"><span></span></div>
+  <div class="header-extra-div-2"><span></span></div>
+  <div class="header-extra-div-3"><span></span></div>
+</header>
+ 
+<main class="content-wrap" role="main">
+  <div class="container content">
+    <div class="row">
+      
+      <div class="main-content-wrap col-md-12">
+        <div class="main-content">
+          <div class="page-title page-header"><span>Lineages</span></div>
+
+<div id="page-content">
+
+<div id="toc" class="floatright">
+<div id="toc-action-bar"><a href="javascript:;" onclick="foldToc()">Fold</a><a style="display: none" id="unfold-link" href="javascript:;" onclick="unfoldToc()">Unfold</a></div>
+<div class="title">Table of Contents</div>
+<div id="toc-list">
+<div style="margin-left: 1em;"><a href="#toc0">Standard Lineages</a></div>
+<div style="margin-left: 1em;"><a href="#toc1">Custom Lineage</a></div>
+<div style="margin-left: 1em;"><a href="#toc2">Exotic Lineages</a></div>
+<div style="margin-left: 1em;"><a href="#toc3">Monstrous Lineages</a></div>
+<div style="margin-left: 1em;"><a href="#toc4">Setting Specific Lineages</a></div>
+<div style="margin-left: 2em;"><a href="#toc5">Dragonlance</a></div>
+<div style="margin-left: 2em;"><a href="#toc6">Eberron</a></div>
+<div style="margin-left: 2em;"><a href="#toc7">Plane Shift</a></div>
+<div style="margin-left: 2em;"><a href="#toc8">Ravenloft</a></div>
+<div style="margin-left: 2em;"><a href="#toc9">Ravnica</a></div>
+<div style="margin-left: 2em;"><a href="#toc10">Spelljammer</a></div>
+<div style="margin-left: 2em;"><a href="#toc11">Theros</a></div>
+<div style="margin-left: 1em;"><a href="#toc12">Unearthed Arcana</a></div>
+</div>
+</div>
+
+<p><strong><em>A visit to one of the great cities in the worlds of Dungeons & Dragons - Waterdeep, the Free City of Greyhawk, or even uncanny Sigil, the City of Doors - overwhelms the senses. Voices chatter in countless different languages. The smells of cooking in dozens of different cuisines mingle with the odors of crowded street and poor sanitation. buildings in myriad architectural styles display the diverse origins of their inhabitants.</em></strong></p>
+
+<p><strong><em>And the people themselves - people of varying size, shape, and color, dressed in a dazzling spectrum of styles and hues - represent many different races, from diminutive halflings and stout dwarves to majestically beautiful elves, mingling among a variety of human ethnicities.</em></strong></p>
+
+<p><strong><em>Scattered among the members of these more common races are the true exotics: a hulking dragonborn here, pushing his way through the crowd, and a sly tiefling there, lurking in the shadows with mischief in her eyes. A group of gnomes laughs as one of them activates a clever wooden toy that moves of its own accord. half-elves and half-orcs live and work alongside humans, without fully belonging to the races of either of their parents. And there, well out of the sunlight is a lone drow - a fugitive from the subterranean expanse of the Underdark, trying to make his way in a world that fears his kind.</em></strong></p>
+
+<h1 id="toc0"><span>Standard Lineages</span></h1>
+<p>These races are included in the Player's Handbook, though variants exist for specific settings that may be used with DM permission, and are considered the standard races allowable for player use in any Dungeons & Dragons setting.</p>
+
+<table class="wiki-content-table">
+<tr>
+<td><a href="races/standard/dragonborn.html">Dragonborn</a></td>
+<td><a href="races/standard/dwarf.html">Dwarf</a></td>
+<td><a href="#" class="race-link" data-race="elf">Elf</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="gnome">Gnome</a></td>
+<td><a href="#" class="race-link" data-race="half-elf">Half-Elf</a></td>
+<td><a href="#" class="race-link" data-race="half-orc">Half-Orc</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="halfling">Halfling</a></td>
+<td><a href="#" class="race-link" data-race="human">Human</a></td>
+<td><a href="#" class="race-link" data-race="tiefling">Tiefling</a></td>
+</tr>
+</table>
+
+<h1 id="toc1"><span>Custom Lineage</span></h1>
+<p>Typical character lineages in D&D include little or no choice. A Custom Lineage addresses that lack of versatility by allowing you to come up with your own combination of lineage abilities to create a unique lineage for your character.</p>
+
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="custom">Custom</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<h1 id="toc2"><span>Exotic Lineages</span></h1>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="aarakocra">Aarakocra</a></td>
+<td><a href="#" class="race-link" data-race="aasimar">Aasimar</a></td>
+<td><a href="#" class="race-link" data-race="changeling">Changeling</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="deep-gnome">Deep Gnome</a></td>
+<td><a href="#" class="race-link" data-race="duergar">Duergar</a></td>
+<td><a href="#" class="race-link" data-race="eladrin">Eladrin</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="fairy">Fairy</a></td>
+<td><a href="#" class="race-link" data-race="firbolg">Firbolg</a></td>
+<td><a href="#" class="race-link" data-race="genasi-air">Genasi (Air)</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="genasi-earth">Genasi (Earth)</a></td>
+<td><a href="#" class="race-link" data-race="genasi-fire">Genasi (Fire)</a></td>
+<td><a href="#" class="race-link" data-race="genasi-water">Genasi (Water)</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="githyanki">Githyanki</a></td>
+<td><a href="#" class="race-link" data-race="githzerai">Githzerai</a></td>
+<td><a href="#" class="race-link" data-race="goliath">Goliath</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="harengon">Harengon</a></td>
+<td><a href="#" class="race-link" data-race="kenku">Kenku</a></td>
+<td><a href="#" class="race-link" data-race="locathah">Locathah</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="owlin">Owlin</a></td>
+<td><a href="#" class="race-link" data-race="satyr">Satyr</a></td>
+<td><a href="#" class="race-link" data-race="sea-elf">Sea Elf</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="shadar-kai">Shadar-Kai</a></td>
+<td><a href="#" class="race-link" data-race="tabaxi">Tabaxi</a></td>
+<td><a href="#" class="race-link" data-race="tortle">Tortle</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="triton">Triton</a></td>
+<td><a href="#" class="race-link" data-race="verdan">Verdan</a></td>
+<td></td>
+</tr>
+</table>
+
+<h1 id="toc3"><span>Monstrous Lineages</span></h1>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="bugbear">Bugbear</a></td>
+<td><a href="#" class="race-link" data-race="centaur">Centaur</a></td>
+<td><a href="#" class="race-link" data-race="goblin">Goblin</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="grung">Grung</a></td>
+<td><a href="#" class="race-link" data-race="hobgoblin">Hobgoblin</a></td>
+<td><a href="#" class="race-link" data-race="kobold">Kobold</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="lizardfolk">Lizardfolk</a></td>
+<td><a href="#" class="race-link" data-race="minotaur">Minotaur</a></td>
+<td><a href="#" class="race-link" data-race="orc">Orc</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="shifter">Shifter</a></td>
+<td><a href="#" class="race-link" data-race="yuan-ti">Yuan-Ti</a></td>
+<td></td>
+</tr>
+</table>
+
+<h1 id="toc4"><span>Setting Specific Lineages</span></h1>
+<h2 id="toc5"><span>Dragonlance</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="kender">Kender</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<h2 id="toc6"><span>Eberron</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="kalashtar">Kalashtar</a></td>
+<td><a href="#" class="race-link" data-race="warforged">Warforged</a></td>
+<td></td>
+</tr>
+</table>
+
+<h2 id="toc7"><span>Plane Shift</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="aetherborn">Aetherborn</a></td>
+<td><a href="#" class="race-link" data-race="aven">Aven</a></td>
+<td><a href="#" class="race-link" data-race="khenra">Khenra</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="kor">Kor</a></td>
+<td><a href="#" class="race-link" data-race="merfolk">Merfolk</a></td>
+<td><a href="#" class="race-link" data-race="naga">Naga</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="siren">Siren</a></td>
+<td><a href="#" class="race-link" data-race="vampire">Vampire</a></td>
+<td></td>
+</tr>
+</table>
+
+<h2 id="toc8"><span>Ravenloft</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="dhampir">Dhampir</a></td>
+<td><a href="#" class="race-link" data-race="hexblood">Hexblood</a></td>
+<td><a href="#" class="race-link" data-race="reborn">Reborn</a></td>
+</tr>
+</table>
+
+<h2 id="toc9"><span>Ravnica</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="loxodon">Loxodon</a></td>
+<td><a href="#" class="race-link" data-race="simic-hybrid">Simic Hybrid</a></td>
+<td><a href="#" class="race-link" data-race="vedalken">Vedalken</a></td>
+</tr>
+</table>
+
+<h2 id="toc10"><span>Spelljammer</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="astral-elf">Astral Elf</a></td>
+<td><a href="#" class="race-link" data-race="autognome">Autognome</a></td>
+<td><a href="#" class="race-link" data-race="giff">Giff</a></td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="hadozee">Hadozee</a></td>
+<td><a href="#" class="race-link" data-race="plasmoid">Plasmoid</a></td>
+<td><a href="#" class="race-link" data-race="thri-kreen">Thri-kreen</a></td>
+</tr>
+</table>
+
+<h2 id="toc11"><span>Theros</span></h2>
+<table class="wiki-content-table">
+<tr>
+<td><a href="#" class="race-link" data-race="leonin">Leonin</a></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<h1 id="toc12"><span>Unearthed Arcana</span></h1>
+<table class="wiki-content-table">
+<tr>
+<th>Lineage</th>
+<th>Source</th>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="autognome-ua">Autognome</a></td>
+<td>Unearthed Arcana 80 - Travelers of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="giff-ua">Giff</a></td>
+<td>Unearthed Arcana 80 - Travelers of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="glitchling-ua">Glitchling</a></td>
+<td>Unearthed Arcana 85 - Wonders of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="hadozee-ua">Hadozee</a></td>
+<td>Unearthed Arcana 80 - Travelers of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="kender-ua">Kender</a></td>
+<td>Unearthed Arcana 82 - Heroes of Krynn</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="kender-ua-revised">Kender Revised</a></td>
+<td>Unearthed Arcana 83 - Heroes of Krynn Revisited</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="owlfolk-ua">Owlfolk</a></td>
+<td>Unearthed Arcana 77 - Folk of the Feywild</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="plasmoid-ua">Plasmoid</a></td>
+<td>Unearthed Arcana 80 - Travelers of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="rabbitfolk-ua">Rabbitfolk</a></td>
+<td>Unearthed Arcana 77 - Folk of the Feywild</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="revenant-ua">Revenant</a></td>
+<td>Unearthed Arcana 15 - Gothic Heroes</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="thri-kreen-ua">Thri-Kreen</a></td>
+<td>Unearthed Arcana 80 - Travelers of the Multiverse</td>
+</tr>
+<tr>
+<td><a href="#" class="race-link" data-race="viashino-ua">Viashino</a></td>
+<td>Unearthed Arcana 53 - Races of Ravnica</td>
+</tr>
+</table>
+
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+ 
+<footer class="footer-wrap" role="contentinfo">
+  <div class="container footer">
+    <div class="license-area">Unless otherwise stated, the content of this page is licensed under
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 License</a></div>
+  </div>
+</footer>
+
+</div>
+</div>
+</div>
+
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Theme Switcher Script -->
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        setTheme(savedTheme);
+        handleRaceLinks();
+    });
+
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const themeOptions = document.getElementById('theme-options');
+        if (themeToggle && !themeToggle.contains(e.target)) {
+            themeOptions.classList.remove('show');
+        }
+    });
+
+    function toggleThemeMenu() {
+        document.getElementById('theme-options').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        setTheme(theme);
+        document.getElementById('theme-options').classList.remove('show');
+    }
+
+    function setTheme(theme) {
+        const body = document.body;
+        const buttons = {
+            fantasy: document.getElementById('btn-fantasy'),
+            steampunk: document.getElementById('btn-steampunk'),
+            winter: document.getElementById('btn-winter'),
+            nature: document.getElementById('btn-nature'),
+            gothic: document.getElementById('btn-gothic')
+        };
+        const themeEmojis = {
+            fantasy: '🐉',
+            steampunk: '⚙',
+            winter: '❄️',
+            nature: '🌿',
+            gothic: '🦇'
+        };
+
+        body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+        body.classList.add(theme + '-theme');
+        
+        Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+        buttons[theme].classList.add('active');
+        
+        document.getElementById('current-theme-btn').textContent = themeEmojis[theme];
+        localStorage.setItem('dnd-theme', theme);
+    }
+
+    // Handle race links
+    function handleRaceLinks() {
+        const raceLinks = document.querySelectorAll('.race-link');
+        raceLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const raceName = this.textContent.trim();
+                showNotification(`📚 ${raceName} - Detailed information coming soon!`);
+            });
+        });
+    }
+
+    // TOC fold/unfold
+    function foldToc() {
+        document.getElementById('toc-list').style.display = 'none';
+        document.querySelector('#toc-action-bar a:first-child').style.display = 'none';
+        document.getElementById('unfold-link').style.display = 'inline';
+    }
+
+    function unfoldToc() {
+        document.getElementById('toc-list').style.display = 'block';
+        document.querySelector('#toc-action-bar a:first-child').style.display = 'inline';
+        document.getElementById('unfold-link').style.display = 'none';
+    }
+
+    function showNotification(message) {
+        const existing = document.querySelector('.notification-popup');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.className = 'notification-popup';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--card-bg), rgba(0,0,0,0.95));
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 20px 30px;
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 20px var(--primary);
+            z-index: 10001;
+            max-width: 90%;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideUp 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-50px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-50px); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>

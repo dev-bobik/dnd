@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Races & Lineages - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #c53131;
+            --secondary: #822000;
+            --accent: #d4af37;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(197, 49, 49, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(197, 49, 49, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--accent);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .page-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .page-title p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Section */
+        .section {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .section h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section p {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Race Grid */
+        .race-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .race-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+        }
+
+        .race-card:hover {
+            border-color: var(--primary);
+            background: rgba(197, 49, 49, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .race-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .race-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .race-card.disabled:hover {
+            border-color: var(--border);
+            background: rgba(0, 0, 0, 0.3);
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Google Translate */
+        .translate-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .race-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .translate-widget {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <div class="page-title">
+        <h1>Races & Lineages</h1>
+        <p>A visit to one of the great cities in the worlds of Dungeons & Dragons overwhelms the senses. Voices chatter in countless different languages. Buildings in myriad architectural styles display the diverse origins of their inhabitants. And the people themselves represent many different races, from diminutive halflings and stout dwarves to majestically beautiful elves.</p>
+    </div>
+
+    <!-- Standard Races -->
+    <div class="section">
+        <h2>Standard Races</h2>
+        <p>These races are included in the Player's Handbook and are considered the standard races allowable for player use in any Dungeons & Dragons setting.</p>
+        
+        <div class="race-grid">
+            <a href="races/standard/dragonborn.html" class="race-card">
+                <h3>Dragonborn</h3>
+            </a>
+            <a href="races/standard/dwarf.html" class="race-card">
+                <h3>Dwarf</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Elf</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Gnome</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Half-Elf</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Half-Orc</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Halfling</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Human</h3>
+            </a>
+            <a href="#" class="race-card disabled">
+                <h3>Tiefling</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Custom Lineage -->
+    <div class="section">
+        <h2>Custom Lineage</h2>
+        <p>Create your own unique combination of lineage abilities to design a character that perfectly fits your vision.</p>
+        
+        <div class="race-grid">
+            <a href="#" class="race-card disabled">
+                <h3>Custom</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Exotic Races -->
+    <div class="section">
+        <h2>Exotic Races</h2>
+        <p>Rare and unusual races from various sourcebooks, offering unique abilities and playstyles.</p>
+        
+        <div class="race-grid">
+            <a href="#" class="race-card disabled"><h3>Aarakocra</h3></a>
+            <a href="#" class="race-card disabled"><h3>Aasimar</h3></a>
+            <a href="#" class="race-card disabled"><h3>Bugbear</h3></a>
+            <a href="#" class="race-card disabled"><h3>Centaur</h3></a>
+            <a href="#" class="race-card disabled"><h3>Changeling</h3></a>
+            <a href="#" class="race-card disabled"><h3>Deep Gnome</h3></a>
+            <a href="#" class="race-card disabled"><h3>Duergar</h3></a>
+            <a href="#" class="race-card disabled"><h3>Eladrin</h3></a>
+            <a href="#" class="race-card disabled"><h3>Fairy</h3></a>
+            <a href="#" class="race-card disabled"><h3>Firbolg</h3></a>
+            <a href="#" class="race-card disabled"><h3>Genasi</h3></a>
+            <a href="#" class="race-card disabled"><h3>Gith</h3></a>
+            <a href="#" class="race-card disabled"><h3>Goblin</h3></a>
+            <a href="#" class="race-card disabled"><h3>Goliath</h3></a>
+            <a href="#" class="race-card disabled"><h3>Harengon</h3></a>
+            <a href="#" class="race-card disabled"><h3>Hobgoblin</h3></a>
+            <a href="#" class="race-card disabled"><h3>Kenku</h3></a>
+            <a href="#" class="race-card disabled"><h3>Kobold</h3></a>
+            <a href="#" class="race-card disabled"><h3>Lizardfolk</h3></a>
+            <a href="#" class="race-card disabled"><h3>Minotaur</h3></a>
+            <a href="#" class="race-card disabled"><h3>Orc</h3></a>
+            <a href="#" class="race-card disabled"><h3>Satyr</h3></a>
+            <a href="#" class="race-card disabled"><h3>Sea Elf</h3></a>
+            <a href="#" class="race-card disabled"><h3>Shadar-kai</h3></a>
+            <a href="#" class="race-card disabled"><h3>Shifter</h3></a>
+            <a href="#" class="race-card disabled"><h3>Tabaxi</h3></a>
+            <a href="#" class="race-card disabled"><h3>Tortle</h3></a>
+            <a href="#" class="race-card disabled"><h3>Triton</h3></a>
+            <a href="#" class="race-card disabled"><h3>Warforged</h3></a>
+            <a href="#" class="race-card disabled"><h3>Yuan-ti</h3></a>
+        </div>
+    </div>
+
+    <!-- Monstrous Races -->
+    <div class="section">
+        <h2>Monstrous Races</h2>
+        <p>Powerful and unusual races that may not be suitable for all campaigns. Consult with your DM before choosing.</p>
+        
+        <div class="race-grid">
+            <a href="#" class="race-card disabled"><h3>Dhampir</h3></a>
+            <a href="#" class="race-card disabled"><h3>Hexblood</h3></a>
+            <a href="#" class="race-card disabled"><h3>Reborn</h3></a>
+            <a href="#" class="race-card disabled"><h3>Owlin</h3></a>
+        </div>
+    </div>
+
+    <!-- Setting-Specific -->
+    <div class="section">
+        <h2>Setting-Specific Races</h2>
+        <p>Races unique to specific D&D campaign settings like Eberron, Ravnica, and others.</p>
+        
+        <div class="race-grid">
+            <a href="#" class="race-card disabled"><h3>Kalashtar</h3></a>
+            <a href="#" class="race-card disabled"><h3>Loxodon</h3></a>
+            <a href="#" class="race-card disabled"><h3>Simic Hybrid</h3></a>
+            <a href="#" class="race-card disabled"><h3>Vedalken</h3></a>
+            <a href="#" class="race-card disabled"><h3>Verdan</h3></a>
+            <a href="#" class="race-card disabled"><h3>Locathah</h3></a>
+            <a href="#" class="race-card disabled"><h3>Grung</h3></a>
+        </div>
+    </div>
+</div>
+
+<!-- Google Translate Widget -->
+<div class="translate-widget">
+    <div id="google_translate_element"></div>
+</div>
+
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+    // Theme System with localStorage persistence
+    const themes = {
+        fantasy: '🐉',
+        steampunk: '⚙',
+        winter: '❄️',
+        nature: '🌿',
+        gothic: '🦇'
+    };
+
+    // Load saved theme or default to fantasy
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        applyTheme(savedTheme);
+    }
+
+    // Apply theme to body
+    function applyTheme(themeName) {
+        // Remove all theme classes
+        document.body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+        
+        // Add selected theme class
+        document.body.classList.add(themeName + '-theme');
+        
+        // Update current theme button
+        document.getElementById('current-theme').textContent = themes[themeName];
+        
+        // Update active state in menu
+        document.querySelectorAll('.theme-option').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + themeName).classList.add('active');
+        
+        // Save to localStorage
+        localStorage.setItem('dnd-theme', themeName);
+    }
+
+    // Toggle theme menu visibility
+    function toggleThemeMenu() {
+        const menu = document.getElementById('theme-menu');
+        menu.classList.toggle('show');
+    }
+
+    // Select specific theme
+    function selectTheme(themeName) {
+        applyTheme(themeName);
+        toggleThemeMenu();
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const menu = document.getElementById('theme-menu');
+        
+        if (!themeToggle.contains(event.target) && menu.classList.contains('show')) {
+            menu.classList.remove('show');
+        }
+    });
+
+    // Load theme on page load
+    window.addEventListener('DOMContentLoaded', loadTheme);
+</script>
+
+</body>
+</html>

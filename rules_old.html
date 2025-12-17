@@ -1,0 +1,2540 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title>Frontpage - DND 5th Edition</title>
+    
+    
+    
+    <script type="text/javascript" src="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--javascript/init.combined.js"></script>
+    <script  type="text/javascript">
+        var URL_HOST = 'www.wikidot.com';
+        var URL_DOMAIN = 'wikidot.com';
+        var USE_SSL =  true ;
+        var URL_STATIC = 'https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc';
+        // global request information
+        
+        var WIKIREQUEST = {};
+        WIKIREQUEST.info = {};
+        
+        WIKIREQUEST.info.domain = "dnd5e.wikidot.com";
+        WIKIREQUEST.info.siteId = 1475899;
+        WIKIREQUEST.info.siteUnixName = "dnd5e";
+        WIKIREQUEST.info.categoryId = 11887299;
+        WIKIREQUEST.info.themeId = 2386862;
+        WIKIREQUEST.info.requestPageName = "home:home";
+        OZONE.request.timestamp = 1765889424;
+        OZONE.request.date = new Date();
+        WIKIREQUEST.info.lang = 'en';
+                WIKIREQUEST.info.pageUnixName = "home:home";
+        WIKIREQUEST.info.pageId = 48865979;
+                        WIKIREQUEST.info.lang = "en";
+        OZONE.lang = "en";
+        var isUAMobile = !!/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    </script>
+    
+    
+
+
+    
+        <script  type="text/javascript">
+    
+        require.config({
+            baseUrl: URL_STATIC + '/common--javascript',
+            paths: {
+                'jquery.ui': 'jquery-ui.min',
+                'jquery.form': 'jquery.form'
+            }
+        });
+    
+    </script>
+    
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+            
+    
+    
+    
+    
+    <meta http-equiv="content-language" content="en"/>
+    <script type="text/javascript" src="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--javascript/WIKIDOT.combined.js"></script>
+            <script type="text/javascript" src="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--bootstrap/3.2.0/bootstrap.min.js"></script>
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <link href="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--fonts/awesome/3.2.1/font-awesome.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style type="text/css" id="internal-style">
+        
+        /* modules */
+        
+                /* bootstrap */
+            @import url(https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--bootstrap/3.2.0/bootstrap.min.css);
+                
+        /* theme */
+                    @import url(https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--theme/bootstrap-base/css/style.css);
+                    @import url(https://dnd5e.wdfiles.com/local--theme/standard-yellow/style.css);
+            </style>
+    
+    <style>
+        /* Theme Variables */
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+            --bg-gradient: linear-gradient(135deg, #1a0a0a 0%, #0a0000 100%);
+            --card-bg: rgba(20, 10, 10, 0.95);
+            --card-hover: rgba(255, 107, 53, 0.1);
+            --border-color: rgba(255, 107, 53, 0.3);
+            --shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --bg-gradient: linear-gradient(135deg, #2a1a0d 0%, #1a1000 100%);
+            --card-bg: rgba(42, 26, 13, 0.95);
+            --card-hover: rgba(197, 160, 89, 0.1);
+            --border-color: rgba(197, 160, 89, 0.3);
+            --shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+            --bg-gradient: linear-gradient(135deg, #0a1423 0%, #000a14 100%);
+            --card-bg: rgba(15, 25, 40, 0.95);
+            --card-hover: rgba(0, 191, 255, 0.1);
+            --border-color: rgba(0, 191, 255, 0.3);
+            --shadow: 0 4px 15px rgba(0, 191, 255, 0.2);
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+            --bg-gradient: linear-gradient(135deg, #0f1e0f 0%, #0a140a 100%);
+            --card-bg: rgba(20, 30, 20, 0.95);
+            --card-hover: rgba(50, 205, 50, 0.1);
+            --border-color: rgba(50, 205, 50, 0.3);
+            --shadow: 0 4px 15px rgba(50, 205, 50, 0.2);
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+            --bg-gradient: linear-gradient(135deg, #140a19 0%, #0a000f 100%);
+            --card-bg: rgba(20, 10, 25, 0.95);
+            --card-hover: rgba(147, 112, 219, 0.1);
+            --border-color: rgba(147, 112, 219, 0.3);
+            --shadow: 0 4px 15px rgba(147, 112, 219, 0.2);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .theme-toggle-btn {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            background: var(--primary);
+            border: 2px solid var(--primary);
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px var(--primary);
+        }
+
+        .theme-options {
+            position: absolute;
+            top: 65px;
+            right: 0;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-options.show {
+            display: flex;
+        }
+
+        .theme-options button {
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #e0e0e0;
+            font-size: 1.4rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-options button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-options button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Google Translate Widget */
+        #google_translate_element {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        #google_translate_element:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        #google_translate_element select {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        #google_translate_element select:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: var(--accent);
+        }
+
+        #google_translate_element select:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
+        }
+
+        .goog-te-gadget {
+            color: var(--primary) !important;
+        }
+
+        /* Enhanced theme-aware styling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            transition: background 0.3s ease;
+            background: var(--bg-gradient) !important;
+        }
+
+        .header-wrap {
+            border-bottom: 2px solid var(--primary) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+            background: rgba(0, 0, 0, 0.85) !important;
+        }
+
+        .site-title h1 a span {
+            color: var(--primary) !important;
+            font-family: 'Cinzel', serif !important;
+            text-shadow: 0 0 10px var(--primary) !important;
+        }
+
+        .navbar-default {
+            background: rgba(0, 0, 0, 0.85) !important;
+            border-color: var(--primary) !important;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            color: var(--primary) !important;
+        }
+
+        /* Sections */
+        .feature {
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px;
+            padding: 20px !important;
+            margin: 15px 0 !important;
+            background: var(--card-bg) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .feature:hover {
+            box-shadow: 0 4px 15px var(--primary);
+            border-color: var(--primary) !important;
+        }
+
+        .feature-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            color: #fff !important;
+            border-radius: 10px !important;
+            padding: 30px !important;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5) !important;
+        }
+
+        .feature-header h1, .feature-header h2, .feature-header h3 {
+            color: #fff !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary) !important;
+            font-family: 'Cinzel', serif !important;
+        }
+
+        a {
+            color: var(--primary) !important;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent) !important;
+        }
+
+        .btn, .button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            border: 2px solid var(--primary) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+            transition: all 0.2s ease;
+            color: #fff !important;
+        }
+
+        .btn:hover, .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--primary) !important;
+        }
+
+        /* Icons */
+        .fa {
+            transition: color 0.2s ease;
+        }
+
+        a:hover .fa {
+            color: var(--accent) !important;
+        }
+
+        /* Lists */
+        li {
+            transition: padding-left 0.2s ease;
+        }
+
+        li:hover {
+            padding-left: 5px;
+        }
+
+        .page-title {
+            border-bottom: 2px solid var(--primary) !important;
+            background: var(--card-bg);
+            padding: 15px !important;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px !important;
+        }
+
+        .side-bar {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            padding: 15px;
+        }
+
+        .main-content {
+            background: rgba(20, 20, 30, 0.85) !important;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        #page-content {
+            color: #e8e8e8 !important;
+        }
+
+        #page-content p,
+        #page-content em,
+        #page-content strong,
+        #page-content li,
+        #page-content td,
+        #page-content div {
+            color: #f0f0f0 !important;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+            }
+            .theme-toggle-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.3rem;
+            }
+            #google_translate_element {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+    
+            <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
+        
+        
+    <link rel="shortcut icon" href="/local--favicon/favicon.gif"/>
+    <link rel="icon" type="image/gif" href="/local--favicon/favicon.gif"/>
+    
+            <link rel="apple-touch-icon" href="/common--images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/common--images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/common--images/apple-touch-icon-114x114.png" />
+        
+        
+            <link rel="alternate" type="application/wiki" title="Edit this page" href="javascript:WIKIDOT.page.listeners.editClick()"/>
+    
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-18234656-1']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_trackPageview']);
+
+        _gaq.push(['old._setAccount', 'UA-68540-5']);
+        _gaq.push(['old._setDomainName', 'none']);
+        _gaq.push(['old._setAllowLinker', true]);
+        _gaq.push(['old._trackPageview']);
+
+            </script>
+    
+    <script type="text/javascript">
+        window.google_analytics_uacct = 'UA-18234656-1';
+        window.google_analytics_domain_name = 'none';
+    </script>
+    
+        <link rel="manifest" href="/onesignal/manifest.json" />
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" acync=""></script>
+    <script>
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+          OneSignal.init({
+            appId: null,
+          });
+        });
+    </script>
+        
+<style>
+.admins-only, li.admins-only{  display: none; }
+</style>
+<script data-cfasync="false">window.nitroAds=window.nitroAds||{createAd:function(){return new Promise(e=>{window.nitroAds.queue.push(["createAd",arguments,e])})},addUserToken:function(){window.nitroAds.queue.push(["addUserToken",arguments])},queue:[]};</script>
+<script data-cfasync="false" async src="https://s.nitropay.com/ads-143.js"></script>
+<style>
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null,
+.first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null, .first.hidefrom_null {display: none !important;}
+null {display: block !important;}
+</style>
+<style>
+@import url('https://css.wikidot.com/theme:standard-cover/code_');
+</style>
+<script type="text/javascript" src="https://d3g0gp89917ko0.cloudfront.net/v--7690939296dc/common--modules/js/misc/NewPageHelperModule.js"></script>
+</head>
+<body id="html-body" class="fantasy-theme">
+<div id="skrollr-body">
+
+<!-- Theme Toggle Button -->
+<div class="theme-toggle">
+    <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
+    <div class="theme-options" id="theme-options">
+        <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+        <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙</button>
+        <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+        <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+        <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Google Translate Widget -->
+<div id="google_translate_element"></div>
+
+<!---------------------------------------------------------
+  Standard Template Layout
+  Developed by the Wikidot Community
+  Version: 1.01.141118
+---------------------------------------------------------->
+<a name="page-top"></a>
+
+<div class="container-wrap-wrap">
+<div class="container-wrap">
+ 
+<header class="header-wrap" role="banner">
+  <div class="container header">
+    <div class="site-title">
+      <h1><a href="#page-top"><span>DND 5th Edition</span></a></h1>
+      <h2><span>community wiki</span></h2>
+    </div>
+    <div class="login-status">
+      <a href="javascript:;" onclick="WIKIDOT.page.listeners.createAccount(event)" class="login-status-create-account btn">Create account</a> <span>or</span> <a href="javascript:;" onclick="WIKIDOT.page.listeners.loginClick(event)" class="login-status-sign-in btn btn-primary">Sign in</a> 
+    </div>
+    <div id="search-top-box" class="form-search">
+    <form id="search-top-box-form" action="dummy" class="input-append">
+        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="Search this site" onfocus="if(YAHOO.util.Dom.hasClass(this, 'empty')){YAHOO.util.Dom.removeClass(this,'empty'); this.value='';}"/><input class="button btn" type="submit" name="search" value="Search"/>
+    </form>
+</div>
+  </div>
+ 
+  
+  <nav class="top-bar-wrap navbar navbar-default" role="navigation">
+    <div class="container top-bar">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-top-target">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#page-top">Home</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-top-target">
+        
+
+<ul class="nav navbar-nav">
+<li><a href="/main:about">About <span class="fa fa-info-circle"><span style="white-space: pre-wrap;">&nbsp;</span></span></a></li>
+<li><a href="/system:join">Membership <span class="fa fa-user"><span style="white-space: pre-wrap;">&nbsp;</span></span></a></li>
+<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Help Docs <span class="fa fa-question-circle"><span style="white-space: pre-wrap;">&nbsp;</span></span></a>
+<ul class="dropdown-menu">
+<li><a href="/help:_home">User Guide</a></li>
+<li><a href="/help:first-time-user">First Time User</a></li>
+<li><a href="/help:quick-reference">Quick Reference</a></li>
+<li><a href="/help:creating-pages">Creating Pages</a></li>
+<li><a href="/help:editing-pages">Editing Pages</a></li>
+<li><a href="/help:navigation-bars">Navigation Bars</a></li>
+<li><a href="/help:using-modules">Using Modules</a></li>
+<li><a href="/help:templates">Templates</a></li>
+<li><a href="/help:css-themes">CSS Themes</a></li>
+</ul>
+</li>
+<li class="dropdown admins-only"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="fa fa-cog"><span style="white-space: pre-wrap;">&nbsp;</span></span></a>
+<ul class="dropdown-menu">
+<li><a href="/_admin">Site Manager</a></li>
+<li><a href="/nav:top">Edit Top Bar</a></li>
+<li><a href="/nav:side">Edit Side Bar</a></li>
+<li><a href="/css:_home">CSS Manager</a></li>
+<li><a href="/system:recent-changes">Recent Changes</a></li>
+<li><a href="/system:list-all-pages">List All Pages</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<div style="display : none;">
+</div>
+
+      </div>
+    </div>
+  </nav>
+  
+ 
+  <div class="header-extra-div-1"><span></span></div>
+  <div class="header-extra-div-2"><span></span></div>
+  <div class="header-extra-div-3"><span></span></div>
+</header>
+ 
+<main class="content-wrap" role="main">
+  <div class="container content">
+    <div class="row">
+    
+      <nav class="side-bar-wrap col-md-3">
+        <div class="side-bar">
+          <div class="side-bar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-side-target">
+              <span>Menu</span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse navbar-side-target">
+            
+
+<div class="text-center" style="margin-bottom: 12px;"><div class="error-block">You should be logged in to clone a site.</div></div>
+<h1 ><span>Site Navigation</span></h1>
+<ul>
+<li><a href="/help:_home">User Guide</a></li>
+<li><a href="/help:first-time-user">First Time User</a></li>
+</ul>
+<ul>
+<li><a href="/main:about">About</a></li>
+<li><a href="/main:contact">Contact</a></li>
+<li><a href="/legal:_home">Legal</a></li>
+<li><a href="/forum:start">Discussion Forums</a></li>
+<li><a href="/system:members">Members</a></li>
+</ul>
+<h1 ><span>Create a Page</span></h1>
+
+<div class="new-page-box" style="text-align: center; margin: 1em 0;">
+	<form action="dummy.html" method="get" onsubmit="WIKIDOT.modules.NewPageHelperModule.listeners.create(event);">
+		<input class="text" name="pageName" type="text" size="20" maxlength="128" style="margin: 1px"/>
+				<input type="submit" class="button" value="New page" style="margin: 1px;"/>
+																
+	</form>
+</div>
+
+                    
+    
+            <!-- wikidot_below_sidebar_160x600 -->
+<div id="wad-dnd5e-below-sidebar" class="wd-adunit wd-ad-np wd-adunit-below_sidebar"></div>
+<script>
+window['nitroAds'].createAd('wad-dnd5e-below-sidebar', {
+  "refreshTime": 30,
+  "renderVisibleOnly": false,
+  "refreshVisibleOnly": true,
+  "sizes": [ [ 160, 600 ] ],
+  "report": {
+    "enabled": true,
+    "wording": "Report Ad",
+    "position": "bottom-right"
+  },
+  "mediaQuery": "(min-width: 1000px)"
+  });
+</script>
+        
+    
+
+            <div style="display: none"></div>
+          </div>
+        </div>
+      </nav>
+      
+      <div class="main-content-wrap col-md-9">
+      
+        <div class="main-content">
+          <div class="page-title page-header"><span>Frontpage</span></div>
+          
+          
+        
+    
+            <!-- wikidot_top_728x90 -->
+<div id="wad-dnd5e-above-content" class="wd-adunit wd-ad-np wd-adunit-above_content"></div>
+<script>
+window['nitroAds'].createAd('wad-dnd5e-above-content', {
+  "refreshTime": 30,
+  "renderVisibleOnly": false,
+  "refreshVisibleOnly": true,
+  "sizes": [ [ 728, 90 ] ],
+  "report": {
+    "enabled": true,
+    "wording": "Report Ad",
+    "position": "bottom-right"
+  },
+  "mediaQuery": "(min-width: 768px)"
+  });
+</script>
+<div id="wad-dnd5e-above-content-mobile" class="wd-adunit wd-ad-np wd-adunit-above_content"></div>
+<script>
+window['nitroAds'].createAd('wad-dnd5e-above-content-mobile', {
+  "refreshTime": 30,
+  "renderVisibleOnly": false,
+  "refreshVisibleOnly": true,
+  "sizes": [ [ 320, 50 ], [320, 100] ],
+  "report": {
+    "enabled": true,
+    "icon": true,
+    "wording": "Report Ad",
+    "position": "top-right"
+  },
+  "mediaQuery": "(min-width: 320px) and (max-width: 767px)"
+  });
+</script>
+        
+    
+
+<div id="page-content">
+
+<div class="feature feature-header">
+<div class="row">
+<div class="col-sm-10">
+<h1><span>Welcome to the D&amp;D 5e wiki.</span></h1>
+<h2><span>Looking for rules from the 2024 sourcebooks?</span></h2>
+<h3><span><a href="http://dnd2024.wikidot.com">2024 Ruleset</a></span></h3>
+
+
+
+
+<p>This wiki hosts DND 5e content that is setting-specific, play-test content, or unofficial 'homebrew' content. Some content found on this page may not be suitable for play at your table. Check with your DM to see if what you find here is a good fit for your table.<br />
+To join the discussion on this site, we now have a <a href="https://discord.gg/5RfjSXKGg4">Discord</a> server set up.</p>
+<div class="btn-get-started"></div>
+</div>
+</div>
+</div>
+<div style="background: #ffe68c;">
+<div class="feature feature-center">
+<div class="row">
+<div class="col-sm-2">
+<p><span class="fa fa-book fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc0">Spells</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-users fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc2">Races</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-university fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc3">Backgrounds</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-key fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc18">Heroic Chronicle</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-magic fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc19">Classes</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-flask fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc67">Items</a></span></h3>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-2">
+<p><span class="fa fa-unlock-alt fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc70">Feats</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-child fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc81">Racial Feats</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-bookmark fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc85">Miscellaneous</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-home fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="#toc98">Homebrew</a></span></h3>
+</div>
+<div class="col-sm-2">
+<p><span class="fa fa-archive fa-4x"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<h3><span><a href="http://dnd5e.wikidot.com/#toc112">UA</a></span></h3>
+</div>
+<div class="col-sm-1"></div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-7"></div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-book" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-sm-2">
+<h1 id="toc0"><span><a href="/spells">All Spells</a></span></h1>
+<p>• <a href="/spells:artificer">Artificer Spells</a><br />
+• <a href="/spells:bard">Bard Spells</a><br />
+• <a href="/spells:cleric">Cleric Spells</a><br />
+• <a href="/spells:druid">Druid Spells</a><br />
+• <a href="/spells:paladin">Paladin Spells</a><br />
+• <a href="/spells:ranger">Ranger Spells</a><br />
+• <a href="/spells:sorcerer">Sorcerer Spells</a><br />
+• <a href="/spells:warlock">Warlock Spells</a><br />
+• <a href="/spells:wizard">Wizard Spells</a></p>
+</div>
+<div class="col-sm-2">
+<h1 id="toc1"><span>School</span></h1>
+<p>• <a href="/spells:abjuration">Abjuration</a><br />
+• <a href="/spells:conjuration">Conjuration</a><br />
+• <a href="/spells:divination">Divination</a><br />
+• <a href="/spells:enchantment">Enchantment</a><br />
+• <a href="/spells:evocation">Evocation</a><br />
+• <a href="/spells:illusion">Illusion</a><br />
+• <a href="/spells:necromancy">Necromancy</a><br />
+• <a href="/spells:transmutation">Transmutation</a></p>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-users" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-4">
+<h1 id="toc2"><span><span style="font-size:90%;"><a href="lineages.html">All Lineages</a></span></span></h1>
+<ul>
+<li><a href="lineages.html#toc0">Common</a>
+<ul>
+<li><a href="races/standard/dragonborn.html">Dragonborn</a></li>
+<li><a href="races/standard/dwarf.html">Dwarf</a></li>
+<li><a href="#" class="race-link" data-race="elf">Elf</a></li>
+<li><a href="#" class="race-link" data-race="gnome">Gnome</a></li>
+<li><a href="#" class="race-link" data-race="half-elf">Half-Elf</a></li>
+<li><a href="#" class="race-link" data-race="half-orc">Half-Orc</a></li>
+<li><a href="#" class="race-link" data-race="halfling">Halfling</a></li>
+<li><a href="#" class="race-link" data-race="human">Human</a></li>
+<li><a href="#" class="race-link" data-race="tiefling">Tiefling</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="col-sm-4">
+<p><span style="font-size:140%;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<ul>
+<li><a href="/lineage#toc2">Exotic</a>
+<ul>
+<li><a href="/lineage:aarakocra">Aarakocra</a></li>
+<li><a href="/lineage:aasimar">Aasimar</a></li>
+<li><a href="/lineage:changeling">Changeling</a></li>
+<li><a href="/lineage:deep-gnome">Deep Gnome</a></li>
+<li><a href="/lineage:duergar">Duergar</a></li>
+<li><a href="/lineage:eladrin">Eladrin</a></li>
+<li><a href="/lineage:fairy">Fairy</a></li>
+<li><a href="/lineage:firbolg">Firbolg</a></li>
+<li><a href="/lineage:genasi-air">Genasi (Air)</a></li>
+<li><a href="/lineage:genasi-earth">Genasi (Earth)</a></li>
+<li><a href="/lineage:genasi-fire">Genasi (Fire)</a></li>
+<li><a href="/lineage:genasi-water">Genasi (Water)</a></li>
+<li><a href="/lineage:githyanki">Githyanki</a></li>
+<li><a href="/lineage:githzerai">Githzerai</a></li>
+<li><a href="/lineage:goliath">Goliath</a></li>
+<li><a href="/lineage:harengon">Harengon</a></li>
+<li><a href="/lineage:kenku">Kenku</a></li>
+<li><a href="/lineage:locathah">Locathah</a></li>
+<li><a href="/lineage:owlin">Owlin</a></li>
+<li><a href="/lineage:satyr">Satyr</a></li>
+<li><a href="/lineage:sea-elf">Sea Elf</a></li>
+<li><a href="/lineage:shadar-kai">Shadar-Kai</a></li>
+<li><a href="/lineage:tabaxi">Tabaxi</a></li>
+<li><a href="/lineage:tortle">Tortle</a></li>
+<li><a href="/lineage:triton">Triton</a></li>
+<li><a href="/lineage:verdan">Verdan</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="col-sm-4">
+<p><span style="font-size:140%;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<ul>
+<li><a href="/lineage#toc3">Monstrous</a>
+<ul>
+<li><a href="/lineage:bugbear">Bugbear</a></li>
+<li><a href="/lineage:centaur">Centaur</a></li>
+<li><a href="/lineage:goblin">Goblin</a></li>
+<li><a href="/lineage:grung">Grung</a></li>
+<li><a href="/lineage:hobgoblin">Hobgoblin</a></li>
+<li><a href="/lineage:kobold">Kobold</a></li>
+<li><a href="/lineage:lizardfolk">Lizardfolk</a></li>
+<li><a href="/lineage:minotaur">Minotaur</a></li>
+<li><a href="/lineage:orc">Orc</a></li>
+<li><a href="/lineage:shifter">Shifter</a></li>
+<li><a href="/lineage:yuan-ti">Yuan-Ti</a></li>
+</ul>
+</li>
+<li><a href="/lineage#toc4">Setting Specific</a>
+<ul>
+<li><a href="/lineage#toc5">Dragonlance</a></li>
+<li><a href="/lineage#toc6">Eberron</a></li>
+<li><a href="/lineage#toc7">Plane Shift</a></li>
+<li><a href="/lineage#toc8">Ravenloft</a></li>
+<li><a href="/lineage#toc9">Ravnica</a></li>
+<li><a href="/lineage#toc10">Spelljammer</a></li>
+<li><a href="/lineage#toc11">Theros</a></li>
+</ul>
+</li>
+<li><a href="/lineage#toc1">Custom</a></li>
+<li><a href="/lineage#toc10">Unearthed Arcana</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-university" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-8">
+<h3 id="toc3"><span>Common Backgrounds</span></h3>
+</div>
+<div class="col-sm-4">
+<h3 id="toc4"><span>Setting Specific</span></h3>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<p>• <a href="/background:acolyte">Acolyte</a><br />
+• <a href="/background:anthropologist">Anthropologist</a><br />
+• <a href="/background:archaeologist">Archaeologist</a><br />
+• <a href="/background:athlete">Athlete</a><br />
+• <a href="/background:charlatan">Charlatan</a><br />
+• <a href="/background:city-watch">City Watch</a><br />
+• <a href="/background:clan-crafter">Clan Crafter</a><br />
+• <a href="/background:cloistered-scholar">Cloistered Scholar</a><br />
+• <a href="/background:courtier">Courtier</a><br />
+• <a href="/background:criminal">Criminal</a><br />
+• <a href="/background:entertainer">Entertainer</a><br />
+• <a href="/background:faceless">Faceless</a><br />
+• <a href="/background:faction-agent">Faction Agent</a><br />
+• <a href="/background:far-traveler">Far Traveler</a><br />
+• <a href="/background:feylost">Feylost</a><br />
+• <a href="/background:fisher">Fisher</a><br />
+• <a href="/background:folk-hero">Folk Hero</a><br />
+• <a href="/background:giant-foundling">Giant Foundling</a><br />
+• <a href="/background:entertainer#toc1">Gladiator</a><br />
+• <a href="/background:guild-artisan">Guild Artisan</a><br />
+• <a href="/background:guild-artisan#toc1">Guild Merchant</a><br />
+• <a href="/background:haunted-one">Haunted One</a><br />
+• <a href="/background:hermit">Hermit</a><br />
+• <a href="/background:house-agent">House Agent</a><br />
+• <a href="/background:inheritor">Inheritor</a><br />
+• <a href="/background:city-watch#toc1">Investigator (SCAG)</a><br />
+• <a href="/background:investigator">Investigator (VRGR)</a><br />
+• <a href="/background:noble#toc1">Knight</a><br />
+• <a href="/background:knight-of-the-order">Knight of the Order</a><br />
+• <a href="/background:marine">Marine</a><br />
+• <a href="/background:mercenary-veteran">Mercenary Veteran</a><br />
+• <a href="/background:noble">Noble</a><br />
+• <a href="/background:outlander">Outlander</a><br />
+• <a href="/background:sailor#toc1">Pirate</a><br />
+• <a href="/background:rewarded">Rewarded</a><br />
+• <a href="/background:ruined">Ruined</a><br />
+• <a href="/background:rune-carver">Rune Carver</a><br />
+• <a href="/background:sage">Sage</a><br />
+• <a href="/background:sailor">Sailor</a><br />
+• <a href="/background:shipwright">Shipwright</a><br />
+• <a href="/background:smuggler">Smuggler</a><br />
+• <a href="/background:soldier">Soldier</a><br />
+• <a href="/background:criminal#toc1">Spy</a></p>
+</div>
+<div class="col-sm-4">
+<p>• <a href="/background:urban-bounty-hunter">Urban Bounty Hunter</a><br />
+• <a href="/background:urchin">Urchin</a><br />
+• <a href="/background:uthgardt-tribe-member">Uthgardt Tribe Member</a><br />
+• <a href="/background:waterdhavian-noble">Waterdhavian Noble</a><br />
+• <a href="/background:witchlight-hand">Witchlight Hand</a></p>
+<h6 id="toc5"><span>AL: Curse of Strahd</span></h6>
+<p>• <a href="/background:black-fist-double-agent">Black Fist Double Agent</a><br />
+• <a href="/background:dragon-casualty">Dragon Casualty</a><br />
+• <a href="/background:iron-route-bandit">Iron Route Bandit</a><br />
+• <a href="/background:phlan-insurgent">Phlan Insurgent</a><br />
+• <a href="/background:stojanow-prisoner">Stojanow Prisoner</a><br />
+• <a href="/background:ticklebelly-nomad">Ticklebelly Nomad</a></p>
+<h6 id="toc6"><span>AL: Mulmaster</span></h6>
+<p>• <a href="/background:caravan-specialist">Caravan Specialist</a><br />
+• <a href="/background:earthspur-miner">Earthspur Miner</a><br />
+• <a href="/background:harborfolk">Harborfolk</a><br />
+• <a href="/background:mulmaster-aristocrat">Mulmaster Aristocrat</a><br />
+• <a href="/background:phlan-refugee">Phlan Refugee</a></p>
+<h6 id="toc7"><span>AL: Hillsfar</span></h6>
+<p>• <a href="/background:cormanthor-refugee">Cormanthor Refugee</a><br />
+• <a href="/background:gate-urchin">Gate Urchin</a><br />
+• <a href="/background:hillsfar-merchant">Hillsfar Merchant</a><br />
+• <a href="/background:hillsfar-smuggler">Hillsfar Smuggler</a><br />
+• <a href="/background:secret-identity">Secret Identity</a><br />
+• <a href="/background:shade-fanatic">Shade Fanatic</a><br />
+• <a href="/background:trade-sheriff">Trade Sheriff</a></p>
+<h6 id="toc8"><span>Unearthed Arcana</span></h6>
+<p>None Available</p>
+<h6 id="toc9"><span>Homebrew</span></h6>
+<p>• <a href="/background:ashari">Ashari</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc10"><span>Acquisitions inc.</span></h6>
+<p>• <a href="/background:celebrity-adventurers-scion">Celebrity Adventurer's Scion</a><br />
+• <a href="/background:failed-merchant">Failed Merchant</a><br />
+• <a href="/background:gambler">Gambler</a><br />
+• <a href="/background:plaintiff">Plaintiff</a><br />
+• <a href="/background:rival-intern">Rival Intern</a></p>
+<h6 id="toc11"><span>Amonkhet</span></h6>
+<p>• <a href="/background:dissenter">Dissenter</a><br />
+• <a href="/background:initiate">Initiate</a><br />
+• <a href="/background:vizier">Vizier</a></p>
+<h6 id="toc12"><span>Dragonlance</span></h6>
+<p>• <a href="/background:knight-of-solamnia">Knight of Solamnia</a><br />
+• <a href="/background:mage-of-high-sorcery">Mage of High Sorcery</a></p>
+<h6 id="toc13"><span>Innistrad</span></h6>
+<p>• <a href="/background:inquisitor">Inquisitor</a></p>
+<h6 id="toc14"><span>Planescape</span></h6>
+<p>• <a href="/background:gate-warden">Gate Warden</a><br />
+• <a href="/background:planar-philosopher">Planar Philosopher</a></p>
+<h6 id="toc15"><span>Ravnica</span></h6>
+<p>• <a href="/background:azorius-functionary">Azorius Functionary</a><br />
+• <a href="/background:boros-legionnaire">Boros Legionnaire</a><br />
+• <a href="/background:dimir-operative">Dimir Operative</a><br />
+• <a href="/background:golgari-agent">Golgari Agent</a><br />
+• <a href="/background:gruul-anarch">Gruul Anarch</a><br />
+• <a href="/background:izzet-engineer">Izzet Engineer</a><br />
+• <a href="/background:orzhov-representative">Orzhov Representative</a><br />
+• <a href="/background:rakdos-cultist">Rakdos Cultist</a><br />
+• <a href="/background:selesnya-initiate">Selesnya Initiate</a><br />
+• <a href="/background:simic-scientist">Simic Scientist</a></p>
+<h6 id="toc16"><span>Strixhaven</span></h6>
+<p>• <a href="/background:lorehold-student">Lorehold Student</a><br />
+• <a href="/background:prismari-student">Prismari Student</a><br />
+• <a href="/background:quandrix-student">Quandrix Student</a><br />
+• <a href="/background:silverquill-student">Silverquill Student</a><br />
+• <a href="/background:witherbloom-student">Witherbloom Student</a></p>
+<h6 id="toc17"><span>Wildemount</span></h6>
+<p>• <a href="/background:grinner">Grinner</a><br />
+• <a href="/background:volstrucker-agent">Volstrucker Agent</a></p>
+<h6 id="toc18"><span>Spelljammer</span></h6>
+<p>• <a href="/background:astral-drifter">Astral Drifter</a><br />
+• <a href="/background:wildspacer">Wildspacer</a></p>
+<h6 id="toc19"><span><a href="/background:optional-features">Optional Features</a></span></h6>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-key" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-sm-6">
+<h1 id="toc20"><span>Heroic Chronicle</span></h1>
+<h6><span><em>The Heroic Chronicle is a system that allows players and Dungeon Masters to work together to build a compelling character story. It even allows characters to gain additional proficiencies, magic items, spells, or feats before the campaign begins.</em></span></h6>
+<p>• <a href="/background:wildemount-heroic-chronicle">Wildemount</a><br />
+• <a href="/background:sword-coast-heroic-chronicle">Sword Coast (D&amp;D Beyond)</a><br />
+• <a href="/this-is-your-life">This is Your Life</a></p>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-cogs" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc21"><span><sup><em>The</em></sup> <a href="/artificer">Artificer</a></span></h1>
+<h6><span><em>Makers of magic-infused objects, artificers are defined by their inventive nature. They see magic as a complex system waiting to be decoded and controlled. Instead of ephemeral spells, they seek to craft durable, useful, marvelous magical items.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc22"><span>Published</span></h6>
+<p>• <a href="/artificer:alchemist">Alchemist</a><br />
+• <a href="/artificer:armorer">Armorer</a><br />
+• <a href="/artificer:artillerist">Artillerist</a><br />
+• <a href="/artificer:battle-smith">Battle Smith</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc23"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc95">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc24"><span>Quick Links</span></h6>
+<p>• <a href="/artificer:infusions">Infusions</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-tint" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc25"><span><sup><em>The</em></sup> <a href="/barbarian">Barbarian</a></span></h1>
+<h6><span><em>For some, their rage springs from a communion with fierce animal spirits. Others draw from a roiling reservoir of anger at a world full of pain. For every barbarian, rage is a power that fuels not just a battle frenzy but also uncanny reflexes, resilience, and feats of strength.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc26"><span>Published</span></h6>
+<p>• <a href="/barbarian:ancestral-guardian">Path of the Ancestral Guardian</a><br />
+• <a href="/barbarian:battlerager">Path of the Battlerager</a><br />
+• <a href="/barbarian:beast">Path of the Beast</a><br />
+• <a href="/barbarian:berserker">Path of the Berserker</a><br />
+• <a href="/barbarian:giant">Path of the Giant</a><br />
+• <a href="/barbarian:storm-herald">Path of the Storm Herald</a><br />
+• <a href="/barbarian:totem-warrior">Path of the Totem Warrior</a><br />
+• <a href="/barbarian:wild-magic">Path of Wild Magic</a><br />
+• <a href="/barbarian:zealot">Path of the Zealot</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc27"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc94">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-music" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc28"><span><sup><em>The</em></sup> <a href="/bard">Bard</a></span></h1>
+<h6><span><em>Whether scholar, skald, or scoundrel, a bard weaves magic through words and music to inspire allies, demoralize foes, manipulate minds, create illusions, and even heal wounds. The bard is a master of song, speech, and the magic they contain.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc29"><span>Published</span></h6>
+<p>• <a href="/bard:creation">College of Creation</a><br />
+• <a href="/bard:eloquence">College of Eloquence</a><br />
+• <a href="/bard:glamour">College of Glamour</a><br />
+• <a href="/bard:lore">College of Lore</a><br />
+• <a href="/bard:spirits">College of Spirits</a><br />
+• <a href="/bard:swords">College of Swords</a><br />
+• <a href="/bard:valor">College of Valor</a><br />
+• <a href="/bard:whispers">College of Whispers</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc30"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc95">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-certificate" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc31"><span><sup><em>The</em></sup> <a href="/blood-hunter">Blood Hunter (Homebrew)</a></span></h1>
+<h6><span><em>Often feared or misunderstood, and driven by an unending drive to destroy the wicked, blood hunters are clever, arcane warriors who have bound their essence to the dark creatures they hunt to better stalk and survive their prey. Armed with the rites of forbidden blood magic and a willingness to sacrifice their own vitality and humanity for the cause, they protect the realms from the shadows, ever vigilant to avoid becoming the same monsters they choose to hunt.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc32"><span>Published</span></h6>
+<p>• <a href="/blood-hunter:ghostslayer">Order of the Ghostslayer</a><br />
+• <a href="/blood-hunter:lycan">Order of the Lycan</a><br />
+• <a href="/blood-hunter:mutant">Order of the Mutant</a><br />
+• <a href="/blood-hunter:profane-soul">Order of the Profane Soul</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc33"><span>Quick Links</span></h6>
+<p>• <a href="/blood-hunter:blood-curse">Blood Curse</a><br />
+• <a href="/blood-hunter:mutagens">Mutagens</a></p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-plus-circle" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc34"><span><sup><em>The</em></sup> <a href="/cleric">Cleric</a></span></h1>
+<h6><span><em>Clerics are intermediaries between the mortal world and the distant planes of the gods. As varied as the gods they serve, clerics strive to embody the handiwork of their deities. No ordinary priest, a cleric is imbued with divine magic.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc35"><span>Published</span></h6>
+<p>• <a href="/cleric:arcana">Arcana Domain</a><br />
+• <a href="/cleric:death">Death Domain</a><br />
+• <a href="/cleric:forge">Forge Domain</a><br />
+• <a href="/cleric:grave">Grave Domain</a><br />
+• <a href="/cleric:knowledge">Knowledge Domain</a><br />
+• <a href="/cleric:life">Life Domain</a><br />
+• <a href="/cleric:light">Light Domain</a><br />
+• <a href="/cleric:nature">Nature Domain</a><br />
+• <a href="/cleric:order">Order Domain</a><br />
+• <a href="/cleric:peace">Peace Domain</a><br />
+• <a href="/cleric:tempest">Tempest Domain</a><br />
+• <a href="/cleric:trickery">Trickery Domain</a><br />
+• <a href="/cleric:twilight">Twilight Domain</a><br />
+• <a href="/cleric:war">War Domain</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc36"><span>Amonkhet</span></h6>
+<p>• <a href="/cleric:ambition">Ambition Domain</a><br />
+• <a href="/cleric:solidarity">Solidarity Domain</a><br />
+• <a href="/cleric:strength">Strength Domain</a><br />
+• <a href="/cleric:zeal">Zeal Domain</a></p>
+<h6 id="toc37"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc96">(a)</a></sup></span></h6>
+<p>• <a href="/cleric:fate-ua">Fate Domain</a></p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-leaf" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc38"><span><sup><em>The</em></sup> <a href="/druid">Druid</a></span></h1>
+<h6><span><em>Whether calling on the elemental forces of nature or emulating the creatures of the animal world, druids are an embodiment of nature's resilience, cunning, and fury. They claim no mastery over nature, but see themselves as extensions of nature's indomitable will.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc39"><span>Published</span></h6>
+<p>• <a href="/druid:dreams">Circle of Dreams</a><br />
+• <a href="/druid:land">Circle of the Land</a><br />
+• <a href="/druid:moon">Circle of the Moon</a><br />
+• <a href="/druid:shepherd">Circle of the Shepherd</a><br />
+• <a href="/druid:spores">Circle of Spores</a><br />
+• <a href="/druid:stars">Circle of Stars</a><br />
+• <a href="/druid:wildfire">Circle of Wildfire</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc40"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc97">(a)</a></sup></span></h6>
+<p>• <a href="/druid:primeval-ua">Circle of the Primeval</a></p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-gavel" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc41"><span><sup><em>The</em></sup> <a href="/fighter">Fighter</a></span></h1>
+<h6><span><em>Fighters share an unparalleled mastery with weapons and armor, and a thorough knowledge of the skills of combat. They are well acquainted with death, both meting it out and staring it defiantly in the face.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc42"><span>Published</span></h6>
+<p>• <a href="/fighter:arcane-archer">Arcane Archer</a><br />
+• <a href="/fighter:banneret">Banneret</a><br />
+• <a href="/fighter:battle-master">Battle Master</a><br />
+• <a href="/fighter:cavalier">Cavalier</a><br />
+• <a href="/fighter:champion">Champion</a><br />
+• <a href="/fighter:echo-knight">Echo Knight</a><br />
+• <a href="/fighter:eldritch-knight">Eldritch Knight</a><br />
+• <a href="/fighter:psi-warrior">Psi Warrior</a><br />
+• <a href="/fighter:rune-knight">Rune Knight</a><br />
+• <a href="/fighter:samurai">Samurai</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc43"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc98">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc44"><span>Quick Links</span></h6>
+<p>• <a href="/fighter:battle-master:maneuvers">Battle Maneuvers</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-spinner" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc45"><span><sup><em>The</em></sup> <a href="/monk">Monk</a></span></h1>
+<h6><span><em>Monks are united in their ability to magically harness the energy that flows in their bodies. Whether channeled as a striking display of combat prowess or a subtler focus of defensive ability and speed, this energy infuses all that a monk does.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc46"><span>Published</span></h6>
+<p>• <a href="/monk:mercy">Way of Mercy</a><br />
+• <a href="/monk:ascendant-dragon">Way of the Ascendant Dragon</a><br />
+• <a href="/monk:astral-self">Way of the Astral Self</a><br />
+• <a href="/monk:drunken-master">Way of the Drunken Master</a><br />
+• <a href="/monk:four-elements">Way of the Four Elements</a><br />
+• <a href="/monk:kensei">Way of the Kensei</a><br />
+• <a href="/monk:long-death">Way of the Long Death</a><br />
+• <a href="/monk:open-hand">Way of the Open Hand</a><br />
+• <a href="/monk:shadow">Way of Shadow</a><br />
+• <a href="/monk:sun-soul">Way of the Sun Soul</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc47"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc99">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc48"><span>Quick Links</span></h6>
+<p>• <a href="/monk:four-elements:disciplines">Disciplines</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-shield" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc49"><span><sup><em>The</em></sup> <a href="/paladin">Paladin</a></span></h1>
+<h6><span><em>Whether sworn before a god's altar and the witness of a priest, in a sacred glade before nature spirits and fey beings, or in a moment of desperation and grief with the dead as the only witness, a paladin's oath is a powerful bond.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc50"><span>Published</span></h6>
+<p>• <a href="/paladin:ancients">Oath of the Ancients</a><br />
+• <a href="/paladin:conquest">Oath of Conquest</a><br />
+• <a href="/paladin:crown">Oath of the Crown</a><br />
+• <a href="/paladin:devotion">Oath of Devotion</a><br />
+• <a href="/paladin:glory">Oath of Glory</a><br />
+• <a href="/paladin:redemption">Oath of Redemption</a><br />
+• <a href="/paladin:vengeance">Oath of Vengeance</a><br />
+• <a href="/paladin:watchers">Oath of the Watchers</a><br />
+• <a href="/paladin:oathbreaker">Oathbreaker</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc51"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc101">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-paw" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc52"><span><sup><em>The</em></sup> <a href="/ranger">Ranger</a></span></h1>
+<h6><span><em>Far from the bustle of cities and towns, past the hedges that shelter the most distant farms from the terrors of the wild, amid the dense-packed trees of trackless forests and across wide and empty plains, rangers keep their unending watch.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc53"><span>Published</span></h6>
+<p>• <a href="/ranger:beast-master">Beast Master Conclave</a><br />
+• <a href="/ranger:drakewarden">Drakewarden</a><br />
+• <a href="/ranger:fey-wanderer">Fey Wanderer</a><br />
+• <a href="/ranger:gloom-stalker">Gloom Stalker Conclave</a><br />
+• <a href="/ranger:horizon-walker">Horizon Walker Conclave</a><br />
+• <a href="/ranger:hunter">Hunter Conclave</a><br />
+• <a href="/ranger:monster-slayer">Monster Slayer Conclave</a><br />
+• <a href="/ranger:swarmkeeper">Swarmkeeper</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc54"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc102">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-eye" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc55"><span><sup><em>The</em></sup> <a href="/rogue">Rogue</a></span></h1>
+<h6><span><em>Rogues rely on skill, stealth, and their foes' vulnerabilities to get the upper hand in any situation. They have a knack for finding the solution to just about any problem, demonstrating a resourcefulness and versatility that is the cornerstone of any successful adventuring party.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc56"><span>Published</span></h6>
+<p>• <a href="/rogue:arcane-trickster">Arcane Trickster</a><br />
+• <a href="/rogue:assassin">Assassin</a><br />
+• <a href="/rogue:inquisitive">Inquisitive</a><br />
+• <a href="/rogue:mastermind">Mastermind</a><br />
+• <a href="/rogue:phantom">Phantom</a><br />
+• <a href="/rogue:scout">Scout</a><br />
+• <a href="/rogue:soulknife">Soulknife</a><br />
+• <a href="/rogue:swashbuckler">Swashbuckler</a><br />
+• <a href="/rogue:thief">Thief</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc57"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc103">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-bolt" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc58"><span><sup><em>The</em></sup> <a href="/sorcerer">Sorcerer</a></span></h1>
+<h6><span><em>Sorcerers carry a magical birthright conferred upon them by an exotic bloodline, some otherworldly influence, or exposure to unknown cosmic forces. No one chooses sorcery; the power chooses the sorcerer.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc59"><span>Published</span></h6>
+<p>• <a href="/sorcerer:aberrant-mind">Aberrant Mind</a><br />
+• <a href="/sorcerer:clockwork-soul">Clockwork Soul</a><br />
+• <a href="/sorcerer:draconic-bloodline">Draconic Bloodline</a><br />
+• <a href="/sorcerer:divine-soul">Divine Soul</a><br />
+• <a href="/sorcerer:lunar-sorcery">Lunar Sorcery</a><br />
+• <a href="/sorcerer:shadow-magic">Shadow Magic</a><br />
+• <a href="/sorcerer:storm-sorcery">Storm Sorcery</a><br />
+• <a href="/sorcerer:wild-magic">Wild Magic</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc60"><span>Kaladesh</span></h6>
+<p>• <a href="/sorcerer:pyromancy">Pyromancy</a></p>
+<h6 id="toc61"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc105">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-sun-o" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc62"><span><sup><em>The</em></sup> <a href="/warlock">Warlock</a></span></h1>
+<h6><span><em>Warlocks are seekers of the knowledge that lies hidden in the fabric of the multiverse. Through pacts made with mysterious beings of supernatural power, warlocks unlock magical effects both subtle and spectacular.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc63"><span>Published</span></h6>
+<p>• <a href="/warlock:archfey">Archfey</a><br />
+• <a href="/warlock:celestial">Celestial</a><br />
+• <a href="/warlock:fathomless">Fathomless</a><br />
+• <a href="/warlock:fiend">Fiend</a><br />
+• <a href="/warlock:the-genie">The Genie</a><br />
+• <a href="/warlock:great-old-one">Great Old One</a><br />
+• <a href="/warlock:hexblade">Hexblade</a><br />
+• <a href="/warlock:undead">Undead</a><br />
+• <a href="/warlock:undying">Undying</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc64"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc106">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc65"><span>Quick Links</span></h6>
+<p>• <a href="/warlock:eldritch-invocations">Eldritch Invocations</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-magic" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc66"><span><sup><em>The</em></sup> <a href="/wizard">Wizard</a></span></h1>
+<h6><span><em>Wizards are supreme magic-users, defined and united as a class by the spells they cast. Drawing on the subtle weave of magic that permeates the cosmos, wizards cast spells of explosive fire, arcing lightning, subtle deception, brute-force mind control, and much more.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc67"><span>Published</span></h6>
+<p>• <a href="/wizard:abjuration">School of Abjuration</a><br />
+• <a href="/wizard:bladesinging">School of Bladesinging</a><br />
+• <a href="/wizard:chronurgy">School of Chronurgy</a><br />
+• <a href="/wizard:conjuration">School of Conjuration</a><br />
+• <a href="/wizard:divination">School of Divination</a><br />
+• <a href="/wizard:enchantment">School of Enchantment</a><br />
+• <a href="/wizard:evocation">School of Evocation</a><br />
+• <a href="/wizard:graviturgy">School of Graviturgy</a><br />
+• <a href="/wizard:illusion">School of Illusion</a><br />
+• <a href="/wizard:necromancy">School of Necromancy</a><br />
+• <a href="/wizard:order-of-scribes">Order of Scribes</a><br />
+• <a href="/wizard:transmutation">School of Transmutation</a><br />
+• <a href="/wizard:war-magic">School of War Magic</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc68"><span>Unearthed Arcana<sup><a href="http://dnd5e.wikidot.com/#toc107">(a)</a></sup></span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-flask" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-sm-3">
+<h1 id="toc69"><span>Items</span></h1>
+<p>• <a href="/adventuring-gear">Adventuring Gear</a><br />
+• <a href="/armor">Armor and Shields</a><br />
+• <a href="/trinkets">Trinkets</a><br />
+• <a href="/weapons">Weapons</a><br />
+• <a href="/firearms">Firearms</a><br />
+• <a href="/explosives">Explosives</a><br />
+• <a href="/wondrous-items">Wondrous Items</a><br />
+• <a href="/currency">Currency</a><br />
+• <a href="/poisons">Poisons</a><br />
+• <a href="/tools">Tools</a><br />
+• <a href="/siege-equipment">Siege Equipment</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-unlock-alt" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div class="row">
+<div class="col-sm-16">
+<h1 id="toc70"><span>Feats</span></h1>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc71"><span>Published</span></h6>
+<p>• <a href="/feat:aberrant-dragonmark">Aberrant Dragonmark</a><br />
+• <a href="/feat:actor">Actor</a><br />
+• <a href="/feat:alert">Alert</a><br />
+• <a href="/feat:artificer-initiate">Artificer Initiate</a><br />
+• <a href="/feat:athlete">Athlete</a><br />
+• <a href="/feat:cartomancer">Cartomancer</a><br />
+• <a href="/feat:charger">Charger</a><br />
+• <a href="/feat:chef">Chef</a><br />
+• <a href="/feat:crossbow-expert">Crossbow Expert</a><br />
+• <a href="/feat:crusher">Crusher</a><br />
+• <a href="/feat:defensive-duelist">Defensive Duelist</a><br />
+• <a href="/feat:dual-wielder">Dual Wielder</a><br />
+• <a href="/feat:dungeon-delver">Dungeon Delver</a><br />
+• <a href="/feat:durable">Durable</a><br />
+• <a href="/feat:eldritch-adept">Eldritch Adept</a><br />
+• <a href="/feat:elemental-adept">Elemental Adept</a><br />
+• <a href="/feat:ember-of-the-fire-giant">Ember of the Fire Giant</a><br />
+• <a href="/feat:fey-touched">Fey Touched</a><br />
+• <a href="/feat:fighting-initiate">Fighting Initiate</a><br />
+• <a href="/feat:fury-of-the-frost-giant">Fury of the Frost Giant</a><br />
+• <a href="/feat:gift-of-the-chromatic-dragon">Gift of the Chromatic Dragon</a><br />
+• <a href="/feat:gift-of-the-gem-dragon">Gift of the Gem Dragon</a><br />
+• <a href="/feat:gift-of-the-metallic-dragon">Gift of the Metallic Dragon</a><br />
+• <a href="/feat:grappler">Grappler</a><br />
+• <a href="/feat:great-weapon-master">Great Weapon Master</a><br />
+• <a href="/feat:guile-of-the-cloud-giant">Guile of the Cloud Giant</a><br />
+• <a href="/feat:gunner">Gunner</a><br />
+• <a href="/feat:healer">Healer</a><br />
+• <a href="/feat:heavily-armored">Heavily Armored</a><br />
+• <a href="/feat:heavy-armor-master">Heavy Armor Master</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc72"><span><span style="color: #ffe68c">.</span></span></h6>
+<p>• <a href="/feat:inspiring-leader">Inspiring Leader</a><br />
+• <a href="/feat:keen-mind">Keen Mind</a><br />
+• <a href="/feat:keenness-of-the-stone-giant">Keenness of the Stone Giant</a><br />
+• <a href="/feat:lightly-armored">Lightly Armored</a><br />
+• <a href="/feat:linguist">Linguist</a><br />
+• <a href="/feat:lucky">Lucky</a><br />
+• <a href="/feat:mage-slayer">Mage Slayer</a><br />
+• <a href="/feat:magic-initiate">Magic Initiate</a><br />
+• <a href="/feat:martial-adept">Martial Adept</a><br />
+• <a href="/feat:medium-armor-master">Medium Armor Master</a><br />
+• <a href="/feat:metamagic-adept">Metamagic Adept</a><br />
+• <a href="/feat:mobile">Mobile</a><br />
+• <a href="/feat:moderately-armored">Moderately Armored</a><br />
+• <a href="/feat:mounted-combatant">Mounted Combatant</a><br />
+• <a href="/feat:observant">Observant</a><br />
+• <a href="/feat:piercer">Piercer</a><br />
+• <a href="/feat:poisoner">Poisoner</a><br />
+• <a href="/feat:polearm-master">Polearm Master</a><br />
+• <a href="/feat:resilient">Resilient</a><br />
+• <a href="/feat:ritual-caster">Ritual Caster</a><br />
+• <a href="/feat:rune-shaper">Rune Shaper</a><br />
+• <a href="/feat:savage-attacker">Savage Attacker</a><br />
+• <a href="/feat:sentinel">Sentinel</a><br />
+• <a href="/feat:shadow-touched">Shadow Touched</a><br />
+• <a href="/feat:sharpshooter">Sharpshooter</a><br />
+• <a href="/feat:shield-master">Shield Master</a><br />
+• <a href="/feat:skill-expert">Skill Expert</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc73"><span><span style="color: #ffe68c">.</span></span></h6>
+<p>• <a href="/feat:skilled">Skilled</a><br />
+• <a href="/feat:skulker">Skulker</a><br />
+• <a href="/feat:slasher">Slasher</a><br />
+• <a href="/feat:soul-of-the-storm-giant">Soul of the Storm Giant</a><br />
+• <a href="/feat:spell-sniper">Spell Sniper</a><br />
+• <a href="/feat:strike-of-the-giants">Strike of the Giants</a><br />
+• <a href="/feat:tavern-brawler">Tavern Brawler</a><br />
+• <a href="/feat:telekinetic">Telekinetic</a><br />
+• <a href="/feat:telepathic">Telepathic</a><br />
+• <a href="/feat:tough">Tough</a><br />
+• <a href="/feat:vigor-of-the-hill-giant">Vigor of the Hill Giant</a><br />
+• <a href="/feat:war-caster">War Caster</a><br />
+• <a href="/feat:weapon-master">Weapon Master</a></p>
+<h6 id="toc74"><span>Planescape</span></h6>
+<p>• <a href="/feat:agent-of-order">Agent of Order</a><br />
+• <a href="/feat:baleful-scion">Baleful Scion</a><br />
+• <a href="/feat:cohort-of-chaos">Cohort of Chaos</a><br />
+• <a href="/feat:outlands-envoy">Outlands Envoy</a><br />
+• <a href="/feat:planar-wanderer">Planar Wanderer</a><br />
+• <a href="/feat:righteous-heritor">Righteous Heritor</a><br />
+• <a href="/feat:scion-of-the-outer-planes">Scion of the Outer Planes</a></p>
+<h6 id="toc75"><span>Strixhaven</span></h6>
+<p>• <a href="/feat:strixhaven-initiate">Strixhaven Initiate</a><br />
+• <a href="/feat:strixhaven-mascot">Strixhaven Mascot</a></p>
+<h6 id="toc76"><span>Dragonlance</span></h6>
+<p>• <a href="/feat:adept-of-the-black-robes">Adept of the Black Robes</a><br />
+• <a href="/feat:adept-of-the-red-robes">Adept of the Red Robes</a><br />
+• <a href="/feat:adept-of-the-white-robes">Adept of the White Robes</a><br />
+• <a href="/feat:divinely-favored">Divinely Favored</a><br />
+• <a href="/feat:initiate-of-high-sorcery">Initiate of High Sorcery</a><br />
+• <a href="/feat:knight-of-the-crown">Knight of the Crown</a><br />
+• <a href="/feat:knight-of-the-rose">Knight of the Rose</a><br />
+• <a href="/feat:knight-of-the-sword">Knight of the Sword</a><br />
+• <a href="/feat:squire-of-solamnia">Squire of Solamnia</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc77"><span>Unearthed Arcana</span></h6>
+<p>None Available</p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc78"><span><span style="color: #ffe68c">.</span></span></h6>
+</div>
+<div class="col-sm-4">
+<h6 id="toc79"><span>Plane Shift</span></h6>
+<p>• <a href="/feat:servo-crafting">Servo Crafting</a><br />
+• <a href="/feat:quicksmithing">Quicksmithing</a></p>
+<h6 id="toc80"><span>Homebrew</span></h6>
+<p>• <a href="/feat:cruel">Cruel</a><br />
+• <a href="/feat:flash-recall">Flash Recall</a><br />
+• <a href="/feat:mystic-conflux">Mystic Conflux</a><br />
+• <a href="/feat:remarkable-recovery">Remarkable Recovery</a><br />
+• <a href="/feat:spelldriver">Spelldriver</a><br />
+• <a href="/feat:thrown-arms-master">Thrown Arms Master</a><br />
+• <a href="/feat:vital-sacrifice">Vital Sacrifice</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-child" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-sm-12">
+<h1 id="toc81"><span>Racial Feats</span></h1>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-6">
+<h6 id="toc82"><span>Published</span></h6>
+<p>• <a href="/feat:bountiful-luck">Bountiful Luck</a><br />
+• <a href="/feat:dragon-fear">Dragon Fear</a><br />
+• <a href="/feat:dragon-hide">Dragon Hide</a><br />
+• <a href="/feat:dwarven-resilience">Dwarven Fortitude</a><br />
+• <a href="/feat:drow-high-magic">Drow High Magic</a><br />
+• <a href="/feat:elven-accuracy">Elven Accuracy</a><br />
+• <a href="/feat:fade-away">Fade Away</a><br />
+• <a href="/feat:fey-teleportation">Fey Teleportation</a><br />
+• <a href="/feat:flames-of-phlegethos">Flames of Phlegethos</a><br />
+• <a href="/feat:infernal-constitution">Infernal Constitution</a><br />
+• <a href="/feat:orcish-fury">Orcish Fury</a><br />
+• <a href="/feat:prodigy">Prodigy</a><br />
+• <a href="/feat:revenant-blade">Revenant Blade</a><br />
+• <a href="/feat:second-chance">Second Chance</a><br />
+• <a href="/feat:squat-nimbleness">Squat Nimbleness</a><br />
+• <a href="/feat:svirfneblin-magic">Svirfneblin Magic</a><br />
+• <a href="/feat:wood-elf-magic">Wood Elf Magic</a></p>
+</div>
+<div class="col-sm-6">
+<h6 id="toc83"><span>Unearthed Arcana</span></h6>
+<p>• <a href="/feat:barbed-hide">Barbed Hide</a><br />
+• <a href="/feat:critter-friend">Critter Friend</a><br />
+• <a href="/feat:dragon-wings">Dragon Wings</a><br />
+• <a href="/feat:everybodys-friend">Everybody's Friend</a><br />
+• <a href="/feat:grudge-bearer">Grudge Bearer</a><br />
+• <a href="/feat:human-determination">Human Determination</a><br />
+• <a href="/feat:orcish-aggression">Orcish Aggression</a><br />
+• <a href="/feat:wonder-maker">Wonder Maker</a></p>
+<h6 id="toc84"><span>Plane Shift</span></h6>
+<p>• <a href="/feat:vampiric-exultation">Vampiric Exultation</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="feature offcolor">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-bookmark" style="font-size: 12em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-sm-3">
+<h1 id="toc85"><span>Miscellaneous</span></h1>
+<h4 id="toc86"><span><a href="/sidekicks">Sidekicks</a></span></h4>
+<p>• <a href="/sidekick:expert">Expert</a><br />
+• <a href="/sidekick:spellcaster">Spellcaster</a><br />
+• <a href="/sidekick:warrior">Warrior</a></p>
+<h5 id="toc87"><span><a href="/survivors">Survivors</a></span></h5>
+<h5 id="toc88"><span><a href="/blessings">Blessings</a></span></h5>
+<h5 id="toc89"><span><a href="/charms">Charms</a></span></h5>
+<h5 id="toc90"><span><a href="/dark-gifts">Dark Gifts</a></span></h5>
+<h5 id="toc91"><span><a href="/draconic-gifts">Draconic Gifts</a></span></h5>
+<h5 id="toc92"><span><a href="/epic-boons">Epic Boons</a></span></h5>
+<h5 id="toc93"><span><a href="/mounts-vehicles">Mounts &amp; Vehicles</a></span></h5>
+<h5 id="toc94"><span><a href="/supernatural-gifts">Supernatural Gifts</a></span></h5>
+<h5 id="toc95"><span><a href="/madness">Madness</a></span></h5>
+</div>
+<div class="col-sm-3">
+<h4 id="toc96"><span>Alternate Rules</span></h4>
+<h5 id="toc97"><span><a href="/spell-points">Spell Points</a></span></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="feature">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-home" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature" style="padding:0px;">
+<div>
+<div class="col-sm-12">
+<h1 id="toc98"><span>Homebrew Subclasses</span></h1>
+<h6><span><em>A selection of homebrew subclasses released through unofficial channels by WotC affiliated DM's</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc99"><span>Artificer</span></h6>
+<p>• <a href="/artificer:forge-adept">Forge Adept</a><br />
+• <a href="/artificer:mastermaker">Mastermaker</a><br />
+• <a href="/artificer:maverick">Maverick</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc100"><span>Barbarian</span></h6>
+<p>• <a href="/barbarian:juggernaut">Path of the Juggernaut</a><br />
+• <a href="/barbarian:juggernaut-reborn">Path of the Juggernaut Reborn</a><br />
+• <a href="/barbarian:path-of-the-depths-pc">Path of the Depths</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc101"><span>Bard</span></h6>
+<p>• <a href="/bard:dirge-singer">College of the Dirge Singer</a><br />
+• <a href="/bard:maestro">College of the Maestro</a><br />
+• <a href="/bard:tragedy">College of Tragedy</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc102"><span>Cleric</span></h6>
+<p>• <a href="/cleric:beauty-hb">Beauty Domain</a><br />
+• <a href="/cleric:blood">Blood Domain</a><br />
+• <a href="/cleric:blood-reborn">Blood Domain Reborn</a><br />
+• <a href="/cleric:mind">Mind Domain</a><br />
+• <a href="/cleric:moon">Moon Domain</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc103"><span>Druid</span></h6>
+<p>• <a href="/druid:blighted">Circle of the Blighted</a><br />
+• <a href="/druid:forged-hb">Circle of the Forged</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc104"><span>Fighter</span></h6>
+<p>• <a href="/fighter:gunslinger">Gunslinger</a><br />
+• <a href="/fighter:renegade">Renegade</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc105"><span>Monk</span></h6>
+<p>• <a href="/monk:cobalt-soul">Way of the Cobalt Soul</a><br />
+• <a href="/monk:living-weapon">Way of the Living Weapon</a><br />
+• <a href="/monk:soul-knife">Way of the Soul Knife</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc106"><span>Paladin</span></h6>
+<p>• <a href="/paladin:open-sea">Oath of the Open Sea</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc107"><span>Ranger</span></h6>
+<p>None Available</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc108"><span>Rogue</span></h6>
+<p>• <a href="/rogue:wild-card">Wild Card</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc109"><span>Sorcerer</span></h6>
+<p>• <a href="/sorcerer:runechild">Runechild</a><br />
+• <a href="/sorcerer:runechild-reborn">Runechild Reborn</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc110"><span>Warlock</span></h6>
+<p>• <a href="/warlock:kraken">Kraken</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h5 id="toc111"><span>Wizard</span></h5>
+<p>• <a href="/wizard:blood-magic">Blood Magic</a></p>
+</div>
+<div class="col-sm-4"></div>
+<div class="col-sm-4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="feature offcolor">
+<div class="feature" style="padding:0px;">
+<div class="row">
+<div class="col-md-5 text-center">
+<p><span class="fa fa-archive" style="font-size: 10em;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+</div>
+<div class="col-md-7">
+<div class="feature offcolor" style="padding:0px;">
+<div>
+<div class="col-sm-12">
+<h1 id="toc112"><span>Archived Unearthed Arcana</span></h1>
+<h6><span><em>Unearthed Arcana (UA) is playtest material released by Wizards of the Coast. UA included in this section has either been superseded by a more recent UA release, by officially published material, or enough time has passed since its release that official publication is unlikely.</em></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc113"><span>Artificer</span></h6>
+<p>• <a href="/artificer:archivist-ua">Archivist</a><br />
+• <a href="/artificer:armorer-ua">Armorer</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc114"><span>Barbarian</span></h6>
+<p>• <a href="/barbarian:beast-ua">Path of the Beast</a><br />
+• <a href="/barbarian:giant-ua">Path of the Giant</a><br />
+• <a href="/barbarian:wild-soul-ua">Path of the Wild Soul</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc115"><span>Bard</span></h6>
+<p>• <a href="/bard:creation-ua">College of Creation</a><br />
+• <a href="/bard:satire-ua">College of Satire</a><br />
+• <a href="/bard:spirits-ua">College of Spirits</a><br />
+• <a href="/multisubclass:mage-of-silverquill-ua">Mage of Silverquill</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc116"><span>Cleric</span></h6>
+<p>• <a href="/cleric:city-ua">City Domain</a><br />
+• <a href="/cleric:protection-ua">Protection Domain</a><br />
+• <a href="/cleric:twilight-ua">Twilight Domain</a><br />
+• <a href="/cleric:unity-ua">Unity Domain</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc117"><span>Druid</span></h6>
+<p>• <a href="/druid:stars-ua">Circle of Stars</a><br />
+• <a href="/druid:twilight-ua">Circle of Twilight</a><br />
+• <a href="/druid:wildlife-ua">Circle of Wildfire</a><br />
+• <a href="/multisubclass:mage-of-prismari-ua">Mage of Prismari</a><br />
+• <a href="/multisubclass:mage-of-witherbloom-ua">Mage of Witherbloom</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc118"><span>Fighter</span></h6>
+<p>• <a href="/fighter:arcane-archer-ua">Arcane Archer</a><br />
+• <a href="/fighter:arcane-archer-revised-ua">Arcane Archer Revised</a><br />
+• <a href="/fighter:brute-ua">Brute</a><br />
+• <a href="/fighter:cavalier-ua">Cavalier</a><br />
+• <a href="/fighter:knight-ua">Knight</a><br />
+• <a href="/fighter:monster-hunter-ua">Monster Hunter</a><br />
+• <a href="/fighter:psi-knight-ua">Psi Knight</a><br />
+• <a href="/fighter:psychic-warrior-ua">Psychic Warrior</a><br />
+• <a href="/fighter:rune-knight-ua">Rune Knight</a><br />
+• <a href="/fighter:samurai-ua">Samurai</a><br />
+• <a href="/fighter:scout-ua">Scout</a><br />
+• <a href="/fighter:sharpshooter-ua">Sharpshooter</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc119"><span>Monk</span></h6>
+<p>• <a href="/monk:ascendant-dragon-ua">Way of the Ascendant Dragon</a><br />
+• <a href="/monk:astral-self-ua">Way of the Astral Self</a><br />
+• <a href="/monk:mercy-ua">Way of Mercy</a><br />
+• <a href="/monk:tranquility-ua">Way of Tranquility</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc120"><span><a href="/mystic">Mystic</a></span></h6>
+<p>• <a href="/mystic:avatar">Avatar</a><br />
+• <a href="/mystic:awakened">Awakened</a><br />
+• <a href="/mystic:the-immortal">The Immortal</a><br />
+• <a href="/mystic:nomad">Nomad</a><br />
+• <a href="/mystic:soul-knife">Soul Knife</a><br />
+• <a href="/mystic:wu-jen">Wu Jen</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc121"><span>Paladin</span></h6>
+<p>• <a href="/paladin:heroism-ua">Oath of Heroism</a><br />
+• <a href="/paladin:treachery-ua">Oath of Treachery</a><br />
+• <a href="/paladin:redemption-ua">Oath of Redemption</a><br />
+• <a href="/paladin:watchers-ua">Oath of the Watchers</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc122"><span>Ranger</span></h6>
+<p>• <a href="/ranger-revised">Revised Ranger</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-revised:beast-ua">Beast Master</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-revised:hunter-ua">Hunter</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-revised:deep-stalker-ua">Deep Stalker</a><br />
+• <a href="/ranger-ambuscade-ua">Ambuscade Ranger</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-ambuscade-ua:guardian">Guardian</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-ambuscade-ua:seeker">Seeker</a><br />
+<span style="white-space: pre-wrap;">&nbsp;&nbsp;</span>• <a href="/ranger-ambuscade-ua:stalker">Stalker</a><br />
+• <a href="/ranger-no-spells">Ranger No Spells</a><br />
+• <a href="/ranger:deep-stalker-ua">Deep Stalker</a><br />
+• <a href="/ranger:drakewarden-ua">Drakewarden</a><br />
+• <a href="/ranger:fey-wanderer-ua">Fey Wanderer</a><br />
+• <a href="/ranger:primeval-guardian-ua">Primeval Guardian Conclave</a><br />
+• <a href="/ranger:swarmkeeper-ua">Swarmkeeper</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc123"><span>Rogue</span></h6>
+<p>• <a href="/rogue:phantom-ua">Phantom</a><br />
+• <a href="/rogue:revived-ua">Revived</a><br />
+• <a href="/rogue:soulknife-ua">Soulknife (2019)</a><br />
+• <a href="/rogue:soulknife-revisited-ua">Soulknife (2020)</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc124"><span><a href="/rune-scribe">Rune Scribe</a></span></h6>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc125"><span>Sorcerer</span></h6>
+<p>• <a href="/sorcerer:aberrant-mind-ua">Aberrant Mind</a><br />
+• <a href="/sorcerer:clockwork-soul-ua">Clockwork Soul</a><br />
+• <a href="/sorcerer:favored-soul-ua">Favored Soul</a><br />
+• <a href="/sorcerer:favored-soul-revisited-ua">Favored Soul Revisited</a><br />
+• <a href="/sorcerer:giant-soul-ua">Giant Soul</a><br />
+• <a href="/sorcerer:lunar-magic-ua">Lunar Magic</a><br />
+• <a href="/multisubclass:mage-of-prismari-ua">Mage of Prismari</a><br />
+• <a href="/multisubclass:mage-of-quandrix-ua">Mage of Quandrix</a><br />
+• <a href="/sorcerer:phoenix-sorcery-ua">Phoenix Sorcery</a><br />
+• <a href="/sorcerer:psionic-soul-ua">Psionic Soul</a><br />
+• <a href="/sorcerer:sea-sorcery-ua">Sea Sorcery</a><br />
+• <a href="/sorcerer:shadow-ua">Shadow</a><br />
+• <a href="/sorcerer:stone-sorcery-ua">Stone Sorcery</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc126"><span>Warlock</span></h6>
+<p>• <a href="/warlock:celestial-ua">Celestial</a><br />
+• <a href="/warlock:genie-ua">Genie</a><br />
+• <a href="/warlock:ghost-in-the-machine-ua">Ghost in the Machine</a><br />
+• <a href="/warlock:hexblade-ua">Hexblade</a><br />
+• <a href="/warlock:lurker-in-the-deep-ua">Lurker in the Deep</a><br />
+• <a href="/multisubclass:mage-of-silverquill-ua">Mage of SIlverquill</a><br />
+• <a href="/multisubclass:mage-of-witherbloom-ua">Mage of WItherbloom</a><br />
+• <a href="/warlock:noble-genie-ua">Noble Genie</a><br />
+• <a href="/warlock:raven-queen-ua">Raven Queen</a><br />
+• <a href="/warlock:seeker-ua">Seeker</a><br />
+• <a href="/warlock:undead-ua">Undead</a><br />
+• <a href="/warlock:undying-light-ua">Undying Light</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc127"><span>Wizard</span></h6>
+<p>• <a href="/wizard:artificer-ua">Artificer</a><br />
+• <a href="/wizard:invention-ua">School of Invention</a><br />
+• <a href="/wizard:lore-mastery-ua">School of Lore Mastery</a><br />
+• <a href="/multisubclass:mage-of-lorehold-ua">Mage of Lorehold</a><br />
+• <a href="/multisubclass:mage-of-prismari-ua">Mage of Prismari</a><br />
+• <a href="/multisubclass:mage-of-quandrix-ua">Mage of Quandrix</a><br />
+• <a href="/multisubclass:mage-of-silverquill-ua">Mage of Silverquill</a><br />
+• <a href="/wizard:onomancy-ua">School of Onomancy</a><br />
+• <a href="/wizard:order-of-scribes-ua">Order of Scribes</a><br />
+• <a href="/wizard:psionics-ua">Psionics</a><br />
+• <a href="/wizard:technomancy-ua">School of Technomancy</a><br />
+• <a href="/wizard:theurgy-ua">School of Theurgy</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc128"><span>Feats</span></h6>
+<p>• <a href="/feat:acrobat">Acrobat</a><br />
+• <a href="/feat:adept-of-the-black-robes-ua">Adept of the Black Robes</a><br />
+• <a href="/feat:adept-of-the-red-robes-ua">Adept of the Red Robes</a><br />
+• <a href="/feat:adept-of-the-white-robes-ua">Adept of the White Robes</a><br />
+• <a href="/feat:agent-of-order-ua">Agent of Order</a><br />
+• <a href="/feat:alchemist">Alchemist</a><br />
+• <a href="/feat:animal-handler">Animal Handler</a><br />
+• <a href="/feat:arcanist">Arcanist</a><br />
+• <a href="/feat:baleful-scion-ua">Baleful Scion</a><br />
+• <a href="/feat:blade-mastery">Blade Mastery</a><br />
+• <a href="/feat:brawny">Brawny</a><br />
+• <a href="/feat:burglar">Burglar</a><br />
+• <a href="/feat:cartomancer-ua">Cartomancer</a><br />
+• <a href="/feat:cohort-of-chaos-ua">Cohort of Chaos</a><br />
+• <a href="/feat:diplomat">Diplomat</a><br />
+• <a href="/feat:divine-communications-ua">Divine Communications</a><br />
+• <a href="/feat:divinely-favored-ua">Divinely Favored</a><br />
+• <a href="/feat:dragonmark-ua">Dragonmark</a><br />
+• <a href="/feat:elemental-touched-ua">Elemental Touched</a><br />
+• <a href="/feat:ember-of-the-fire-giant-ua">Ember of the Fire Giant</a><br />
+• <a href="/feat:ember-of-the-fire-giant-revised-ua">Ember of the Fire Giant (Revised)</a><br />
+• <a href="/feat:empathic">Empathic</a><br />
+• <a href="/feat:fell-handed">Fell Handed</a><br />
+• <a href="/feat:flail-mastery">Flail Mastery</a><br />
+• <a href="/feat:fury-of-the-frost-giant-ua">Fury of the Frost Giant</a><br />
+• <a href="/feat:fury-of-the-frost-giant-revised-ua">Fury of the Frost Giant (Revised)</a><br />
+• <a href="/feat:guile-of-the-cloud-giant-ua">Guile of the Cloud Giant</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc129"><span><span style="color: #ffe68c">.</span></span></h6>
+<p>• <a href="/feat:guile-of-the-cloud-giant-revised-ua">Guile of the Cloud Giant (Revised)</a><br />
+• <a href="/feat:gourmand">Gourmand</a><br />
+• <a href="/feat:greater-dragonmark">Greater Dragonmark</a><br />
+• <a href="/feat:historian">Historian</a><br />
+• <a href="/feat:initiate-of-high-sorcery-ua">Initiate of High Sorcery</a><br />
+• <a href="/feat:investigator">Investigator</a><br />
+• <a href="/feat:keenness-of-the-stone-giant-ua">Keenness of the Stone Giant</a><br />
+• <a href="/feat:keenness-of-the-stone-giant-revised-ua">Keenness of the Stone Giant (Revised)</a><br />
+• <a href="/feat:knight-of-the-crown-ua">Knight of the Crown</a><br />
+• <a href="/feat:knight-of-the-sword-ua">Knight of the Sword</a><br />
+• <a href="/feat:knight-of-the-rose-ua">Knight of the Rose</a><br />
+• <a href="/feat:master-of-disguise">Master of Disguise</a><br />
+• <a href="/feat:medic">Medic</a><br />
+• <a href="/feat:menacing">Menacing</a><br />
+• <a href="/feat:metabolic-control">Metabolic Control</a><br />
+• <a href="/feat:naturalist">Naturalist</a><br />
+• <a href="/feat:outlands-envoy-ua">Outlands Envoy</a><br />
+• <a href="/feat:outsized-might-ua">Outsized Might</a><br />
+• <a href="/feat:perceptive">Perceptive</a><br />
+• <a href="/feat:performer">Performer</a><br />
+• <a href="/feat:planar-wanderer-ua">Planar Wanderer</a><br />
+• <a href="/feat:practiced-expert">Practiced Expert</a><br />
+• <a href="/feat:quick-fingered">Quick-Fingered</a><br />
+• <a href="/feat:righteous-heritor-ua">Righteous Heritor</a></p>
+</div>
+<div class="col-sm-4">
+<h6 id="toc130"><span><span style="color: #ffe68c">.</span></span></h6>
+<p>• <a href="/feat:rune-carver-adept-ua">Rune Carver Adept</a><br />
+• <a href="/feat:rune-carver-adept-revised-ua">Rune Carver Adept (Revised)</a><br />
+• <a href="/feat:rune-carver-apprentice-ua">Rune Carver Apprentice</a><br />
+• <a href="/feat:rune-carver-apprentice-revised-ua">Rune Carver Apprentice (Revised)</a><br />
+• <a href="/feat:scion-of-the-outer-planes-ua">Scion of the Outer Planes</a><br />
+• <a href="/feat:scion-of-elemental-air-ua">Scion of Elemental Air</a><br />
+• <a href="/feat:scion-of-elemental-earth-ua">Scion of Elemental Earth</a><br />
+• <a href="/feat:scion-of-elemental-fire-ua">Scion of Elemental Fire</a><br />
+• <a href="/feat:scion-of-elemental-water-ua">Scion of Elemental Water</a><br />
+• <a href="/feat:shield-training">Shield Training</a><br />
+• <a href="/feat:silver-tongued">Silver-Tongued</a><br />
+• <a href="/feat:spear-mastery">Spear Mastery</a><br />
+• <a href="/feat:soul-of-the-storm-giant-ua">Soul of the Storm Giant</a><br />
+• <a href="/feat:soul-of-the-storm-giant-revised-ua">Soul of the Storm Giant (Revised)</a><br />
+• <a href="/feat:squire-of-solamnia-ua">Squire of Solamnia</a><br />
+• <a href="/feat:stealthy">Stealthy</a><br />
+• <a href="/feat:strike-of-the-giants-ua">Strike of the Giants</a><br />
+• <a href="/feat:survivalist">Survivalist</a><br />
+• <a href="/feat:tandem-tactician">Tandem Tactician</a><br />
+• <a href="/feat:theologian">Theologian</a><br />
+• <a href="/feat:tower-of-iron-will">Tower of Iron Will</a><br />
+• <a href="/feat:tracker">Tracker</a><br />
+• <a href="/feat:vigor-of-the-hill-giant-ua">Vigor of the Hill Giant</a><br />
+• <a href="/feat:vigor-of-the-hill-giant-revised-ua">Vigor of the Hill Giant (Revised)</a><br />
+• <a href="/feat:wild-talent">Wild Talent</a></p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-4">
+<h6 id="toc131"><span>Backgrounds</span></h6>
+<p>• <a href="/background:gate-warden-ua">Gate Warden</a><br />
+• <a href="/background:giant-foundling-ua">Giant Foundling</a><br />
+• <a href="/background:knight-of-solamnia-ua">Knight of Solamnia</a><br />
+• <a href="/background:mage-of-high-sorcery-ua">Mage of High Sorcery</a><br />
+• <a href="/background:planar-philosopher-ua">Planar Philosopher</a><br />
+• <a href="/background:rune-carver-ua">Rune Carver</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+
+
+
+
+        
+    
+            <!-- floating video element -->
+<div id="wad-dnd5e-floating-video" style="position: fixed; right: 0; bottom: 0;"></div>
+<script>
+window['nitroAds'].createAd('wad-dnd5e-floating-video', {
+  "refreshTime": 30,
+  "format": "floating",
+  "mediaQuery": "(min-width: 1025px)"
+  });
+</script>
+        
+    
+
+
+        
+    
+                        <!-- wikidot_bottom_300x250 -->
+<div id="wad-dnd5e-below-content" class="wd-adunit wd-ad-np wd-adunit-below_content"></div>
+<script>
+window['nitroAds'].createAd('wad-dnd5e-below-content', {
+  "refreshTime": 30,
+  "renderVisibleOnly": false,
+  "refreshVisibleOnly": true,
+  "sizes": [ [ 300, 250 ] ],
+  "report": {
+    "enabled": true,
+    "wording": "Report Ad",
+    "position": "bottom-right"
+  }
+  });
+</script>
+                    
+    
+
+
+          
+          <div class="page-info-break"></div>
+          <div class="page-options-container"></div>
+          <div id="action-area" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+ 
+<footer class="footer-wrap" role="contentinfo">
+  <div class="container footer">
+    <div class="options" style="display: block; visibility: visible;">
+    <a href="http://www.wikidot.com/doc" id="wikidot-help-button">Help</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:terms-of-service" id="wikidot-tos-button">Terms of Service</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:privacy-policy" id="wikidot-privacy-button">Privacy</a>
+    &nbsp;|
+    <a href="javascript:;" id="bug-report-button" onclick="WIKIDOT.page.listeners.pageBugReport(event)">Report a bug</a>
+    &nbsp;|
+    <a href="javascript:;" id="abuse-report-button" onclick="WIKIDOT.page.listeners.flagPageObjectionable(event)">Flag as objectionable</a>
+    <span id="consent-box" style="display:none">
+        &nbsp;|
+        <a href="javascript:;"  onclick="window.__cmp('showModal');">Update cookie settings</a>
+    </span>
+
+    <script>
+    if (window["nitroAds"] && window["nitroAds"].loaded) {
+        document.getElementById("consent-box").style.display = window["__tcfapi"] ? "" : "none";
+        } else {
+        document.addEventListener(
+                "nitroAds.loaded",
+                () =>
+                (document.getElementById("consent-box").style.display = window["__tcfapi"] ? "" : "none")
+                );
+    }
+    </script>
+</div>
+Powered by <a href="http://www.wikidot.com">Wikidot.com</a>
+    <div class="license-area">Unless otherwise stated, the content of this page is licensed under
+
+ <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 License</a></div>
+  </div>
+  <div class="extrac-div-1"><span></span></div>
+  <div class="extrac-div-2"><span></span></div>
+  <div class="extrac-div-3"><span></span></div>
+</footer>
+ 
+
+</div> <!-- container-wrap -->
+ 
+<div class="extra-div-1"><span></span></div>
+<div class="extra-div-2"><span></span></div>
+<div class="extra-div-3"><span></span></div>
+<div class="extra-div-4"><span></span></div>
+<div class="extra-div-5"><span></span></div>
+<div class="extra-div-6"><span></span></div>
+</div> <!-- container-wrap-wrap -->
+</div>
+<div id="dummy-ondomready-block" style="display: none;" ></div>
+    <!-- Google Analytics load -->
+    <script type="text/javascript">
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+
+
+
+<div id="page-options-bottom-tips" style="display: none;">
+    <div id="edit-button-hovertip">
+        Click here to edit contents of this page.    </div>
+</div>
+<div id="page-options-bottom-2-tips"  style="display: none;">
+    <div id="edit-sections-button-hovertip">
+        Click here to toggle editing of individual sections of the page (if possible).         Watch headings for an &quot;edit&quot; link when available.    </div>
+    <div id="edit-append-button-hovertip">
+        Append content without editing the whole page source.    </div>
+    <div id="history-button-hovertip">
+        Check out how this page has evolved in the past.    </div>
+    <div id="discuss-button-hovertip">
+        If you want to discuss contents of this page - this is the easiest way to do it.    </div>
+    <div id="files-button-hovertip">
+        View and manage file attachments for this page.    </div>
+    <div id="site-tools-button-hovertip">
+        A few useful tools to manage this Site.    </div>
+    <div id="backlinks-button-hovertip">
+        See pages that link to and include this page.    </div>
+    <div id="rename-move-button-hovertip">
+        Change the name (also URL address, possibly the category) of the page.    </div>
+    <div id="view-source-button-hovertip">
+        View wiki source for this page without editing.    </div>
+    <div id="parent-page-button-hovertip">  
+        View/set parent page (used for creating breadcrumbs and structured layout).    </div>
+            <div id="abuse-report-button-hovertip">
+            Notify administrators if there is objectionable content in this page.        </div>
+        <div id="bug-report-button-hovertip">
+            Something does not work as expected? Find out what you can do.        </div>
+        <div id="wikidot-help-button-hovertip">
+            General Wikidot.com documentation and help section.        </div>
+        <div id="wikidot-tos-button-hovertip">
+            Wikidot.com Terms of Service - what you can, what you should not etc.        </div>
+        <div id="wikidot-privacy-button-hovertip">
+            Wikidot.com Privacy Policy.          
+        </div>
+    </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Theme Switcher Script -->
+    <script>
+        // Load saved theme on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+            setTheme(savedTheme);
+            handleSubpageLinks();
+        });
+
+        // Close theme menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeOptions = document.getElementById('theme-options');
+            if (themeToggle && !themeToggle.contains(e.target)) {
+                themeOptions.classList.remove('show');
+            }
+        });
+
+        function toggleThemeMenu() {
+            const themeOptions = document.getElementById('theme-options');
+            themeOptions.classList.toggle('show');
+        }
+
+        function selectTheme(theme) {
+            setTheme(theme);
+            document.getElementById('theme-options').classList.remove('show');
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const buttons = {
+                fantasy: document.getElementById('btn-fantasy'),
+                steampunk: document.getElementById('btn-steampunk'),
+                winter: document.getElementById('btn-winter'),
+                nature: document.getElementById('btn-nature'),
+                gothic: document.getElementById('btn-gothic')
+            };
+            const themeEmojis = {
+                fantasy: '🐉',
+                steampunk: '⚙',
+                winter: '❄️',
+                nature: '🌿',
+                gothic: '🦇'
+            };
+            const currentThemeBtn = document.getElementById('current-theme-btn');
+
+            // Remove all theme classes
+            body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+            
+            // Add selected theme
+            body.classList.add(theme + '-theme');
+            
+            // Update button states
+            Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+            buttons[theme].classList.add('active');
+            
+            // Update main toggle button emoji
+            currentThemeBtn.textContent = themeEmojis[theme];
+            
+            // Save theme to localStorage
+            localStorage.setItem('dnd-theme', theme);
+        }
+
+        // Handle links to subpages that don't exist locally
+        function handleSubpageLinks() {
+            const allLinks = document.querySelectorAll('a[href^="/"]');
+            allLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                // Skip anchor links and home link
+                if (href.startsWith('/#') || href === '/' || href === '#page-top') {
+                    return;
+                }
+                
+                // For wikidot-style paths (like /spells:wizard, /lineage:elf, etc.)
+                if (href.includes(':') || href.startsWith('/spells') || href.startsWith('/lineage') || 
+                    href.startsWith('/background') || href.startsWith('/class') || href.startsWith('/feat') ||
+                    href.startsWith('/main') || href.startsWith('/help') || href.startsWith('/system') ||
+                    href.startsWith('/legal') || href.startsWith('/forum') || href.startsWith('/nav') ||
+                    href.startsWith('/css') || href.startsWith('/_admin')) {
+                    
+                    // Add styling to indicate these are reference links
+                    link.style.cursor = 'help';
+                    link.title = 'Reference link - full database coming soon';
+                    
+                    // Prevent default navigation and show message
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const itemName = this.textContent.trim();
+                        showNotification(`📚 ${itemName} - Full database is being prepared. This is a reference list.`);
+                    });
+                }
+            });
+        }
+
+        // Show notification message
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existing = document.querySelector('.notification-popup');
+            if (existing) {
+                existing.remove();
+            }
+
+            const notification = document.createElement('div');
+            notification.className = 'notification-popup';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, var(--card-bg), rgba(0,0,0,0.95));
+                border: 2px solid var(--primary);
+                border-radius: 10px;
+                padding: 20px 30px;
+                color: #fff;
+                font-family: 'Lato', sans-serif;
+                font-size: 1rem;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 20px var(--primary);
+                z-index: 10001;
+                max-width: 90%;
+                text-align: center;
+                animation: slideDown 0.3s ease-out;
+            `;
+
+            document.body.appendChild(notification);
+
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideUp 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add notification animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+            
+            @keyframes slideUp {
+                from {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-50px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>

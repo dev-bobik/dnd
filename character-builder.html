@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Builder - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #c53131;
+            --secondary: #822000;
+            --accent: #f0a500;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --card-hover: #242424;
+            --border: #333;
+            --text-primary: #e8e8e8;
+            --text-secondary: #aaa;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a0a0a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 15, 15, 0.95);
+            border-bottom: 3px solid var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(197, 49, 49, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            z-index: -1;
+        }
+
+        .step:first-child::before {
+            left: 50%;
+            width: 50%;
+        }
+
+        .step:last-child::before {
+            width: 50%;
+            left: 0;
+        }
+
+        .step.active::before,
+        .step.completed::before {
+            background: var(--primary);
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 3px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-icon {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(197, 49, 49, 0.5);
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-icon {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .step-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Main Content Area */
+        .builder-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            min-height: 600px;
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        /* Race Selection Grid */
+        .race-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .race-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .race-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .race-card:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(197, 49, 49, 0.3);
+        }
+
+        .race-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .race-card.selected {
+            border-color: var(--primary);
+            background: rgba(197, 49, 49, 0.1);
+        }
+
+        .race-card.selected::before {
+            transform: scaleX(1);
+        }
+
+        .race-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .race-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .race-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .trait-badge {
+            background: rgba(197, 49, 49, 0.2);
+            border: 1px solid var(--primary);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        /* Character Sheet Preview */
+        .character-preview {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .character-preview h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .preview-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-section label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .preview-section .value {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .preview-section input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.7rem;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .preview-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(197, 49, 49, 0.3);
+        }
+
+        /* Ability Scores Grid */
+        .abilities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ability-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .ability-box label {
+            display: block;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ability-box input {
+            width: 60px;
+            height: 60px;
+            background: rgba(197, 49, 49, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .ability-modifier {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cinzel', serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(197, 49, 49, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 49, 49, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .builder-content {
+                grid-template-columns: 1fr;
+            }
+
+            .character-preview {
+                position: relative;
+                top: 0;
+            }
+
+            .race-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps {
+                padding: 0;
+                overflow-x: auto;
+            }
+
+            .step {
+                min-width: 120px;
+            }
+
+            .abilities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list strong {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">D&D 5E</a>
+            <div class="nav-links">
+                <a href="rules.html">Rules</a>
+                <a href="lineages.html">Races</a>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step active" data-step="1" onclick="goToStep(1)">
+                <div class="step-icon"><i class="fas fa-user"></i></div>
+                <div class="step-label">Basic Info</div>
+            </div>
+            <div class="step" data-step="2" onclick="goToStep(2)">
+                <div class="step-icon"><i class="fas fa-dragon"></i></div>
+                <div class="step-label">Race</div>
+            </div>
+            <div class="step" data-step="3" onclick="goToStep(3)">
+                <div class="step-icon"><i class="fas fa-hat-wizard"></i></div>
+                <div class="step-label">Class</div>
+            </div>
+            <div class="step" data-step="4" onclick="goToStep(4)">
+                <div class="step-icon"><i class="fas fa-dice-d20"></i></div>
+                <div class="step-label">Abilities</div>
+            </div>
+            <div class="step" data-step="5" onclick="goToStep(5)">
+                <div class="step-icon"><i class="fas fa-scroll"></i></div>
+                <div class="step-label">Review</div>
+            </div>
+        </div>
+
+        <!-- Builder Content -->
+        <div class="builder-content">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Step 1: Basic Info -->
+                <div class="step-content active" id="step-1">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">
+                        <i class="fas fa-user"></i> Character Information
+                    </h2>
+                    <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 2px solid var(--border);">
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500;">
+                                Character Name *
+                            </label>
+                            <input type="text" id="char-name" placeholder="Enter your character's name..." 
+                                   style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 2px solid var(--border); color: var(--text-primary); border-radius: 8px; font-size: 1.1rem;">
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                            <div>
+                                <label style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500;">Level</label>
+                                <input type="number" id="char-level" value="1" min="1" max="20" 
+                                       style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 2px solid var(--border); color: var(--text-primary); border-radius: 8px; font-size: 1.1rem;">
+                            </div>
+                            <div>
+                                <label style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500;">Experience Points</label>
+                                <input type="number" id="char-xp" value="0" 
+                                       style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 2px solid var(--border); color: var(--text-primary); border-radius: 8px; font-size: 1.1rem;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Race Selection -->
+                <div class="step-content" id="step-2">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">
+                        <i class="fas fa-dragon"></i> Choose Your Race
+                    </h2>
+                    <div class="race-grid" id="race-grid">
+                        <!-- Races will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Class Selection -->
+                <div class="step-content" id="step-3">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">
+                        <i class="fas fa-hat-wizard"></i> Choose Your Class
+                    </h2>
+                    <div class="empty-state">
+                        <i class="fas fa-hourglass-half"></i>
+                        <p>Class selection coming soon...</p>
+                    </div>
+                </div>
+
+                <!-- Step 4: Abilities -->
+                <div class="step-content" id="step-4">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">
+                        <i class="fas fa-dice-d20"></i> Ability Scores
+                    </h2>
+                    <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 2px solid var(--border);">
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            Roll or assign your ability scores. Racial bonuses will be applied automatically.
+                        </p>
+                        <div class="abilities-grid">
+                            <div class="ability-box">
+                                <label>STR</label>
+                                <input type="number" id="str-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="str-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="str-total">10</span></small>
+                            </div>
+                            <div class="ability-box">
+                                <label>DEX</label>
+                                <input type="number" id="dex-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="dex-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="dex-total">10</span></small>
+                            </div>
+                            <div class="ability-box">
+                                <label>CON</label>
+                                <input type="number" id="con-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="con-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="con-total">10</span></small>
+                            </div>
+                            <div class="ability-box">
+                                <label>INT</label>
+                                <input type="number" id="int-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="int-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="int-total">10</span></small>
+                            </div>
+                            <div class="ability-box">
+                                <label>WIS</label>
+                                <input type="number" id="wis-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="wis-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="wis-total">10</span></small>
+                            </div>
+                            <div class="ability-box">
+                                <label>CHA</label>
+                                <input type="number" id="cha-base" value="10" min="3" max="18" onchange="calculateModifiers()">
+                                <span class="ability-modifier" id="cha-mod">+0</span>
+                                <small style="color: var(--text-secondary);">Total: <span id="cha-total">10</span></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Review -->
+                <div class="step-content" id="step-5">
+                    <h2 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;">
+                        <i class="fas fa-scroll"></i> Review Your Character
+                    </h2>
+                    <div id="review-content" style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 2px solid var(--border);">
+                        <!-- Review will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="previousStep()" id="prev-btn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="next-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-primary" onclick="saveCharacter()" id="save-btn" style="display: none;">
+                        <i class="fas fa-save"></i> Save Character
+                    </button>
+                </div>
+            </div>
+
+            <!-- Character Preview Sidebar -->
+            <div class="character-preview">
+                <h2><i class="fas fa-id-card"></i> Character Sheet</h2>
+                
+                <div class="preview-section">
+                    <label>Name</label>
+                    <div class="value" id="preview-name">-</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Race</label>
+                    <div class="value" id="preview-race">-</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Class</label>
+                    <div class="value" id="preview-class">-</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Level</label>
+                    <div class="value" id="preview-level">1</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Hit Points</label>
+                    <div class="value" id="preview-hp">-</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Armor Class</label>
+                    <div class="value" id="preview-ac">10</div>
+                </div>
+
+                <div class="preview-section">
+                    <label>Speed</label>
+                    <div class="value" id="preview-speed">30 ft.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let currentStep = 1;
+        let characterData = {
+            name: '',
+            level: 1,
+            xp: 0,
+            race: null,
+            class: null,
+            abilities: {
+                str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10
+            }
+        };
+
+        // Load available races
+        const races = [
+            {
+                name: 'Human',
+                description: 'Versatile and ambitious, humans are the most adaptable of all races.',
+                traits: ['+1 to all abilities', 'Extra skill', '30 ft. speed'],
+                bonuses: { str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1 },
+                speed: 30,
+                features: ['Extra Language', 'Extra Skill']
+            },
+            {
+                name: 'Elf',
+                description: 'Graceful and long-lived, elves are attuned to magic and nature.',
+                traits: ['+2 DEX', 'Darkvision', 'Fey Ancestry'],
+                bonuses: { str: 0, dex: 2, con: 0, int: 0, wis: 0, cha: 0 },
+                speed: 30,
+                features: ['Darkvision', 'Keen Senses', 'Fey Ancestry', 'Trance']
+            },
+            {
+                name: 'Dwarf',
+                description: 'Bold and hardy, dwarves are skilled warriors and craftsmen.',
+                traits: ['+2 CON', 'Darkvision', 'Dwarven Resilience'],
+                bonuses: { str: 0, dex: 0, con: 2, int: 0, wis: 0, cha: 0 },
+                speed: 25,
+                features: ['Darkvision', 'Dwarven Resilience', 'Stonecunning']
+            },
+            {
+                name: 'Dragonborn',
+                description: 'Proud dragon-kin with breath weapons and draconic heritage.',
+                traits: ['+2 STR, +1 CHA', 'Breath Weapon', 'Damage Resistance'],
+                bonuses: { str: 2, dex: 0, con: 0, int: 0, wis: 0, cha: 1 },
+                speed: 30,
+                features: ['Draconic Ancestry', 'Breath Weapon', 'Damage Resistance'],
+                detailPage: 'dragonborn.html'
+            },
+            {
+                name: 'Halfling',
+                description: 'Small and nimble, halflings are brave and lucky folk.',
+                traits: ['+2 DEX', 'Lucky', 'Brave'],
+                bonuses: { str: 0, dex: 2, con: 0, int: 0, wis: 0, cha: 0 },
+                speed: 25,
+                features: ['Lucky', 'Brave', 'Halfling Nimbleness']
+            },
+            {
+                name: 'Half-Orc',
+                description: 'Strong and resilient, half-orcs have orcish might and human adaptability.',
+                traits: ['+2 STR, +1 CON', 'Darkvision', 'Relentless Endurance'],
+                bonuses: { str: 2, dex: 0, con: 1, int: 0, wis: 0, cha: 0 },
+                speed: 30,
+                features: ['Darkvision', 'Relentless Endurance', 'Savage Attacks']
+            },
+            {
+                name: 'Tiefling',
+                description: 'Infernal heritage grants tieflings innate magical abilities.',
+                traits: ['+2 CHA, +1 INT', 'Darkvision', 'Hellish Resistance'],
+                bonuses: { str: 0, dex: 0, con: 0, int: 1, wis: 0, cha: 2 },
+                speed: 30,
+                features: ['Darkvision', 'Hellish Resistance', 'Infernal Legacy']
+            },
+            {
+                name: 'Gnome',
+                description: 'Small and inventive, gnomes are curious and clever.',
+                traits: ['+2 INT', 'Darkvision', 'Gnome Cunning'],
+                bonuses: { str: 0, dex: 0, con: 0, int: 2, wis: 0, cha: 0 },
+                speed: 25,
+                features: ['Darkvision', 'Gnome Cunning']
+            }
+        ];
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadRaces();
+            loadCharacterData();
+            updatePreview();
+            calculateModifiers();
+        });
+
+        function loadRaces() {
+            const grid = document.getElementById('race-grid');
+            grid.innerHTML = races.map(race => `
+                <div class="race-card" onclick="selectRace('${race.name}')">
+                    <h3>${race.name}</h3>
+                    <p>${race.description}</p>
+                    <div class="race-traits">
+                        ${race.traits.map(trait => `<span class="trait-badge">${trait}</span>`).join('')}
+                    </div>
+                    ${race.detailPage ? `<p style="margin-top: 1rem;"><a href="${race.detailPage}" style="color: var(--accent); text-decoration: none;" onclick="event.stopPropagation();">View Details →</a></p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function selectRace(raceName) {
+            const race = races.find(r => r.name === raceName);
+            if (!race) return;
+
+            // Update character data
+            characterData.race = race;
+
+            // Visual feedback
+            document.querySelectorAll('.race-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            // Update preview
+            updatePreview();
+            calculateModifiers();
+
+            // Mark step as completed
+            document.querySelector('[data-step="2"]').classList.add('completed');
+        }
+
+        function goToStep(step) {
+            if (step < 1 || step > 5) return;
+            
+            currentStep = step;
+            
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((el, index) => {
+                el.classList.remove('active');
+                if (index + 1 < step) {
+                    el.classList.add('completed');
+                } else if (index + 1 === step) {
+                    el.classList.add('active');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.step-content').forEach((el, index) => {
+                el.classList.remove('active');
+                if (index + 1 === step) {
+                    el.classList.add('active');
+                }
+            });
+
+            // Update buttons
+            document.getElementById('prev-btn').style.display = step > 1 ? 'block' : 'none';
+            document.getElementById('next-btn').style.display = step < 5 ? 'block' : 'none';
+            document.getElementById('save-btn').style.display = step === 5 ? 'block' : 'none';
+
+            // Generate review on step 5
+            if (step === 5) {
+                generateReview();
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextStep() {
+            // Validation
+            if (currentStep === 1 && !document.getElementById('char-name').value) {
+                alert('Please enter a character name');
+                return;
+            }
+            if (currentStep === 2 && !characterData.race) {
+                alert('Please select a race');
+                return;
+            }
+
+            goToStep(currentStep + 1);
+        }
+
+        function previousStep() {
+            goToStep(currentStep - 1);
+        }
+
+        function calculateModifiers() {
+            const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+            let raceBonuses = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+
+            if (characterData.race && characterData.race.bonuses) {
+                raceBonuses = characterData.race.bonuses;
+            }
+
+            abilities.forEach(ability => {
+                const base = parseInt(document.getElementById(`${ability}-base`).value) || 10;
+                const bonus = raceBonuses[ability] || 0;
+                const total = base + bonus;
+                const modifier = Math.floor((total - 10) / 2);
+
+                document.getElementById(`${ability}-total`).textContent = total;
+                document.getElementById(`${ability}-mod`).textContent = modifier >= 0 ? `+${modifier}` : modifier;
+
+                characterData.abilities[ability] = base;
+            });
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            // Update name
+            const name = document.getElementById('char-name').value || '-';
+            document.getElementById('preview-name').textContent = name;
+            characterData.name = name;
+
+            // Update level
+            const level = document.getElementById('char-level').value || 1;
+            document.getElementById('preview-level').textContent = level;
+            characterData.level = level;
+
+            // Update race
+            if (characterData.race) {
+                document.getElementById('preview-race').textContent = characterData.race.name;
+                document.getElementById('preview-speed').textContent = `${characterData.race.speed} ft.`;
+            }
+
+            // Calculate AC and HP (simplified)
+            const conMod = Math.floor(((characterData.abilities.con + (characterData.race?.bonuses.con || 0)) - 10) / 2);
+            const dexMod = Math.floor(((characterData.abilities.dex + (characterData.race?.bonuses.dex || 0)) - 10) / 2);
+            
+            document.getElementById('preview-ac').textContent = 10 + dexMod;
+            document.getElementById('preview-hp').textContent = 10 + conMod; // Simplified
+        }
+
+        function generateReview() {
+            const review = document.getElementById('review-content');
+            const conMod = Math.floor(((characterData.abilities.con + (characterData.race?.bonuses.con || 0)) - 10) / 2);
+            
+            review.innerHTML = `
+                <h3 style="color: var(--primary); font-family: 'Cinzel', serif; margin-bottom: 1rem;">
+                    ${characterData.name || 'Unnamed Character'}
+                </h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                    Level ${characterData.level} ${characterData.race?.name || 'No Race'} ${characterData.class?.name || 'No Class'}
+                </p>
+
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Ability Scores</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        ${['str', 'dex', 'con', 'int', 'wis', 'cha'].map(ability => {
+                            const base = characterData.abilities[ability];
+                            const bonus = characterData.race?.bonuses[ability] || 0;
+                            const total = base + bonus;
+                            const mod = Math.floor((total - 10) / 2);
+                            return `
+                                <div style="text-align: center; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                                    <div style="color: var(--primary); font-weight: 700; text-transform: uppercase;">${ability.toUpperCase()}</div>
+                                    <div style="font-size: 1.5rem; color: var(--text-primary); margin: 0.5rem 0;">${total}</div>
+                                    <div style="color: var(--accent);">${mod >= 0 ? '+' : ''}${mod}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                ${characterData.race ? `
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--accent); margin-bottom: 1rem;">Racial Features</h4>
+                        <ul class="feature-list">
+                            ${characterData.race.features.map(feature => `<li><strong>${feature}</strong></li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+
+                <div style="background: rgba(197, 49, 49, 0.1); border: 2px solid var(--primary); border-radius: 8px; padding: 1.5rem; margin-top: 2rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> Quick Stats</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div><strong style="color: var(--accent);">Speed:</strong> ${characterData.race?.speed || 30} ft.</div>
+                        <div><strong style="color: var(--accent);">Hit Points:</strong> ${10 + conMod}</div>
+                        <div><strong style="color: var(--accent);">Armor Class:</strong> ${10 + Math.floor(((characterData.abilities.dex + (characterData.race?.bonuses.dex || 0)) - 10) / 2)}</div>
+                        <div><strong style="color: var(--accent);">Proficiency:</strong> +2</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function saveCharacter() {
+            // Update character data
+            characterData.name = document.getElementById('char-name').value;
+            characterData.level = parseInt(document.getElementById('char-level').value);
+            characterData.xp = parseInt(document.getElementById('char-xp').value);
+
+            // Save to localStorage
+            localStorage.setItem('dnd-character', JSON.stringify(characterData));
+
+            // Show success message
+            alert('✓ Character saved successfully!');
+        }
+
+        function loadCharacterData() {
+            const saved = localStorage.getItem('dnd-character');
+            if (saved) {
+                characterData = JSON.parse(saved);
+                
+                // Populate form
+                if (characterData.name) document.getElementById('char-name').value = characterData.name;
+                if (characterData.level) document.getElementById('char-level').value = characterData.level;
+                if (characterData.xp) document.getElementById('char-xp').value = characterData.xp;
+                
+                // Load abilities
+                if (characterData.abilities) {
+                    Object.keys(characterData.abilities).forEach(ability => {
+                        const input = document.getElementById(`${ability}-base`);
+                        if (input) input.value = characterData.abilities[ability];
+                    });
+                }
+
+                updatePreview();
+                calculateModifiers();
+            }
+        }
+
+        // Input listeners
+        document.getElementById('char-name').addEventListener('input', updatePreview);
+        document.getElementById('char-level').addEventListener('change', updatePreview);
+    </script>
+</body>
+</html>

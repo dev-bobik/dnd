@@ -3,351 +3,841 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D&D 5e Rules | DnD Web</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>D&D 5th Edition - Player's Handbook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Lato', sans-serif;
-            background: #000;
-            color: #e0e0e0;
-            line-height: 1.7;
-            min-height: 100vh;
-            transition: all 0.5s ease;
-        }
-
-        body.fantasy-theme {
-            --primary: #ff6b35;
+        :root {
+            --primary: #c53131;
             --secondary: #8b0000;
             --accent: #d4af37;
-            --bg-gradient: linear-gradient(135deg, #1a0a00 0%, #2a0505 50%, #0a0000 100%);
-            --card-bg: rgba(30, 15, 10, 0.85);
-            --card-hover: rgba(40, 20, 15, 0.95);
-            --border-color: rgba(255, 107, 53, 0.3);
-            --shadow: rgba(255, 107, 53, 0.4);
+            --text: #f0f0f0;
+            --bg: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --border: #3a3a3a;
         }
 
-        body.steampunk-theme {
-            --primary: #c5a059;
-            --secondary: #8b6f47;
-            --accent: #d4a574;
-            --bg-gradient: linear-gradient(135deg, #1a1410 0%, #2a1f15 50%, #0f0a05 100%);
-            --card-bg: rgba(30, 25, 20, 0.85);
-            --card-hover: rgba(40, 30, 25, 0.95);
-            --border-color: rgba(197, 160, 89, 0.3);
-            --shadow: rgba(197, 160, 89, 0.4);
+        /* Theme System */
+        body.fantasy-theme { --primary: #ff6b35; --secondary: #8b0000; --accent: #d4af37; }
+        body.steampunk-theme { --primary: #c5a059; --secondary: #8b6f47; --accent: #d4a574; }
+        body.winter-theme { --primary: #4a9eff; --secondary: #2e5a8a; --accent: #a8d8ff; }
+        body.nature-theme { --primary: #4a9c4e; --secondary: #2d5f30; --accent: #8bc18a; }
+        body.gothic-theme { --primary: #9b59b6; --secondary: #5a3b6d; --accent: #c895d8; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        body.winter-theme {
-            --primary: #00bfff;
-            --secondary: #4169e1;
-            --accent: #87ceeb;
-            --bg-gradient: linear-gradient(135deg, #0a1420 0%, #0f1a2e 50%, #050a15 100%);
-            --card-bg: rgba(15, 25, 40, 0.85);
-            --card-hover: rgba(20, 35, 55, 0.95);
-            --border-color: rgba(0, 191, 255, 0.3);
-            --shadow: rgba(0, 191, 255, 0.4);
+        body {
+            font-family: 'Spectral', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        body.nature-theme {
-            --primary: #32cd32;
-            --secondary: #228b22;
-            --accent: #90ee90;
-            --bg-gradient: linear-gradient(135deg, #0a1a0a 0%, #0f2a0f 50%, #050f05 100%);
-            --card-bg: rgba(15, 30, 20, 0.85);
-            --card-hover: rgba(20, 40, 30, 0.95);
-            --border-color: rgba(50, 205, 50, 0.3);
-            --shadow: rgba(50, 205, 50, 0.4);
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg) 100%);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary);
         }
 
-        body.gothic-theme {
-            --primary: #9370db;
-            --secondary: #663399;
-            --accent: #8b008b;
-            --bg-gradient: linear-gradient(135deg, #0a0015 0%, #1a0a2e 50%, #0f0520 100%);
-            --card-bg: rgba(20, 10, 40, 0.85);
-            --card-hover: rgba(30, 15, 50, 0.95);
-            --border-color: rgba(147, 112, 219, 0.3);
-            --shadow: rgba(147, 112, 219, 0.4);
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        body { background: var(--bg-gradient, linear-gradient(135deg, #0a0015 0%, #1a0a2e 50%, #0f0520 100%)); }
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
 
-        .theme-toggle { position: relative; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 8px;
+            border: 2px solid var(--border);
+        }
 
         .theme-toggle-btn {
-            width: 40px; height: 40px; padding: 0;
-            background: var(--primary, #9370db);
-            border: 2px solid var(--primary, #9370db);
-            color: #fff; font-size: 1.3rem;
-            cursor: pointer; border-radius: 50%;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
             transition: all 0.3s;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px var(--shadow, rgba(147, 112, 219, 0.4));
         }
 
-        .theme-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--shadow, rgba(147, 112, 219, 0.6));
+        .theme-toggle-btn:hover,
+        .theme-toggle-btn.active {
+            background: var(--primary);
         }
 
-        .theme-options {
-            position: absolute; top: 50px; right: 0;
-            background: var(--card-bg, rgba(20, 10, 40, 0.95));
-            border: 2px solid var(--primary, #9370db);
-            border-radius: 12px; padding: 12px;
-            display: none; flex-direction: column; gap: 10px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--shadow, rgba(147, 112, 219, 0.4));
-            backdrop-filter: blur(10px); z-index: 1002;
-        }
-
-        .theme-options.show { display: flex; }
-
-        .theme-options button {
-            width: 44px; height: 44px; padding: 0;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            color: #e0e0e0; font-size: 1.4rem;
-            cursor: pointer; border-radius: 50%;
-            transition: all 0.3s;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .theme-options button.active {
-            background: var(--primary, #9370db);
-            border-color: var(--primary, #9370db);
-            box-shadow: 0 0 15px var(--shadow, rgba(147, 112, 219, 0.6));
-            transform: scale(1.15);
-        }
-
-        .theme-options button:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: scale(1.1);
-        }
-
+        /* Google Translate */
         #google_translate_element {
-            position: fixed; top: 90px; right: 20px; z-index: 1000;
-            background: var(--card-bg, rgba(20, 10, 40, 0.95));
-            padding: 10px 15px; border-radius: 10px;
-            border: 2px solid var(--primary, #9370db);
-            box-shadow: 0 0 30px var(--shadow, rgba(147, 112, 219, 0.4));
-            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
         }
 
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0 !important; }
-
-        header {
-            background: var(--card-bg, rgba(15, 5, 30, 0.95));
-            backdrop-filter: blur(12px);
-            padding: 1.2rem 2rem;
-            border-bottom: 2px solid var(--primary, #9370db);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            position: sticky; top: 0; z-index: 999;
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--secondary) 50%, var(--bg) 100%);
         }
 
-        .header-content {
-            max-width: 1400px; margin: 0 auto;
-            display: flex; justify-content: space-between;
-            align-items: center; gap: 1.5rem;
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
-        .header-left { display: flex; align-items: center; gap: 1.5rem; }
-        .header-right { display: flex; align-items: center; gap: 1rem; }
-
-        h1 {
-            font-family: 'Cinzel', serif; font-size: 2rem;
-            color: var(--primary, #9370db);
-            text-shadow: 0 0 20px var(--shadow, rgba(147, 112, 219, 0.6));
-            letter-spacing: 1px;
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .back-btn {
-            padding: 0.7rem 1.3rem;
-            background: linear-gradient(135deg, var(--primary, #9370db), var(--secondary, #663399));
-            color: white; border: 1px solid var(--primary, #9370db);
-            border-radius: 6px; text-decoration: none; font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px var(--shadow, rgba(147, 112, 219, 0.3));
-            display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px var(--shadow, rgba(147, 112, 219, 0.5));
-        }
-
-        .intro-section {
-            background: linear-gradient(135deg, var(--border-color, rgba(147, 112, 219, 0.15)), transparent);
-            padding: 5rem 2rem 4rem; text-align: center;
-            border-bottom: 1px solid var(--border-color, rgba(147, 112, 219, 0.3));
-        }
-
-        .intro-section h2 {
-            font-family: 'Cinzel', serif; font-size: 3rem;
-            color: var(--primary, #9370db); margin-bottom: 1.5rem;
-            text-shadow: 0 0 30px var(--shadow, rgba(147, 112, 219, 0.6));
-            letter-spacing: 2px;
-        }
-
-        .intro-section p {
-            max-width: 800px; margin: 0 auto;
-            font-size: 1.25rem; color: #d0d0d0; line-height: 1.8;
-        }
-
-        .quick-links {
-            background: linear-gradient(to bottom, transparent, var(--border-color, rgba(147, 112, 219, 0.05)));
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 4rem 2rem;
         }
 
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2.5rem; max-width: 1400px; margin: 0 auto;
-        }
-
-        .link-card {
-            background: var(--card-bg, rgba(20, 10, 40, 0.85));
-            border: 2px solid var(--border-color, rgba(147, 112, 219, 0.3));
-            border-radius: 18px; padding: 2.5rem 1.5rem;
+        /* Section Title */
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer; backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 1rem;
         }
 
-        .link-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--primary, #9370db);
-            background: var(--card-hover, rgba(30, 15, 50, 0.95));
-            box-shadow: 0 12px 40px var(--shadow, rgba(147, 112, 219, 0.5));
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
         }
 
-        .link-card i {
-            font-size: 4rem; color: var(--primary, #9370db);
-            margin-bottom: 1.2rem;
-            filter: drop-shadow(0 0 15px var(--shadow, rgba(147, 112, 219, 0.6)));
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Centrování pro class grid (13 položek = poslední 1 uprostřed mezi 2. a 3. sloupcem) */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .class-grid .class-card:nth-child(13) {
+            grid-column: 2 / 4;
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        /* Centrování pro items grid (11 položek = poslední 3 uprostřed mezi sloupci) */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* První 8 položek zabírají po 2 sloupcích */
+        .items-grid > .card:nth-child(-n+8) {
+            grid-column: span 2;
+        }
+
+        /* Poslední 3 položky mezi sloupci */
+        .items-grid > .card:nth-child(9) {
+            grid-column: 2 / 4;
+        }
+        
+        .items-grid > .card:nth-child(10) {
+            grid-column: 4 / 6;
+        }
+        
+        .items-grid > .card:nth-child(11) {
+            grid-column: 6 / 8;
+        }
+
+        /* Card Links */
+        a.card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        /* Class Card with Background Image */
+        .class-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .link-card:hover i {
-            transform: scale(1.15);
-            filter: drop-shadow(0 0 25px var(--shadow, rgba(147, 112, 219, 0.8)));
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s;
+            z-index: 0;
         }
 
-        .link-card h3 {
-            font-family: 'Cinzel', serif; font-size: 1.4rem;
-            color: var(--accent, #DA70D6); letter-spacing: 1px;
+        .class-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(26,26,26,0.85) 100%);
+            z-index: 1;
         }
 
-        .feature-section {
-            padding: 5rem 2rem;
-            max-width: 1400px; margin: 0 auto;
+        .class-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
         }
 
-        .feature-section.alt {
-            background: linear-gradient(to bottom, var(--border-color, rgba(147, 112, 219, 0.08)), transparent);
-            margin: 0; max-width: none; padding: 5rem 2rem;
+        .class-card:hover::before {
+            transform: scale(1.05);
         }
 
-        .feature-header { text-align: center; margin-bottom: 4rem; }
-
-        .feature-header h2 {
-            font-family: 'Cinzel', serif; font-size: 2.8rem;
-            color: var(--primary, #9370db); margin-bottom: 1rem;
-            text-shadow: 0 0 25px var(--shadow, rgba(147, 112, 219, 0.6));
-            letter-spacing: 2px;
+        .class-card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
         }
 
-        .feature-header .icon {
-            font-size: 5.5rem; color: var(--primary, #9370db);
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 20px var(--shadow, rgba(147, 112, 219, 0.7)));
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .feature-card {
-            background: var(--card-bg, rgba(20, 10, 40, 0.85));
-            border: 2px solid var(--border-color, rgba(147, 112, 219, 0.3));
-            border-radius: 15px; padding: 2.5rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary, #9370db);
-            background: var(--card-hover, rgba(30, 15, 50, 0.95));
-            box-shadow: 0 10px 35px var(--shadow, rgba(147, 112, 219, 0.4));
-            transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-            font-family: 'Cinzel', serif; font-size: 1.6rem;
-            color: var(--primary, #9370db); margin-bottom: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        .feature-card h4 {
-            font-size: 1.15rem; color: var(--accent, #DA70D6);
-            margin: 1.8rem 0 0.8rem; font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .feature-card p { color: #d0d0d0; line-height: 1.9; font-size: 1.05rem; }
-        .feature-card em { color: #c0c0c0; font-style: italic; }
-        .feature-card i { color: var(--primary, #9370db); margin-right: 0.6rem; }
-        .item-list { color: #d0d0d0; line-height: 2.2; font-size: 1.05rem; }
-
-        footer {
-            background: var(--card-bg, rgba(15, 5, 30, 0.95));
-            backdrop-filter: blur(12px); padding: 4rem 2rem; text-align: center;
-            border-top: 2px solid var(--primary, #9370db); margin-top: 5rem;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        footer h3 {
+        .class-card h3 {
             font-family: 'Cinzel', serif;
-            color: var(--primary, #9370db); margin-bottom: 1.2rem;
-            font-size: 1.8rem;
-            text-shadow: 0 0 20px var(--shadow, rgba(147, 112, 219, 0.5));
+            font-size: 2rem;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
-        
-        footer p { color: #d0d0d0; font-size: 1.05rem; line-height: 1.8; }
+
+        /* Background Images for Classes */
+        .artificer::before { background-image: url('artifficer.jpg'); }
+        .barbarian::before { background-image: url('barabrian.jpg'); }
+        .bard::before { background-image: url('bard.jpg'); }
+        .cleric::before { background-image: url('cleric.jpg'); }
+        .druid::before { background-image: url('druid.jpg'); }
+        .fighter::before { background-image: url('fighter.jpg'); }
+        .monk::before { background-image: url('monk.jpg'); }
+        .paladin::before { background-image: url('paladin.jpg'); }
+        .ranger::before { background-image: url('ranger.jpg'); }
+        .rogue::before { background-image: url('rogue.jpg'); }
+        .sorcerer::before { background-image: url('sorcerer.jpg'); }
+        .warlock::before { background-image: url('warlock.jpg'); }
+        .wizard::before { background-image: url('wizard.jpg'); }
+
+        /* List Card */
+        .list-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .list-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .list-card ul {
+            list-style: none;
+        }
+
+        .list-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .list-card li:last-child {
+            border-bottom: none;
+        }
+
+        .list-card a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .list-card a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .grid-5 { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(3, 1fr); }
+            .grid-5 { grid-template-columns: repeat(3, 1fr); }
+        }
 
         @media (max-width: 768px) {
-            header { padding: 1rem 1.5rem; }
-            .header-content { flex-wrap: wrap; }
-            h1 { font-size: 1.6rem; }
-            .intro-section { padding: 3rem 1.5rem; }
-            .intro-section h2 { font-size: 2.2rem; }
-            .intro-section p { font-size: 1.1rem; }
-            .links-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
-            .link-card { padding: 2rem 1rem; }
-            .link-card i { font-size: 3rem; }
-            .feature-section { padding: 3rem 1.5rem; }
-            .feature-header h2 { font-size: 2rem; }
-            .feature-header .icon { font-size: 4rem; }
-            .feature-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .feature-card { padding: 2rem; }
-            #google_translate_element {
-                position: relative; top: 0; right: 0;
-                margin: 0.5rem auto; width: fit-content;
-            }
-            .theme-toggle-btn { width: 36px; height: 36px; font-size: 1.1rem; }
-            .theme-options { right: -10px; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-5 { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-4 { grid-template-columns: 1fr; }
+            .grid-5 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body class="gothic-theme">
-    <script>
+<body class="fantasy-theme">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-toggle-btn active" data-theme="fantasy" title="Fantasy">🐉</button>
+        <button class="theme-toggle-btn" data-theme="steampunk" title="Steampunk">⚙️</button>
+        <button class="theme-toggle-btn" data-theme="winter" title="Winter">❄️</button>
+        <button class="theme-toggle-btn" data-theme="nature" title="Nature">🌿</button>
+        <button class="theme-toggle-btn" data-theme="gothic" title="Gothic">🦇</button>
+    </div>
+
+    <!-- Google Translate -->
+    <div id="google_translate_element"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">D&D 5e</a>
+            <ul class="nav-links">
+                <li><a href="lineages.html">Races</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#spells">Spells</a></li>
+                <li><a href="#items">Items</a></li>
+                <li><a href="character-builder.html">Character Builder</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Player's Handbook</h1>
+        <p>Everything you need to create and play characters in the world's greatest roleplaying game</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Quick Access -->
+        <h2 class="section-title">Quick Access</h2>
+        <div class="grid-5">
+            <a href="lineages.html" class="card-link">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>Races</h3>
+                    <p>Character lineages</p>
+                </div>
+            </a>
+            <a href="#classes" class="card-link">
+                <div class="card">
+                    <i class="fas fa-hat-wizard"></i>
+                    <h3>Classes</h3>
+                    <p>Character classes</p>
+                </div>
+            </a>
+            <a href="#spells" class="card-link">
+                <div class="card">
+                    <i class="fas fa-book"></i>
+                    <h3>Spells</h3>
+                    <p>Magic & spellcasting</p>
+                </div>
+            </a>
+            <a href="#items" class="card-link">
+                <div class="card">
+                    <i class="fas fa-sword"></i>
+                    <h3>Items</h3>
+                    <p>Equipment & gear</p>
+                </div>
+            </a>
+            <a href="#feats" class="card-link">
+                <div class="card">
+                    <i class="fas fa-star"></i>
+                    <h3>Feats</h3>
+                    <p>Special abilities</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Classes Section -->
+        <h2 class="section-title" id="classes">Classes</h2>
+        <div class="class-grid">
+            <a href="#" class="class-card artificer">
+                <div class="class-card-content">
+                    <h3>Artificer</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card barbarian">
+                <div class="class-card-content">
+                    <h3>Barbarian</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card bard">
+                <div class="class-card-content">
+                    <h3>Bard</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card cleric">
+                <div class="class-card-content">
+                    <h3>Cleric</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card druid">
+                <div class="class-card-content">
+                    <h3>Druid</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card fighter">
+                <div class="class-card-content">
+                    <h3>Fighter</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card monk">
+                <div class="class-card-content">
+                    <h3>Monk</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card paladin">
+                <div class="class-card-content">
+                    <h3>Paladin</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card ranger">
+                <div class="class-card-content">
+                    <h3>Ranger</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card rogue">
+                <div class="class-card-content">
+                    <h3>Rogue</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card sorcerer">
+                <div class="class-card-content">
+                    <h3>Sorcerer</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card warlock">
+                <div class="class-card-content">
+                    <h3>Warlock</h3>
+                </div>
+            </a>
+            <a href="#" class="class-card wizard">
+                <div class="class-card-content">
+                    <h3>Wizard</h3>
+                </div>
+            </a>
+        </div>
+
+        <!-- Spells Section -->
+        <h2 class="section-title" id="spells">Spells by Class</h2>
+        <div class="grid-5">
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-cog"></i>
+                    <h3>Artificer Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-music"></i>
+                    <h3>Bard Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-cross"></i>
+                    <h3>Cleric Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Druid Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-shield-halved"></i>
+                    <h3>Paladin Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-paw"></i>
+                    <h3>Ranger Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-fire-flame-curved"></i>
+                    <h3>Sorcerer Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-moon"></i>
+                    <h3>Warlock Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-wand-sparkles"></i>
+                    <h3>Wizard Spells</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-book"></i>
+                    <h3>All Spells</h3>
+                </div>
+            </a>
+        </div>
+
+        <!-- Items Section -->
+        <h2 class="section-title" id="items">Items & Equipment</h2>
+        <div class="items-grid">
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-toolbox"></i>
+                    <h3>Adventuring Gear</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-shield"></i>
+                    <h3>Armor and Shields</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-dice-d20"></i>
+                    <h3>Trinkets</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-khanda"></i>
+                    <h3>Weapons</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-gun"></i>
+                    <h3>Firearms</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-bomb"></i>
+                    <h3>Explosives</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-ring"></i>
+                    <h3>Wondrous Items</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-coins"></i>
+                    <h3>Currency</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-flask"></i>
+                    <h3>Poisons</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-hammer"></i>
+                    <h3>Tools</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-chess-rook"></i>
+                    <h3>Siege Equipment</h3>
+                </div>
+            </a>
+        </div>
+
+        <!-- Feats Section -->
+        <h2 class="section-title" id="feats">Feats</h2>
+        <div class="grid-4">
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-star"></i>
+                    <h3>All Feats</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-fist-raised"></i>
+                    <h3>Combat Feats</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-hat-wizard"></i>
+                    <h3>Magic Feats</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>Racial Feats</h3>
+                </div>
+            </a>
+        </div>
+
+        <!-- Backgrounds Section -->
+        <h2 class="section-title">Backgrounds</h2>
+        <div class="grid-3">
+            <div class="list-card">
+                <h3>Common Backgrounds</h3>
+                <ul>
+                    <li><a href="#">Acolyte</a></li>
+                    <li><a href="#">Charlatan</a></li>
+                    <li><a href="#">Criminal</a></li>
+                    <li><a href="#">Entertainer</a></li>
+                    <li><a href="#">Folk Hero</a></li>
+                    <li><a href="#">Guild Artisan</a></li>
+                    <li><a href="#">Hermit</a></li>
+                    <li><a href="#">Noble</a></li>
+                    <li><a href="#">Outlander</a></li>
+                    <li><a href="#">Sage</a></li>
+                    <li><a href="#">Sailor</a></li>
+                    <li><a href="#">Soldier</a></li>
+                    <li><a href="#">Urchin</a></li>
+                </ul>
+            </div>
+            <div class="list-card">
+                <h3>Additional Backgrounds</h3>
+                <ul>
+                    <li><a href="#">Anthropologist</a></li>
+                    <li><a href="#">Archaeologist</a></li>
+                    <li><a href="#">City Watch</a></li>
+                    <li><a href="#">Clan Crafter</a></li>
+                    <li><a href="#">Cloistered Scholar</a></li>
+                    <li><a href="#">Courtier</a></li>
+                    <li><a href="#">Faction Agent</a></li>
+                    <li><a href="#">Far Traveler</a></li>
+                    <li><a href="#">Haunted One</a></li>
+                    <li><a href="#">Inheritor</a></li>
+                    <li><a href="#">Knight of the Order</a></li>
+                    <li><a href="#">Mercenary Veteran</a></li>
+                    <li><a href="#">Urban Bounty Hunter</a></li>
+                </ul>
+            </div>
+            <div class="list-card">
+                <h3>Setting Specific</h3>
+                <ul>
+                    <li><a href="#">Azorius Functionary</a></li>
+                    <li><a href="#">Boros Legionnaire</a></li>
+                    <li><a href="#">Dimir Operative</a></li>
+                    <li><a href="#">Golgari Agent</a></li>
+                    <li><a href="#">Gruul Anarch</a></li>
+                    <li><a href="#">Izzet Engineer</a></li>
+                    <li><a href="#">Orzhov Representative</a></li>
+                    <li><a href="#">Rakdos Cultist</a></li>
+                    <li><a href="#">Selesnya Initiate</a></li>
+                    <li><a href="#">Simic Scientist</a></li>
+                    <li><a href="#">House Agent</a></li>
+                    <li><a href="#">Athlete</a></li>
+                    <li><a href="#">Witchlight Hand</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Races Section -->
+        <h2 class="section-title">Races</h2>
+        <div style="display: flex; justify-content: center; margin-bottom: 4rem;">
+            <a href="lineages.html" style="text-decoration: none; width: 100%; max-width: 400px;">
+                <div class="card" style="padding: 3rem;">
+                    <i class="fas fa-users" style="font-size: 4rem;"></i>
+                    <h3 style="font-size: 2rem; margin-top: 1rem;">View All Races</h3>
+                    <p>Browse all playable races and lineages</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Miscellaneous -->
+        <h2 class="section-title">Additional Resources</h2>
+        <div class="grid-3">
+            <a href="character-builder.html" class="card-link">
+                <div class="card">
+                    <i class="fas fa-dice-d20"></i>
+                    <h3>Character Builder</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-key"></i>
+                    <h3>Heroic Chronicle</h3>
+                </div>
+            </a>
+            <a href="#" class="card-link">
+                <div class="card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Rules Reference</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
@@ -355,279 +845,30 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-        function toggleThemeMenu() {
-            document.getElementById('theme-options').classList.toggle('show');
-        }
+    <script>
+        // Theme Switcher
+        const themeButtons = document.querySelectorAll('.theme-toggle-btn');
+        const body = document.body;
 
-        function selectTheme(theme) {
-            setTheme(theme);
-            document.getElementById('theme-options').classList.remove('show');
-        }
+        // Load saved theme
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        body.className = savedTheme + '-theme';
+        document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
 
-        function setTheme(theme) {
-            const body = document.body;
-            body.className = theme + '-theme';
-            
-            document.querySelectorAll('.theme-options button').forEach(btn => {
-                btn.classList.remove('active');
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const theme = button.dataset.theme;
+                body.className = theme + '-theme';
+                
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                localStorage.setItem('dnd-theme', theme);
             });
-            document.getElementById('btn-' + theme).classList.add('active');
-            
-            localStorage.setItem('rulesTheme', theme);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('rulesTheme') || 'gothic';
-            setTheme(savedTheme);
-        });
-
-        document.addEventListener('click', (e) => {
-            const themeToggle = document.querySelector('.theme-toggle');
-            if (!themeToggle.contains(e.target)) {
-                document.getElementById('theme-options').classList.remove('show');
-            }
         });
     </script>
-
-    <div id="google_translate_element"></div>
-
-    <header>
-        <div class="header-content">
-            <div class="header-left">
-                <h1>⚔️ D&D 5e Rules</h1>
-            </div>
-            <div class="header-right">
-                <div class="theme-toggle">
-                    <button class="theme-toggle-btn" onclick="toggleThemeMenu()">🎨</button>
-                    <div class="theme-options" id="theme-options">
-                        <button id="btn-fantasy" onclick="selectTheme('fantasy')">🐉</button>
-                        <button id="btn-steampunk" onclick="selectTheme('steampunk')">⚙️</button>
-                        <button id="btn-winter" onclick="selectTheme('winter')">❄️</button>
-                        <button id="btn-nature" onclick="selectTheme('nature')">🌿</button>
-                        <button id="btn-gothic" class="active" onclick="selectTheme('gothic')">🦇</button>
-                    </div>
-                </div>
-                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-            </div>
-        </div>
-    </header>
-
-    <div class="intro-section">
-        <h2>Welcome to the D&D 5e Reference Guide</h2>
-        <p>Discover complete rules for creating characters and playing Dungeons & Dragons 5th Edition.</p>
-    </div>
-
-    <div class="quick-links">
-        <div class="links-grid">
-            <div class="link-card" onclick="location.href='#spells'">
-                <i class="fas fa-book"></i>
-                <h3>Spells</h3>
-            </div>
-            <div class="link-card" onclick="location.href='#races'">
-                <i class="fas fa-users"></i>
-                <h3>Races</h3>
-            </div>
-            <div class="link-card" onclick="location.href='#classes'">
-                <i class="fas fa-hat-wizard"></i>
-                <h3>Classes</h3>
-            </div>
-            <div class="link-card" onclick="location.href='#items'">
-                <i class="fas fa-flask"></i>
-                <h3>Items</h3>
-            </div>
-            <div class="link-card" onclick="location.href='#feats'">
-                <i class="fas fa-star"></i>
-                <h3>Feats</h3>
-            </div>
-            <div class="link-card" onclick="location.href='#backgrounds'">
-                <i class="fas fa-university"></i>
-                <h3>Backgrounds</h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section" id="spells">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-book"></i></div>
-            <h2>Spells</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>By Class</h3>
-                <div class="item-list">
-                    • Artificer • Bard • Cleric • Druid<br>
-                    • Paladin • Ranger • Sorcerer • Warlock • Wizard
-                </div>
-            </div>
-            <div class="feature-card">
-                <h3>Schools of Magic</h3>
-                <div class="item-list">
-                    • Abjuration • Conjuration • Divination<br>
-                    • Enchantment • Evocation • Illusion<br>
-                    • Necromancy • Transmutation
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section alt" id="races">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-users"></i></div>
-            <h2>Races</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Common</h3>
-                <div class="item-list">
-                    • Dragonborn • Dwarf • Elf • Gnome<br>
-                    • Half-Elf • Half-Orc • Halfling • Human • Tiefling
-                </div>
-            </div>
-            <div class="feature-card">
-                <h3>Exotic</h3>
-                <div class="item-list">
-                    • Aarakocra • Aasimar • Genasi • Goliath<br>
-                    • Firbolg • Tabaxi • Triton • Yuan-ti
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section" id="classes">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-hat-wizard"></i></div>
-            <h2>Classes</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3><i class="fas fa-cogs"></i> Artificer</h3>
-                <p><em>Masters of invention and magic.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-angry"></i> Barbarian</h3>
-                <p><em>Fierce warriors who can enter battle rage.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-music"></i> Bard</h3>
-                <p><em>Inspiring magicians wielding musical magic.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-cross"></i> Cleric</h3>
-                <p><em>Priestly champions of divine magic.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-leaf"></i> Druid</h3>
-                <p><em>Priests of nature and its powers.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-fist-raised"></i> Fighter</h3>
-                <p><em>Masters of martial combat.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-om"></i> Monk</h3>
-                <p><em>Martial artists harnessing body and spirit.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-shield-alt"></i> Paladin</h3>
-                <p><em>Holy warriors bound to sacred oaths.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-tree"></i> Ranger</h3>
-                <p><em>Warriors of nature and martial prowess.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-user-secret"></i> Rogue</h3>
-                <p><em>Scoundrels using stealth and trickery.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-fire"></i> Sorcerer</h3>
-                <p><em>Spellcasters with inherent magic.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-book-dead"></i> Warlock</h3>
-                <p><em>Magic from otherworldly patrons.</em></p>
-            </div>
-            <div class="feature-card">
-                <h3><i class="fas fa-magic"></i> Wizard</h3>
-                <p><em>Scholarly masters of arcane magic.</em></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section alt" id="items">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-flask"></i></div>
-            <h2>Items & Equipment</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Weapons & Armor</h3>
-                <div class="item-list">
-                    • Simple & Martial Weapons<br>
-                    • Light, Medium & Heavy Armor • Shields
-                </div>
-            </div>
-            <div class="feature-card">
-                <h3>Magic Items</h3>
-                <div class="item-list">
-                    • Wondrous Items • Potions • Scrolls<br>
-                    • Rings • Staffs • Wands • Artifacts
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section" id="feats">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-star"></i></div>
-            <h2>Feats</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Combat Feats</h3>
-                <div class="item-list">
-                    • Great Weapon Master • Sharpshooter<br>
-                    • Polearm Master • Sentinel • Shield Master
-                </div>
-            </div>
-            <div class="feature-card">
-                <h3>Magic Feats</h3>
-                <div class="item-list">
-                    • War Caster • Spell Sniper<br>
-                    • Magic Initiate • Ritual Caster
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="feature-section alt" id="backgrounds">
-        <div class="feature-header">
-            <div class="icon"><i class="fas fa-university"></i></div>
-            <h2>Backgrounds</h2>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Common Backgrounds</h3>
-                <div class="item-list">
-                    • Acolyte • Criminal • Folk Hero<br>
-                    • Noble • Sailor • Soldier • Urchin
-                </div>
-            </div>
-            <div class="feature-card">
-                <h3>Specialized</h3>
-                <div class="item-list">
-                    • Archaeologist • City Watch • Gladiator<br>
-                    • Investigator • Pirate • Sage • Spy
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <h3>More Content Coming Soon</h3>
-        <p>Detailed descriptions of all races, classes, spells coming soon.</p>
-        <p style="margin-top: 2rem; color: var(--primary, #9370db);">⚔️ May your dice roll true ⚔️</p>
-    </footer>
 </body>
 </html>

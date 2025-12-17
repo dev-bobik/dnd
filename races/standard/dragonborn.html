@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragonborn - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #c53131;
+            --secondary: #822000;
+            --accent: #d4af37;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(197, 49, 49, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(197, 49, 49, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--accent);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../dragonborn.png');
+            background-size: 110% auto;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        em {
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-family: 'Cinzel', serif;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .sidebar h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary);
+        }
+
+        /* Google Translate */
+        #google_translate_element {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Variant Box */
+        .variant-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Dragonborn</h1>
+        </div>
+
+        <h1 id="phb">Player's Handbook</h1>
+        <p><em>Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique race, combining the best attributes of dragons and humanoids.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Charisma score increases by 1.</li>
+            <li><strong>Age.</strong> Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80.</li>
+            <li><strong>Alignment.</strong> Dragonborn tend towards extremes, making a conscious choice for one side or the other between Good and Evil (represented by Bahamut and Tiamat, respectively).</li>
+            <li><strong>Size.</strong> Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Draconic Ancestry.</strong> You are distantly related to a particular kind of dragon. Choose a type of dragon from the below list; this determines the damage and area of your breath weapon, and the type of resistance you gain.</li>
+        </ul>
+
+        <table>
+            <tr>
+                <th>Dragon Color</th>
+                <th>Damage Type</th>
+                <th>Breath Weapon</th>
+            </tr>
+            <tr><td>Black</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Blue</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Brass</td><td>Fire</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Bronze</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Copper</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Gold</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Green</td><td>Poison</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>Red</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Silver</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>White</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
+        </table>
+
+        <ul>
+            <li><strong>Breath Weapon.</strong> You can use your action to exhale destructive energy. When you use your breath weapon, all creatures in the area must make a saving throw, the type of which is determined by your ancestry. The DC of this saving throw is 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increase to 3d6 at 6th level, 4d6 at 11th, and 5d6 at 16th level. After using your breath weapon, you cannot use it again until you complete a short or long rest.</li>
+            <li><strong>Damage Resistance.</strong> You have resistance to the damage type associated with your ancestry.</li>
+            <li><strong>Languages.</strong> You can read, speak, and write Common and Draconic.</li>
+        </ul>
+
+        <div class="variant-section">
+            <h2 id="draconblood">Draconblood</h2>
+            <p><em>Source: Explorer's Guide to Wildemount</em></p>
+            <p><em>Draconbloods possess long tails and a knack for social manipulation. They remember the days when they were once mighty conquerors.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Charisma score increases by 1.</li>
+                <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+                <li><strong>Forceful Presence.</strong> When you make a Intimidation or Persuasion check, you can do so with advantage once per long rest.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="ravenite">Ravenite</h2>
+            <p><em>Source: Explorer's Guide to Wildemount</em></p>
+            <p><em>Ravenites have no tails and a hearty physique. They remember the days when they were slaves to the draconblood, as well as the day when they overthrew their masters.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Constitution score increases by 1.</li>
+                <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+                <li><strong>Vengeful Assault.</strong> When you take damage from a creature in range of a weapon you are wielding, you can use your reaction to make an attack against that creature. You can do this once per short or long rest.</li>
+            </ul>
+        </div>
+
+        <h1 id="fizbans">Fizban's Treasury of Dragons</h1>
+
+        <div class="variant-section">
+            <h2 id="chromatic">Chromatic</h2>
+            <p><em>Dragonborn with chromatic ancestry claim the raw elemental power of chromatic dragons. The vibrant colors of black, blue, green, red, and white dragons gleam in those dragonborn's scaled skin and in the deadly energy of their breath weapons.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Chromatic Ancestry.</strong> Choose one type of dragon: Black (Acid), Blue (Lightning), Green (Poison), Red (Fire), or White (Cold).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 30-foot line that is 5 feet wide. Each creature must make a Dexterity saving throw (DC = 8 + your Constitution modifier + your proficiency bonus). On a failed save, the creature takes 1d10 damage. This damage increases by 1d10 at 5th (2d10), 11th (3d10), and 17th level (4d10). You can use this a number of times equal to your proficiency bonus, regaining uses on a long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Chromatic Ancestry.</li>
+                <li><strong>Chromatic Warding.</strong> Starting at 5th level, as an action, you can channel your draconic energy to protect yourself. For 1 minute, you become immune to the damage type associated with your Chromatic Ancestry. Once you use this trait, you can't do so again until you finish a long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="metallic">Metallic</h2>
+            <p><em>Dragonborn with metallic ancestry lay claim to the tenacity of metallic dragons — brass, bronze, copper, gold, and silver — whose hues glint in their scales.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Metallic Ancestry.</strong> Choose one type of dragon: Brass (Fire), Bronze (Lightning), Copper (Acid), Gold (Fire), or Silver (Cold).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 15-foot cone. Each creature must make a Dexterity saving throw (DC = 8 + Constitution modifier + proficiency bonus). On a failed save, takes 1d10 damage. Increases by 1d10 at 5th (2d10), 11th (3d10), and 17th level (4d10). Usable a number of times equal to proficiency bonus, regaining on long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Metallic Ancestry.</li>
+                <li><strong>Metallic Breath Weapon.</strong> At 5th level, you gain a second breath weapon in a 15-foot cone (DC = 8 + CON + proficiency). Choose Enervating Breath (CON save, incapacitated until start of your next turn on fail) or Repulsion Breath (STR save, pushed 20 feet and knocked prone on fail). Once per long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="gem">Gem</h2>
+            <p><em>Gem dragonborn partake of the heritage of gem dragons, who claim to be heirs of Sardior, the Ruby Dragon. The colors and mysterious powers of gem dragons gleam in these dragonborn's scaled skin.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Gem Ancestry.</strong> Choose one type of dragon: Amethyst (Force), Crystal (Radiant), Emerald (Psychic), Sapphire (Thunder), or Topaz (Necrotic).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 15-foot cone. Each creature must make a Dexterity saving throw (DC = 8 + CON + proficiency). On fail, takes 1d10 damage. Increases at 5th (2d10), 11th (3d10), 17th (4d10). Usable proficiency bonus times per long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Gem Ancestry.</li>
+                <li><strong>Psionic Mind.</strong> You can telepathically speak to any creature you can see within 30 feet of you. You don't need to share a language with the creature, but the creature must be able to understand at least one language.</li>
+                <li><strong>Gem Flight.</strong> Starting at 5th level, you can use a bonus action to manifest spectral wings. These wings last for 1 minute, granting you a flying speed equal to your walking speed and the ability to hover. Once per long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#phb">Player's Handbook</a></li>
+            <li><a href="#draconblood">Draconblood</a></li>
+            <li><a href="#ravenite">Ravenite</a></li>
+            <li><a href="#fizbans">Fizban's Treasury</a></li>
+            <li><a href="#chromatic">→ Chromatic</a></li>
+            <li><a href="#metallic">→ Metallic</a></li>
+            <li><a href="#gem">→ Gem</a></li>
+        </ul>
+
+        <div id="google_translate_element"></div>
+    </aside>
+</div>
+
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+    // Theme System with localStorage persistence
+    const themes = {
+        fantasy: '🐉',
+        steampunk: '⚙',
+        winter: '❄️',
+        nature: '🌿',
+        gothic: '🦇'
+    };
+
+    // Load saved theme or default to fantasy
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        applyTheme(savedTheme);
+    }
+
+    // Apply theme to body
+    function applyTheme(themeName) {
+        // Remove all theme classes
+        document.body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
+        
+        // Add selected theme class
+        document.body.classList.add(themeName + '-theme');
+        
+        // Update current theme button
+        document.getElementById('current-theme').textContent = themes[themeName];
+        
+        // Update active state in menu
+        document.querySelectorAll('.theme-option').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + themeName).classList.add('active');
+        
+        // Save to localStorage
+        localStorage.setItem('dnd-theme', themeName);
+    }
+
+    // Toggle theme menu visibility
+    function toggleThemeMenu() {
+        const menu = document.getElementById('theme-menu');
+        menu.classList.toggle('show');
+    }
+
+    // Select specific theme
+    function selectTheme(themeName) {
+        applyTheme(themeName);
+        toggleThemeMenu();
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const menu = document.getElementById('theme-menu');
+        
+        if (!themeToggle.contains(event.target) && menu.classList.contains('show')) {
+            menu.classList.remove('show');
+        }
+    });
+
+    // Load theme on page load
+    window.addEventListener('DOMContentLoaded', loadTheme);
+</script>
+
+</body>
+</html>
