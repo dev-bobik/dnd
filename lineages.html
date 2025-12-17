@@ -77,6 +77,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -107,72 +108,50 @@
 
         /* Theme Toggle */
         .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: var(--card);
+            border-radius: 12px;
+            padding: 8px;
+            border: 2px solid var(--border);
         }
 
-        .theme-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 3px solid var(--accent);
-            color: white;
+        .theme-toggle-btn {
+            background: transparent;
+            border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 4px 8px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
         }
 
-        .theme-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        .theme-toggle-btn:hover,
+        .theme-toggle-btn.active {
+            background: var(--primary);
         }
 
-        .theme-menu {
-            position: absolute;
-            top: 60px;
-            right: 0;
+        /* Google Translate */
+        #google_translate_element {
             background: var(--card);
-            border: 2px solid var(--primary);
+            padding: 8px 12px;
             border-radius: 12px;
-            padding: 1rem;
-            display: none;
-            flex-direction: column;
-            gap: 0.5rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-        }
-
-        .theme-menu.show {
-            display: flex;
-        }
-
-        .theme-option {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
             border: 2px solid var(--border);
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s;
+        }
+
+        #google_translate_element select {
+            background: var(--dark);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-right {
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .theme-option:hover {
-            transform: scale(1.1);
-            border-color: var(--primary);
-        }
-
-        .theme-option.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary);
+            gap: 1rem;
         }
 
         /* Container */
@@ -277,19 +256,6 @@
             box-shadow: none;
         }
 
-        /* Google Translate */
-        .translate-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--card);
-            padding: 1rem;
-            border-radius: 12px;
-            border: 2px solid var(--primary);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -309,12 +275,6 @@
             .race-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-
-            .translate-widget {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
-            }
         }
     </style>
 </head>
@@ -328,20 +288,18 @@
             <a href="rules.html"><i class="fas fa-home"></i> Rules</a>
             <a href="lineages.html"><i class="fas fa-users"></i> All Races</a>
         </nav>
+        <div class="nav-right">
+            <div id="google_translate_element"></div>
+            <div class="theme-toggle">
+                <button class="theme-toggle-btn active" data-theme="fantasy" title="Fantasy Theme">🐉</button>
+                <button class="theme-toggle-btn" data-theme="steampunk" title="Steampunk Theme">⚙️</button>
+                <button class="theme-toggle-btn" data-theme="winter" title="Winter Theme">❄️</button>
+                <button class="theme-toggle-btn" data-theme="nature" title="Nature Theme">🌿</button>
+                <button class="theme-toggle-btn" data-theme="gothic" title="Gothic Theme">🦇</button>
+            </div>
+        </div>
     </div>
 </header>
-
-<!-- Theme Toggle -->
-<div class="theme-toggle">
-    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
-    <div class="theme-menu" id="theme-menu">
-        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
-        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
-        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
-        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
-        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
-    </div>
-</div>
 
 <!-- Main Container -->
 <div class="container">
@@ -487,11 +445,6 @@
     </div>
 </div>
 
-<!-- Google Translate Widget -->
-<div class="translate-widget">
-    <div id="google_translate_element"></div>
-</div>
-
 <!-- Google Translate Script -->
 <script type="text/javascript">
     function googleTranslateElementInit() {
@@ -507,21 +460,11 @@
 
 <script>
     // Theme System with localStorage persistence
-    const themes = {
-        fantasy: '🐉',
-        steampunk: '⚙',
-        winter: '❄️',
-        nature: '🌿',
-        gothic: '🦇'
-    };
-
-    // Load saved theme or default to fantasy
     function loadTheme() {
         const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
         applyTheme(savedTheme);
     }
 
-    // Apply theme to body
     function applyTheme(themeName) {
         // Remove all theme classes
         document.body.classList.remove('fantasy-theme', 'steampunk-theme', 'winter-theme', 'nature-theme', 'gothic-theme');
@@ -529,41 +472,30 @@
         // Add selected theme class
         document.body.classList.add(themeName + '-theme');
         
-        // Update current theme button
-        document.getElementById('current-theme').textContent = themes[themeName];
-        
-        // Update active state in menu
-        document.querySelectorAll('.theme-option').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('btn-' + themeName).classList.add('active');
+        // Update active state on buttons
+        document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.theme === themeName) {
+                btn.classList.add('active');
+            }
+        });
         
         // Save to localStorage
         localStorage.setItem('dnd-theme', themeName);
     }
 
-    // Toggle theme menu visibility
-    function toggleThemeMenu() {
-        const menu = document.getElementById('theme-menu');
-        menu.classList.toggle('show');
-    }
-
-    // Select specific theme
-    function selectTheme(themeName) {
-        applyTheme(themeName);
-        toggleThemeMenu();
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const themeToggle = document.querySelector('.theme-toggle');
-        const menu = document.getElementById('theme-menu');
+    // Add event listeners to theme buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        loadTheme();
         
-        if (!themeToggle.contains(event.target) && menu.classList.contains('show')) {
-            menu.classList.remove('show');
-        }
+        const themeButtons = document.querySelectorAll('.theme-toggle-btn');
+        themeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                applyTheme(theme);
+            });
+        });
     });
-
-    // Load theme on page load
-    window.addEventListener('DOMContentLoaded', loadTheme);
 </script>
 
 </body>
