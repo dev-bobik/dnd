@@ -54,6 +54,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -83,10 +84,8 @@
 
         /* Theme Toggle */
         .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+            display: flex;
+            gap: 8px;
             background: var(--card-bg);
             border-radius: 12px;
             padding: 8px;
@@ -110,14 +109,25 @@
 
         /* Google Translate */
         #google_translate_element {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
             background: var(--card-bg);
-            padding: 15px;
+            padding: 8px 12px;
             border-radius: 12px;
             border: 2px solid var(--border);
+        }
+
+        #google_translate_element select {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         /* Hero Section */
@@ -449,18 +459,6 @@
     </style>
 </head>
 <body class="fantasy-theme">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <button class="theme-toggle-btn active" data-theme="fantasy" title="Fantasy">🐉</button>
-        <button class="theme-toggle-btn" data-theme="steampunk" title="Steampunk">⚙️</button>
-        <button class="theme-toggle-btn" data-theme="winter" title="Winter">❄️</button>
-        <button class="theme-toggle-btn" data-theme="nature" title="Nature">🌿</button>
-        <button class="theme-toggle-btn" data-theme="gothic" title="Gothic">🦇</button>
-    </div>
-
-    <!-- Google Translate -->
-    <div id="google_translate_element"></div>
-
     <!-- Header -->
     <header>
         <nav>
@@ -472,6 +470,16 @@
                 <li><a href="#items">Items</a></li>
                 <li><a href="character-builder.html">Character Builder</a></li>
             </ul>
+            <div class="nav-right">
+                <div id="google_translate_element"></div>
+                <div class="theme-toggle">
+                    <button class="theme-toggle-btn active" data-theme="fantasy" title="Fantasy Theme">🐉</button>
+                    <button class="theme-toggle-btn" data-theme="steampunk" title="Steampunk Theme">⚙️</button>
+                    <button class="theme-toggle-btn" data-theme="winter" title="Winter Theme">❄️</button>
+                    <button class="theme-toggle-btn" data-theme="nature" title="Nature Theme">🌿</button>
+                    <button class="theme-toggle-btn" data-theme="gothic" title="Gothic Theme">🦇</button>
+                </div>
+            </div>
         </nav>
     </header>
 
