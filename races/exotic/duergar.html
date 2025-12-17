@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duergar - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #808080;
+            --secondary: #606060;
+            --accent: #a0a0a0;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(128, 128, 128, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(128, 128, 128, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../duergar.jpg');
+            background-size: 110% auto;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li ul li:before {
+            content: "◦";
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--text-dim);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+
+        .toc {
+            background: rgba(36, 36, 36, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li:before {
+            display: none;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .main {
+                padding: 2rem;
+            }
+
+            .race-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 1.5rem;
+            }
+
+            .race-title {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Duergar</h1>
+        </div>
+
+        <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
+        <p><em>Duergar are dwarves whose ancestors were transformed by centuries living in the deepest places of the Underdark. That chthonic realm is saturated with strange magical energy, and over generations, early duergar absorbed traces of it. They were further altered when mind flayers and other Aberrations invaded and performed horrific experiments on them. Fueled by Underdark magic, those experiments left early duergar with psionic powers, which have been passed down to their descendants. In time, they liberated themselves from their aberrant tyrants and forged a new life for themselves in the Underdark and beyond.</em></p>
+        <p><em>Like other dwarves, duergar typically have a life span of 350 years.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+            <li><strong>Creature Type.</strong> You are a Humanoid. You are also considered a dwarf for any prerequisite or effect that requires you to be a dwarf.</li>
+            <li><strong>Size.</strong> You are Medium.</li>
+            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <li><strong>Darkvision.</strong> You can see in dim light within 120 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
+            <li><strong>Duergar Magic.</strong> Starting at 3rd level, you can cast the Enlarge/Reduce spell with this trait, without requiring a material component. Starting at 5th level, you can also cast the Invisibility spell with it, without requiring a material component. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast these spells using spell slots you have of the appropriate level.
+                <ul>
+                    <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
+                </ul>
+            </li>
+            <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws you make to avoid or end the poisoned condition on yourself. You also have resistance to poison damage.</li>
+            <li><strong>Psionic Fortitude.</strong> You have advantage on saving throws you make to avoid or end the charmed or stunned condition on yourself.</li>
+            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+        </ul>
+
+        <h1 id="scag">Sword Coast Adventurer's Guide</h1>
+        <p><em>The gray dwarves, or duergar, live deep in the Underdark. After delving deeper than any other dwarves, they were enslaved by mind flayers for eons. Although they eventually won their freedom, these grim, ashen-skinned dwarves now take slaves of their own and are as tyrannical as their former masters.</em></p>
+        <p><em>Physically similar to other dwarves in some ways, duergar are wiry and lean, with black eyes and bald heads, with the males growing long, unkempt, gray beards.</em></p>
+        <p><em>Duergar value toil above all else. Showing emotions other than grim determination or wrath is frowned on in their culture, but they can sometimes seem joyful when at work. They have the typical dwarven appreciation for order, tradition, and impeccable craftsmanship, but their goods are purely utilitarian, disdaining aesthetic or artistic value.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Strength score increases by 1.</li>
+            <li><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</li>
+            <li><strong>Size.</strong> Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</li>
+            <li><strong>Superior Darkvision.</strong> You can see in dim light within 120 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+            <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</li>
+            <li><strong>Duergar Resilience.</strong> You have advantage on saving throws against illusions and against being charmed or paralyzed.</li>
+            <li><strong>Dwarven Combat Training.</strong> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</li>
+            <li><strong>Tool Proficiency.</strong> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</li>
+            <li><strong>Stonecunning.</strong> Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</li>
+            <li><strong>Duergar Magic.</strong> When you reach 3rd level, you can cast the Enlarge/Reduce spell on yourself once with this trait, using only the spell's enlarge option. When you reach 5th level, you can cast the Invisibility spell on yourself once with this trait. You don't need material components for either spell, and you can't cast them while you're in direct sunlight, although sunlight has no effect on them once cast. You regain the ability to cast these spells with this trait when you finish a long rest. Intelligence is your spellcasting ability for these spells.</li>
+            <li><strong>Sunlight Sensitivity.</strong> You have disadvantage on Attack rolls and Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</li>
+        </ul>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#motm">Monsters of the Multiverse</a></li>
+                <li><a href="#scag">Sword Coast Adventurer's Guide</a></li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+<script>
+    // Theme Management
+    function toggleThemeMenu() {
+        document.getElementById('theme-menu').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        // Remove all theme classes
+        document.body.className = '';
+        
+        // Add selected theme class
+        document.body.classList.add(theme + '-theme');
+        
+        // Update active button
+        document.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + theme).classList.add('active');
+        
+        // Update main theme button emoji
+        const emojis = {
+            'fantasy': '🐉',
+            'steampunk': '⚙',
+            'winter': '❄️',
+            'nature': '🌿',
+            'gothic': '🦇'
+        };
+        document.getElementById('current-theme').textContent = emojis[theme];
+        
+        // Save theme preference
+        localStorage.setItem('dnd-theme', theme);
+        
+        // Close menu
+        document.getElementById('theme-menu').classList.remove('show');
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        selectTheme(savedTheme);
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle.contains(e.target)) {
+            document.getElementById('theme-menu').classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>

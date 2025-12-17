@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabaxi - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #c8903a;
+            --secondary: #8b6914;
+            --accent: #e6b35c;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(200, 144, 58, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(200, 144, 58, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(200, 144, 58, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../tabaxi.jpg');
+            background-size: 110% auto;
+            background-position: center 15%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li ul li:before {
+            content: "◦";
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--text-dim);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+
+        .toc {
+            background: rgba(36, 36, 36, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li:before {
+            display: none;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .main {
+                padding: 2rem;
+            }
+
+            .race-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 1.5rem;
+            }
+
+            .race-title {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Tabaxi</h1>
+        </div>
+
+        <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
+        <p><em>Created by the Cat Lord—a divine being of the Upper Planes—to blend the qualities of humanoids and cats, tabaxi are a varied people in both attitude and appearance. In some lands, tabaxi live like the cats they resemble, naturally curious and at home in playful environments. In other places, tabaxi live as other folk do, not exhibiting the feline behavior the Cat Lord intended.</em></p>
+        <p><em>Tabaxi's appearance is as varied as their attitudes. Some tabaxi have features or patterning in their fur like tigers, jaguars, or other big cats, while others have appearances more like a house cat. Still others have unique patterns or might style their fur to their preferences — or might even be hairless!</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+            <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
+            <li><strong>Speed.</strong> Your walking speed is 30 feet, and you have a climbing speed equal to your walking speed.</li>
+            <li><strong>Cat's Claws.</strong> You can use your claws to make unarmed strikes. When you hit with them, the strike deals 1d6 + your Strength modifier slashing damage, instead of the bludgeoning damage normal for an unarmed strike.</li>
+            <li><strong>Cat's Talent.</strong> You have proficiency in the Perception and Stealth skills.</li>
+            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
+            <li><strong>Feline Agility.</strong> Your reflexes and agility allow you to move with a burst of speed. When you move on your turn in combat, you can double your speed until the end of the turn. Once you use this trait, you can't use it again until you move 0 feet on one of your turns.</li>
+            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The <em>Player's Handbook</em> offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+        </ul>
+
+        <h1 id="volo">Volo's Guide to Monsters</h1>
+        <p><em>Hailing from a strange and distant land, wandering tabaxi are catlike humanoids driven by curiosity to collect interesting artifacts, gather tales and stories, and lay eyes on all the world's wonders. Ultimate travelers, the inquisitive tabaxi rarely stay in one place for long. Their innate nature pushes them to leave no secrets uncovered, no treasures or legends lost.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Charisma score increases by 1.</li>
+            <li><strong>Age.</strong> Tabaxi have lifespans equivalent to humans.</li>
+            <li><strong>Alignment.</strong> Tabaxi tend toward chaotic alignments, as they let impulse and fancy guide their decisions. They are rarely evil, with most of them driven by curiosity rather than greed or other dark impulses.</li>
+            <li><strong>Size.</strong> Tabaxi are taller on average than humans and relatively slender. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Darkvision.</strong> You have a cat's keen senses, especially in the dark. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+            <li><strong>Feline Agility.</strong> Your reflexes and agility allow you to move with a burst of speed. When you move on your turn in combat, you can double your speed until the end of the turn. Once you use this trait, you can't use it again until you move 0 feet on one of your turns.</li>
+            <li><strong>Cat's Claws.</strong> Because of your claws, you have a climbing speed of 20 feet. In addition, your claws are natural weapons, which you can use to make unarmed strikes. If you hit with them, you deal slashing damage equal to 1d4 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike.</li>
+            <li><strong>Cat's Talent.</strong> You have proficiency in the Perception and Stealth skills.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language of your choice.</li>
+        </ul>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#motm">Monsters of the Multiverse</a></li>
+                <li><a href="#volo">Volo's Guide to Monsters</a></li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+<script>
+    // Theme Management
+    function toggleThemeMenu() {
+        document.getElementById('theme-menu').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        // Remove all theme classes
+        document.body.className = '';
+        
+        // Add selected theme class
+        document.body.classList.add(theme + '-theme');
+        
+        // Update active button
+        document.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + theme).classList.add('active');
+        
+        // Update main theme button emoji
+        const emojis = {
+            'fantasy': '🐉',
+            'steampunk': '⚙',
+            'winter': '❄️',
+            'nature': '🌿',
+            'gothic': '🦇'
+        };
+        document.getElementById('current-theme').textContent = emojis[theme];
+        
+        // Save theme preference
+        localStorage.setItem('dnd-theme', theme);
+        
+        // Close menu
+        document.getElementById('theme-menu').classList.remove('show');
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        selectTheme(savedTheme);
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle.contains(e.target)) {
+            document.getElementById('theme-menu').classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Genasi - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #1e90ff;
+            --secondary: #0066cc;
+            --accent: #87cefa;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../watergenasi.jpg');
+            background-size: 110% auto;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li ul li:before {
+            content: "◦";
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--text-dim);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+
+        .toc {
+            background: rgba(36, 36, 36, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li:before {
+            display: none;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .main {
+                padding: 2rem;
+            }
+
+            .race-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 1.5rem;
+            }
+
+            .race-title {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Water Genasi</h1>
+        </div>
+
+        <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
+        <p><em>Tracing their ancestry to the genies of the Elemental Planes, each genasi can tap into the power of one of the elements. Air, earth, fire, and water — these are the four pillars of the Material Plane and the four types of genasi. Some genasi are direct descendants of a genie, while others were born to non-genasi parents who lived near a place suffused by a genie's magic.</em></p>
+        <p><em>A typical genasi has a life span of 120 years</em></p>
+        <p><em>Water genasi descend from marids, aquatic genies from the Elemental Plane of Water. Water genasi are perfectly suited to life underwater and carry the power of the waves inside themselves.</em></p>
+        <p><em>Their skin is often shades of blue or green, sometimes a blend of the two. If they have a human skin tone, there is a glistening texture that catches the light, like water droplets or nearly invisible fish scales. Their hair can resemble seaweed, waving as if in a current, or it can even be like water itself.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+            <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
+            <li><strong>Speed.</strong> Your walking speed is 30 feet, and you have a swimming speed equal to your walking speed.</li>
+            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
+            <li><strong>Acid Resistance.</strong> You have resistance to acid damage.</li>
+            <li><strong>Amphibious.</strong> You can breathe air and water.</li>
+            <li><strong>Call to the Wave.</strong> You know the Acid Splash cantrip. Starting at 3rd level, you can cast the Create or Destroy Water spell with this trait. Starting at 5th level, you can also cast the Water Walk spell with this trait, without requiring a material component. Once you cast Create or Destroy Water or Water Walk with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.
+                <ul>
+                    <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
+                </ul>
+            </li>
+            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+        </ul>
+
+        <h1 id="eepc">Elemental Evil Player's Companion</h1>
+        <p><em>Those who think of other planes at all consider them remote, distant realms, but planar influence can be felt throughout the world. It sometimes manifests in beings who, through an accident of birth, carry the power of the planes in their blood. The genasi are one such people, the offspring of genies and mortals.</em></p>
+        <p><em>The lapping of waves, the spray of sea foam on the wind, the ocean depths — all of these things call to your heart. You wander freely and take pride in your independence, though others might consider you selfish.</em></p>
+        <p><em>Most water genasi look as if they just finished bathing, with beads of moisture collecting on their skin and hair. They smell of fresh rain and clean water. Blue or green skin is common, and most have somewhat overlarge eyes, blue-black in color. A water genasi's hair might float freely, swaying and waving as if underwater. Some have voices with undertones reminiscent of whale song or trickling streams.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 1.</li>
+            <li><strong>Age.</strong> Genasi mature at about the same rate as humans and reach adulthood in their late teens. They live somewhat longer than humans do, up to 120 years.</li>
+            <li><strong>Alignment.</strong> Independent and self-reliant, genasi tend toward a neutral alignment.</li>
+            <li><strong>Size.</strong> Genasi are as varied as their mortal parents but are generally built like humans, standing anywhere from 5 feet to over 6 feet tall. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Swim.</strong> You have a swimming speed of 30 feet.</li>
+            <li><strong>Acid Resistance.</strong> You have resistance to acid damage.</li>
+            <li><strong>Amphibious.</strong> You can breathe air and water.</li>
+            <li><strong>Call to the Wave.</strong> You know the Shape Water cantrip. When you reach 3rd level, you can cast the Create or Destroy Water spell as a 2nd-level spell once with this trait, and you regain the ability to cast it this way when you finish a long rest. Constitution is your spellcasting ability for these spells.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and Primordial. Primordial is a guttural language, filled with harsh syllables and hard consonants.</li>
+        </ul>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#motm">Monsters of the Multiverse</a></li>
+                <li><a href="#eepc">Elemental Evil Player's Companion</a></li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+<script>
+    // Theme Management
+    function toggleThemeMenu() {
+        document.getElementById('theme-menu').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        // Remove all theme classes
+        document.body.className = '';
+        
+        // Add selected theme class
+        document.body.classList.add(theme + '-theme');
+        
+        // Update active button
+        document.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + theme).classList.add('active');
+        
+        // Update main theme button emoji
+        const emojis = {
+            'fantasy': '🐉',
+            'steampunk': '⚙',
+            'winter': '❄️',
+            'nature': '🌿',
+            'gothic': '🦇'
+        };
+        document.getElementById('current-theme').textContent = emojis[theme];
+        
+        // Save theme preference
+        localStorage.setItem('dnd-theme', theme);
+        
+        // Close menu
+        document.getElementById('theme-menu').classList.remove('show');
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        selectTheme(savedTheme);
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle.contains(e.target)) {
+            document.getElementById('theme-menu').classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>
