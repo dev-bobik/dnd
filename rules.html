@@ -203,6 +203,18 @@
             margin-bottom: 4rem;
         }
 
+        /* Link styling - transparentní pro karty */
+        .grid-2 > a,
+        .grid-3 > a,
+        .grid-4 > a,
+        .grid-5 > a,
+        .class-grid > a,
+        .items-grid > a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
         /* Centrování pro class grid (13 položek = poslední 1 uprostřed mezi 2. a 3. sloupcem) */
         .class-grid {
             display: grid;
@@ -211,8 +223,11 @@
             margin-bottom: 4rem;
         }
 
-        .class-grid .class-card:nth-child(13) {
+        .class-grid > a:nth-child(13) {
             grid-column: 2 / 4;
+        }
+
+        .class-grid > a:nth-child(13) .class-card {
             margin-left: 25%;
             margin-right: 25%;
         }
@@ -226,28 +241,21 @@
         }
 
         /* První 8 položek zabírají po 2 sloupcích */
-        .items-grid > .card:nth-child(-n+8) {
+        .items-grid > a:nth-child(-n+8) {
             grid-column: span 2;
         }
 
         /* Poslední 3 položky mezi sloupci */
-        .items-grid > .card:nth-child(9) {
+        .items-grid > a:nth-child(9) {
             grid-column: 2 / 4;
         }
         
-        .items-grid > .card:nth-child(10) {
+        .items-grid > a:nth-child(10) {
             grid-column: 4 / 6;
         }
         
-        .items-grid > .card:nth-child(11) {
+        .items-grid > a:nth-child(11) {
             grid-column: 6 / 8;
-        }
-
-        /* Card Links */
-        a.card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
 
         /* Cards */
@@ -469,35 +477,35 @@
         <!-- Quick Access -->
         <h2 class="section-title">Quick Access</h2>
         <div class="grid-5">
-            <a href="lineages.html" class="card-link">
+            <a href="lineages.html" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-users"></i>
                     <h3>Races</h3>
                     <p>Character lineages</p>
                 </div>
             </a>
-            <a href="#classes" class="card-link">
+            <a href="#classes" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-hat-wizard"></i>
                     <h3>Classes</h3>
                     <p>Character classes</p>
                 </div>
             </a>
-            <a href="#spells" class="card-link">
+            <a href="#spells" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-book"></i>
                     <h3>Spells</h3>
                     <p>Magic & spellcasting</p>
                 </div>
             </a>
-            <a href="#items" class="card-link">
+            <a href="#items" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-sword"></i>
                     <h3>Items</h3>
                     <p>Equipment & gear</p>
                 </div>
             </a>
-            <a href="#feats" class="card-link">
+            <a href="#feats" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-star"></i>
                     <h3>Feats</h3>
@@ -509,69 +517,95 @@
         <!-- Classes Section -->
         <h2 class="section-title" id="classes">Classes</h2>
         <div class="class-grid">
-            <a href="#" class="class-card artificer">
-                <div class="class-card-content">
-                    <h3>Artificer</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card artificer">
+                    <div class="class-card-content">
+                        <h3>Artificer</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card barbarian">
-                <div class="class-card-content">
-                    <h3>Barbarian</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card barbarian">
+                    <div class="class-card-content">
+                        <h3>Barbarian</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card bard">
-                <div class="class-card-content">
-                    <h3>Bard</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card bard">
+                    <div class="class-card-content">
+                        <h3>Bard</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card cleric">
-                <div class="class-card-content">
-                    <h3>Cleric</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card cleric">
+                    <div class="class-card-content">
+                        <h3>Cleric</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card druid">
-                <div class="class-card-content">
-                    <h3>Druid</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card druid">
+                    <div class="class-card-content">
+                        <h3>Druid</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card fighter">
-                <div class="class-card-content">
-                    <h3>Fighter</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card fighter">
+                    <div class="class-card-content">
+                        <h3>Fighter</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card monk">
-                <div class="class-card-content">
-                    <h3>Monk</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card monk">
+                    <div class="class-card-content">
+                        <h3>Monk</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card paladin">
-                <div class="class-card-content">
-                    <h3>Paladin</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card paladin">
+                    <div class="class-card-content">
+                        <h3>Paladin</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card ranger">
-                <div class="class-card-content">
-                    <h3>Ranger</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card ranger">
+                    <div class="class-card-content">
+                        <h3>Ranger</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card rogue">
-                <div class="class-card-content">
-                    <h3>Rogue</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card rogue">
+                    <div class="class-card-content">
+                        <h3>Rogue</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card sorcerer">
-                <div class="class-card-content">
-                    <h3>Sorcerer</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card sorcerer">
+                    <div class="class-card-content">
+                        <h3>Sorcerer</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card warlock">
-                <div class="class-card-content">
-                    <h3>Warlock</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card warlock">
+                    <div class="class-card-content">
+                        <h3>Warlock</h3>
+                    </div>
                 </div>
             </a>
-            <a href="#" class="class-card wizard">
-                <div class="class-card-content">
-                    <h3>Wizard</h3>
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="class-card wizard">
+                    <div class="class-card-content">
+                        <h3>Wizard</h3>
+                    </div>
                 </div>
             </a>
         </div>
@@ -579,61 +613,61 @@
         <!-- Spells Section -->
         <h2 class="section-title" id="spells">Spells by Class</h2>
         <div class="grid-5">
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-cog"></i>
                     <h3>Artificer Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-music"></i>
                     <h3>Bard Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-cross"></i>
                     <h3>Cleric Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-seedling"></i>
                     <h3>Druid Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-shield-halved"></i>
                     <h3>Paladin Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-paw"></i>
                     <h3>Ranger Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-fire-flame-curved"></i>
                     <h3>Sorcerer Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-moon"></i>
                     <h3>Warlock Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-wand-sparkles"></i>
                     <h3>Wizard Spells</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-book"></i>
                     <h3>All Spells</h3>
@@ -644,67 +678,67 @@
         <!-- Items Section -->
         <h2 class="section-title" id="items">Items & Equipment</h2>
         <div class="items-grid">
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-toolbox"></i>
                     <h3>Adventuring Gear</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-shield"></i>
                     <h3>Armor and Shields</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-dice-d20"></i>
                     <h3>Trinkets</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-khanda"></i>
                     <h3>Weapons</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-gun"></i>
                     <h3>Firearms</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-bomb"></i>
                     <h3>Explosives</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-ring"></i>
                     <h3>Wondrous Items</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-coins"></i>
                     <h3>Currency</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-flask"></i>
                     <h3>Poisons</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-hammer"></i>
                     <h3>Tools</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-chess-rook"></i>
                     <h3>Siege Equipment</h3>
@@ -715,25 +749,25 @@
         <!-- Feats Section -->
         <h2 class="section-title" id="feats">Feats</h2>
         <div class="grid-4">
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-star"></i>
                     <h3>All Feats</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-fist-raised"></i>
                     <h3>Combat Feats</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-hat-wizard"></i>
                     <h3>Magic Feats</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-users"></i>
                     <h3>Racial Feats</h3>
@@ -815,19 +849,19 @@
         <!-- Miscellaneous -->
         <h2 class="section-title">Additional Resources</h2>
         <div class="grid-3">
-            <a href="character-builder.html" class="card-link">
+            <a href="character-builder.html" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-dice-d20"></i>
                     <h3>Character Builder</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-key"></i>
                     <h3>Heroic Chronicle</h3>
                 </div>
             </a>
-            <a href="#" class="card-link">
+            <a href="#" style="text-decoration: none; color: inherit;">
                 <div class="card">
                     <i class="fas fa-book-open"></i>
                     <h3>Rules Reference</h3>
