@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shifter - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #a0826d;
+            --secondary: #6b5d4f;
+            --accent: #c9a66b;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(160, 130, 109, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(160, 130, 109, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(160, 130, 109, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../shifter.jpg');
+            background-size: 110% auto;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li ul li:before {
+            content: "◦";
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--text-dim);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(160, 130, 109, 0.2);
+            color: var(--accent);
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+
+        tr:hover {
+            background: rgba(160, 130, 109, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+
+        .toc {
+            background: rgba(36, 36, 36, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li:before {
+            display: none;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        .toc ul ul a {
+            font-size: 0.85rem;
+            padding-left: 1rem;
+        }
+
+        .toc ul ul a:hover {
+            padding-left: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .main {
+                padding: 2rem;
+            }
+
+            .race-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 1.5rem;
+            }
+
+            .race-title {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Shifter</h1>
+        </div>
+
+        <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
+        <p><em>Shifters are sometimes called weretouched, as they are descendants of people who contracted full or partial lycanthropy. Humanoids with a bestial aspect, shifters can't fully change shape, but they can temporarily enhance their animalistic features by entering a state they call shifting.</em></p>
+        <p><em>Shifters are similar to humans in height and build but are typically more lithe and flexible. Their facial features have a bestial cast, often with large eyes and pointed ears; most shifters also have prominent canine teeth. They grow fur-like hair on nearly every part of their bodies. While a shifter's appearance might remind an onlooker of an animal, they remain clearly identifiable as shifters even when at their most feral.</em></p>
+        <p><em>Most shifters resemble a particular kind of lycanthrope. You can choose the kind of lycanthrope in your past, or you can determine it randomly by rolling on the Lycanthrope Ancestor table. The table also provides a suggestion for the Shifting option you might have as a result of your ancestry.</em></p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Lycanthrope Ancestor</th>
+                </tr>
+                <tr>
+                    <th>d6</th>
+                    <th>Ancestor</th>
+                    <th>Suggested Shifting Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Werebear</td>
+                    <td>Beasthide</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Wereboar</td>
+                    <td>Beasthide</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Wererat</td>
+                    <td>Swiftstride</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Weretiger</td>
+                    <td>Swiftstride</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Werewolf (wolflike)</td>
+                    <td>Longtooth</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Werewolf (doglike)</td>
+                    <td>Wildhunt</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+            <li><strong>Size.</strong> You are Medium.</li>
+            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <li><strong>Bestial Instincts.</strong> Channeling the beast within, you have proficiency in one of the following skills of your choice: Acrobatics, Athletics, Intimidation, or Survival.</li>
+            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
+            <li><strong>Shifting.</strong> As a bonus action, you can assume a more bestial appearance. This transformation lasts for 1 minute, until you die, or until you revert to your normal appearance as a bonus action. When you shift, you gain temporary hit points equal to 2 x your proficiency bonus. You can shift a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.
+                <ul>
+                    <li>Whenever you shift, you gain an additional benefit based on one of the following options (choose when you select this race):
+                        <ul>
+                            <li><strong>Beasthide.</strong> You gain 1d6 additional temporary hit points. While shifted, you have a +1 bonus to your Armor Class.</li>
+                            <li><strong>Longtooth.</strong> When you shift and as a bonus action on your other turns while shifted, you can use your elongated fangs to make an unarmed strike. If you hit with your fangs, you can deal piercing damage equal to 1d6 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike.</li>
+                            <li><strong>Swiftstride.</strong> While shifted, your walking speed increases by 10 feet. Additionally, you can move up to 10 feet as a reaction when a creature ends its turn within 5 feet of you. This reactive movement doesn't provoke opportunity attacks.</li>
+                            <li><strong>Wildhunt.</strong> While shifted, you have advantage on Wisdom checks, and no creature within 30 feet of you can make an attack roll with advantage against you unless you're incapacitated.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+        </ul>
+
+        <h1 id="eberron">Eberron - Rising from the Last War</h1>
+        <p><em>Shifters are sometimes called the weretouched, as many believe that they are the descendants of humans and lycanthropes. They are humanoids with a bestial aspect; while they cannot fully change shape they can temporarily enhance their animalistic features – a state they call shifting. Whatever their origins, shifters have evolved into a unique race. A shifter walks on the knife's edge between the wilds and the world around them. Do they embrace their primal instincts or the path of civilization?</em></p>
+        <ul>
+            <li><em>Beasthide often signifies the bear or boar: stoic, stubborn and thick-skinned.</em></li>
+            <li><em>Longtooth shifters typically have lupine traits and prefer to run with a pack.</em></li>
+            <li><em>Swiftstride are often predatory and feline, but a swiftstride could also be a cunning rat who darts through the shadows.</em></li>
+            <li><em>Wildhunt shifters are born from any creature that tracks its prey.</em></li>
+        </ul>
+
+        <ul>
+            <li><strong>Age.</strong> Shifters are quick to mature both physically and emotionally, reaching young adulthood at age 10. They rarely live to be more than 70 years old.</li>
+            <li><strong>Alignment.</strong> Shifters tend toward neutrality, being more focused on survival than concepts of good and evil. A love of personal freedom can drive shifters toward chaotic alignments.</li>
+            <li><strong>Size.</strong> Shifters range from 5 to almost 7 feet tall, depending on their subrace. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Darkvision.</strong> You have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+            <li><strong>Keen Senses.</strong> You have proficiency in the Perception skill.</li>
+            <li><strong>Shifting.</strong> As a bonus action, you can assume a more bestial appearance. This transformation lasts for 1 minute, until you die, or until you revert to your normal appearance as a bonus action. When you shift, you gain temporary hit points equal to your level + your Constitution modifier (minimum of 1 temporary hit point). You also gain benefits that depend on your shifter subrace, described below. Once you shift, you can't do so again until you finish a short or long rest.</li>
+            <li><strong>Languages.</strong> You can read and write Common.</li>
+            <li><strong>Subrace.</strong> The beast within shapes each shifter physically and mentally. The four major subraces of shifter include beasthide, longtooth, swiftstride, and wildhunt. Choose a subrace for your shifter.</li>
+        </ul>
+
+        <h2 id="beasthide">Beasthide</h2>
+        <p><em>Stoic and solid, a beasthide shifter draws strength and stability from the beast within. Beasthide shifters are typically tied to the bear or the boar, but any creature known for its toughness could apply.</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Strength score increases by 1.</li>
+            <li><strong>Natural Athlete.</strong> You have proficiency in the Athletics skill.</li>
+            <li><strong>Shifting Feature.</strong> Whenever you shift, you gain 1d6 additional temporary hit points, and while shifted, you have a +1 bonus to your Armor Class.</li>
+        </ul>
+
+        <h2 id="longtooth">Longtooth</h2>
+        <p><em>Longtooth shifters are fierce and aggressive, but they form deep bonds with their friends. Many longtooth shifters have canine traits that become more pronounced as they shift, but they might instead draw on tigers, hyenas, or other predators.</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Dexterity score increases by 1.</li>
+            <li><strong>Fierce.</strong> You have proficiency in the Intimidation skill.</li>
+            <li><strong>Shifting Feature.</strong> While shifted, you can use your elongated fangs to make an unarmed strike as a bonus action. If you hit with your fangs, you can deal piercing damage equal to 1d6 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike.</li>
+        </ul>
+
+        <h2 id="swiftstride">Swiftstride</h2>
+        <p><em>Swiftstride shifters are graceful and quick. Typically feline in nature, swiftstride shifters are often aloof and difficult to pin down physically or socially.</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Charisma score increase by 1.</li>
+            <li><strong>Graceful.</strong> You have proficiency in the Acrobatics skill.</li>
+            <li><strong>Shifting Feature.</strong> While shifted, your walking speed increases by 10 feet. Additionally, you can move up to 10 feet as a reaction when an enemy ends its turn within 5 feet of you. This reactive movement doesn't provoke opportunity attacks.</li>
+        </ul>
+
+        <h2 id="wildhunt">Wildhunt</h2>
+        <p><em>Wildhunt shifters are sharp and insightful. Some are constantly alert, ever wary for possible threats. Others focus on their intuition, searching within. Wildhunt shifters are excellent hunters, and they also tend to become the spiritual leaders of shifter communities.</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2.</li>
+            <li><strong>Natural Tracker.</strong> You have proficiency in the Survival skill.</li>
+            <li><strong>Mark the Scent.</strong> As a bonus action, you can mark one creature you can see within 10 feet of you. Until the end of your next long rest, your proficiency bonus is doubled for any ability check you make to find the marked creature, and you always know the location of that creature if it is within 60 feet of you. You can't use this trait again until you finish a short or long rest.</li>
+            <li><strong>Shifting Feature.</strong> While shifted, you have advantage on Wisdom checks.</li>
+        </ul>
+
+        <h1 id="ua">Unearthed Arcana</h1>
+        
+        <h2 id="cliffwalk">Cliffwalk</h2>
+        <p>Source: Unearthed Arcana 1 - Eberron</p>
+        <p><em>Your cliffwalk heritage grants you the agility of a mountain goat.</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 1.</li>
+            <li><strong>Shifting Feature.</strong> While shifting, you gain a climb speed of 30 feet.</li>
+        </ul>
+
+        <h2 id="razorclaw">Razorclaw</h2>
+        <p>Source: Unearthed Arcana 1 - Eberron</p>
+        <p><em>As a razorclaw shifter, you make swift, slashing strikes in battle</em></p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 1.</li>
+            <li><strong>Shifting Feature.</strong> While shifting, you can make an unarmed strike as a bonus action. You can use your Dexterity for its attack roll and damage bonus, and this attack deals slashing damage.</li>
+        </ul>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#motm">Monsters of the Multiverse</a></li>
+                <li><a href="#eberron">Eberron - Rising from the Last War</a>
+                    <ul>
+                        <li><a href="#beasthide">Beasthide</a></li>
+                        <li><a href="#longtooth">Longtooth</a></li>
+                        <li><a href="#swiftstride">Swiftstride</a></li>
+                        <li><a href="#wildhunt">Wildhunt</a></li>
+                    </ul>
+                </li>
+                <li><a href="#ua">Unearthed Arcana</a>
+                    <ul>
+                        <li><a href="#cliffwalk">Cliffwalk</a></li>
+                        <li><a href="#razorclaw">Razorclaw</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+<script>
+    // Theme Management
+    function toggleThemeMenu() {
+        document.getElementById('theme-menu').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        // Remove all theme classes
+        document.body.className = '';
+        
+        // Add selected theme class
+        document.body.classList.add(theme + '-theme');
+        
+        // Update active button
+        document.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + theme).classList.add('active');
+        
+        // Update main theme button emoji
+        const emojis = {
+            'fantasy': '🐉',
+            'steampunk': '⚙',
+            'winter': '❄️',
+            'nature': '🌿',
+            'gothic': '🦇'
+        };
+        document.getElementById('current-theme').textContent = emojis[theme];
+        
+        // Save theme preference
+        localStorage.setItem('dnd-theme', theme);
+        
+        // Close menu
+        document.getElementById('theme-menu').classList.remove('show');
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        selectTheme(savedTheme);
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle.contains(e.target)) {
+            document.getElementById('theme-menu').classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>

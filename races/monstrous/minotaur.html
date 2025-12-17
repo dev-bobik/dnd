@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minotaur - D&D 5e</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #8b4513;
+            --secondary: #654321;
+            --accent: #a0522d;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
+        }
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
+        }
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+        }
+
+        body.winter-theme {
+            --primary: #00bfff;
+            --secondary: #4169e1;
+            --accent: #87ceeb;
+        }
+
+        body.nature-theme {
+            --primary: #32cd32;
+            --secondary: #228b22;
+            --accent: #90ee90;
+        }
+
+        body.gothic-theme {
+            --primary: #9370db;
+            --secondary: #663399;
+            --accent: #8b008b;
+        }
+
+        body {
+            font-family: 'Spectral', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(0, 0, 0, 0.8));
+            border-bottom: 2px solid var(--primary);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-menu.show {
+            display: flex;
+        }
+
+        .theme-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--border);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+        }
+
+        /* Race Header - Full Width */
+        .race-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin: -2rem -2rem 3rem -2rem;
+            padding: 8rem 2rem 3rem 2rem;
+            position: relative;
+            background-image: url('../../minotaur.jpg');
+            background-size: 110% auto;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            border-radius: 0;
+            overflow: hidden;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            min-height: 400px;
+        }
+
+        .race-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.6) 50%, 
+                rgba(26, 26, 26, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .race-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .race-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--primary), 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Main Content */
+        .main {
+            background: rgba(36, 36, 36, 0.5);
+            border-radius: 12px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Content */
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li ul li:before {
+            content: "◦";
+        }
+
+        strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--text-dim);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+
+        .toc {
+            background: rgba(36, 36, 36, 0.8);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li:before {
+            display: none;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .main {
+                padding: 2rem;
+            }
+
+            .race-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 1.5rem;
+            }
+
+            .race-title {
+                font-size: 1.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <a href="../../rules.html" class="logo">D&D 5E</a>
+        <nav class="nav">
+            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
+            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
+    <div class="theme-menu" id="theme-menu">
+        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
+        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
+        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
+        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
+        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Minotaur</h1>
+        </div>
+
+        <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
+        <p><em>Minotaurs are barrel-chested humanoids with heads resembling those of bulls. Blessed with a supernaturally strong sense of direction, minotaurs make great navigators. Some sages believe minotaurs were first created by the Lady of Pain to patrol the magical mazes that she uses to trap her foes.</em></p>
+        <p><em>Minotaur horns range in size from about 1 foot long to easily three times that length. Minotaurs often carve their horns to sharpen their edges, etch symbols of power into them, or sheathe them in bronze to prevent them from shattering during battle.</em></p>
+        <p><em>Thick hair extends down minotaurs' necks and powerful backs, and some have long patches of hair on their chins and cheeks. Their legs end in heavy, cloven hooves, and they have long, tufted tails.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+            <li><strong>Size.</strong> You are Medium.</li>
+            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <li><strong>Horns.</strong> You have horns that you can use to make unarmed strikes. When you hit with them, the strike deals 1d6 + your Strength modifier piercing damage, instead of the bludgeoning damage normal for an unarmed strike.</li>
+            <li><strong>Goring Rush.</strong> Immediately after you take the Dash action on your turn and move at least 20 feet, you can make one melee attack with your Horns as a bonus action.</li>
+            <li><strong>Hammering Horns.</strong> Immediately after you hit a creature with a melee attack as part of the Attack action on your turn, you can use a bonus action to attempt to push that target with your horns. The target must be within 5 feet of you and no more than one size larger than you. Unless it succeeds on a Strength saving throw against a DC equal to 8 + your proficiency bonus + your Strength modifier, you push it up to 10 feet away from you.</li>
+            <li><strong>Labyrinthine Recall.</strong> You always know which direction is north, and you have advantage on any Wisdom (Survival) check you make to navigate or track.</li>
+            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+        </ul>
+
+        <h1 id="ggtr">Guildmaster's Guide to Ravnica</h1>
+        <p><em>The minotaurs of Ravnica are strong in body. dedication, and courage. They are at home on the battlefield, willing to fight for their various causes. They combine a burning fury in battle with keen tactics that make them excellent commanders as well as valuable shock troops.</em></p>
+        <p><em>Minotaurs are barrel-chested humanoids with heads resembling those of bulls. Their horns range in size from about 1 foot long to great, curling weapons easily three times that length. They often ornament their horns with metal rings or sheathe them in metal to protect them from damage.</em></p>
+        <p><em>Manes of shaggy fur extend down minotaurs' necks and powerful backs, and males have long tufts of hair on their chins and cheeks. Their legs end in heavy, cloven hooves. Minotaurs are born with long, tufted tails, but minotaurs of the Ordruun clan (and some others) have their tails docked as part of a coming-of-age ceremony; they find the heavy armor of the Boros legion much more comfortable without a long tail in the way.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Constitution score increases by 1.</li>
+            <li><strong>Alignment.</strong> Most minotaurs who join the Boros Legion lean toward lawful alignments, while those associated with the Cult of Rakdos or the Gruul Clans tend toward chaotic alignments.</li>
+            <li><strong>Size.</strong> Minotaurs average over 6 feet in height, and they have stocky builds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Horns.</strong> Your horns are natural melee weapons, which you can use to make unarmed strikes. If you hit with them, you deal piercing damage equal to 1d6 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike.</li>
+            <li><strong>Goring Rush.</strong> Immediately after you use the Dash action on your turn and move at least 20 feet, you can make one melee attack with your horns as a bonus action.</li>
+            <li><strong>Hammering Horns.</strong> Immediately after you hit a creature with a melee attack as a part of the Attack action on your turn, you can use a bonus action to attempt to shove that target with your horns. The target must be within 5 feet of you and no more than one size larger than you. Unless it succeeds on a Strength saving throw against a DC equal to 8 + your proficiency bonus + your Strength modifier, you push it up to 10 feet away from you.</li>
+            <li><strong>Imposing Presence.</strong> You have proficiency in one of the following skills of your choice: Intimidation or Persuasion.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and Minotaur.</li>
+        </ul>
+
+        <h1 id="mot">Mythic Odyssey of Theros</h1>
+        <p><em>The minotaurs who dwell in the badlands of Phoberos and the remote polis of Skophos are caught between two worlds. Some follow the dark god Mogis, who has tyrannized them for ages untold and shown them a trail of slaughter that is all many minotaurs have ever known. Others, though, have emerged from this bloody path and found a world that welcomes those who pursue their own destinies and heroic callings.</em></p>
+        <p><em>Minotaurs are barrel-chested humanoids with heads resembling those of bulls. Their horns range in size from about 1 foot long to great, curling weapons easily three times that length. Theros minotaurs often carve their horns to sharpen their edges, etch symbols of power into them, or sheathe them in bronze to prevent them from shattering during battle.</em></p>
+        <p><em>Thick hair extends down minotaurs' necks and powerful backs, and some have long patches of hair on their chins and cheeks. Their legs end in heavy, cloven hooves, and they have long, tufted tails. Minotaur priests often adorn themselves with sacred items, be they trophies from fallen foes, keepsakes from their homeland, or naturally occurring marks of their god's favor.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Constitution score increases by 1.</li>
+            <li><strong>Age.</strong> Minotaurs mature and age at about the same rate as humans.</li>
+            <li><strong>Alignment.</strong> Minotaurs who leave the walls of Skophos have the opportunity to be free of its culture and pursue chaotic alignments, while those who remain within the polis and its tyrannical regime tend toward lawful alignments.</li>
+            <li><strong>Size.</strong> Minotaurs average over 6 feet in height, and they have stocky builds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Horns.</strong> Your horns are natural melee weapons, which you can use to make unarmed strikes. If you hit with them, you deal piercing damage equal to 1d6 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike.</li>
+            <li><strong>Goring Rush.</strong> Immediately after you use the Dash action on your turn and move at least 20 feet, you can make one melee attack with your horns as a bonus action.</li>
+            <li><strong>Hammering Horns.</strong> Immediately after you hit a creature with a melee attack as a part of the Attack action on your turn, you can use a bonus action to attempt to shove that target with your horns. The target must be within 5 feet of you and no more than one size larger than you. Unless it succeeds on a Strength saving throw against a DC equal to 8 + your proficiency bonus + your Strength modifier, you push it up to 10 feet away from you.</li>
+            <li><strong>Imposing Presence.</strong> You have proficiency in one of the following skills of your choice: Intimidation or Persuasion.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and Minotaur.</li>
+        </ul>
+
+        <h1 id="psa">Plane Shift - Amonkhet</h1>
+        <p><em>Minotaurs are powerfully built, barrel-chested humanoids with heads resembling rams. Their horns curl tightly against the sides of their heads to encircle their ears, and manes of shaggy fur — shorter in females — fall over their broad shoulders. As their appearance suggests, they combine physical strength with stubbornness, bravado, and reckless bravery. They revel in combat, especially when the odds against them seem overwhelming.</em></p>
+        <p><em>Minotaurs are rowdy, boisterous, and direct to the point of rudeness. They have no qualms about declaring what they want and defying others to keep it from them. In combat, they bellow loud challenges in defiance of their foes, and roar with laughter as they triumph.</em></p>
+        <p><em>Minotaurs believe they hold a unique place among the races of Amonkhet. The khenra can look to Hazoret, the naga to Rhonas, and the aven to Kefnet to see themselves represented among the gods. Humans have no single god to look to, which explains why they demonstrate such variety. But only one god bears a pair of curving horns: the God-Pharaoh himself, who holds a special place for many of the minotaurs of Amonkhet.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Constitution score increases by 1.</li>
+            <li><strong>Age.</strong> Minotaurs develop more slowly than humans, reaching full maturity around the age of 20. They typically become acolytes at around 8 or 9 years old, making them among the older members of their crops. Once they reach maturity, though, minotaurs age quickly, rushing headlong through the trials (as they do all aspects of life) to complete them before they pass their peak. A minotaur allowed to die of old age would rarely live beyond 40.</li>
+            <li><strong>Alignment.</strong> Most minotaurs lean toward chaotic alignments, and they have a slight inclination toward evil.</li>
+            <li><strong>Size.</strong> Minotaurs average over 6 feet in height, and they have strong, stocky builds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Natural Weapon.</strong> You can use your horns as a natural weapon to make unarmed strikes. If you hit with your horns, you deal bludgeoning damage equal to 1d6 + your Strength modifier.</li>
+            <li><strong>Menacing.</strong> You gain proficiency in the Intimidation skill.</li>
+            <li><strong>Relentless Endurance.</strong> When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.</li>
+            <li><strong>Savage Attacks.</strong> When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.</li>
+            <li><strong>Languages.</strong> You can speak, read, and write Common and Minotaur.</li>
+        </ul>
+
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#motm">Monsters of the Multiverse</a></li>
+                <li><a href="#ggtr">Guildmaster's Guide to Ravnica</a></li>
+                <li><a href="#mot">Mythic Odyssey of Theros</a></li>
+                <li><a href="#psa">Plane Shift - Amonkhet</a></li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+<script>
+    // Theme Management
+    function toggleThemeMenu() {
+        document.getElementById('theme-menu').classList.toggle('show');
+    }
+
+    function selectTheme(theme) {
+        // Remove all theme classes
+        document.body.className = '';
+        
+        // Add selected theme class
+        document.body.classList.add(theme + '-theme');
+        
+        // Update active button
+        document.querySelectorAll('.theme-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('btn-' + theme).classList.add('active');
+        
+        // Update main theme button emoji
+        const emojis = {
+            'fantasy': '🐉',
+            'steampunk': '⚙',
+            'winter': '❄️',
+            'nature': '🌿',
+            'gothic': '🦇'
+        };
+        document.getElementById('current-theme').textContent = emojis[theme];
+        
+        // Save theme preference
+        localStorage.setItem('dnd-theme', theme);
+        
+        // Close menu
+        document.getElementById('theme-menu').classList.remove('show');
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
+        selectTheme(savedTheme);
+    });
+
+    // Close theme menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle.contains(e.target)) {
+            document.getElementById('theme-menu').classList.remove('show');
+        }
+    });
+</script>
+
+</body>
+</html>
