@@ -9,7 +9,7 @@
     <style>
         :root {
             --primary: #c53131;
-            --secondary: #8b0000;
+            --skecondary: #8b0000;
             --accent: #d4af37;
             --text: #f0f0f0;
             --bg: #1a1a1a;
@@ -111,8 +111,8 @@
         #google_translate_element {
             background: var(--card-bg);
             padding: 8px 12px;
-            border-radius: 12px;
-            border: 2px solid var(--border);
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
         #google_translate_element select {
@@ -120,8 +120,53 @@
             color: var(--text);
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 0.9rem;
+            padding: 6px 10px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .goog-te-gadget {
+            color: var(--text) !important;
+            font-family: 'Spectral', serif !important;
+        }
+
+        .goog-te-gadget .goog-te-combo {
+            background: var(--bg) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 6px !important;
+            padding: 6px 10px !important;
+            margin: 0 !important;
+        }
+
+        /* Zobrazit všechny části widgetu */
+        .goog-te-gadget-simple {
+            background-color: var(--card-bg) !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        .goog-te-menu-value {
+            color: var(--text) !important;
+        }
+
+        .goog-te-menu-value span {
+            color: var(--text) !important;
+            display: inline !important;
+        }
+
+        .goog-te-gadget-icon {
+            background-image: none !important;
+            margin-right: 4px !important;
+        }
+
+        /* Skrýt pouze Google Translate banner */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
         }
 
         .nav-right {
