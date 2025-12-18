@@ -18,11 +18,41 @@
         }
 
         /* Theme System */
-        body.fantasy-theme { --primary: #ff6b35; --secondary: #8b0000; --accent: #d4af37; }
-        body.steampunk-theme { --primary: #c5a059; --secondary: #8b6f47; --accent: #d4a574; }
-        body.winter-theme { --primary: #4a9eff; --secondary: #2e5a8a; --accent: #a8d8ff; }
-        body.nature-theme { --primary: #4a9c4e; --secondary: #2d5f30; --accent: #8bc18a; }
-        body.gothic-theme { --primary: #9b59b6; --secondary: #5a3b6d; --accent: #c895d8; }
+        body.fantasy-theme { 
+            --primary: #ff6b35; 
+            --secondary: #8b0000; 
+            --accent: #d4af37; 
+            --nav-bg: rgba(20, 10, 10, 0.7);
+            --card-bg: rgba(20, 10, 10, 0.95);
+        }
+        body.steampunk-theme { 
+            --primary: #c5a059; 
+            --secondary: #8b6f47; 
+            --accent: #d4a574; 
+            --nav-bg: rgba(42, 26, 13, 0.7);
+            --card-bg: rgba(20, 20, 20, 0.95);
+        }
+        body.winter-theme { 
+            --primary: #4a9eff; 
+            --secondary: #2e5a8a; 
+            --accent: #a8d8ff; 
+            --nav-bg: rgba(10, 20, 35, 0.7);
+            --card-bg: rgba(15, 25, 40, 0.95);
+        }
+        body.nature-theme { 
+            --primary: #4a9c4e; 
+            --secondary: #2d5f30; 
+            --accent: #8bc18a; 
+            --nav-bg: rgba(15, 30, 15, 0.7);
+            --card-bg: rgba(20, 30, 20, 0.95);
+        }
+        body.gothic-theme { 
+            --primary: #9b59b6; 
+            --secondary: #5a3b6d; 
+            --accent: #c895d8; 
+            --nav-bg: rgba(20, 10, 25, 0.7);
+            --card-bg: rgba(20, 10, 25, 0.95);
+        }
 
         * {
             margin: 0;
@@ -35,132 +65,135 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            padding-top: 80px;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg) 100%);
-            padding: 1.5rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             border-bottom: 2px solid var(--primary);
+            transition: all 0.5s ease;
         }
 
         nav {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             gap: 2rem;
         }
 
-        .home-btn {
-            background: var(--card-bg);
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            padding: 8px 16px;
-            color: var(--accent);
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
             text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .home-btn:hover {
-            background: var(--primary);
-            color: var(--text);
-            transform: translateY(-2px);
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 20px var(--primary);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
-            justify-content: center;
-            align-items: center;
             margin: 0;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: #e0e0e0;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: color 0.3s;
+            font-weight: 500;
         }
 
         .nav-links a:hover {
             color: var(--primary);
         }
 
-        /* Theme Toggle Dropdown */
+        /* Theme Toggle Button */
         .theme-toggle {
             position: relative;
         }
 
         .theme-toggle-btn {
-            background: var(--card-bg);
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            background: var(--primary);
             border: 2px solid var(--primary);
-            border-radius: 8px;
-            padding: 8px 16px;
-            color: var(--text);
-            font-size: 1rem;
+            color: #fff;
+            font-size: 1.2rem;
             cursor: pointer;
+            border-radius: 50%;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            box-shadow: 0 0 10px var(--primary);
         }
 
         .theme-toggle-btn:hover {
-            background: var(--primary);
-            transform: translateY(-2px);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary);
         }
 
         .theme-dropdown {
             position: absolute;
-            top: calc(100% + 8px);
+            top: 50px;
             right: 0;
             background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 8px;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 10px;
             display: none;
             flex-direction: column;
-            gap: 4px;
-            min-width: 150px;
-            z-index: 1000;
+            gap: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary);
+            backdrop-filter: blur(10px);
+            z-index: 1002;
         }
 
-        .theme-toggle:hover .theme-dropdown {
+        .theme-toggle.open .theme-dropdown {
             display: flex;
         }
 
         .theme-option {
-            background: transparent;
-            border: none;
-            padding: 8px 12px;
-            color: var(--text);
-            text-align: left;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            font-size: 1.3rem;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 50%;
             transition: all 0.3s;
-            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .theme-option:hover {
-            background: var(--primary);
+            justify-content: center;
         }
 
         .theme-option.active {
             background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-option:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
         }
 
         /* Google Translate */
@@ -589,10 +622,7 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="index.html" class="home-btn">
-                <i class="fas fa-home"></i>
-                Home
-            </a>
+            <a href="index.html" class="logo">D&D 5e</a>
             <ul class="nav-links">
                 <li><a href="lineages.html">Races</a></li>
                 <li><a href="#classes">Classes</a></li>
@@ -602,16 +632,13 @@
             </ul>
             <div class="nav-right">
                 <div class="theme-toggle">
-                    <button class="theme-toggle-btn">
-                        <i class="fas fa-palette"></i>
-                        Theme
-                    </button>
+                    <button class="theme-toggle-btn">🎨</button>
                     <div class="theme-dropdown">
-                        <button class="theme-option active" data-theme="fantasy">🐉 Fantasy</button>
-                        <button class="theme-option" data-theme="steampunk">⚙️ Steampunk</button>
-                        <button class="theme-option" data-theme="winter">❄️ Winter</button>
-                        <button class="theme-option" data-theme="nature">🌿 Nature</button>
-                        <button class="theme-option" data-theme="gothic">🦇 Gothic</button>
+                        <button class="theme-option active" data-theme="fantasy">🐉</button>
+                        <button class="theme-option" data-theme="steampunk">⚙️</button>
+                        <button class="theme-option" data-theme="winter">❄️</button>
+                        <button class="theme-option" data-theme="nature">🌿</button>
+                        <button class="theme-option" data-theme="gothic">🦇</button>
                     </div>
                 </div>
                 <div id="google_translate_element"></div>
@@ -1047,8 +1074,22 @@
 
     <script>
         // Theme Switcher
+        const themeToggle = document.querySelector('.theme-toggle');
+        const themeToggleBtn = document.querySelector('.theme-toggle-btn');
         const themeOptions = document.querySelectorAll('.theme-option');
         const body = document.body;
+
+        // Toggle dropdown
+        themeToggleBtn.addEventListener('click', () => {
+            themeToggle.classList.toggle('open');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!themeToggle.contains(e.target)) {
+                themeToggle.classList.remove('open');
+            }
+        });
 
         // Load saved theme
         const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
@@ -1064,6 +1105,7 @@
                 option.classList.add('active');
                 
                 localStorage.setItem('dnd-theme', theme);
+                themeToggle.classList.remove('open');
             });
         });
     </script>
