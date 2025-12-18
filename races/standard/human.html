@@ -6,35 +6,31 @@
     <title>Human - D&D 5e</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        function toggleThemeMenu() {
-            const menu = document.getElementById('theme-options');
-            menu.classList.toggle('show');
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4682b4;
+            --secondary: #36648b;
+            --accent: #87ceeb;
+            --dark: #1a1a1a;
+            --card: #242424;
+            --text: #e8e8e8;
+            --text-dim: #999;
+            --border: #333;
         }
-        function selectTheme(theme) {
-            document.body.className = '';
-            document.body.classList.add(theme + '-theme');
-            document.querySelectorAll('.theme-options button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + theme).classList.add('active');
-            document.getElementById('current-theme-btn').textContent = document.getElementById('btn-' + theme).textContent;
-            localStorage.setItem('selectedTheme', theme);
+
+        body.fantasy-theme {
+            --primary: #ff6b35;
+            --secondary: #8b0000;
+            --accent: #d4af37;
         }
-        window.onload = function() {
-            const savedTheme = localStorage.getItem('selectedTheme') || 'fantasy';
-            selectTheme(savedTheme);
-            document.addEventListener('click', function(event) {
-                const menu = document.getElementById('theme-options');
-                const btn = document.getElementById('current-theme-btn');
-                if (!menu.contains(event.target) && event.target !== btn) {
-                    menu.classList.remove('show');
-                }
-            });
-            // Oprava pro správné zavírání menu při změně velikosti okna
-            window.addEventListener('resize', function() {
-                document.getElementById('theme-options').classList.remove('show');
-            });
-        };
-    </script>
+
+        body.steampunk-theme {
+            --primary: #c5a059;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
         }
 
         body.winter-theme {
