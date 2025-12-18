@@ -51,24 +51,37 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
             gap: 2rem;
         }
 
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
+        .home-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 8px 16px;
             color: var(--accent);
             text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-btn:hover {
+            background: var(--primary);
+            color: var(--text);
+            transform: translateY(-2px);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -198,7 +211,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-left: auto;
+            justify-content: flex-end;
         }
 
         /* Hero Section */
@@ -533,7 +546,10 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="#" class="logo">D&D 5e</a>
+            <a href="index.html" class="home-btn">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
             <ul class="nav-links">
                 <li><a href="lineages.html">Races</a></li>
                 <li><a href="#classes">Classes</a></li>
