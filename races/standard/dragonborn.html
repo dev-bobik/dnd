@@ -558,70 +558,89 @@
 
 <!-- Header -->
 <header class="header">
-    <div class="header-content">
-        <a href="../../rules.html" class="logo">D&D 5E</a>
-        <nav class="nav">
-            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
-            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
-        </nav>
-    </div>
+    <nav>
+        <a href="../../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <ul class="nav-links">
+            <li><a href="../../rules.html">Rules</a></li>
+            <li><a href="../../lineages.html">All Races</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="theme-toggle">
+                <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
+                <div class="theme-options" id="theme-options">
+                    <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+                    <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙️</button>
+                    <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+                    <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+                    <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+                </div>
+            </div>
+            <div id="google_translate_element"></div>
+        </div>
+    </nav>
 </header>
-<!-- Theme Toggle -->
-<div class="theme-toggle">
-    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
-    <div class="theme-menu" id="theme-menu">
-        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
-        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙️</button>
-        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
-        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
-        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
-    </div>
-</div>
 
-<script>
-    // Theme Switcher (lineages style)
-    function toggleThemeMenu() {
-        const themeMenu = document.getElementById('theme-menu');
-        themeMenu.classList.toggle('show');
-    }
-    function selectTheme(theme) {
-        setTheme(theme);
-        document.getElementById('theme-menu').classList.remove('show');
-    }
-    function setTheme(theme) {
-        const body = document.body;
-        const buttons = {
-            fantasy: document.getElementById('btn-fantasy'),
-            steampunk: document.getElementById('btn-steampunk'),
-            winter: document.getElementById('btn-winter'),
-            nature: document.getElementById('btn-nature'),
-            gothic: document.getElementById('btn-gothic')
-        };
-        const themeEmojis = {
-            fantasy: '🐉',
-            steampunk: '⚙️',
-            winter: '❄️',
-            nature: '🌿',
-            gothic: '🦇'
-        };
-        body.className = theme + '-theme';
-        Object.values(buttons).forEach(btn => btn.classList.remove('active'));
-        buttons[theme].classList.add('active');
-        document.getElementById('current-theme').textContent = themeEmojis[theme];
-        localStorage.setItem('dnd-theme', theme);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
-        setTheme(savedTheme);
-    });
-    document.addEventListener('click', (e) => {
-        const themeToggle = document.querySelector('.theme-toggle');
-        const themeMenu = document.getElementById('theme-menu');
-        if (themeToggle && !themeToggle.contains(e.target)) {
-            themeMenu.classList.remove('show');
-        }
-    });
-</script>
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Content -->
+    <main class="main">
+        <div class="race-header">
+            <h1 class="race-title">Dragonborn</h1>
+        </div>
+
+        <h1 id="phb">Player's Handbook</h1>
+        <p><em>Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique race, combining the best attributes of dragons and humanoids.</em></p>
+
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Charisma score increases by 1.</li>
+            <li><strong>Age.</strong> Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80.</li>
+            <li><strong>Alignment.</strong> Dragonborn tend towards extremes, making a conscious choice for one side or the other between Good and Evil (represented by Bahamut and Tiamat, respectively).</li>
+            <li><strong>Size.</strong> Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Draconic Ancestry.</strong> You are distantly related to a particular kind of dragon. Choose a type of dragon from the below list; this determines the damage and area of your breath weapon, and the type of resistance you gain.</li>
+        </ul>
+
+        <table>
+            <tr>
+                <th>Dragon Color</th>
+                <th>Damage Type</th>
+                <th>Breath Weapon</th>
+            </tr>
+            <tr><td>Black</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Blue</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Brass</td><td>Fire</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Bronze</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Copper</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Gold</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Green</td><td>Poison</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>Red</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Silver</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>White</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
+        </table>
+
+        <ul>
+            <li><strong>Breath Weapon.</strong> You can use your action to exhale destructive energy. When you use your breath weapon, all creatures in the area must make a saving throw, the type of which is determined by your ancestry. The DC of this saving throw is 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increase to 3d6 at 6th level, 4d6 at 11th, and 5d6 at 16th level. After using your breath weapon, you cannot use it again until you complete a short or long rest.</li>
+            <li><strong>Damage Resistance.</strong> You have resistance to the damage type associated with your ancestry.</li>
+            <li><strong>Languages.</strong> You can read, speak, and write Common and Draconic.</li>
+        </ul>
+
+        <div class="variant-section">
+            <h2 id="draconblood">Draconblood</h2>
+            <p><em>Source: Explorer's Guide to Wildemount</em></p>
+            <p><em>Draconbloods possess long tails and a knack for social manipulation. They remember the days when they were once mighty conquerors.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Charisma score increases by 1.</li>
+                <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+                <li><strong>Forceful Presence.</strong> When you make a Intimidation or Persuasion check, you can do so with advantage once per long rest.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="ravenite">Ravenite</h2>
             <p><em>Source: Explorer's Guide to Wildemount</em></p>
             <p><em>Ravenites have no tails and a hearty physique. They remember the days when they were slaves to the draconblood, as well as the day when they overthrew their masters.</em></p>
 
