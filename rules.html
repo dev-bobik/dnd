@@ -175,128 +175,139 @@
 
         /* Google Translate */
         #google_translate_element {
-            background: transparent;
-            padding: 0;
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
-        /* Skrýt text a zobrazit pouze select */
+        #google_translate_element select {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
         .goog-te-gadget {
-            font-size: 0 !important;
-            line-height: 0 !important;
+            color: var(--text) !important;
+            font-family: 'Spectral', serif !important;
         }
 
         .goog-te-gadget .goog-te-combo {
-            background: var(--card-bg) !important;
-            color: var(--text) !important;
-            border: 2px solid var(--primary) !important;
-            border-radius: 8px !important;
-            padding: 8px 12px !important;
+            background: #1a1a1a !important;
+            color: #f0f0f0 !important;
+            border: 1px solid var(--primary) !important;
+            border-radius: 6px !important;
+            padding: 6px 10px !important;
             margin: 0 !important;
             font-family: 'Spectral', serif !important;
-            font-size: 0.95rem !important;
-            cursor: pointer !important;
-            transition: all 0.3s !important;
-        }
-
-        .goog-te-gadget .goog-te-combo:hover {
-            background: var(--primary) !important;
-            transform: translateY(-2px) !important;
         }
 
         .goog-te-gadget .goog-te-combo option {
-            background: var(--card-bg) !important;
-            color: var(--text) !important;
+            background: #1a1a1a !important;
+            color: #f0f0f0 !important;
         }
 
-        /* Skrýt všechen text kromě selectu */
+        /* Zobrazit všechny části widgetu */
         .goog-te-gadget-simple {
             background-color: transparent !important;
             border: none !important;
             padding: 0 !important;
         }
 
-        .goog-te-gadget span {
-            display: none !important;
+        .goog-te-menu-value {
+            color: #f0f0f0 !important;
         }
 
-        .goog-te-gadget > span > a {
-            display: none !important;
+        .goog-te-menu-value span {
+            color: #f0f0f0 !important;
+            display: inline !important;
         }
 
-        .goog-te-gadget > span > span {
-            display: none !important;
+        .goog-te-menu-value span:first-child {
+            color: #f0f0f0 !important;
         }
 
-        .goog-te-gadget .goog-te-combo {
-            display: inline-block !important;
-        }
-
-        /* Skrýt "Powered by" */
-        .goog-logo-link {
-            display: none !important;
+        .goog-te-menu-value span:nth-child(2)::before {
+            content: ' ';
         }
 
         .goog-te-gadget-icon {
             display: none !important;
         }
 
-        /* Google Translate Dropdown Menu - dynamické barvy podle tématu */
+        a.goog-te-menu-value {
+            color: #f0f0f0 !important;
+        }
+
+        a.goog-te-menu-value:link {
+            color: #f0f0f0 !important;
+        }
+
+        .goog-te-gadget a {
+            color: #f0f0f0 !important;
+        }
+
+        /* Google Translate Dropdown Menu */
         .goog-te-menu2 {
-            background: var(--card-bg) !important;
-            border: 2px solid var(--primary) !important;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px var(--primary) !important;
+            background: #2a2a2a !important;
+            border: 2px solid #ff6b35 !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8), 0 0 20px #ff6b35 !important;
         }
 
         .goog-te-menu2-colpad {
-            background: var(--card-bg) !important;
+            background: #2a2a2a !important;
         }
 
         .goog-te-menu2 table {
-            background: var(--card-bg) !important;
+            background: #2a2a2a !important;
         }
 
         .goog-te-menu2 tbody,
         .goog-te-menu2 tr,
         .goog-te-menu2 td {
-            background: var(--card-bg) !important;
+            background: #2a2a2a !important;
         }
 
         .goog-te-menu-frame {
-            background: var(--card-bg) !important;
+            background: #2a2a2a !important;
         }
 
         iframe.goog-te-menu-frame {
-            background: var(--card-bg) !important;
+            background: #2a2a2a !important;
         }
 
         .goog-te-menu2-item div,
         .goog-te-menu2-item:link div,
         .goog-te-menu2-item:visited div,
         .goog-te-menu2-item:active div {
-            color: var(--text) !important;
-            background: var(--card-bg) !important;
+            color: #f0f0f0 !important;
+            background: #2a2a2a !important;
             border: none !important;
         }
 
         .goog-te-menu2-item:hover {
-            background: var(--primary) !important;
+            background: #ff6b35 !important;
         }
 
         .goog-te-menu2-item:hover div {
-            background: var(--primary) !important;
+            background: #ff6b35 !important;
             color: #fff !important;
         }
 
         .goog-te-menu2-item-selected {
-            background: var(--primary) !important;
+            background: #ff6b35 !important;
         }
 
         .goog-te-menu2-item-selected div {
-            background: var(--primary) !important;
+            background: #ff6b35 !important;
             color: #fff !important;
         }
 
-        /* Skrýt Google Translate banner */
+        /* Skrýt pouze Google Translate banner */
         .goog-te-banner-frame {
             display: none !important;
         }

@@ -749,17 +749,15 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="toc">
-            <div class="toc-title">Contents</div>
-            <ul>
-                <li><a href="#phb">📖 Player's Handbook</a></li>
-                <li class="sub"><a href="#hill">Hill Dwarf</a></li>
-                <li class="sub"><a href="#mountain">Mountain Dwarf</a></li>
-                <li><a href="#eberron">⚙️ Eberron</a></li>
-                <li class="sub"><a href="#warding">Mark of Warding</a></li>
-                <li><a href="#kaladesh">🌌 Kaladesh</a></li>
-            </ul>
-        </div>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#phb">Player's Handbook</a></li>
+            <li><a href="#hill">Hill Dwarf</a></li>
+            <li><a href="#mountain">Mountain Dwarf</a></li>
+            <li><a href="#eberron">Eberron</a></li>
+            <li><a href="#warding">Mark of Warding</a></li>
+            <li><a href="#kaladesh">Kaladesh</a></li>
+        </ul>
 
         <div id="google_translate_element"></div>
     </aside>
@@ -781,15 +779,18 @@
 <script>
     // Theme System with localStorage persistence
     // Google Translate Init
+
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'en',
             includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
         }, 'google_translate_element');
     }
-
-    // Theme Switcher
+</script>
+<script>
+    // Theme Switcher (unified)
     function toggleThemeMenu() {
         const themeOptions = document.getElementById('theme-options');
         themeOptions.classList.toggle('show');
@@ -845,18 +846,6 @@
             themeOptions.classList.remove('show');
         }
     });
-
-    // Function to update race image when provided
-    function setRaceImage(imagePath) {
-        const img = document.getElementById('race-image');
-        const container = document.querySelector('.race-image');
-        
-        if (imagePath) {
-            img.src = imagePath;
-            img.style.display = 'block';
-            container.style.display = 'block';
-        }
-    }
 </script>
 
 </body>
