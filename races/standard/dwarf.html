@@ -624,26 +624,30 @@
 
 <!-- Header -->
 <header class="header">
-    <div class="header-content">
-        <a href="../../rules.html" class="logo">D&D 5E</a>
-        <nav class="nav">
-            <a href="../../rules.html"><i class="fas fa-home"></i> Rules</a>
-            <a href="../../lineages.html"><i class="fas fa-users"></i> All Races</a>
-        </nav>
-    </div>
+    <nav>
+        <a href="../../index.html" class="home-btn">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <ul class="nav-links">
+            <li><a href="../../rules.html">Rules</a></li>
+            <li><a href="../../lineages.html">All Races</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="theme-toggle">
+                <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
+                <div class="theme-options" id="theme-options">
+                    <button onclick="selectTheme('fantasy')" class="active" id="btn-fantasy" title="Fantasy">🐉</button>
+                    <button onclick="selectTheme('steampunk')" id="btn-steampunk" title="Steampunk">⚙️</button>
+                    <button onclick="selectTheme('winter')" id="btn-winter" title="Winter">❄️</button>
+                    <button onclick="selectTheme('nature')" id="btn-nature" title="Nature">🌿</button>
+                    <button onclick="selectTheme('gothic')" id="btn-gothic" title="Gothic">🦇</button>
+                </div>
+            </div>
+            <div id="google_translate_element"></div>
+        </div>
+    </nav>
 </header>
-
-<!-- Theme Toggle -->
-<div class="theme-toggle">
-    <button class="theme-btn" onclick="toggleThemeMenu()" id="current-theme">🐉</button>
-    <div class="theme-menu" id="theme-menu">
-        <button class="theme-option active" onclick="selectTheme('fantasy')" id="btn-fantasy">🐉</button>
-        <button class="theme-option" onclick="selectTheme('steampunk')" id="btn-steampunk">⚙</button>
-        <button class="theme-option" onclick="selectTheme('winter')" id="btn-winter">❄️</button>
-        <button class="theme-option" onclick="selectTheme('nature')" id="btn-nature">🌿</button>
-        <button class="theme-option" onclick="selectTheme('gothic')" id="btn-gothic">🦇</button>
-    </div>
-</div>
 
 <!-- Main Container -->
 <div class="container">
