@@ -444,27 +444,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -481,51 +470,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -588,9 +569,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -604,7 +585,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -621,37 +601,35 @@
         <h1 id="features">Simic Hybrid Features</h1>
         <p>Source: Guildmaster's Guide to Ravnica</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and another ability score of your choice increases by 1.</li>
-            <li><strong>Age.</strong> Simic Hybrids are created at adulthood as either humans, vedalkens, or elves. Their maximum life expectancy is probably reduced.</li>
-            <li><strong>Alignment.</strong> Simic Hybrid's alignments vary from group to group.</li>
-            <li><strong>Size.</strong> Simic Hybrids are the same size of they race that they were created from. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and another ability score of your choice increases by 1.</li>
+           <li><strong>Age.</strong> Simic Hybrids are created at adulthood as either humans, vedalkens, or elves. Their maximum life expectancy is probably reduced.</li>
+           <li><strong>Alignment.</strong> Simic Hybrid's alignments vary from group to group.</li>
+           <li><strong>Size.</strong> Simic Hybrids are the same size of they race that they were created from. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
             <li><strong>Animal Enhancements.</strong> Your body has been altered with animal characteristics. You choose one animal enhancement now and one at 5th level.
-                <ul>
-                    <li><strong>Manta Glide (1st level).</strong> You have ray-like fins that you use as wings to slow your fall or allow you to glide. When you fall and are not incapacitated, you can subtract up to 100 feet from your fall when calculating your fall damage and can move horizontally 2 feet for every 1 foot you fall.</li>
-                    <li><strong>Nimble Climber (1st level).</strong> You have a climb speed equal to your walk speed.</li>
-                    <li><strong>Underwater Adaptation (1st level).</strong> You can breathe air and water, and you gain a swim speed equal to your walking speed.</li>
-                    <li><strong>Grappling Appendages (5th level).</strong> You have two special appendages growing alongside with your arms. Choose whether they're both claws or tentacles. As an action, you can use one of them to grapple a creature. Each one is also a natural weapon, which you can use to make an unarmed strike with. If you hit, they do 1D6 + your strength modifier bludgeon damage. Immediately after hitting, you can try to grapple the target as a bonus action. These appendages are not dexterous enough to use weapons, magic weapons, and other specialized equipment.</li>
-                    <li><strong>Carapace (5th level).</strong> Your skin in places is covered by a thick shell. You gain a +1 to your AC when not wearing heavy armour.</li>
-                    <li><strong>Acid Spit (5th level).</strong> As an action, you can spray acid from glands in your mouth, targeting one creature or object you can see within 30 feet of you. The target must make a Dexterity saving throw against a DC of 8 + you proficiency bonus + your Constitution modifier. The target takes 2D10 acid damage if they fail. The damage increases to 3D10 at 11th level and 4D10 at 17th level. You can use this up to your Constitution modifier's worth of times per long rest.</li>
+                    <ul>
+                   <li><strong>Manta Glide (1st level).</strong> You have ray-like fins that you use as wings to slow your fall or allow you to glide. When you fall and are not incapacitated, you can subtract up to 100 feet from your fall when calculating your fall damage and can move horizontally 2 feet for every 1 foot you fall.</li>
+                   <li><strong>Nimble Climber (1st level).</strong> You have a climb speed equal to your walk speed.</li>
+                   <li><strong>Underwater Adaptation (1st level).</strong> You can breathe air and water, and you gain a swim speed equal to your walking speed.</li>
+                   <li><strong>Grappling Appendages (5th level).</strong> You have two special appendages growing alongside with your arms. Choose whether they're both claws or tentacles. As an action, you can use one of them to grapple a creature. Each one is also a natural weapon, which you can use to make an unarmed strike with. If you hit, they do 1D6 + your strength modifier bludgeon damage. Immediately after hitting, you can try to grapple the target as a bonus action. These appendages are not dexterous enough to use weapons, magic weapons, and other specialized equipment.</li>
+                   <li><strong>Carapace (5th level).</strong> Your skin in places is covered by a thick shell. You gain a +1 to your AC when not wearing heavy armour.</li>
+                   <li><strong>Acid Spit (5th level).</strong> As an action, you can spray acid from glands in your mouth, targeting one creature or object you can see within 30 feet of you. The target must make a Dexterity saving throw against a DC of 8 + you proficiency bonus + your Constitution modifier. The target takes 2D10 acid damage if they fail. The damage increases to 3D10 at 11th level and 4D10 at 17th level. You can use this up to your Constitution modifier's worth of times per long rest.</li>
                 </ul>
             </li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and your choice of either Elven or Vedalken.</li>
-        </ul>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and your choice of either Elven or Vedalken.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#features">Simic Hybrid Features</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

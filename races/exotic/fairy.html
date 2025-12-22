@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -496,51 +485,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -603,9 +584,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -619,7 +600,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -680,20 +660,20 @@
             </tbody>
         </table>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
-            <li><strong>Creature Type.</strong> You are a Fey.</li>
-            <li><strong>Size.</strong> You are Small.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+           <li><strong>Creature Type.</strong> You are a Fey.</li>
+           <li><strong>Size.</strong> You are Small.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
             <li><strong>Fairy Magic.</strong> You know the Druidcraft cantrip.
-                <ul>
-                    <li>Starting at 3rd level, you can cast the Faerie Fire spell with this trait. Starting at 5th level, you can also cast the Enlarge/Reduce spell with this trait. Once you cast Faerie Fire or Enlarge/Reduce with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
-                    <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
+                    <ul>
+                   <li>Starting at 3rd level, you can cast the Faerie Fire spell with this trait. Starting at 5th level, you can also cast the Enlarge/Reduce spell with this trait. Once you cast Faerie Fire or Enlarge/Reduce with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
+                   <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
                 </ul>
             </li>
-            <li><strong>Flight.</strong> Because of your wings, you have a flying speed equal to your walking speed. You can't use this flying speed if you're wearing medium or heavy armor.</li>
-            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
-        </ul>
+           <li><strong>Flight.</strong> Because of your wings, you have a flying speed equal to your walking speed. You can't use this flying speed if you're wearing medium or heavy armor.</li>
+           <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+            </ul>
 
         <h1 id="witchlight">The Wild Beyond the Witchlight</h1>
         <p><em>The Feywild is home to many fantastic peoples, including fairies. Fairies are a wee folk, but not nearly as much so as their pixie and sprite friends. The first fairies spoke Elvish, Goblin, or Sylvan, and encounters with human visitors prompted many of them to learn Common as well.</em></p>
@@ -745,16 +725,16 @@
             </tbody>
         </table>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1, or increase three different scores by 1.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
-            <li><strong>Creature Type.</strong> You are a Fey.</li>
-            <li><strong>Life Span.</strong> Fairies have a life span of about a century.</li>
-            <li><strong>Size.</strong> You are Small.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Fairy Magic.</strong> You know the Druidcraft cantrip. Starting at 3rd level, you can cast the Faerie Fire spell with this trait. Starting at 5th level, you can also cast the Enlarge/Reduce spell with this trait. Once you cast Faerie Fire or Enlarge/Reduce with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
-            <li><strong>Flight.</strong> Because of your wings, you have a flying speed equal to your walking speed. You can't use this flying speed if you're wearing medium or heavy armor.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1, or increase three different scores by 1.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
+           <li><strong>Creature Type.</strong> You are a Fey.</li>
+           <li><strong>Life Span.</strong> Fairies have a life span of about a century.</li>
+           <li><strong>Size.</strong> You are Small.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Fairy Magic.</strong> You know the Druidcraft cantrip. Starting at 3rd level, you can cast the Faerie Fire spell with this trait. Starting at 5th level, you can also cast the Enlarge/Reduce spell with this trait. Once you cast Faerie Fire or Enlarge/Reduce with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race).</li>
+           <li><strong>Flight.</strong> Because of your wings, you have a flying speed equal to your walking speed. You can't use this flying speed if you're wearing medium or heavy armor.</li>
+            </ul>
 
         <h1 id="ua">Unearthed Arcana</h1>
         <p>Source: Unearthed Arcana 77 - Folk of the Feywild</p>
@@ -808,30 +788,26 @@
             </tbody>
         </table>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1.</li>
-            <li><strong>Type.</strong> You are a Fey.</li>
-            <li><strong>Size.</strong> Your size is Small.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Fairy Flight.</strong> You have a flying speed equal to your walking speed and can hover. This flight is magical and does not require the use of your wings (if you have them).</li>
-            <li><strong>Fairy Magic.</strong> You know the Druidcraft and Faerie Fire spells. You can cast Faerie Fire without expending a spell slot, and you must finish a long rest before you can cast it this way again. You can also cast this spell using any spell slots you have. Your spellcasting ability for these spells is your choice of Intelligence, Wisdom, or Charisma.</li>
-            <li><strong>Fey Passage.</strong> You can squeeze through a space as narrow as 1 inch wide.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1.</li>
+           <li><strong>Type.</strong> You are a Fey.</li>
+           <li><strong>Size.</strong> Your size is Small.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Fairy Flight.</strong> You have a flying speed equal to your walking speed and can hover. This flight is magical and does not require the use of your wings (if you have them).</li>
+           <li><strong>Fairy Magic.</strong> You know the Druidcraft and Faerie Fire spells. You can cast Faerie Fire without expending a spell slot, and you must finish a long rest before you can cast it this way again. You can also cast this spell using any spell slots you have. Your spellcasting ability for these spells is your choice of Intelligence, Wisdom, or Charisma.</li>
+           <li><strong>Fey Passage.</strong> You can squeeze through a space as narrow as 1 inch wide.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#motm">Monsters of the Multiverse</a></li>
-                <li><a href="#witchlight">Wild Beyond the Witchlight</a></li>
-                <li><a href="#ua">Unearthed Arcana</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

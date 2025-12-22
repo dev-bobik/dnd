@@ -438,27 +438,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -501,51 +490,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -608,9 +589,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -624,7 +605,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -683,27 +663,27 @@
 
         <h2>Reborn Traits</h2>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or increase three different ability scores by 1. If you are replacing your race with this lineage, replace any Ability Score Increase you previously had with this.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. If you are replacing your race with this lineage, you retain any languages you had and gain no new languages.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
-            <li><strong>Size.</strong> You are Medium or Small. You choose the size when you gain this lineage.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or increase three different ability scores by 1. If you are replacing your race with this lineage, replace any Ability Score Increase you previously had with this.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. If you are replacing your race with this lineage, you retain any languages you had and gain no new languages.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+           <li><strong>Size.</strong> You are Medium or Small. You choose the size when you gain this lineage.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
             <li><strong>Ancestral Legacy.</strong> If you replace a race with this lineage, you can keep the following elements of that race: any skill proficiencies you gained from it and any climbing, flying, or swimming speed you gained from it.
-                <ul>
-                    <li>If you don't keep any of those elements or you choose this lineage at character creation, you gain proficiency in two skills of your choice.</li>
+                    <ul>
+                   <li>If you don't keep any of those elements or you choose this lineage at character creation, you gain proficiency in two skills of your choice.</li>
                 </ul>
             </li>
             <li><strong>Deathless Nature.</strong> You have escaped death, a fact represented by the following benefits:
-                <ul>
-                    <li>You have advantage on saving throws against disease and being poisoned, and you have resistance to poison damage.</li>
-                    <li>You have advantage on death saving throws.</li>
-                    <li>You don't need to eat, drink, or breathe.</li>
-                    <li>You don't need to sleep, and magic can't put you to sleep. You can finish a long rest in 4 hours if you spend those hours in an inactive, motionless state, during which you retain consciousness.</li>
+                    <ul>
+                   <li>You have advantage on saving throws against disease and being poisoned, and you have resistance to poison damage.</li>
+                   <li>You have advantage on death saving throws.</li>
+                   <li>You don't need to eat, drink, or breathe.</li>
+                   <li>You don't need to sleep, and magic can't put you to sleep. You can finish a long rest in 4 hours if you spend those hours in an inactive, motionless state, during which you retain consciousness.</li>
                 </ul>
             </li>
-            <li><strong>Knowledge from a Past Life.</strong> You temporarily remember glimpses of the past, perhaps faded memories from ages ago or a previous life. When you make an ability check that uses a skill, you can roll a d6 immediately after seeing the number on the d20 and add the number on the d6 to the check. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
-        </ul>
+           <li><strong>Knowledge from a Past Life.</strong> You temporarily remember glimpses of the past, perhaps faded memories from ages ago or a previous life. When you make an ability check that uses a skill, you can roll a d6 immediately after seeing the number on the d20 and add the number on the d6 to the check. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
+            </ul>
 
         <h1 id="unearthed">Unearthed Arcana</h1>
         <p>Source: Unearthed Arcana 76 - Gothic Lineages</p>
@@ -754,36 +734,33 @@
 
         <h2>Reborn Traits</h2>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1.</li>
-            <li><strong>Type.</strong> Humanoid, as well as Construct or Undead (choose when you gain this lineage)</li>
-            <li><strong>Size.</strong> Medium or Small (choose when you gain this lineage)</li>
-            <li><strong>Speed.</strong> 30 feet</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1.</li>
+           <li><strong>Type.</strong> Humanoid, as well as Construct or Undead (choose when you gain this lineage)</li>
+           <li><strong>Size.</strong> Medium or Small (choose when you gain this lineage)</li>
+           <li><strong>Speed.</strong> 30 feet</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light.</li>
             <li><strong>Deathless Nature.</strong> You have escaped death, a fact represented by the following benefits:
-                <ul>
-                    <li>You have advantage on saving throws against disease and being poisoned, and you have resistance to poison damage.</li>
-                    <li>You have advantage on death saving throws.</li>
-                    <li>You don't need to eat, drink, or breathe.</li>
-                    <li>You don't need to sleep, and magic can't put you to sleep. You can finish a long rest in 4 hours if you spend those hours in an inactive, motionless state, during which you retain consciousness.</li>
+                    <ul>
+                   <li>You have advantage on saving throws against disease and being poisoned, and you have resistance to poison damage.</li>
+                   <li>You have advantage on death saving throws.</li>
+                   <li>You don't need to eat, drink, or breathe.</li>
+                   <li>You don't need to sleep, and magic can't put you to sleep. You can finish a long rest in 4 hours if you spend those hours in an inactive, motionless state, during which you retain consciousness.</li>
                 </ul>
             </li>
-            <li><strong>Knowledge from a Past Life.</strong> You temporarily remember sporadic glimpses of the past, perhaps faded memories from ages ago or a previous life. When you make an ability check that uses a skill, you can roll a d6 and add the number rolled to the check. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
-        </ul>
+           <li><strong>Knowledge from a Past Life.</strong> You temporarily remember sporadic glimpses of the past, perhaps faded memories from ages ago or a previous life. When you make an ability check that uses a skill, you can roll a d6 and add the number rolled to the check. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#ravenloft">Ravenloft Version</a></li>
-                <li><a href="#unearthed">Unearthed Arcana</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

@@ -430,9 +430,8 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
@@ -441,12 +440,8 @@
             position: relative;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -491,57 +486,38 @@
             position: sticky;
             top: 120px;
             height: fit-content;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
-            border: 2px solid var(--primary);
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
         }
 
-        .toc-title {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .toc ul {
+        .sidebar ul {
+            list-style: none;
             margin: 0;
+            padding: 0;
         }
 
-        .toc li {
-            margin: 0.5rem 0;
-            padding-left: 0;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc li:before {
-            content: none;
-        }
-
-        .toc a {
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            display: block;
-            padding: 0.3rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .toc a:hover {
-            color: var(--primary);
-            background: rgba(197, 49, 49, 0.1);
-            padding-left: 1rem;
-        }
-
-        .toc .sub {
-            margin-left: 1rem;
+            transition: color 0.3s;
             font-size: 0.9rem;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary);
         }
 
         /* Google Translate */
@@ -625,9 +601,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -655,35 +631,35 @@
         <h1 id="phb">Player's Handbook</h1>
         <p><em>Kingdoms rich in ancient grandeur, halls carved into the roots of mountains, the echoing of picks and hammers in deep mines and blazing forges, a commitment to clan and tradition, and a burning hatred of goblins and orcs – these common threads unite all dwarves.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2.</li>
-            <li><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</li>
-            <li><strong>Alignment.</strong> Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</li>
-            <li><strong>Size.</strong> Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</li>
-            <li><strong>Darkvision.</strong> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</li>
-            <li><strong>Dwarven Combat Training.</strong> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</li>
-            <li><strong>Tool Proficiency.</strong> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</li>
-            <li><strong>Stonecunning.</strong> Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2.</li>
+           <li><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</li>
+           <li><strong>Alignment.</strong> Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</li>
+           <li><strong>Size.</strong> Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</li>
+           <li><strong>Darkvision.</strong> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</li>
+           <li><strong>Dwarven Combat Training.</strong> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</li>
+           <li><strong>Tool Proficiency.</strong> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</li>
+           <li><strong>Stonecunning.</strong> Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</li>
+            </ul>
 
         <div class="variant-section">
             <h2 id="hill">Hill Dwarf</h2>
             <p><em>As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience. The gold dwarves of Faerûn in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.</em></p>
-            <ul>
-                <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 1.</li>
-                <li><strong>Dwarven Toughness.</strong> Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.</li>
+                <ul>
+               <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 1.</li>
+               <li><strong>Dwarven Toughness.</strong> Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.</li>
             </ul>
         </div>
 
         <div class="variant-section">
             <h2 id="mountain">Mountain Dwarf</h2>
             <p><em>As a mountain dwarf, you're strong and hardy, accustomed to a difficult life in rugged terrain. You're probably on the tall side (for a dwarf), and tend toward lighter coloration. The shield dwarves of northern Faerûn, as well as the ruling Hylar clan and the noble Daewar clan of Dragonlance, are mountain dwarves.</em></p>
-            <ul>
-                <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2.</li>
-                <li><strong>Dwarven Armor Training.</strong> You have proficiency with light and medium armor.</li>
+                <ul>
+               <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2.</li>
+               <li><strong>Dwarven Armor Training.</strong> You have proficiency with light and medium armor.</li>
             </ul>
         </div>
 
@@ -692,11 +668,11 @@
         <div class="variant-section">
             <h2 id="warding">Mark of Warding</h2>
             <p><em>If you're a dwarf with the Mark of Warding, you have this subrace, with the following traits.</em></p>
-            <ul>
-                <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 1.</li>
-                <li><strong>Warder's Intuition.</strong> Whenever you make an Intelligence (Investigation) check or an Ability Check involving Thieves' Tools, you can roll a d4 and add the number rolled to the total ability check.</li>
-                <li><strong>Wards and Seals.</strong> You can cast the Alarm and Mage Armor spells with this trait. Starting at 3rd level, you can also cast the Arcane Lock spell with it. Once you cast either spell with this trait, you can't cast that spell again until you finish a Long Rest. Intelligence is your Spellcasting Ability for these spells, and you don't require material components when you cast them with this trait.</li>
-                <li><strong>Spells of the Mark.</strong> If you have the Spellcasting or Pact Magic class feature, the spells on the Mark of Warding Spells table are added to the spell list of your Spellcasting class.</li>
+                <ul>
+               <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 1.</li>
+               <li><strong>Warder's Intuition.</strong> Whenever you make an Intelligence (Investigation) check or an Ability Check involving Thieves' Tools, you can roll a d4 and add the number rolled to the total ability check.</li>
+               <li><strong>Wards and Seals.</strong> You can cast the Alarm and Mage Armor spells with this trait. Starting at 3rd level, you can also cast the Arcane Lock spell with it. Once you cast either spell with this trait, you can't cast that spell again until you finish a Long Rest. Intelligence is your Spellcasting Ability for these spells, and you don't require material components when you cast them with this trait.</li>
+               <li><strong>Spells of the Mark.</strong> If you have the Spellcasting or Pact Magic class feature, the spells on the Mark of Warding Spells table are added to the spell list of your Spellcasting class.</li>
             </ul>
 
             <table>
@@ -730,18 +706,18 @@
         <h1 id="kaladesh">Plane Shift: Kaladesh</h1>
         <p><em>Dwarves don't understand laziness or shortcuts. Just as a machine must function smoothly at all times, so too an artisan should work steadily and with care. Dwarves take pride in their work ethic, and abhor any attitude or behavior that would undermine the quality of their work.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Wisdom score increases by 1.</li>
-            <li><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</li>
-            <li><strong>Alignment.</strong> Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</li>
-            <li><strong>Size.</strong> Dwarves stand around 5 feet tall and average about 150 pounds. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</li>
-            <li><strong>Darkvision.</strong> Accustomed to life underground in your race's ancient past, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</li>
-            <li><strong>Dwarven Toughness.</strong> Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.</li>
-            <li><strong>Artisan's Expertise.</strong> You gain proficiency with two kinds of artisan's tools of your choice. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies. In addition, whenever you make an Intelligence (History) check related to the origin of any architectural construction (including buildings, public works such as canals and aqueducts, and the massive cogwork that underlies much of the construction of Ghirapur), you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Wisdom score increases by 1.</li>
+           <li><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</li>
+           <li><strong>Alignment.</strong> Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</li>
+           <li><strong>Size.</strong> Dwarves stand around 5 feet tall and average about 150 pounds. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</li>
+           <li><strong>Darkvision.</strong> Accustomed to life underground in your race's ancient past, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</li>
+           <li><strong>Dwarven Toughness.</strong> Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.</li>
+           <li><strong>Artisan's Expertise.</strong> You gain proficiency with two kinds of artisan's tools of your choice. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies. In addition, whenever you make an Intelligence (History) check related to the origin of any architectural construction (including buildings, public works such as canals and aqueducts, and the massive cogwork that underlies much of the construction of Ghirapur), you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</li>
+            </ul>
 
         <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
         <p style="text-align: center; color: var(--text-dim);"><em>See also: Duergar (MPMM)</em></p>
@@ -751,12 +727,12 @@
     <aside class="sidebar">
         <h3>Contents</h3>
         <ul>
-            <li><a href="#phb">Player's Handbook</a></li>
-            <li><a href="#hill">Hill Dwarf</a></li>
-            <li><a href="#mountain">Mountain Dwarf</a></li>
-            <li><a href="#eberron">Eberron</a></li>
-            <li><a href="#warding">Mark of Warding</a></li>
-            <li><a href="#kaladesh">Kaladesh</a></li>
+           <li><a href="#phb">Player's Handbook</a></li>
+           <li><a href="#hill">Hill Dwarf</a></li>
+           <li><a href="#mountain">Mountain Dwarf</a></li>
+           <li><a href="#eberron">Eberron</a></li>
+           <li><a href="#warding">Mark of Warding</a></li>
+           <li><a href="#kaladesh">Kaladesh</a></li>
         </ul>
 
         <div id="google_translate_element"></div>

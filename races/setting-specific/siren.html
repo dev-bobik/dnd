@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -472,51 +461,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -579,9 +560,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -595,7 +576,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -613,27 +593,25 @@
         <h1 id="siren-features">Siren Features</h1>
         <p>Source: Plane Shift - Ixalan</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 2.</li>
-            <li><strong>Alignment.</strong> Most sirens lean toward chaotic alignment, cherishing the freedom and independence that comes from joining a pirate crew.</li>
-            <li><strong>Size.</strong> Sirens stand about 5 to 6 feet tall, but their bodies are slender and their bones partially hollow to facilitate their flight. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
-            <li><strong>Flight.</strong> You have a flying speed of 30 feet. You can't use your flying speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can't use your flying speed if you are encumbered.)</li>
-            <li><strong>Siren's Song.</strong> You know the <em>Friends</em> cantrip and can cast it without material components.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Siren.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 2.</li>
+           <li><strong>Alignment.</strong> Most sirens lean toward chaotic alignment, cherishing the freedom and independence that comes from joining a pirate crew.</li>
+           <li><strong>Size.</strong> Sirens stand about 5 to 6 feet tall, but their bodies are slender and their bones partially hollow to facilitate their flight. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
+           <li><strong>Flight.</strong> You have a flying speed of 30 feet. You can't use your flying speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can't use your flying speed if you are encumbered.)</li>
+           <li><strong>Siren's Song.</strong> You know the <em>Friends</em> cantrip and can cast it without material components.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Siren.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#siren-features">Siren Features</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

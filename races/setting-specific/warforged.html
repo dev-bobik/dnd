@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,9 +556,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -591,7 +572,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -607,112 +587,105 @@
         <h1 id="erlw">Eberron: Rising from the Last War</h1>
         <p>Source: Eberron: Rising from the Last War</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and one other ability score of your choice increases by 1.</li>
-            <li><strong>Age.</strong> A typical warforged is between two and thirty years old. The maximum lifespan of the warforged remains a mystery; so far, warforged have shown no signs of deterioration due to age. You are immune to magical aging effects.</li>
-            <li><strong>Alignment.</strong> Most warforged take comfort in order and discipline, tending toward law and neutrality. But some have absorbed the morality – or lack thereof – of the beings with which they served.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and one other ability score of your choice increases by 1.</li>
+           <li><strong>Age.</strong> A typical warforged is between two and thirty years old. The maximum lifespan of the warforged remains a mystery; so far, warforged have shown no signs of deterioration due to age. You are immune to magical aging effects.</li>
+           <li><strong>Alignment.</strong> Most warforged take comfort in order and discipline, tending toward law and neutrality. But some have absorbed the morality – or lack thereof – of the beings with which they served.</li>
             <li><strong>Size.</strong> Your size is Medium. To set your height and weight randomly, start with rolling a size modifier.
-                <ul>
-                    <li>Size modifier = 2d6</li>
-                    <li>Height = 5 feet + 10 inches + your size modifier in inches</li>
-                    <li>Weight in pounds = 270 + (4 x your size modifier)</li>
+                    <ul>
+                   <li>Size modifier = 2d6</li>
+                   <li>Height = 5 feet + 10 inches + your size modifier in inches</li>
+                   <li>Weight in pounds = 270 + (4 x your size modifier)</li>
                 </ul>
             </li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
             <li><strong>Constructed Resilience.</strong> You were created to have remarkable fortitude, represented by the following benefits:
-                <ul>
-                    <li>You have advantage on saving throws against being poisoned, and you have resistance to poison damage.</li>
-                    <li>You don't need to eat, drink, or breathe.</li>
-                    <li>You are immune to disease.</li>
-                    <li>You don't need to sleep, and magic can't put you to sleep.</li>
+                    <ul>
+                   <li>You have advantage on saving throws against being poisoned, and you have resistance to poison damage.</li>
+                   <li>You don't need to eat, drink, or breathe.</li>
+                   <li>You are immune to disease.</li>
+                   <li>You don't need to sleep, and magic can't put you to sleep.</li>
                 </ul>
             </li>
-            <li><strong>Sentry's Rest.</strong> When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn't render you unconscious, and you can see and hear as normal.</li>
+           <li><strong>Sentry's Rest.</strong> When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn't render you unconscious, and you can see and hear as normal.</li>
             <li><strong>Integrated Protection.</strong> Your body has built-in defensive layers, which can be enhanced with armor.
-                <ul>
-                    <li>You gain a +1 bonus to Armor Class.</li>
-                    <li>You can don only armor with which you have proficiency. To don armor, you must incorporate it into your body over the course of 1 hour, during which you must remain in contact with the armor. To doff armor, you must spend 1 hour removing it. You can rest while donning or doffing armor in this way.</li>
-                    <li>While you live, your armor can't be removed from your body against your will.</li>
+                    <ul>
+                   <li>You gain a +1 bonus to Armor Class.</li>
+                   <li>You can don only armor with which you have proficiency. To don armor, you must incorporate it into your body over the course of 1 hour, during which you must remain in contact with the armor. To doff armor, you must spend 1 hour removing it. You can rest while donning or doffing armor in this way.</li>
+                   <li>While you live, your armor can't be removed from your body against your will.</li>
                 </ul>
             </li>
-            <li><strong>Specialized Design.</strong> You gain one skill proficiency and one tool proficiency of your choice.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language of your choice.</li>
-        </ul>
+           <li><strong>Specialized Design.</strong> You gain one skill proficiency and one tool proficiency of your choice.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language of your choice.</li>
+            </ul>
 
         <h1 id="ua">Unearthed Arcana / Wayfinder's Guide</h1>
         <p>Source: Wayfinder's Guide to Eberron</p>
 
         <h2 id="features">Core Features</h2>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 1.</li>
-            <li><strong>Age.</strong> A typical warforged is between two and thirty years old. The maximum lifespan of the warforged remains a mystery; so far, warforged have shown no signs of deterioration due to age.</li>
-            <li><strong>Alignment.</strong> Most warforged take comfort in order and discipline, tending toward law and neutrality. But some have absorbed the morality – or lack thereof – of the beings with which they served.</li>
-            <li><strong>Size.</strong> Your size is Medium. Most warforged stand between 5 and 6 1/2 feet tall. Weight and build are affected by subrace.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 1.</li>
+           <li><strong>Age.</strong> A typical warforged is between two and thirty years old. The maximum lifespan of the warforged remains a mystery; so far, warforged have shown no signs of deterioration due to age.</li>
+           <li><strong>Alignment.</strong> Most warforged take comfort in order and discipline, tending toward law and neutrality. But some have absorbed the morality – or lack thereof – of the beings with which they served.</li>
+           <li><strong>Size.</strong> Your size is Medium. Most warforged stand between 5 and 6 1/2 feet tall. Weight and build are affected by subrace.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
             <li><strong>Warforged Resilience.</strong> You were created to have remarkable fortitude, represented by the following benefits.
-                <ul>
-                    <li>You have advantage on saving throws against being poisoned, and you have resistance to poison damage.</li>
-                    <li>You are immune to disease.</li>
-                    <li>You don't need to eat, drink, or breathe.</li>
-                    <li>You don't need to sleep and don't suffer the effects of exhaustion due to lack of rest, and magic can't put you to sleep.</li>
+                    <ul>
+                   <li>You have advantage on saving throws against being poisoned, and you have resistance to poison damage.</li>
+                   <li>You are immune to disease.</li>
+                   <li>You don't need to eat, drink, or breathe.</li>
+                   <li>You don't need to sleep and don't suffer the effects of exhaustion due to lack of rest, and magic can't put you to sleep.</li>
                 </ul>
             </li>
-            <li><strong>Sentry's Rest.</strong> When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn't render you unconscious, and you can see and hear as normal.</li>
+           <li><strong>Sentry's Rest.</strong> When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn't render you unconscious, and you can see and hear as normal.</li>
             <li><strong>Integrated Protection.</strong> Your body has built-in defensive layers, which determine your armor class. You gain no benefit from wearing armor, but if you are using a shield, you apply its bonus as normal.
-                <ul>
-                    <li>You can alter your body to enter different defensive modes; each time you finish a long rest, choose one mode to adopt from the table below, provided you meet the mode's prerequisite.</li>
-                    <li><strong>Darkwood Core (unarmored)</strong> - None required - AC = 11 + your Dexterity modifier (add proficiency bonus if proficient with light armor).</li>
-                    <li><strong>Composite Plating (armored)</strong> - Medium armor proficiency - AC = 13 + your Dexterity modifier (maximum of 2) + your proficiency bonus.</li>
-                    <li><strong>Heavy Plating (armored)</strong> - Heavy armor proficiency - AC = 16 + your proficiency bonus; disadvantage on Dexterity (Stealth) checks.</li>
+                    <ul>
+                   <li>You can alter your body to enter different defensive modes; each time you finish a long rest, choose one mode to adopt from the table below, provided you meet the mode's prerequisite.</li>
+                   <li><strong>Darkwood Core (unarmored)</strong> - None required - AC = 11 + your Dexterity modifier (add proficiency bonus if proficient with light armor).</li>
+                   <li><strong>Composite Plating (armored)</strong> - Medium armor proficiency - AC = 13 + your Dexterity modifier (maximum of 2) + your proficiency bonus.</li>
+                   <li><strong>Heavy Plating (armored)</strong> - Heavy armor proficiency - AC = 16 + your proficiency bonus; disadvantage on Dexterity (Stealth) checks.</li>
                 </ul>
             </li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common.</li>
-        </ul>
+           <li><strong>Languages.</strong> You can speak, read, and write Common.</li>
+            </ul>
 
         <h2 id="envoy">Envoy</h2>
         <p><em>As an envoy, you were designed with a certain specialized function in mind. You might be an assassin, a healer, or an entertainer, to name a few possibilities. Envoys are the rarest of the warforged subraces, and yours could be a unique design.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Two different ability scores of your choice increase by 1.</li>
-            <li><strong>Specialized Design.</strong> You gain one skill proficiency of your choice, one tool proficiency of your choice, and fluency in one language of your choice.</li>
-            <li><strong>Integrated Tool.</strong> Choose one tool you're proficient with. This tool is integrated into your body, and you double your proficiency bonus for any ability checks you make with it. You must have your hands free to use this integrated tool.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Two different ability scores of your choice increase by 1.</li>
+           <li><strong>Specialized Design.</strong> You gain one skill proficiency of your choice, one tool proficiency of your choice, and fluency in one language of your choice.</li>
+           <li><strong>Integrated Tool.</strong> Choose one tool you're proficient with. This tool is integrated into your body, and you double your proficiency bonus for any ability checks you make with it. You must have your hands free to use this integrated tool.</li>
+            </ul>
 
         <h2 id="juggernaut">Juggernaut</h2>
         <p><em>You're an imposing war machine built for close combat and raw might. You tower over your comrades; juggernaut warforged stand between 6 and 7 feet in height and can weigh up to 450 pounds.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2.</li>
-            <li><strong>Iron Fists.</strong> When you make an unarmed strike, you can deal 1d4 + your Strength modifier bludgeoning damage instead of the normal damage.</li>
-            <li><strong>Powerful Build.</strong> You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2.</li>
+           <li><strong>Iron Fists.</strong> When you make an unarmed strike, you can deal 1d4 + your Strength modifier bludgeoning damage instead of the normal damage.</li>
+           <li><strong>Powerful Build.</strong> You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.</li>
+            </ul>
 
         <h2 id="skirmisher">Skirmisher</h2>
         <p><em>You were built to scout the edges of battle and outmaneuver your enemies. You are lean and designed for speed.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2.</li>
-            <li><strong>Swift.</strong> Your walking speed is increased by 5 feet.</li>
-            <li><strong>Light Step.</strong> When you are traveling alone for an extended period of time (one hour or more), you can move stealthily at a normal pace.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2.</li>
+           <li><strong>Swift.</strong> Your walking speed is increased by 5 feet.</li>
+           <li><strong>Light Step.</strong> When you are traveling alone for an extended period of time (one hour or more), you can move stealthily at a normal pace.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#erlw">Eberron: Rising</a></li>
-                <li><a href="#ua">Unearthed Arcana</a></li>
-                <li><a href="#features">Core Features</a></li>
-                <li><a href="#envoy">Envoy</a></li>
-                <li><a href="#juggernaut">Juggernaut</a></li>
-                <li><a href="#skirmisher">Skirmisher</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

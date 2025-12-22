@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,9 +556,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -591,8 +572,7 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
-</header>
+    </header>
 
 <!-- Main Container -->
 <div class="container">
@@ -606,46 +586,46 @@
         <p><em>Harengons originated in the Feywild, where they spoke Sylvan and embodied the spirit of freedom and travel. In time, these rabbitfolk hopped into other worlds, bringing the fey realm's exuberance with them and learning new languages as they went.</em></p>
         <p><em>Harengons are bipedal, with the characteristic long feet of the rabbits they resemble and fur in a variety of colors. They share the keen senses and powerful legs of leporine creatures and are full of energy, like a wound-up spring. Harengons are blessed with a little fey luck, and they often find themselves a few fortunate feet away from dangers during adventures.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
-            <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Hare-Trigger.</strong> You can add your proficiency bonus to your initiative rolls.</li>
-            <li><strong>Leporine Senses.</strong> You have proficiency in the Perception skill.</li>
-            <li><strong>Lucky Footwork.</strong> When you fail a Dexterity saving throw, you can use your reaction to roll a d4 and add it to the save, potentially turning the failure into a success. You can't use this reaction if you're prone or your speed is 0.</li>
-            <li><strong>Rabbit Hop.</strong> As a bonus action, you can jump a number of feet equal to five times your proficiency bonus, without provoking opportunity attacks. You can use this trait only if your speed is greater than 0. You can use it a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
-            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+           <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Hare-Trigger.</strong> You can add your proficiency bonus to your initiative rolls.</li>
+           <li><strong>Leporine Senses.</strong> You have proficiency in the Perception skill.</li>
+           <li><strong>Lucky Footwork.</strong> When you fail a Dexterity saving throw, you can use your reaction to roll a d4 and add it to the save, potentially turning the failure into a success. You can't use this reaction if you're prone or your speed is 0.</li>
+           <li><strong>Rabbit Hop.</strong> As a bonus action, you can jump a number of feet equal to five times your proficiency bonus, without provoking opportunity attacks. You can use this trait only if your speed is greater than 0. You can use it a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
+           <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+            </ul>
 
         <h1 id="wbtw">The Wild Beyond the Witchlight</h1>
         <p><em>Harengons originated in the Feywild, where they spoke Sylvan and embodied the spirit of freedom and travel. In time, these rabbitfolk hopped into other worlds, bringing the fey realm's exuberance with them and learning new languages as they went.</em></p>
         <p><em>Harengons are bipedal, with the characteristic long feet of the rabbits they resemble and fur in a variety of colors. They share the keen senses and powerful legs of leporine creatures and are full of energy, like a wound-up spring. Harengons are blessed with a little fey luck, and they often find themselves a few fortunate feet away from dangers during adventures.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1, or increase three different scores by 1.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
-            <li><strong>Life Span.</strong> Harengons have a life span of about a century.</li>
-            <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Hare-Trigger.</strong> You can add your proficiency bonus to your initiative rolls.</li>
-            <li><strong>Leporine Senses.</strong> You have proficiency in the Perception skill.</li>
-            <li><strong>Lucky Footwork.</strong> When you fail a Dexterity saving throw, you can use your reaction to roll a d4 and add it to the save, potentially turning the failure into a success. You can't use this reaction if you're prone or your speed is 0.</li>
-            <li><strong>Rabbit Hop.</strong> As a bonus action, you can jump a number of feet equal to five times your proficiency bonus, without provoking opportunity attacks. You can use this trait only if your speed is greater than 0. You can use it a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1, or increase three different scores by 1.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+           <li><strong>Life Span.</strong> Harengons have a life span of about a century.</li>
+           <li><strong>Size.</strong> You are Medium or Small. You choose the size when you select this race.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Hare-Trigger.</strong> You can add your proficiency bonus to your initiative rolls.</li>
+           <li><strong>Leporine Senses.</strong> You have proficiency in the Perception skill.</li>
+           <li><strong>Lucky Footwork.</strong> When you fail a Dexterity saving throw, you can use your reaction to roll a d4 and add it to the save, potentially turning the failure into a success. You can't use this reaction if you're prone or your speed is 0.</li>
+           <li><strong>Rabbit Hop.</strong> As a bonus action, you can jump a number of feet equal to five times your proficiency bonus, without provoking opportunity attacks. You can use this trait only if your speed is greater than 0. You can use it a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</li>
+            </ul>
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="toc">
-            <h3>Contents</h3>
-            <ul>
-                <li><a href="#motm">Monsters of the Multiverse</a></li>
-                <li><a href="#wbtw">Wild Beyond the Witchlight</a></li>
+                <h3>Contents</h3>
+                <ul>
+               <li><a href="#motm">Monsters of the Multiverse</a></li>
+               <li><a href="#wbtw">Wild Beyond the Witchlight</a></li>
             </ul>
         </div>
-    </aside>
+        </aside>
 </div>
 
 <script>

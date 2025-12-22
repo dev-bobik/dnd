@@ -11,9 +11,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --primary: #9370db;
-            --secondary: #663399;
-            --accent: #dda0dd;
+            --primary: #c53131;
+            --secondary: #822000;
+            --accent: #d4af37;
             --dark: #1a1a1a;
             --card: #242424;
             --text: #e8e8e8;
@@ -442,18 +442,6 @@
             position: relative;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        ul ul li:before {
-            content: "•";
-        }
-
         strong {
             color: var(--accent);
             font-weight: 600;
@@ -495,57 +483,39 @@
         .sidebar {
             position: sticky;
             top: 120px;
-            align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-
-        .toc a:hover {
-            color: var(--primary);
-            padding-left: 0.5rem;
-        }
-
-        .toc .toc-subitem {
-            padding-left: 1rem;
+            transition: color 0.3s;
             font-size: 0.9rem;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary);
         }
 
         /* Responsive */
@@ -758,65 +728,83 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
-            <ul>
-                <li><a href="#phb">Player's Handbook</a></li>
-                <li><a href="#eberron">Eberron</a></li>
-                <li class="toc-subitem"><a href="#mark-detection">Mark of Detection</a></li>
-                <li class="toc-subitem"><a href="#mark-storm">Mark of Storm</a></li>
-            </ul>
-        </nav>
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="#phb">Player's Handbook</a></li>
+            <li><a href="#eberron">Eberron</a></li>
+            <li class="toc-subitem"><a href="#mark-detection">Mark of Detection</a></li>
+            <li class="toc-subitem"><a href="#mark-storm">Mark of Storm</a></li>
+        </ul>
+
+        <div id="google_translate_element"></div>
     </aside>
 </div>
 
 <script>
-    // Theme Management
+    // Theme System with localStorage persistence
+    // Google Translate Init
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+
+    // Theme Switcher
     function toggleThemeMenu() {
-        document.getElementById('theme-menu').classList.toggle('show');
+        const themeOptions = document.getElementById('theme-options');
+        themeOptions.classList.toggle('show');
     }
 
     function selectTheme(theme) {
-        // Remove all theme classes
-        document.body.className = '';
-        
-        // Add selected theme class
-        document.body.classList.add(theme + '-theme');
-        
-        // Update active button
-        document.querySelectorAll('.theme-option').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.getElementById('btn-' + theme).classList.add('active');
-        
-        // Update main theme button emoji
-        const emojis = {
-            'fantasy': '🐉',
-            'steampunk': '⚙',
-            'winter': '❄️',
-            'nature': '🌿',
-            'gothic': '🦇'
+        setTheme(theme);
+        document.getElementById('theme-options').classList.remove('show');
+    }
+
+    function setTheme(theme) {
+        const body = document.body;
+        const buttons = {
+            fantasy: document.getElementById('btn-fantasy'),
+            steampunk: document.getElementById('btn-steampunk'),
+            winter: document.getElementById('btn-winter'),
+            nature: document.getElementById('btn-nature'),
+            gothic: document.getElementById('btn-gothic')
         };
-        document.getElementById('current-theme').textContent = emojis[theme];
-        
-        // Save theme preference
+        const themeEmojis = {
+            fantasy: '🐉',
+            steampunk: '⚙️',
+            winter: '❄️',
+            nature: '🌿',
+            gothic: '🦇'
+        };
+
+        // Remove all theme classes
+        body.className = theme + '-theme';
+
+        // Update button states
+        Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+        buttons[theme].classList.add('active');
+
+        // Update main theme button emoji
+        document.getElementById('current-theme-btn').textContent = themeEmojis[theme];
+
+        // Save to localStorage
         localStorage.setItem('dnd-theme', theme);
-        
-        // Close menu
-        document.getElementById('theme-menu').classList.remove('show');
     }
 
     // Load saved theme on page load
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
-        selectTheme(savedTheme);
+        setTheme(savedTheme);
     });
 
     // Close theme menu when clicking outside
     document.addEventListener('click', (e) => {
         const themeToggle = document.querySelector('.theme-toggle');
-        if (!themeToggle.contains(e.target)) {
-            document.getElementById('theme-menu').classList.remove('show');
+        const themeOptions = document.getElementById('theme-options');
+        if (themeToggle && !themeToggle.contains(e.target)) {
+            themeOptions.classList.remove('show');
         }
     });
 </script>

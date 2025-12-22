@@ -438,27 +438,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -475,51 +464,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -582,9 +563,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -598,7 +579,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -612,118 +592,112 @@
         <h1 id="motm">Mordenkainen Presents: Monsters of the Multiverse</h1>
         <p><em>A subterranean folk, goblins can be found in every corner of the multiverse, often beside their bugbear and hobgoblin kin. Long before the god Maglubiyet conquered them, early goblins served in the court of the Queen of Air and Darkness, one of the Feywild's archfey. Goblins thrived in her dangerous domain thanks to a special boon from her—a supernatural knack for finding the weak spots in foes larger than themselves and for getting out of trouble. Goblins brought this fey boon with them to worlds across the Material Plane, even if they don't remember the fey realm they inhabited before Maglubiyet's rise. Now many goblins pursue their own destinies, escaping the plots of both archfey and gods.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid. You are also considered a goblinoid for any prerequisite or effect that requires you to be a goblinoid.</li>
-            <li><strong>Size.</strong> You are Small.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
-            <li><strong>Fey Ancestry.</strong> You have advantage on saving throws you make to avoid or end the charmed condition on yourself.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid. You are also considered a goblinoid for any prerequisite or effect that requires you to be a goblinoid.</li>
+           <li><strong>Size.</strong> You are Small.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.</li>
+           <li><strong>Fey Ancestry.</strong> You have advantage on saving throws you make to avoid or end the charmed condition on yourself.</li>
             <li><strong>Fury of the Small.</strong> When you damage a creature with an attack or a spell and the creature's size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your proficiency bonus.
-                <ul>
-                    <li>You can use this trait a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest, and you can use it no more than once per turn.</li>
+                    <ul>
+                   <li>You can use this trait a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest, and you can use it no more than once per turn.</li>
                 </ul>
             </li>
-            <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
-            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
-        </ul>
+           <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
+           <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+            </ul>
 
         <h1 id="vgtm">Volo's Guide to Monsters</h1>
         <p><em>Goblins occupy an uneasy place in a dangerous world, and they react by lashing out at any creatures they believe they can bully. Cunning in battle and cruel in victory, goblins are fawning and servile in defeat.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Constitution score increases by 1.</li>
-            <li><strong>Age.</strong> Goblins reach adulthood at age 8 and live up to 60 years.</li>
-            <li><strong>Alignment.</strong> Goblins are typically neutral evil, as they care only for their own needs. A few goblins might tend toward good or neutrality, but only rarely.</li>
-            <li><strong>Size.</strong> Goblins are between 3 and 4 feet tall and weigh between 40 and 80 pounds. Your size is Small.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Fury of the Small.</strong> When you damage a creature with an attack or a spell and the creature's size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your level. Once you use this trait, you can't use it again until you finish a short or long rest.</li>
-            <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Goblin.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Constitution score increases by 1.</li>
+           <li><strong>Age.</strong> Goblins reach adulthood at age 8 and live up to 60 years.</li>
+           <li><strong>Alignment.</strong> Goblins are typically neutral evil, as they care only for their own needs. A few goblins might tend toward good or neutrality, but only rarely.</li>
+           <li><strong>Size.</strong> Goblins are between 3 and 4 feet tall and weigh between 40 and 80 pounds. Your size is Small.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Fury of the Small.</strong> When you damage a creature with an attack or a spell and the creature's size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your level. Once you use this trait, you can't use it again until you finish a short or long rest.</li>
+           <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Goblin.</li>
+            </ul>
 
         <h1 id="awm">Adventures with Muk: Dankwood</h1>
         <p><em>Source: Adventures with Muk, Extra Life 2019</em></p>
         <p><em>Dankwood goblins are much like any other run-of-the-mill goblin but they are much more gentle and artistic than the savage and uncouth goblins of the world.</em></p>
         <p><em>They are inquisitive and have a magical bond with the small forest creatures with which they are often friends. They are fast and nimble and love to explore. Because of this they make great adventurers and guides.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Wisdom score increases by 1.</li>
-            <li><strong>Age.</strong> Dankwood goblins reach adulthood at age 8 and live up to 60 years.</li>
-            <li><strong>Alignment.</strong> Dankwood goblins are typically neutral or neutral good, though some mischievous dankwood goblins are chaotic neutral.</li>
-            <li><strong>Size.</strong> Dankwood goblins are between 3 and 4 feet tall and weigh between 40 and 80 pounds. Your size is Small.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Speak with Small Beasts.</strong> Through sounds and gestures you can communicate simple ideas with Small or smaller beasts. Dankwood goblins love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets.</li>
-            <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Goblin.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Wisdom score increases by 1.</li>
+           <li><strong>Age.</strong> Dankwood goblins reach adulthood at age 8 and live up to 60 years.</li>
+           <li><strong>Alignment.</strong> Dankwood goblins are typically neutral or neutral good, though some mischievous dankwood goblins are chaotic neutral.</li>
+           <li><strong>Size.</strong> Dankwood goblins are between 3 and 4 feet tall and weigh between 40 and 80 pounds. Your size is Small.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Speak with Small Beasts.</strong> Through sounds and gestures you can communicate simple ideas with Small or smaller beasts. Dankwood goblins love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets.</li>
+           <li><strong>Nimble Escape.</strong> You can take the Disengage or Hide action as a bonus action on each of your turns.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Goblin.</li>
+            </ul>
 
         <h1 id="psi">Plane Shift: Ixalan</h1>
         <p><em>Goblins are native to Ixalan, and their eager curiosity drew them to the ships of the Brazen Coalition where the pirates first made landfall on the Sun Empire's shores. Though they still thrive in remote jungle colonies, goblins are most commonly seen swinging on the ropes of sleek pirate ships.</em></p>
         <p><em>Goblins stand about three feet tall, though they rarely stand upright. They prefer a crouched posture that lets them scramble quickly on all fours, aided by their long prehensile tails. Their hearing and eyesight make them excellent lookouts, and their agility serves them well as crew members on pirate ships. They climb, swing, and jump easily among a ship's ropes, and can get into tight spaces that humans can't. For better or worse, many goblins are also incorrigible pranksters, and they often have a hard time determining when a prank is inappropriate, is poorly timed, or has gone too far.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2.</li>
-            <li><strong>Age.</strong> Goblins mature faster than humans, reaching adulthood around age 12. They age noticeably faster, and though few goblins live to old age, the most cautious rarely live longer than 50 years.</li>
-            <li><strong>Alignment.</strong> Most goblins are wildly chaotic, with no particular inclination toward good or evil but a strong tendency toward mischief.</li>
-            <li><strong>Size.</strong> Goblins average about 3 feet tall and weigh about 40 pounds. Your size is Small.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
-            <li><strong>Agile Climber.</strong> You have a climbing speed of 25 feet. You can't use your climbing speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can't use your climbing speed if you are encumbered.)</li>
-            <li><strong>Darkvision.</strong> Accustomed to life in the jungle night, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Goblin.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2.</li>
+           <li><strong>Age.</strong> Goblins mature faster than humans, reaching adulthood around age 12. They age noticeably faster, and though few goblins live to old age, the most cautious rarely live longer than 50 years.</li>
+           <li><strong>Alignment.</strong> Most goblins are wildly chaotic, with no particular inclination toward good or evil but a strong tendency toward mischief.</li>
+           <li><strong>Size.</strong> Goblins average about 3 feet tall and weigh about 40 pounds. Your size is Small.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
+           <li><strong>Agile Climber.</strong> You have a climbing speed of 25 feet. You can't use your climbing speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can't use your climbing speed if you are encumbered.)</li>
+           <li><strong>Darkvision.</strong> Accustomed to life in the jungle night, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Goblin.</li>
+            </ul>
 
         <h1 id="psz">Plane Shift: Zendikar</h1>
         <p><em>Goblins are an inquisitive and adaptable race hampered by their small size, their natural cowardice, and a severe shortage of common sense. They eagerly explore areas that others hesitate to enter, and obsessively fiddle with magic that more sensible folk would take careful precautions with. They prize ancient artifacts not for their inherent value, but primarily as a mark of status—for a precious trophy proves that its owner survived a delve into a deep and dangerous ruin.</em></p>
         <p><em>A typical goblin stands between three-and-a-half and five feet tall, with a slender, elongated build. Goblins' arms are unusually long and spindly, making them adept at climbing cliffs and trees. Their skin has a stony texture, ranging in color from red-brown to moss green or gray. Their ears are large and swept back, their eyes are intensely red, and many sport heavy bone protrusions on their spines or elbows. Males have similar growths jutting from their chins, while females have heavier growths on their foreheads.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2.</li>
-            <li><strong>Age.</strong> Goblins mature faster than humans, reaching adulthood around age 12. They age noticeably faster, and though few goblins live to old age, the most cautious rarely live longer than 50 years.</li>
-            <li><strong>Alignment.</strong> Most goblins are wildly chaotic, with no particular inclination toward good or evil.</li>
-            <li><strong>Size.</strong> Goblins average about 3 feet tall and weigh about 40 pounds. Your size is Small.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
-            <li><strong>Darkvision.</strong> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Grit.</strong> You have resistance to fire damage and psychic damage. In addition, when you are wearing no armor, your AC is equal to 11 + your Dexterity modifier.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Goblin.</li>
-            <li><strong>Tribe.</strong> Most goblins on Zendikar belong to one of three tribes: the Grotag, the Lavastep, and the Tuktuk. Choose one of these tribes.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2.</li>
+           <li><strong>Age.</strong> Goblins mature faster than humans, reaching adulthood around age 12. They age noticeably faster, and though few goblins live to old age, the most cautious rarely live longer than 50 years.</li>
+           <li><strong>Alignment.</strong> Most goblins are wildly chaotic, with no particular inclination toward good or evil.</li>
+           <li><strong>Size.</strong> Goblins average about 3 feet tall and weigh about 40 pounds. Your size is Small.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 25 feet.</li>
+           <li><strong>Darkvision.</strong> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Grit.</strong> You have resistance to fire damage and psychic damage. In addition, when you are wearing no armor, your AC is equal to 11 + your Dexterity modifier.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign) and Goblin.</li>
+           <li><strong>Tribe.</strong> Most goblins on Zendikar belong to one of three tribes: the Grotag, the Lavastep, and the Tuktuk. Choose one of these tribes.</li>
+            </ul>
 
         <h2>Grotag Tribe</h2>
         <p><em>Smaller and weaker than their cousins, and with larger hands and feet, goblins of the Grotag tribe attempt to live by their wits—though seldom with much success. When a Grotag goblin has the bright idea of trying to tame fleshpiercer mites, at least a few others will be willing to follow that goblin into a nest—usually to predictably horrible results. But though the Grotag seem to have a never-ending supply of bad ideas, and a horrible ratio of bad ideas to good, the Grotag likewise seem to have a never-ending supply of Grotag. As such, by trial and error (and more error), these goblins have stumbled across a great deal of knowledge useful for surviving the deep places of Zendikar, and for dealing with the creatures that live there. The Grotag imagine themselves to have a sort of empathy with beasts, and they lose hundreds of goblins each year to ill-advised attempts at monster taming. But, every now and again, one of these efforts is successful.</em></p>
-        <ul>
-            <li><strong>Grotag Tamer.</strong> You have proficiency in the Animal Handling skill.</li>
-        </ul>
+            <ul>
+           <li><strong>Grotag Tamer.</strong> You have proficiency in the Animal Handling skill.</li>
+            </ul>
 
         <h2>Lavastep Tribe</h2>
         <p><em>The Lavastep tribe is the most industrious of the goblin tribes, and possesses much hard-won knowledge of the geothermal activity in Akoum. More so than members of the other tribes, the Lavastep goblins build surprisingly effective equipment out of the crystal shards and veins of strange metals that occasionally boil up to the surface. The most warlike of their kind, Lavastep goblins frequently harass the kor, elves, and humans of Akoum.</em></p>
-        <ul>
-            <li><strong>Lavastep Grit.</strong> You have advantage on Dexterity (Stealth) checks made to hide in rocky or subterranean environments.</li>
-        </ul>
+            <ul>
+           <li><strong>Lavastep Grit.</strong> You have advantage on Dexterity (Stealth) checks made to hide in rocky or subterranean environments.</li>
+            </ul>
 
         <h2>Tuktuk Tribe</h2>
         <p><em>Among the goblins, the Tuktuk are most likely to hire themselves out as ruin guides to other races. Of course, their usual plan is to help find something of value, steal it, trigger a trap intentionally, and then run.</em></p>
-        <ul>
-            <li><strong>Tuktuk Cunning.</strong> You have proficiency with thieves' tools.</li>
-        </ul>
+            <ul>
+           <li><strong>Tuktuk Cunning.</strong> You have proficiency with thieves' tools.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#motm">Monsters of the Multiverse</a></li>
-                <li><a href="#vgtm">Volo's Guide to Monsters</a></li>
-                <li><a href="#awm">Adventures with Muk: Dankwood</a></li>
-                <li><a href="#psi">Plane Shift: Ixalan</a></li>
-                <li><a href="#psz">Plane Shift: Zendikar</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

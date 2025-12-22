@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,9 +556,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../rules.html">Rules</a></li>
-            <li><a href="../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../rules.html">Rules</a></li>
+           <li><a href="../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -591,7 +572,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -607,32 +587,30 @@
         
         <p>Instead of choosing one of the game's races for your character at 1st level, you can use the following traits to represent your character's lineage, giving you full control over how your character's origin shaped them:</p>
 
-        <ul>
-            <li><strong>Creature type.</strong> You are a humanoid. You determine your appearance and whether you resemble any of your kin.</li>
-            <li><strong>Size.</strong> You are Small or Medium (your choice).</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Ability Score Increase.</strong> One ability score of your choice increases by 2.</li>
-            <li><strong>Feat.</strong> You gain one feat of your choice for which you qualify.</li>
+            <ul>
+           <li><strong>Creature type.</strong> You are a humanoid. You determine your appearance and whether you resemble any of your kin.</li>
+           <li><strong>Size.</strong> You are Small or Medium (your choice).</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Ability Score Increase.</strong> One ability score of your choice increases by 2.</li>
+           <li><strong>Feat.</strong> You gain one feat of your choice for which you qualify.</li>
             <li><strong>Variable Trait.</strong> You gain one of the following options of your choice:
-                <ul>
-                    <li>Darkvision with a range of 60 feet.</li>
-                    <li>Proficiency in one skill of your choice.</li>
+                    <ul>
+                   <li>Darkvision with a range of 60 feet.</li>
+                   <li>Proficiency in one skill of your choice.</li>
                 </ul>
             </li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for your character.</li>
-        </ul>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for your character.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#tcoe">Tasha's Cauldron</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

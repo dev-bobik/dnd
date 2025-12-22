@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,10 +556,10 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">Races</a></li>
-            <li><a href="../../character-builder.html">Character Builder</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">Races</a></li>
+           <li><a href="../../character-builder.html">Character Builder</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -592,7 +573,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -610,29 +590,27 @@
         <h1 id="kor-features">Kor Features</h1>
         <p>Source: Plane Shift - Zendikar</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Wisdom score increases by 1.</li>
-            <li><strong>Age.</strong> Kor mature at the same rate as humans and live about as long.</li>
-            <li><strong>Alignment.</strong> Most kor are lawful good, with a strong dedication to community and the traditions of their ancestors.</li>
-            <li><strong>Size.</strong> Kor average nearly 6 feet tall, but are much lighter and more slender than humans. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a climbing speed of 30 feet as long as you are not encumbered or wearing heavy armor.</li>
-            <li><strong>Kor Climbing.</strong> You have proficiency in the Athletics and Acrobatics skills.</li>
-            <li><strong>Lucky.</strong> When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</li>
-            <li><strong>Brave.</strong> You have advantage on saving throws against being frightened.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common, and communicate in the silent speech of the kor.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Dexterity score increases by 2, and your Wisdom score increases by 1.</li>
+           <li><strong>Age.</strong> Kor mature at the same rate as humans and live about as long.</li>
+           <li><strong>Alignment.</strong> Most kor are lawful good, with a strong dedication to community and the traditions of their ancestors.</li>
+           <li><strong>Size.</strong> Kor average nearly 6 feet tall, but are much lighter and more slender than humans. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a climbing speed of 30 feet as long as you are not encumbered or wearing heavy armor.</li>
+           <li><strong>Kor Climbing.</strong> You have proficiency in the Athletics and Acrobatics skills.</li>
+           <li><strong>Lucky.</strong> When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.</li>
+           <li><strong>Brave.</strong> You have advantage on saving throws against being frightened.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common, and communicate in the silent speech of the kor.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#kor-features">Kor Features</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

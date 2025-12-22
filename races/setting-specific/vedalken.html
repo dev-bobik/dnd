@@ -438,27 +438,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -479,51 +468,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -586,9 +567,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -602,7 +583,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -617,43 +597,40 @@
 
         <h1 id="ravnica">Guildmaster's Guide to Ravnica</h1>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Wisdom score increases by 1.</li>
-            <li><strong>Age.</strong> Vedalken mature slower than humans do, reaching maturity around age 40. Their life span is typically 350 years, with some living to the age of 500.</li>
-            <li><strong>Alignment.</strong> Vedalken are usually lawful and non-evil.</li>
-            <li><strong>Size.</strong> Tall and slender, Vedalken stand around 6 to 6½ feet tall. They usually weigh around 200lbs(90kg). They are medium creatures.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Vedalken Dispassion.</strong> You have advantage on all Intelligence, Wisdom, and Charisma Saving Throws.</li>
-            <li><strong>Tireless Precision.</strong> You are proficient in one of the following skills of your choice: Arcana, History, Investigation, Medicine, Performance, or Sleight of Hand. You are also proficient with one tool of your choice. Whenever you make an ability check with the chosen skill or tool, roll a d4 and add the number rolled to the check's total.</li>
-            <li><strong>Partially Amphibious.</strong> By absorbing oxygen through your skin, you can breathe underwater for up to 1 hour. Once you've reached that limit, you can't use this trait again until you finish a long rest.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common, Vedalken, and one language of your choice.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Wisdom score increases by 1.</li>
+           <li><strong>Age.</strong> Vedalken mature slower than humans do, reaching maturity around age 40. Their life span is typically 350 years, with some living to the age of 500.</li>
+           <li><strong>Alignment.</strong> Vedalken are usually lawful and non-evil.</li>
+           <li><strong>Size.</strong> Tall and slender, Vedalken stand around 6 to 6½ feet tall. They usually weigh around 200lbs(90kg). They are medium creatures.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Vedalken Dispassion.</strong> You have advantage on all Intelligence, Wisdom, and Charisma Saving Throws.</li>
+           <li><strong>Tireless Precision.</strong> You are proficient in one of the following skills of your choice: Arcana, History, Investigation, Medicine, Performance, or Sleight of Hand. You are also proficient with one tool of your choice. Whenever you make an ability check with the chosen skill or tool, roll a d4 and add the number rolled to the check's total.</li>
+           <li><strong>Partially Amphibious.</strong> By absorbing oxygen through your skin, you can breathe underwater for up to 1 hour. Once you've reached that limit, you can't use this trait again until you finish a long rest.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common, Vedalken, and one language of your choice.</li>
+            </ul>
 
         <h1 id="kaladesh">Plane Shift - Kaladesh</h1>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Wisdom score increases by 1.</li>
-            <li><strong>Age.</strong> Vedalken mature at the same rate humans do, and most are expected to settle down into an adult life by around age 40. They can live 350 to almost 500 years.</li>
-            <li><strong>Alignment.</strong> Vedalken are most often lawful and rarely evil.</li>
-            <li><strong>Size.</strong> Vedalken are taller than humans but more slender. They average 6 to 6½ feet tall, but usually weigh less than 200 pounds. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Vedalken Cunning.</strong> You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</li>
-            <li><strong>Aether Lore.</strong> Whenever you make an Intelligence (History) check related to magic items or aether-powered technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Vedalken. The Vedalken language is renowned for its technical treatises and its catalogs of knowledge about the natural world and the aether that pervades it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Wisdom score increases by 1.</li>
+           <li><strong>Age.</strong> Vedalken mature at the same rate humans do, and most are expected to settle down into an adult life by around age 40. They can live 350 to almost 500 years.</li>
+           <li><strong>Alignment.</strong> Vedalken are most often lawful and rarely evil.</li>
+           <li><strong>Size.</strong> Vedalken are taller than humans but more slender. They average 6 to 6½ feet tall, but usually weigh less than 200 pounds. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Vedalken Cunning.</strong> You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.</li>
+           <li><strong>Aether Lore.</strong> Whenever you make an Intelligence (History) check related to magic items or aether-powered technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Vedalken. The Vedalken language is renowned for its technical treatises and its catalogs of knowledge about the natural world and the aether that pervades it.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#ravnica">Ravnica Version</a></li>
-                <li><a href="#kaladesh">Kaladesh Version</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -496,51 +485,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -603,9 +584,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -619,8 +600,7 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
-</header>
+    </header>
 
 <!-- Main Container -->
 <div class="container">
@@ -635,21 +615,21 @@
         <p><em>A lanky people with skin tones of yellows, greens, and browns, githyanki complement their physical prowess with psionic might, instilled in them by mind flayers and cultivated over eons in the Astral Plane. Now all githyanki can use their psychic bond with that plane to access splinters of knowledge left behind by beings who travel, live, and die among the silver astral clouds.</em></p>
         <p><em>Githyanki who reside in the Astral Plane can live indefinitely.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
-            <li><strong>Size.</strong> You are Medium.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
-            <li><strong>Astral Knowledge.</strong> You can mystically access a reservoir of experiences of entities connected to the Astral Plane. Whenever you finish a long rest, you gain proficiency in one skill of your choice and with one weapon or tool of your choice, selected from the Player's Handbook, as you momentarily project your consciousness into the Astral Plane. These proficiencies last until the end of your next long rest.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+           <li><strong>Size.</strong> You are Medium.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+           <li><strong>Astral Knowledge.</strong> You can mystically access a reservoir of experiences of entities connected to the Astral Plane. Whenever you finish a long rest, you gain proficiency in one skill of your choice and with one weapon or tool of your choice, selected from the Player's Handbook, as you momentarily project your consciousness into the Astral Plane. These proficiencies last until the end of your next long rest.</li>
             <li><strong>Githyanki Psionics.</strong> You know the Mage Hand cantrip, and the hand is invisible when you cast the cantrip with this trait.
-                <ul>
-                    <li>Starting at 3rd level, you can cast the Jump spell with this trait. Starting at 5th level, you can also cast the Misty Step spell with it. Once you cast Jump or Misty Step with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
-                    <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race). None of these spells require spell components when you cast them with this trait.</li>
+                    <ul>
+                   <li>Starting at 3rd level, you can cast the Jump spell with this trait. Starting at 5th level, you can also cast the Misty Step spell with it. Once you cast Jump or Misty Step with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
+                   <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race). None of these spells require spell components when you cast them with this trait.</li>
                 </ul>
             </li>
-            <li><strong>Psychic Resilience.</strong> You have resistance to psychic damage.</li>
-            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
-        </ul>
+           <li><strong>Psychic Resilience.</strong> You have resistance to psychic damage.</li>
+           <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+            </ul>
 
         <h1 id="mtof">Mordenkainen's Tome of Foes</h1>
         <p><em>The warlike githyanki and the contemplative githzerai are a sundered people – two cultures that utterly despise one another. The brutal githyanki are trained from birth as warriors, while the githzerai hone their minds to a razor's edge in their fortresses within Limbo. But before there were githyanki or githzerai, these creatures were a single race enslaved by the illithids.</em></p>
@@ -657,22 +637,22 @@
         <p><em>Whether these tall, gaunt creatures were peaceful or savage, cultured or primitive before the illithids enslaved and changed them, none can say. Not even the original name of their race remains from that distant time.</em></p>
         <p><em>The githyanki plunder countless worlds from the decks of their astral vessels and the backs of red dragons. Feathers, beads, gems, and precious metals decorate their armor and weapons – the legendary silver swords with which they cut through their foes. Since winning their freedom from the illithids, the githyanki have become ruthless conquerors under the rulership of their dread lich-queen, Vlaakith.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Intelligence score increases by 1.</li>
-            <li><strong>Age.</strong> Gith reach adulthood in their late teens and live for about a century.</li>
-            <li><strong>Size.</strong> Gith are taller and leaner than humans, with most a slender 6 feet in height. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Alignment.</strong> Githyanki tend toward lawful evil. They are aggressive and arrogant, and they remain the faithful servants of their lich-queen, Vlaakith. Renegade githyanki tend toward chaos.</li>
-            <li><strong>Decadent Mastery.</strong> You learn one language of your choice, and you are proficient with one skill or tool of your choice. In the timeless city of Tu'narath, githyanki have bountiful time to master odd bits of knowledge.</li>
-            <li><strong>Martial Prodigy.</strong> You are proficient with light and medium armor and with shortswords, longswords, and greatswords.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Intelligence score increases by 1.</li>
+           <li><strong>Age.</strong> Gith reach adulthood in their late teens and live for about a century.</li>
+           <li><strong>Size.</strong> Gith are taller and leaner than humans, with most a slender 6 feet in height. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Alignment.</strong> Githyanki tend toward lawful evil. They are aggressive and arrogant, and they remain the faithful servants of their lich-queen, Vlaakith. Renegade githyanki tend toward chaos.</li>
+           <li><strong>Decadent Mastery.</strong> You learn one language of your choice, and you are proficient with one skill or tool of your choice. In the timeless city of Tu'narath, githyanki have bountiful time to master odd bits of knowledge.</li>
+           <li><strong>Martial Prodigy.</strong> You are proficient with light and medium armor and with shortswords, longswords, and greatswords.</li>
             <li><strong>Githyanki Psionics.</strong> You know the Mage Hand cantrip, and the hand is invisible when you cast the cantrip with this trait.
-                <ul>
-                    <li>When you reach 3rd level, you can cast the Jump spell once with this trait, and you regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Misty Step spell once with this trait, and you regain the ability to do so when you finish a long rest.</li>
-                    <li>Intelligence is your spellcasting ability for these spells. When you cast them with this trait, they don't require components.</li>
+                    <ul>
+                   <li>When you reach 3rd level, you can cast the Jump spell once with this trait, and you regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Misty Step spell once with this trait, and you regain the ability to do so when you finish a long rest.</li>
+                   <li>Intelligence is your spellcasting ability for these spells. When you cast them with this trait, they don't require components.</li>
                 </ul>
             </li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Gith.</li>
-        </ul>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Gith.</li>
+            </ul>
 
         <h2>Githyanki Character Concepts</h2>
 
@@ -788,13 +768,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="toc">
-            <h3>Contents</h3>
-            <ul>
-                <li><a href="#motm">Monsters of the Multiverse</a></li>
-                <li><a href="#mtof">Tome of Foes</a></li>
+                <h3>Contents</h3>
+                <ul>
+               <li><a href="#motm">Monsters of the Multiverse</a></li>
+               <li><a href="#mtof">Tome of Foes</a></li>
             </ul>
         </div>
-    </aside>
+        </aside>
 </div>
 
 <script>

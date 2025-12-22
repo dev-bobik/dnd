@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -496,51 +485,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -603,9 +584,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -619,8 +600,7 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
-</header>
+    </header>
 
 <!-- Main Container -->
 <div class="container">
@@ -634,21 +614,21 @@
         <p><em>Githzerai migrated to the Everchanging Chaos of Limbo after the ancient schism that split their ancestors from their cousins, githyanki. Limbo is a roiling maelstrom of matter and energy, collapsing and reforming without purpose or direction, until a creature exerts deliberate will to stabilize it. Through their potent psionic power, githzerai carved a home for themselves amid the chaos. As the ages passed, githzerai explorers ranged out to other planes and worlds of the multiverse.</em></p>
         <p><em>Githzerai are generally slender, with speckled skin in shades of yellow, green, or brown. Eons of cultivating their mental powers within the endless chaos of Limbo have imbued githzerai with the ability to shape psionic energy to protect themselves and probe minds.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
-            <li><strong>Creature Type.</strong> You are a Humanoid.</li>
-            <li><strong>Size.</strong> You are Medium.</li>
-            <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> When determining your character's ability scores, increase one score by 2 and increase a different score by 1, or increase three different scores by 1. You can't raise any of your scores above 20.</li>
+           <li><strong>Creature Type.</strong> You are a Humanoid.</li>
+           <li><strong>Size.</strong> You are Medium.</li>
+           <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
             <li><strong>Githzerai Psionics.</strong> You know the Mage Hand cantrip, and the hand is invisible when you cast the cantrip with this trait.
-                <ul>
-                    <li>Starting at 3rd level, you can cast the Shield spell with this trait. Starting at 5th level, you can also cast the Detect Thoughts spell with it. Once you cast Shield or Detect Thoughts with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
-                    <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race). None of these spells require spell components when you cast them with this trait.</li>
+                    <ul>
+                   <li>Starting at 3rd level, you can cast the Shield spell with this trait. Starting at 5th level, you can also cast the Detect Thoughts spell with it. Once you cast Shield or Detect Thoughts with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast either of those spells using any spell slots you have of the appropriate level.</li>
+                   <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells when you cast them with this trait (choose when you select this race). None of these spells require spell components when you cast them with this trait.</li>
                 </ul>
             </li>
-            <li><strong>Mental Discipline.</strong> Your innate psychic defenses grant you advantage on saving throws you make to avoid or end the charmed and frightened conditions on yourself.</li>
-            <li><strong>Psychic Resilience.</strong> You have resistance to psychic damage.</li>
-            <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
-        </ul>
+           <li><strong>Mental Discipline.</strong> Your innate psychic defenses grant you advantage on saving throws you make to avoid or end the charmed and frightened conditions on yourself.</li>
+           <li><strong>Psychic Resilience.</strong> You have resistance to psychic damage.</li>
+           <li><strong>Languages.</strong> Your character can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. The Player's Handbook offers a list of languages to choose from. The DM is free to modify that list for a campaign.</li>
+            </ul>
 
         <h1 id="mtof">Mordenkainen's Tome of Foes</h1>
         <p><em>The warlike githyanki and the contemplative githzerai are a sundered people – two cultures that utterly despise one another. The brutal githyanki are trained from birth as warriors, while the githzerai hone their minds to a razor's edge in their fortresses within Limbo. But before there were githyanki or githzerai, these creatures were a single race enslaved by the illithids.</em></p>
@@ -656,21 +636,21 @@
         <p><em>Whether these tall, gaunt creatures were peaceful or savage, cultured or primitive before the illithids enslaved and changed them, none can say. Not even the original name of their race remains from that distant time.</em></p>
         <p><em>Focused philosophers and austere ascetics, the githzerai pursue lives of rigid order. Lean and muscular, they wear unadorned clothing free of ornamentation, keeping their own counsel and trusting few creatures outside of their own kind. Having turned their backs on their warlike githyanki kin, the githzerai maintain a strict monastic lifestyle, dwelling on islands of order in the vast sea of chaos that is the plane of Limbo.</em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2, and your Intelligence score increases by 1.</li>
-            <li><strong>Age.</strong> Gith reach adulthood in their late teens and live for about a century.</li>
-            <li><strong>Size.</strong> Gith are taller and leaner than humans, with most a slender 6 feet in height. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Alignment.</strong> Githzerai tend toward lawful neutral. Their rigorous training in psychic abilities requires an implacable mental discipline.</li>
-            <li><strong>Mental Discipline.</strong> You have advantage on saving throws against the charmed and frightened conditions. Under the tutelage of monastic masters, githzerai learn to govern their own minds.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2, and your Intelligence score increases by 1.</li>
+           <li><strong>Age.</strong> Gith reach adulthood in their late teens and live for about a century.</li>
+           <li><strong>Size.</strong> Gith are taller and leaner than humans, with most a slender 6 feet in height. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Alignment.</strong> Githzerai tend toward lawful neutral. Their rigorous training in psychic abilities requires an implacable mental discipline.</li>
+           <li><strong>Mental Discipline.</strong> You have advantage on saving throws against the charmed and frightened conditions. Under the tutelage of monastic masters, githzerai learn to govern their own minds.</li>
             <li><strong>Githzerai Psionics.</strong> You know the Mage Hand cantrip, and the hand is invisible when you cast the cantrip with this trait.
-                <ul>
-                    <li>When you reach 3rd level, you can cast the Shield spell once with this trait, and you regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Detect Thoughts spell once with this trait, and you regain the ability to do so when you finish a long rest.</li>
-                    <li>Wisdom is your spellcasting ability for these spells. When you cast them with this trait, they don't require components.</li>
+                    <ul>
+                   <li>When you reach 3rd level, you can cast the Shield spell once with this trait, and you regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Detect Thoughts spell once with this trait, and you regain the ability to do so when you finish a long rest.</li>
+                   <li>Wisdom is your spellcasting ability for these spells. When you cast them with this trait, they don't require components.</li>
                 </ul>
             </li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Gith.</li>
-        </ul>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Gith.</li>
+            </ul>
 
         <h2>Githzerai Character Concepts</h2>
 
@@ -786,13 +766,13 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="toc">
-            <h3>Contents</h3>
-            <ul>
-                <li><a href="#motm">Monsters of the Multiverse</a></li>
-                <li><a href="#mtof">Tome of Foes</a></li>
+                <h3>Contents</h3>
+                <ul>
+               <li><a href="#motm">Monsters of the Multiverse</a></li>
+               <li><a href="#mtof">Tome of Foes</a></li>
             </ul>
         </div>
-    </aside>
+        </aside>
 </div>
 
 <script>

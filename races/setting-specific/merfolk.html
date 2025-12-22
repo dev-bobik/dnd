@@ -438,27 +438,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -475,54 +464,46 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
-        .toc ul ul {
+        .sidebar ul ul {
             margin-left: 1rem;
         }
 
@@ -586,9 +567,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -602,7 +583,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -619,36 +599,36 @@
 
         <p>The River Heralds are merfolk—a race of amphibious humanoids at home throughout the oceans, rivers, and rain forests of Ixalan. They stand between seven and eight feet tall, with skin that ranges from deep burgundy through many shades of violet and blue, to green, bright orange, and yellow. They are humanlike in shape, but have long fins extending from their shoulders, forearms, middle backs, and calves. Frills of fins also protrude from the backs of their heads. All merfolk can breathe air or filter oxygen from the water, and they can walk on land or swim with equal ease.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 1.</li>
-            <li><strong>Age.</strong> Merfolk mature at the same rate humans do and reach adulthood around the age of 20. They live considerably longer than humans, though, often reaching well over 100 years.</li>
-            <li><strong>Alignment.</strong> Most merfolk are neutral, living in close harmony with nature.</li>
-            <li><strong>Size.</strong> Merfolk are significantly taller than most humans, standing between seven and eight feet tall and averaging about 300 pounds. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a swimming speed of 30 feet.</li>
-            <li><strong>Amphibious.</strong> You can breathe air and water.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign), Merfolk and one additional language of your choice.</li>
-            <li><strong>Subrace.</strong> Merfolk are actually two separate subspecies. The green merfolk favor the land, walking among the trees and savoring the sunlight that filters through the leaves, while the blue merfolk are more at home in the waters of the Great River and the Inner Sea.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 1.</li>
+           <li><strong>Age.</strong> Merfolk mature at the same rate humans do and reach adulthood around the age of 20. They live considerably longer than humans, though, often reaching well over 100 years.</li>
+           <li><strong>Alignment.</strong> Most merfolk are neutral, living in close harmony with nature.</li>
+           <li><strong>Size.</strong> Merfolk are significantly taller than most humans, standing between seven and eight feet tall and averaging about 300 pounds. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a swimming speed of 30 feet.</li>
+           <li><strong>Amphibious.</strong> You can breathe air and water.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common (if it exists in your campaign), Merfolk and one additional language of your choice.</li>
+           <li><strong>Subrace.</strong> Merfolk are actually two separate subspecies. The green merfolk favor the land, walking among the trees and savoring the sunlight that filters through the leaves, while the blue merfolk are more at home in the waters of the Great River and the Inner Sea.</li>
+            </ul>
 
         <h2 id="green-merfolk">Green Merfolk</h2>
 
         <p>Green merfolk generally have yellow chests and pale green faces, shading to dark blues and purples on their backs and limbs. The patterns on their skin suggest the colors of the tree frogs common in the rain forest, as do their eyes of orange, lime green, or sky blue. Their fins are relatively short and thick. They climb trees with ease, move through undergrowth unhindered, and often wield magic to shape vines and branches to their will.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2.</li>
-            <li><strong>Mask of the Wild.</strong> You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.</li>
-            <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Druid spell list. Wisdom is your spellcasting ability for it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2.</li>
+           <li><strong>Mask of the Wild.</strong> You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.</li>
+           <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Druid spell list. Wisdom is your spellcasting ability for it.</li>
+            </ul>
 
         <h2 id="blue-merfolk">Blue Merfolk</h2>
 
         <p>Blue merfolk often have burgundy or magenta on their faces and chests, with lighter shades of blue and purple elsewhere. Their eyes are red, orange, or blue, and their long, thin, and elegant fins resemble scarves or veils of fine fabric. They swim easily, even upstream, and clamber over rocks and through rapids with ease. They prefer to dwell in shallow waters, but spend a fair amount of time on land as well.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2.</li>
-            <li><strong>Lore of the Waters.</strong> You gain proficiency in History and Nature.</li>
-            <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting ability for it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2.</li>
+           <li><strong>Lore of the Waters.</strong> You gain proficiency in History and Nature.</li>
+           <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting ability for it.</li>
+            </ul>
 
         <h1 id="plane-shift-zendikar">Plane Shift - Zendikar</h1>
 
@@ -656,72 +636,56 @@
 
         <p>Merfolk are associated with knowledge, logic, and strategy, though the traditional merfolk creeds express this connection in different ways.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 1.</li>
-            <li><strong>Age.</strong> Merfolk mature at the same rate humans do and reach adulthood around the age of 20. They live considerably longer than humans, though, often reaching well over 100 years.</li>
-            <li><strong>Alignment.</strong> Most merfolk are neutral, though merfolk of the Emeria and Cosi creeds have chaotic leanings.</li>
-            <li><strong>Size.</strong> Merfolk are about the same size and build as humans. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a swimming speed of 30 feet.</li>
-            <li><strong>Amphibious.</strong> You can breathe air and water.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common, Merfolk and one additional language of your choice.</li>
-            <li><strong>Creeds.</strong> The merfolk race is divided into three creeds, founded on the principles of Emeria (wind), Ula (water), and Cosi (the trickster). A merfolk isn't born into a creed but chooses it upon reaching adulthood, and it is rare for a merfolk not to choose a creed. Merfolk of the wind and water creeds aren't hostile to each other, but members of each creed regard the other creed with a vague disdain. Members of both those creeds regard the Cosi creed with suspicion and some degree of fear, and Cosi-creed adherents tend to keep their affiliation secret. Choose one of these creeds for your character.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 1.</li>
+           <li><strong>Age.</strong> Merfolk mature at the same rate humans do and reach adulthood around the age of 20. They live considerably longer than humans, though, often reaching well over 100 years.</li>
+           <li><strong>Alignment.</strong> Most merfolk are neutral, though merfolk of the Emeria and Cosi creeds have chaotic leanings.</li>
+           <li><strong>Size.</strong> Merfolk are about the same size and build as humans. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet. You also have a swimming speed of 30 feet.</li>
+           <li><strong>Amphibious.</strong> You can breathe air and water.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common, Merfolk and one additional language of your choice.</li>
+           <li><strong>Creeds.</strong> The merfolk race is divided into three creeds, founded on the principles of Emeria (wind), Ula (water), and Cosi (the trickster). A merfolk isn't born into a creed but chooses it upon reaching adulthood, and it is rare for a merfolk not to choose a creed. Merfolk of the wind and water creeds aren't hostile to each other, but members of each creed regard the other creed with a vague disdain. Members of both those creeds regard the Cosi creed with suspicion and some degree of fear, and Cosi-creed adherents tend to keep their affiliation secret. Choose one of these creeds for your character.</li>
+            </ul>
 
         <h2 id="emeria-creed">Emeria (Wind) Creed</h2>
 
         <p>Merfolk who followed Emeria's creed seek wisdom and truth in the Wind Realm, exploring the mystical forces—rather than natural causes—behind historical events. They are evasive and intentionally enigmatic in their interactions with others, and are often described as manipulative and deceptive.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2.</li>
-            <li><strong>Wind Creed Manipulation.</strong> You have proficiency in the Deception and Persuasion skills.</li>
-            <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Druid spell list. Wisdom is your spellcasting ability for it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2.</li>
+           <li><strong>Wind Creed Manipulation.</strong> You have proficiency in the Deception and Persuasion skills.</li>
+           <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Druid spell list. Wisdom is your spellcasting ability for it.</li>
+            </ul>
 
         <h2 id="ula-creed">Ula (Water) Creed</h2>
 
         <p>Ula-creed merfolk emphasize intellectual pursuits, stressing hard evidence and reason over passion. They are analytical scholars, chroniclers, explorers, and navigators who pride themselves on being blunt and straightforward.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2.</li>
-            <li><strong>Water Creed Navigation.</strong> You have proficiency with navigator's tools and in the Survival skill.</li>
-            <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting ability for it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2.</li>
+           <li><strong>Water Creed Navigation.</strong> You have proficiency with navigator's tools and in the Survival skill.</li>
+           <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting ability for it.</li>
+            </ul>
 
         <h2 id="cosi-creed">Cosi Creed</h2>
 
         <p>No merfolk will openly admit to following the creed of the trickster, but those who do view Cosi as an ally who can grant them control over the chaotic forces of the world.</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Charisma score increases by an additional 1 (for a total of 2), and your Intelligence score increases by 1.</li>
-            <li><strong>Creed of the Trickster.</strong> You have proficiency in the Sleight of Hand and Stealth skills.</li>
-            <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Bard spell list. Charisma is your spellcasting ability for it.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Charisma score increases by an additional 1 (for a total of 2), and your Intelligence score increases by 1.</li>
+           <li><strong>Creed of the Trickster.</strong> You have proficiency in the Sleight of Hand and Stealth skills.</li>
+           <li><strong>Cantrip.</strong> You know one cantrip of your choice from the Bard spell list. Charisma is your spellcasting ability for it.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#plane-shift-ixalan">Plane Shift - Ixalan</a></li>
-                <li>
-                    <ul>
-                        <li><a href="#green-merfolk">Green Merfolk</a></li>
-                        <li><a href="#blue-merfolk">Blue Merfolk</a></li>
-                    </ul>
-                </li>
-                <li><a href="#plane-shift-zendikar">Plane Shift - Zendikar</a></li>
-                <li>
-                    <ul>
-                        <li><a href="#emeria-creed">Emeria (Wind) Creed</a></li>
-                        <li><a href="#ula-creed">Ula (Water) Creed</a></li>
-                        <li><a href="#cosi-creed">Cosi Creed</a></li>
-                    </ul>
-                </li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

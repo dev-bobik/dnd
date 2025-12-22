@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,9 +556,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -591,7 +572,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -605,30 +585,28 @@
         <h1 id="ai">Acquisitions Incorporated</h1>
         <p><em><strong>Verdan owe their existence to chaos. Descendants of goblins and hobgoblins, transformed by the shadow of That-Which-Endures. They are THE newest race of Faerûn.</strong></em></p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 2, and your Constitution score increases by 1.</li>
-            <li><strong>Age.</strong> Verdan reach adulthood at around the age 24 and it is thought that they might live to nearly 200 years old. However, because no verdan has died of old age since the race's initial creation, their upper age limits remain speculation.</li>
-            <li><strong>Alignment.</strong> Verdan are generally good, although their absence of racial identity and shared history can sometimes see individual verdan become untethered from any moral or ethical framework.</li>
-            <li><strong>Size.</strong> Verdan start out similar in size to the goblins they were created from, ranging from 3 to 4 feet in height. But at some point after reaching maturity, each verdan undergoes a sudden growth spurt of 2 feet or more. At 1st level, you are a small creature. When you reach 5th level, you become a medium creature.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Black Blood Healing.</strong> The black blood that is a sign of your people's connection to That-Which-Endures boosts your natural healing. When you roll either 1 or 2 on any Hit Die you spend at the end of a short rest, you can re-roll the die and must use the new roll.</li>
-            <li><strong>Limited Telepathy.</strong> You can telepathically speak to any creature you can see within 30 feet. You don't need to share a language with the creature for it to understand your telepathy, but it must be able to understand at least one language. This process of communication is slow and limited, allowing you to transmit and receive only simple ideas and straightforward concepts.</li>
-            <li><strong>Persuasive.</strong> Your people's lack of history makes you trustworthy and humble. You have proficiency in the Persuasion skill.</li>
-            <li><strong>Telepathic Insight.</strong> Your mind's connection to the world around you strengthens your will. You have advantage on all Wisdom and Charisma saving throws.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common, Goblin, and one additional language. This language typically has some connection to one of the areas or cultures that has been part of your life.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Charisma score increases by 2, and your Constitution score increases by 1.</li>
+           <li><strong>Age.</strong> Verdan reach adulthood at around the age 24 and it is thought that they might live to nearly 200 years old. However, because no verdan has died of old age since the race's initial creation, their upper age limits remain speculation.</li>
+           <li><strong>Alignment.</strong> Verdan are generally good, although their absence of racial identity and shared history can sometimes see individual verdan become untethered from any moral or ethical framework.</li>
+           <li><strong>Size.</strong> Verdan start out similar in size to the goblins they were created from, ranging from 3 to 4 feet in height. But at some point after reaching maturity, each verdan undergoes a sudden growth spurt of 2 feet or more. At 1st level, you are a small creature. When you reach 5th level, you become a medium creature.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Black Blood Healing.</strong> The black blood that is a sign of your people's connection to That-Which-Endures boosts your natural healing. When you roll either 1 or 2 on any Hit Die you spend at the end of a short rest, you can re-roll the die and must use the new roll.</li>
+           <li><strong>Limited Telepathy.</strong> You can telepathically speak to any creature you can see within 30 feet. You don't need to share a language with the creature for it to understand your telepathy, but it must be able to understand at least one language. This process of communication is slow and limited, allowing you to transmit and receive only simple ideas and straightforward concepts.</li>
+           <li><strong>Persuasive.</strong> Your people's lack of history makes you trustworthy and humble. You have proficiency in the Persuasion skill.</li>
+           <li><strong>Telepathic Insight.</strong> Your mind's connection to the world around you strengthens your will. You have advantage on all Wisdom and Charisma saving throws.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common, Goblin, and one additional language. This language typically has some connection to one of the areas or cultures that has been part of your life.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#ai">Acquisitions Incorporated</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

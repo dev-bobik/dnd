@@ -438,27 +438,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -479,51 +468,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -586,9 +567,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -602,7 +583,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -619,30 +599,28 @@
 
         <h1 id="traits">Leonin Features</h1>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Strength score increases by 1.</li>
-            <li><strong>Age.</strong> Leonin mature and age at about the same rate as humans.</li>
-            <li><strong>Alignment.</strong> Leonin tend toward good alignments. Leonin who are focused on the pride lean toward lawful good.</li>
-            <li><strong>Size.</strong> Leonin are typically over 6 feet tall, with some standing over 7 feet. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 35 feet.</li>
-            <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
-            <li><strong>Claws.</strong> Your claws are natural weapons, which you can use to make unarmed strikes. If you hit with them, you can deal slashing damage equal to 1d4 + your Strength modifier.</li>
-            <li><strong>Hunter's Instincts.</strong> You have proficiency in one of the following skills of your choice: Athletics, Intimidation, Perception, or Survival.</li>
-            <li><strong>Daunting Roar.</strong> As a bonus action, you can let out an especially menacing roar. Creatures of your choice within 10 feet of you that can hear you must succeed on a Wisdom saving throw or become frightened of you until the end of your next turn. The DC of the save equals 8 + your proficiency bonus + your Constitution modifier. Once you use this trait, you can't use it again until you finish a short or long rest.</li>
-            <li><strong>Languages.</strong> You can speak, read, and write Common and Leonin.</li>
-        </ul>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Constitution score increases by 2, and your Strength score increases by 1.</li>
+           <li><strong>Age.</strong> Leonin mature and age at about the same rate as humans.</li>
+           <li><strong>Alignment.</strong> Leonin tend toward good alignments. Leonin who are focused on the pride lean toward lawful good.</li>
+           <li><strong>Size.</strong> Leonin are typically over 6 feet tall, with some standing over 7 feet. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 35 feet.</li>
+           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+           <li><strong>Claws.</strong> Your claws are natural weapons, which you can use to make unarmed strikes. If you hit with them, you can deal slashing damage equal to 1d4 + your Strength modifier.</li>
+           <li><strong>Hunter's Instincts.</strong> You have proficiency in one of the following skills of your choice: Athletics, Intimidation, Perception, or Survival.</li>
+           <li><strong>Daunting Roar.</strong> As a bonus action, you can let out an especially menacing roar. Creatures of your choice within 10 feet of you that can hear you must succeed on a Wisdom saving throw or become frightened of you until the end of your next turn. The DC of the save equals 8 + your proficiency bonus + your Constitution modifier. Once you use this trait, you can't use it again until you finish a short or long rest.</li>
+           <li><strong>Languages.</strong> You can speak, read, and write Common and Leonin.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#traits">Leonin Features</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

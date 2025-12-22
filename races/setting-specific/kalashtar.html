@@ -431,27 +431,16 @@
         }
 
         ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+            margin: 1rem 0 1rem 2rem;
+            list-style-type: disc;
         }
 
         li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+            margin-bottom: 0.8rem;
         }
 
-        li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        li ul li:before {
-            content: "◦";
+        li::marker {
+            color: white;
         }
 
         strong {
@@ -468,51 +457,43 @@
             position: sticky;
             top: 120px;
             align-self: start;
-        }
-
-        .toc {
-            background: rgba(36, 36, 36, 0.8);
+        }        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            background: rgba(36, 36, 36, 0.5);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .toc h3 {
+        .sidebar h3 {
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .toc ul {
+        .sidebar ul {
             list-style: none;
-            padding: 0;
             margin: 0;
-        }
-
-        .toc li {
             padding: 0;
-            margin: 0;
         }
 
-        .toc li:before {
-            display: none;
+        .sidebar li {
+            margin-bottom: 0.5rem;
         }
 
-        .toc a {
-            display: block;
-            padding: 0.5rem 0;
+        .sidebar a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
-        .toc a:hover {
+        .sidebar a:hover {
             color: var(--primary);
-            padding-left: 0.5rem;
         }
 
         /* Responsive */
@@ -575,9 +556,9 @@
             Home
         </a>
         <ul class="nav-links">
-            <li><a href="../../rules.html">Rules</a></li>
-            <li><a href="../../lineages.html">All Races</a></li>
-        </ul>
+           <li><a href="../../rules.html">Rules</a></li>
+           <li><a href="../../lineages.html">All Races</a></li>
+            </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -591,7 +572,6 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
-    </nav>
 </header>
 
 <!-- Main Container -->
@@ -607,56 +587,53 @@
         <h1 id="erlw">Eberron: Rising from the Last War</h1>
         <p>Source: Eberron: Rising from the Last War</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2, and your Charisma score increases by 1.</li>
-            <li><strong>Age.</strong> Kalashtar develop physically at the same rate as humans do and have similar lifespans.</li>
-            <li><strong>Alignment.</strong> The noble spirit tied to a kalashtar drives it toward lawful and good behavior. Most kalashtar combine strong self-discipline with compassion for all sentient beings, but some kalashtar resist the virtuous influence of their spirit.</li>
-            <li><strong>Size.</strong> Kalashtar are similar in build to humans, though they are typically a few inches taller. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Dual Mind.</strong> You have advantage on all Wisdom saving throws.</li>
-            <li><strong>Mental Discipline.</strong> You have resistance to psychic damage.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Wisdom score increases by 2, and your Charisma score increases by 1.</li>
+           <li><strong>Age.</strong> Kalashtar develop physically at the same rate as humans do and have similar lifespans.</li>
+           <li><strong>Alignment.</strong> The noble spirit tied to a kalashtar drives it toward lawful and good behavior. Most kalashtar combine strong self-discipline with compassion for all sentient beings, but some kalashtar resist the virtuous influence of their spirit.</li>
+           <li><strong>Size.</strong> Kalashtar are similar in build to humans, though they are typically a few inches taller. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Dual Mind.</strong> You have advantage on all Wisdom saving throws.</li>
+           <li><strong>Mental Discipline.</strong> You have resistance to psychic damage.</li>
             <li><strong>Mind Link.</strong> You can speak telepathically to any creature you can see, provided the creature is within a number of feet of you equal to 10 times your level. You don't need to share a language with the creature for it to understand your telepathic utterances, but the creature must be able to understand at least one language.
-                <ul>
-                    <li>When you're using this trait to speak telepathically to a creature, you can use your action to give that creature the ability to speak telepathically with you for 1 hour or until you end this effect as an action. To use this ability, the creature must be able to see you and must be within this trait's range. You can give this ability to only one creature at a time; giving it to a creature takes it away from another creature who has it.</li>
+                    <ul>
+                   <li>When you're using this trait to speak telepathically to a creature, you can use your action to give that creature the ability to speak telepathically with you for 1 hour or until you end this effect as an action. To use this ability, the creature must be able to see you and must be within this trait's range. You can give this ability to only one creature at a time; giving it to a creature takes it away from another creature who has it.</li>
                 </ul>
             </li>
-            <li><strong>Severed from Dreams.</strong> Kalashtar sleep, but they don't connect to the plane of dreams as other creatures do. Instead, their minds draw from the memories of their otherworldly spirit while they sleep. As such, you are immune to magical spells and effects that require you to dream, like the Dream spell, but not to spells and effects that put you to sleep, like the Sleep spell.</li>
-            <li><strong>Languages.</strong> You can read and write Common, Quori, and one other language of your choice.</li>
-        </ul>
+           <li><strong>Severed from Dreams.</strong> Kalashtar sleep, but they don't connect to the plane of dreams as other creatures do. Instead, their minds draw from the memories of their otherworldly spirit while they sleep. As such, you are immune to magical spells and effects that require you to dream, like the Dream spell, but not to spells and effects that put you to sleep, like the Sleep spell.</li>
+           <li><strong>Languages.</strong> You can read and write Common, Quori, and one other language of your choice.</li>
+            </ul>
 
         <h1 id="ua">Unearthed Arcana</h1>
         <p>Source: Unearthed Arcana 52 - Races of Eberron</p>
 
-        <ul>
-            <li><strong>Ability Score Increase.</strong> Your Wisdom and Charisma scores both increase by 1. In addition, one ability score of your choice increases by 1.</li>
-            <li><strong>Age.</strong> Kalashtar develop physically at the same rate as humans do and have similar lifespans.</li>
-            <li><strong>Alignment.</strong> The noble spirit tied to a kalashtar drives it toward lawful and good behavior. Most kalashtar combine strong self-discipline with compassion for all sentient beings, but some kalashtar resist the virtuous influence of their spirit.</li>
-            <li><strong>Size.</strong> Kalashtar are similar in build to humans, though they are typically a few inches taller. Your size is Medium.</li>
-            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
-            <li><strong>Dual Mind.</strong> When you make a Wisdom saving throw, you can use your reaction to gain advantage on the roll. You can use this trait immediately before or after you roll, but before any of the roll's effects occur.</li>
-            <li><strong>Mental Discipline.</strong> You have resistance to psychic damage.</li>
+            <ul>
+           <li><strong>Ability Score Increase.</strong> Your Wisdom and Charisma scores both increase by 1. In addition, one ability score of your choice increases by 1.</li>
+           <li><strong>Age.</strong> Kalashtar develop physically at the same rate as humans do and have similar lifespans.</li>
+           <li><strong>Alignment.</strong> The noble spirit tied to a kalashtar drives it toward lawful and good behavior. Most kalashtar combine strong self-discipline with compassion for all sentient beings, but some kalashtar resist the virtuous influence of their spirit.</li>
+           <li><strong>Size.</strong> Kalashtar are similar in build to humans, though they are typically a few inches taller. Your size is Medium.</li>
+           <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+           <li><strong>Dual Mind.</strong> When you make a Wisdom saving throw, you can use your reaction to gain advantage on the roll. You can use this trait immediately before or after you roll, but before any of the roll's effects occur.</li>
+           <li><strong>Mental Discipline.</strong> You have resistance to psychic damage.</li>
             <li><strong>Mind Link.</strong> You can speak telepathically to any creature you can see within 60 feet of you. You don't need to share a language with the creature for it to understand your telepathic messages, but the creature must be able to understand at least one language or be telepathic itself.
-                <ul>
-                    <li>As a bonus action when you're speaking telepathically to a creature, you can give that creature the ability to speak telepathically to you until the start of your next turn. To use this ability, the creature must be within 60 feet of you and be able to see you.</li>
+                    <ul>
+                   <li>As a bonus action when you're speaking telepathically to a creature, you can give that creature the ability to speak telepathically to you until the start of your next turn. To use this ability, the creature must be within 60 feet of you and be able to see you.</li>
                 </ul>
             </li>
-            <li><strong>Psychic Glamour.</strong> Choose one of the following skills: Insight, Intimidation, Performance, or Persuasion. You have advantage on all ability checks you make with that skill.</li>
-            <li><strong>Severed from Dreams.</strong> Kalashtar sleep, but they don't connect to the plane of dreams as other creatures do. Instead, their minds draw from the memories of their otherworldly spirit while they sleep. As such, you are immune to magical spells and effects that require you to dream, like the Dream spell, but not to spells and effects that put you to sleep, like the Sleep spell.</li>
-            <li><strong>Languages.</strong> You can read and write Common, Quori, and one other language of your choice.</li>
-        </ul>
+           <li><strong>Psychic Glamour.</strong> Choose one of the following skills: Insight, Intimidation, Performance, or Persuasion. You have advantage on all ability checks you make with that skill.</li>
+           <li><strong>Severed from Dreams.</strong> Kalashtar sleep, but they don't connect to the plane of dreams as other creatures do. Instead, their minds draw from the memories of their otherworldly spirit while they sleep. As such, you are immune to magical spells and effects that require you to dream, like the Dream spell, but not to spells and effects that put you to sleep, like the Sleep spell.</li>
+           <li><strong>Languages.</strong> You can read and write Common, Quori, and one other language of your choice.</li>
+            </ul>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <nav class="toc">
-            <h3>Contents</h3>
+        <h3>Contents</h3>
             <ul>
-                <li><a href="#erlw">Eberron: Rising</a></li>
-                <li><a href="#ua">Unearthed Arcana</a></li>
+               <li><a href="#traits">Racial Traits</a></li>
             </ul>
-        </nav>
-    </aside>
+        </aside>
 </div>
 
 <script>

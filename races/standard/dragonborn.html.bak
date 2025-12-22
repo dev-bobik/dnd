@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hexblood - D&D 5e</title>
+    <title>Dragonborn - D&D 5e</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -11,9 +11,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --primary: #6b8e23;
-            --secondary: #556b2f;
-            --accent: #9acd32;
+            --primary: #c53131;
+            --secondary: #822000;
+            --accent: #d4af37;
             --dark: #1a1a1a;
             --card: #242424;
             --text: #e8e8e8;
@@ -341,7 +341,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr 280px;
             gap: 3rem;
@@ -354,7 +354,7 @@
             margin: -2rem -2rem 3rem -2rem;
             padding: 8rem 2rem 3rem 2rem;
             position: relative;
-            background-image: url('../../hexblood.jpg');
+            background-image: url('../../dragonborn.png');
             background-size: 110% auto;
             background-position: center 25%;
             background-repeat: no-repeat;
@@ -408,11 +408,9 @@
             font-family: 'Cinzel', serif;
             color: var(--primary);
             font-size: 2rem;
-            margin: 2.5rem 0 1.5rem 0;
+            margin: 2.5rem 0 1rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-bottom: 2px solid var(--border);
         }
 
         h2 {
@@ -420,41 +418,23 @@
             color: var(--accent);
             font-size: 1.5rem;
             margin: 2rem 0 1rem 0;
-            padding-left: 1rem;
-            border-left: 4px solid var(--accent);
         }
 
-        h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--secondary);
-            font-size: 1.2rem;
-            margin: 1.5rem 0 1rem 0;
-        }
-
-        h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--accent);
-            font-size: 1.1rem;
-            margin: 1.2rem 0 0.8rem 0;
-        }
-
-        /* Content */
         p {
             margin-bottom: 1rem;
-            font-size: 1.05rem;
+        }
+
+        em {
+            color: var(--text-dim);
+            font-style: italic;
         }
 
         ul {
             margin: 1rem 0 1rem 2rem;
-            list-style-type: disc;
         }
 
         li {
             margin-bottom: 0.8rem;
-        }
-
-        li::marker {
-            color: white;
         }
 
         strong {
@@ -462,30 +442,25 @@
             font-weight: 600;
         }
 
-        em {
-            color: var(--text-dim);
-        }
-
-        /* Table */
+        /* Tables */
         table {
             width: 100%;
-            margin: 1.5rem 0;
             border-collapse: collapse;
+            margin: 1.5rem 0;
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-        }
-
-        th, td {
-            padding: 0.8rem;
-            text-align: left;
-            border: 1px solid var(--border);
         }
 
         th {
             background: var(--primary);
             color: white;
-            font-weight: 600;
+            padding: 0.8rem;
+            text-align: left;
             font-family: 'Cinzel', serif;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
         }
 
         tr:hover {
@@ -493,11 +468,6 @@
         }
 
         /* Sidebar */
-        .sidebar {
-            position: sticky;
-            top: 120px;
-            align-self: start;
-        }        /* Sidebar */
         .sidebar {
             position: sticky;
             top: 120px;
@@ -536,6 +506,13 @@
             color: var(--primary);
         }
 
+        /* Google Translate */
+        #google_translate_element {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .container {
@@ -543,16 +520,7 @@
             }
 
             .sidebar {
-                position: relative;
-                top: 0;
-            }
-
-            .main {
-                padding: 2rem;
-            }
-
-            .race-title {
-                font-size: 2rem;
+                position: static;
             }
         }
 
@@ -563,17 +531,8 @@
             }
 
             .nav {
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-direction: column;
                 gap: 1rem;
-            }
-
-            .main {
-                padding: 1.5rem;
-            }
-
-            .race-title {
-                font-size: 1.8rem;
             }
 
             h1 {
@@ -583,6 +542,15 @@
             h2 {
                 font-size: 1.2rem;
             }
+        }
+
+        /* Variant Box */
+        .variant-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
         }
     </style>
 </head>
@@ -596,9 +564,9 @@
             Home
         </a>
         <ul class="nav-links">
-           <li><a href="../../rules.html">Rules</a></li>
-           <li><a href="../../lineages.html">All Races</a></li>
-            </ul>
+            <li><a href="../../rules.html">Rules</a></li>
+            <li><a href="../../lineages.html">All Races</a></li>
+        </ul>
         <div class="nav-right">
             <div class="theme-toggle">
                 <button class="theme-toggle-btn" onclick="toggleThemeMenu()" id="current-theme-btn" title="Change Theme">🐉</button>
@@ -612,6 +580,7 @@
             </div>
             <div id="google_translate_element"></div>
         </div>
+    </nav>
 </header>
 
 <!-- Main Container -->
@@ -619,175 +588,223 @@
     <!-- Main Content -->
     <main class="main">
         <div class="race-header">
-            <h1 class="race-title">Hexblood</h1>
+            <h1 class="race-title">Dragonborn</h1>
         </div>
 
-        <p><strong><em>Where wishing fails, ancient magic can offer a heart's desire—at least, for a time. Hexbloods are individuals infused with eldritch magic, fey energy, or mysterious witchcraft. Some who enter into bargains with hags gain their deepest wishes but eventually find themselves transformed. These changes evidence a hag's influence: ears that split in forked points, skin in lurid shades, long hair that regrows if cut, and an irremovable living crown. Along with these marks, hexbloods manifest hag-like traits, such as darkvision, and a variety of magical methods to beguile the senses and avoid the same.</em></strong></p>
+        <h1 id="phb">Player's Handbook</h1>
+        <p><em>Born of dragons, as their name proclaims, the dragonborn walk proudly through a world that greets them with fearful incomprehension. Shaped by draconic gods or the dragons themselves, dragonborn originally hatched from dragon eggs as a unique race, combining the best attributes of dragons and humanoids.</em></p>
 
-        <p><strong><em>While many hexbloods gain their lineage after making a deal with a hag, others reveal their nature as they age—particularly if a hag influenced them early in life or even before their birth. Many hexbloods turn to lives of adventure, seeking to discover the mysteries of their magic, to forge a connection with their fey natures, or to avoid a hag that obsesses over them.</em></strong></p>
-
-        <h1 id="ravenloft">Van Richten's Guide to Ravenloft</h1>
-
-        <h3>Heir of Hags</h3>
-        <p>One way hags create more of their kind is through the creation of hexbloods. Every hexblood exhibits features suggestive of the hag whose magic inspires their powers. This includes an unusual crown, often called a eldercross or witch's turn. This living, garland-like part of a hexblood's body extends from their temples and wraps behind the head, serving as a visible mark of the bargain between hag and hexblood, a debt owed, or a change to come.</p>
-
-        <h3>Hexblood Origins</h3>
-        <p>A bargain with a hag or other eerie forces transformed your character into a magical being. Roll on or choose an option from the Hexblood Origins table to determine how your character gained their lineage.</p>
-
-        <table>
-            <tr>
-                <th colspan="2">Hexblood Origins</th>
-            </tr>
-            <tr>
-                <th>d8</th>
-                <th>Origin</th>
-            </tr>
-            <tr><td>1</td><td>Seeking a child, your parent made a bargain with a hag. You are the result of that arrangement.</td></tr>
-            <tr><td>2</td><td>Fey kidnappers swapped you and your parents' child.</td></tr>
-            <tr><td>3</td><td>A coven of hags lost one of its members. You were created to replace the lost hag.</td></tr>
-            <tr><td>4</td><td>You were cursed as a child. A deal with the spirits of the forest transformed you into a hexblood, now free of the curse.</td></tr>
-            <tr><td>5</td><td>You began life as a fey creature, but an accident changed you and forced you from your home.</td></tr>
-            <tr><td>6</td><td>A slighted druid transformed you and bound you to live only so long as a sacred tree bears fruit.</td></tr>
-        </table>
-
-        <h2>Hexblood Traits</h2>
-
-            <ul>
-           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or increase three different ability scores by 1. If you are replacing your race with this lineage, replace any Ability Score Increase you previously had with this.</li>
-           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character. If you are replacing your race with this lineage, you retain any languages you had and gain no new languages.</li>
-           <li><strong>Creature Type.</strong> You are a Fey.</li>
-           <li><strong>Size.</strong> You are Medium or Small. You choose the size when you gain this lineage.</li>
-           <li><strong>Speed.</strong> Your walking speed is 30 feet</li>
-            <li><strong>Ancestral Legacy.</strong> If you replace a race with this lineage, you can keep the following elements of that race: any skill proficiencies you gained from it and any climbing, flying, or swimming speed you gained from it.
-                    <ul>
-                   <li>If you don't keep any of those elements or you choose this lineage at character creation, you gain proficiency in two skills of your choice.</li>
-                </ul>
-            </li>
-           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness as shades of gray.</li>
-            <li><strong>Eerie Token.</strong> As a bonus action, you can harmlessly remove a lock of your hair, one of your nails, or one of your teeth. This token is imbued with magic until you finish a long rest. While the token is imbued this way, you can take these actions:
-                    <ul>
-                   <li><strong><em>Telepathic Message.</em></strong> As an action, you can send a telepathic message to the creature holding or carrying the token, as long as you are within 10 miles of it. The message can contain up to twenty-five words.</li>
-                   <li><strong><em>Remote Viewing.</em></strong> If you are within 10 miles of the token, you can enter a trance as an action. The trance lasts for 1 minute, but it ends early if you dismiss it (no action required) or are incapacitated. During this trance, you can see and hear from the token as if you were located where it is. While you are using your senses at the token's location, you are blinded and deafened in regard to your own surroundings. When the trance ends, the token is harmlessly destroyed.</li>
-                   <li>Once you create a token using this feature, you can't do so again until you finish a long rest, at which point your missing part regrows.</li>
-                </ul>
-            </li>
-            <li><strong>Hex Magic.</strong> You can cast the Disguise Self and Hex spells with this trait. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast these spells using any spell slots you have.
-                    <ul>
-                   <li>Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells (choose the ability when you gain this lineage).</li>
-                </ul>
-            </li>
-            </ul>
-
-        <h1 id="unearthed">Unearthed Arcana</h1>
-        <p>Source: Unearthed Arcana 76 - Gothic Lineages</p>
-
-        <h3>Heir of Hags</h3>
-        <p>One way hags create more of their kind is through the creation of hexbloods. Every hexblood exhibits features suggestive of the hag whose magic inspires their powers. This includes an unusual crown, often called a "eldercross" or "witch's turn." This living, garland-like part of a hexblood's body extends from their temples and wraps behind the head, serving as a visible mark of the bargain between hag and hexblood, a debt owed, or a change to come.</p>
-
-        <h4>Becoming a Hag</h4>
-        <p>Hags can undertake a ritual to irreversibly transform a hexblood they created into a new hag, either one of their own kind or that embodies the hexblood's nature. This requires that both the hag and hexblood be in the same place and consent to the lengthy ritual— circumstances most hexbloods shun but might come to accept over the course of centuries. Once a hexblood undergoes this irreversible ritual, they emerge as a hag NPC no longer under the control of the hexblood's player, unless the DM rules otherwise.</p>
-
-        <h3>Hexblood Origins</h3>
-        <p>A bargain with a hag or other eerie forces transformed your character into a magical being. Roll on or choose an option from the Hexblood Origins table to determine how your character gained their lineage.</p>
+        <ul>
+            <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Charisma score increases by 1.</li>
+            <li><strong>Age.</strong> Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80.</li>
+            <li><strong>Alignment.</strong> Dragonborn tend towards extremes, making a conscious choice for one side or the other between Good and Evil (represented by Bahamut and Tiamat, respectively).</li>
+            <li><strong>Size.</strong> Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium.</li>
+            <li><strong>Speed.</strong> Your base walking speed is 30 feet.</li>
+            <li><strong>Draconic Ancestry.</strong> You are distantly related to a particular kind of dragon. Choose a type of dragon from the below list; this determines the damage and area of your breath weapon, and the type of resistance you gain.</li>
+        </ul>
 
         <table>
             <tr>
-                <th colspan="2">Hexblood Origins</th>
+                <th>Dragon Color</th>
+                <th>Damage Type</th>
+                <th>Breath Weapon</th>
             </tr>
-            <tr>
-                <th>d8</th>
-                <th>Origin</th>
-            </tr>
-            <tr><td>1</td><td>Seeking a child, your parent made a bargain with a hag. You are the result of that arrangement.</td></tr>
-            <tr><td>2</td><td>Fey kidnappers swapped you and your parents' child.</td></tr>
-            <tr><td>3</td><td>A coven of hags lost one of their members. You were created to replace the lost hag.</td></tr>
-            <tr><td>4</td><td>You were cursed as a child. A deal with the spirits of the forest transformed you into a hexblood, now free of the curse.</td></tr>
-            <tr><td>5</td><td>You began life as a fey creature, but an accident or crime changed you and forced you from your home.</td></tr>
-            <tr><td>6</td><td>A slighted druid transformed you and bound you to live only so long as a sacred tree bears fruit.</td></tr>
-            <tr><td>7</td><td>You made a deal with a hag, but they twisted your words and transformed you.</td></tr>
-            <tr><td>8</td><td>You are a child of the wilds. Animals and mysterious whispers were the only family you ever knew.</td></tr>
+            <tr><td>Black</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Blue</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Brass</td><td>Fire</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Bronze</td><td>Lightning</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Copper</td><td>Acid</td><td>5 by 30 ft. line (DEX save)</td></tr>
+            <tr><td>Gold</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Green</td><td>Poison</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>Red</td><td>Fire</td><td>15 ft. cone (DEX save)</td></tr>
+            <tr><td>Silver</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
+            <tr><td>White</td><td>Cold</td><td>15 ft. cone (CON save)</td></tr>
         </table>
 
-        <h2>Hexblood Traits</h2>
+        <ul>
+            <li><strong>Breath Weapon.</strong> You can use your action to exhale destructive energy. When you use your breath weapon, all creatures in the area must make a saving throw, the type of which is determined by your ancestry. The DC of this saving throw is 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increase to 3d6 at 6th level, 4d6 at 11th, and 5d6 at 16th level. After using your breath weapon, you cannot use it again until you complete a short or long rest.</li>
+            <li><strong>Damage Resistance.</strong> You have resistance to the damage type associated with your ancestry.</li>
+            <li><strong>Languages.</strong> You can read, speak, and write Common and Draconic.</li>
+        </ul>
+
+        <div class="variant-section">
+            <h2 id="draconblood">Draconblood</h2>
+            <p><em>Source: Explorer's Guide to Wildemount</em></p>
+            <p><em>Draconbloods possess long tails and a knack for social manipulation. They remember the days when they were once mighty conquerors.</em></p>
 
             <ul>
-           <li><strong>Ability Score Increase.</strong> Increase one ability score by 2, and increase a different one by 1.</li>
-           <li><strong>Type.</strong> Fey and Humanoid</li>
-           <li><strong>Size.</strong> Medium or Small (choose when you gain this lineage)</li>
-           <li><strong>Speed.</strong> 30 feet</li>
-           <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light.</li>
-           <li><strong>Fey Resilience.</strong> You have advantage on saving throws you make to avoid or end the charmed condition on yourself.</li>
-           <li><strong>Hex Magic.</strong> You can cast the Disguise Self and Hex spells with this trait. Intelligence, Wisdom, or Charisma is your spellcasting ability for these spells (choose when you gain this lineage). Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a long rest. You can also cast these spells using any spells slots you have.</li>
-            <li><strong>Magic Token.</strong> As an action, you can harmlessly pull out one of your nails, a tooth, or a lock of hair. This token is imbued with magic until you finish a long rest. While the token is imbued in this way, you can use an action to send a telepathic message to the creature holding or carrying the token, as long as you are on the same plane of existence and are within 10 miles of it. The message can contain up to twenty-five words.
-                    <ul>
-                   <li>In addition, while you are within 10 miles of the token, you can use an action to enter a trance for 1 minute, during which you can see and hear from the token as if you were located where it is. While you are using your senses at the token's location, you are blinded and deafened in regard to your own surroundings. Afterward, the token is harmlessly destroyed.</li>
-                   <li>Once you create a token using this feature, you can't do so again until you finish a long rest, at which point your missing part regrows.</li>
-                </ul>
-            </li>
-           <li><strong>Languages.</strong> You can speak, read, and write Common and one other language that you and your DM agree is appropriate for the character.</li>
+                <li><strong>Ability Score Increase.</strong> Your Intelligence score increases by 2, and your Charisma score increases by 1.</li>
+                <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+                <li><strong>Forceful Presence.</strong> When you make a Intimidation or Persuasion check, you can do so with advantage once per long rest.</li>
             </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="ravenite">Ravenite</h2>
+            <p><em>Source: Explorer's Guide to Wildemount</em></p>
+            <p><em>Ravenites have no tails and a hearty physique. They remember the days when they were slaves to the draconblood, as well as the day when they overthrew their masters.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Your Strength score increases by 2, and your Constitution score increases by 1.</li>
+                <li><strong>Darkvision.</strong> You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</li>
+                <li><strong>Vengeful Assault.</strong> When you take damage from a creature in range of a weapon you are wielding, you can use your reaction to make an attack against that creature. You can do this once per short or long rest.</li>
+            </ul>
+        </div>
+
+        <h1 id="fizbans">Fizban's Treasury of Dragons</h1>
+
+        <div class="variant-section">
+            <h2 id="chromatic">Chromatic</h2>
+            <p><em>Dragonborn with chromatic ancestry claim the raw elemental power of chromatic dragons. The vibrant colors of black, blue, green, red, and white dragons gleam in those dragonborn's scaled skin and in the deadly energy of their breath weapons.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Chromatic Ancestry.</strong> Choose one type of dragon: Black (Acid), Blue (Lightning), Green (Poison), Red (Fire), or White (Cold).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 30-foot line that is 5 feet wide. Each creature must make a Dexterity saving throw (DC = 8 + your Constitution modifier + your proficiency bonus). On a failed save, the creature takes 1d10 damage. This damage increases by 1d10 at 5th (2d10), 11th (3d10), and 17th level (4d10). You can use this a number of times equal to your proficiency bonus, regaining uses on a long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Chromatic Ancestry.</li>
+                <li><strong>Chromatic Warding.</strong> Starting at 5th level, as an action, you can channel your draconic energy to protect yourself. For 1 minute, you become immune to the damage type associated with your Chromatic Ancestry. Once you use this trait, you can't do so again until you finish a long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="metallic">Metallic</h2>
+            <p><em>Dragonborn with metallic ancestry lay claim to the tenacity of metallic dragons — brass, bronze, copper, gold, and silver — whose hues glint in their scales.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Metallic Ancestry.</strong> Choose one type of dragon: Brass (Fire), Bronze (Lightning), Copper (Acid), Gold (Fire), or Silver (Cold).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 15-foot cone. Each creature must make a Dexterity saving throw (DC = 8 + Constitution modifier + proficiency bonus). On a failed save, takes 1d10 damage. Increases by 1d10 at 5th (2d10), 11th (3d10), and 17th level (4d10). Usable a number of times equal to proficiency bonus, regaining on long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Metallic Ancestry.</li>
+                <li><strong>Metallic Breath Weapon.</strong> At 5th level, you gain a second breath weapon in a 15-foot cone (DC = 8 + CON + proficiency). Choose Enervating Breath (CON save, incapacitated until start of your next turn on fail) or Repulsion Breath (STR save, pushed 20 feet and knocked prone on fail). Once per long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
+
+        <div class="variant-section">
+            <h2 id="gem">Gem</h2>
+            <p><em>Gem dragonborn partake of the heritage of gem dragons, who claim to be heirs of Sardior, the Ruby Dragon. The colors and mysterious powers of gem dragons gleam in these dragonborn's scaled skin.</em></p>
+
+            <ul>
+                <li><strong>Ability Score Increase.</strong> Increase one ability score by 2 and increase a different one by 1, or you increase three different scores by 1.</li>
+                <li><strong>Type.</strong> You are a Humanoid.</li>
+                <li><strong>Size.</strong> You are Medium.</li>
+                <li><strong>Speed.</strong> Your walking speed is 30 feet.</li>
+                <li><strong>Gem Ancestry.</strong> Choose one type of dragon: Amethyst (Force), Crystal (Radiant), Emerald (Psychic), Sapphire (Thunder), or Topaz (Necrotic).</li>
+                <li><strong>Breath Weapon.</strong> When you take the Attack action, you can replace one of your attacks with an exhalation of magical energy in a 15-foot cone. Each creature must make a Dexterity saving throw (DC = 8 + CON + proficiency). On fail, takes 1d10 damage. Increases at 5th (2d10), 11th (3d10), 17th (4d10). Usable proficiency bonus times per long rest.</li>
+                <li><strong>Draconic Resistance.</strong> You have resistance to the damage type associated with your Gem Ancestry.</li>
+                <li><strong>Psionic Mind.</strong> You can telepathically speak to any creature you can see within 30 feet of you. You don't need to share a language with the creature, but the creature must be able to understand at least one language.</li>
+                <li><strong>Gem Flight.</strong> Starting at 5th level, you can use a bonus action to manifest spectral wings. These wings last for 1 minute, granting you a flying speed equal to your walking speed and the ability to hover. Once per long rest.</li>
+                <li><strong>Languages.</strong> You can speak, read, and write Common and one other language.</li>
+            </ul>
+        </div>
 
     </main>
 
     <!-- Sidebar -->
     <aside class="sidebar">
         <h3>Contents</h3>
-            <ul>
-               <li><a href="#traits">Racial Traits</a></li>
-            </ul>
-        </aside>
+        <ul>
+            <li><a href="#phb">Player's Handbook</a></li>
+            <li><a href="#draconblood">Draconblood</a></li>
+            <li><a href="#ravenite">Ravenite</a></li>
+            <li><a href="#fizbans">Fizban's Treasury</a></li>
+            <li><a href="#chromatic">→ Chromatic</a></li>
+            <li><a href="#metallic">→ Metallic</a></li>
+            <li><a href="#gem">→ Gem</a></li>
+        </ul>
+
+        <div id="google_translate_element"></div>
+    </aside>
 </div>
 
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <script>
-    // Theme Management
+    // Theme System with localStorage persistence
+    // Google Translate Init
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,cs,de,es,fr,it,pl,pt,ru,ja,ko,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+
+    // Theme Switcher
     function toggleThemeMenu() {
-        document.getElementById('theme-menu').classList.toggle('show');
+        const themeOptions = document.getElementById('theme-options');
+        themeOptions.classList.toggle('show');
     }
 
     function selectTheme(theme) {
-        // Remove all theme classes
-        document.body.className = '';
-        
-        // Add selected theme class
-        document.body.classList.add(theme + '-theme');
-        
-        // Update active button
-        document.querySelectorAll('.theme-option').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.getElementById('btn-' + theme).classList.add('active');
-        
-        // Update main theme button emoji
-        const emojis = {
-            'fantasy': '🐉',
-            'steampunk': '⚙',
-            'winter': '❄️',
-            'nature': '🌿',
-            'gothic': '🦇'
+        setTheme(theme);
+        document.getElementById('theme-options').classList.remove('show');
+    }
+
+    function setTheme(theme) {
+        const body = document.body;
+        const buttons = {
+            fantasy: document.getElementById('btn-fantasy'),
+            steampunk: document.getElementById('btn-steampunk'),
+            winter: document.getElementById('btn-winter'),
+            nature: document.getElementById('btn-nature'),
+            gothic: document.getElementById('btn-gothic')
         };
-        document.getElementById('current-theme').textContent = emojis[theme];
-        
-        // Save theme preference
+        const themeEmojis = {
+            fantasy: '🐉',
+            steampunk: '⚙️',
+            winter: '❄️',
+            nature: '🌿',
+            gothic: '🦇'
+        };
+
+        // Remove all theme classes
+        body.className = theme + '-theme';
+
+        // Update button states
+        Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+        buttons[theme].classList.add('active');
+
+        // Update main theme button emoji
+        document.getElementById('current-theme-btn').textContent = themeEmojis[theme];
+
+        // Save to localStorage
         localStorage.setItem('dnd-theme', theme);
-        
-        // Close menu
-        document.getElementById('theme-menu').classList.remove('show');
     }
 
     // Load saved theme on page load
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('dnd-theme') || 'fantasy';
-        selectTheme(savedTheme);
+        setTheme(savedTheme);
     });
 
     // Close theme menu when clicking outside
     document.addEventListener('click', (e) => {
         const themeToggle = document.querySelector('.theme-toggle');
-        if (!themeToggle.contains(e.target)) {
-            document.getElementById('theme-menu').classList.remove('show');
+        const themeOptions = document.getElementById('theme-options');
+        if (themeToggle && !themeToggle.contains(e.target)) {
+            themeOptions.classList.remove('show');
         }
     });
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
